@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>776</width>
+    <height>555</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>CodeKeeper</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="applications-development"/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QTabWidget::tab-bar { alignment: center; }</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabs">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="homeTab" native="true">
+       <attribute name="title">
+        <string>Homepage</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="title">
+          <property name="font">
+           <font>
+            <pointsize>26</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>CodeKeeper</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="settingsL">
+          <item>
+           <widget class="QPushButton" name="settingsBtn">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Settings</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="syncL">
+          <item>
+           <widget class="QPushButton" name="syncBtn">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Sync data</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="notesTab" native="true">
+       <attribute name="title">
+        <string>Notes</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="noteL2">
+          <item>
+           <layout class="QHBoxLayout" name="noteL">
+            <item>
+             <widget class="QTreeWidget" name="notesTree">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <column>
+               <property name="text">
+                <string>Notes</string>
+               </property>
+              </column>
+              <item>
+               <property name="text">
+                <string>Dev</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>ООП</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Qt c++</string>
+                </property>
+               </item>
+              </item>
+              <item>
+               <property name="text">
+                <string>School</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>math</string>
+                </property>
+               </item>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTextEdit" name="noteEdit"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tasksTab">
+       <attribute name="title">
+        <string>Tasks</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <layout class="QVBoxLayout" name="incompleteTasks">
+          <item>
+           <widget class="QLabel" name="title_1">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Incomplete tasks</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="incompleteList"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="inprocessTasks">
+          <item>
+           <widget class="QLabel" name="title_2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Inprocess Tasks</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="inprocessList"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="completeTasks">
+          <item>
+           <widget class="QLabel" name="title_3">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Complete Tasks</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="completeList"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="projectsTab">
+       <attribute name="title">
+        <string>Projects</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
