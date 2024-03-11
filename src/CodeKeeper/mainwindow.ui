@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>694</width>
-    <height>733</height>
+    <width>776</width>
+    <height>555</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -93,38 +93,6 @@
             </property>
             <property name="text">
              <string>Sync data</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="setupSyncL">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>80</number>
-          </property>
-          <property name="rightMargin">
-           <number>80</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="setupSyncBtn">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Setup sync via git</string>
             </property>
            </widget>
           </item>

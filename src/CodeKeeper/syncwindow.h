@@ -2,6 +2,7 @@
 #define SYNCWINDOW_H
 
 #include <QWidget>
+#include <QSettings>
 
 namespace Ui {
 class SyncWindow;
@@ -14,6 +15,8 @@ class SyncWindow : public QWidget
 public:
     explicit SyncWindow(QWidget *parent = nullptr);
     ~SyncWindow();
+
+    QSettings *GlobalSettings;
     Ui::SyncWindow *ui;
 
 private:

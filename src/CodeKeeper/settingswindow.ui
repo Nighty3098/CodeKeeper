@@ -35,7 +35,7 @@
       <number>0</number>
      </property>
      <item row="0" column="0">
-      <widget class="QLabel" name="title_1">
+      <widget class="QLabel" name="label_1">
        <property name="maximumSize">
         <size>
          <width>100</width>
@@ -48,14 +48,23 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Font style</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QFontComboBox" name="fontComboBox"/>
+      <widget class="QFontComboBox" name="fontComboBox">
+       <property name="font">
+        <font>
+         <family>SF Pro</family>
+        </font>
+       </property>
+       <property name="currentText">
+        <string>SF Pro</string>
+       </property>
+      </widget>
      </item>
      <item row="0" column="1">
       <widget class="QSpinBox" name="spinBox">
@@ -85,9 +94,35 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Theme style</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <property name="topMargin">
+      <number>100</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="setupSyncBtn">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Setup sync via GitHub</string>
        </property>
       </widget>
      </item>
@@ -99,7 +134,7 @@
       <number>100</number>
      </property>
      <item>
-      <widget class="QPushButton" name="clerDataBtn">
+      <widget class="QPushButton" name="clearDataBtn">
        <property name="minimumSize">
         <size>
          <width>0</width>

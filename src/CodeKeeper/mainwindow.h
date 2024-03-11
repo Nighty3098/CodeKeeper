@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "settingswindow.h"
 #include "syncwindow.h"
+#include <QSettings>
+#include <QCloseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -16,17 +18,16 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    QSettings *GlobalSettings;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
-    void on_syncBtn_clicked();
-
     void on_settingsBtn_clicked();
+    void closeEvent(QCloseEvent *event);
 
 private:
     Ui::MainWindow *ui;
     SettingsWindow *settingsWindow;
-    SyncWindow *syncWindow;
 };
 #endif // MAINWINDOW_H
