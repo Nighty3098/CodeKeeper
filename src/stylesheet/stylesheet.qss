@@ -90,7 +90,7 @@ QLineEdit {
         alternate-background-color: #181818;
 }
 
-QTextEdit {
+QPlainTextEdit {
         background-color: #3c4251;
         selection-background-color: #999999;
         selection-color: #ffffff;
