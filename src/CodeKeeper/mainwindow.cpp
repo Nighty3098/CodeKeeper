@@ -14,19 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     GlobalSettings = new QSettings("Settings", "Settings");
     QFont selectedFont = GlobalSettings->value("font").value<QFont>();
-/*
-    ui->settingsBtn->setFont(QFont(selectedFont));
-    ui->syncBtn->setFont(QFont(selectedFont));
-    ui->title->setFont(QFont(selectedFont));
-    ui->noteEdit->setFont(QFont(selectedFont));
-    ui->notesTree->setFont(QFont(selectedFont));
-    ui->completeList->setFont(QFont(selectedFont));
-    ui->title_3->setFont(QFont(selectedFont));
-    ui->incompleteList->setFont(QFont(selectedFont));
-    ui->title_1->setFont(QFont(selectedFont));
-    ui->inprocessList->setFont(QFont(selectedFont));
-    ui->title_2->setFont(QFont(selectedFont));
-*/
+
     ui->setupUi(this);
 }
 
@@ -39,8 +27,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-// =============================
 
 void MainWindow::on_settingsBtn_clicked()
 {

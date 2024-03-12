@@ -1,31 +1,29 @@
 #ifndef SETTINGSWINDOW_H
 #define SETTINGSWINDOW_H
 
+#include <QMainWindow>
 #include "syncwindow.h"
-#include <QWidget>
 #include <QSettings>
 
 namespace Ui {
 class SettingsWindow;
 }
 
-class SettingsWindow : public QWidget
+class SettingsWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    QSettings *GlobalSettings;
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
 
-    QSettings *GlobalSettings;
-    Ui::SettingsWindow *ui;
-
-private:
-    SyncWindow *syncWindow;
-
 private slots:
     void on_setupSyncBtn_clicked();
-    void on_saveBtn_clicked();
+
+private:
+    Ui::SettingsWindow *ui;
+    SyncWindow *syncWindow;
 };
 
 #endif // SETTINGSWINDOW_H

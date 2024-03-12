@@ -18,6 +18,7 @@
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QTreeWidget>
@@ -34,11 +35,16 @@ public:
     QTabWidget *tabs;
     QWidget *homeTab;
     QVBoxLayout *verticalLayout;
+    QSpacerItem *verticalSpacer;
     QLabel *title;
-    QHBoxLayout *settingsL;
-    QPushButton *settingsBtn;
+    QSpacerItem *verticalSpacer_4;
+    QHBoxLayout *horizontalLayout_4;
+    QPushButton *pushButton;
     QHBoxLayout *syncL;
     QPushButton *syncBtn;
+    QSpacerItem *verticalSpacer_2;
+    QHBoxLayout *settingsL;
+    QPushButton *settingsBtn;
     QWidget *notesTab;
     QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *noteL2;
@@ -77,38 +83,62 @@ public:
         homeTab->setObjectName(QString::fromUtf8("homeTab"));
         verticalLayout = new QVBoxLayout(homeTab);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
+
         title = new QLabel(homeTab);
         title->setObjectName(QString::fromUtf8("title"));
         QFont font;
-        font.setPointSize(26);
+        font.setPointSize(40);
         title->setFont(font);
         title->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(title);
 
-        settingsL = new QHBoxLayout();
-        settingsL->setObjectName(QString::fromUtf8("settingsL"));
-        settingsBtn = new QPushButton(homeTab);
-        settingsBtn->setObjectName(QString::fromUtf8("settingsBtn"));
-        settingsBtn->setMinimumSize(QSize(0, 25));
-        settingsBtn->setMaximumSize(QSize(200, 16777215));
+        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        settingsL->addWidget(settingsBtn);
+        verticalLayout->addItem(verticalSpacer_4);
+
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        pushButton = new QPushButton(homeTab);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setMinimumSize(QSize(200, 30));
+        pushButton->setMaximumSize(QSize(200, 30));
+
+        horizontalLayout_4->addWidget(pushButton);
 
 
-        verticalLayout->addLayout(settingsL);
+        verticalLayout->addLayout(horizontalLayout_4);
 
         syncL = new QHBoxLayout();
         syncL->setObjectName(QString::fromUtf8("syncL"));
         syncBtn = new QPushButton(homeTab);
         syncBtn->setObjectName(QString::fromUtf8("syncBtn"));
-        syncBtn->setMinimumSize(QSize(0, 25));
-        syncBtn->setMaximumSize(QSize(200, 25));
+        syncBtn->setMinimumSize(QSize(200, 30));
+        syncBtn->setMaximumSize(QSize(200, 30));
 
         syncL->addWidget(syncBtn);
 
 
         verticalLayout->addLayout(syncL);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer_2);
+
+        settingsL = new QHBoxLayout();
+        settingsL->setObjectName(QString::fromUtf8("settingsL"));
+        settingsBtn = new QPushButton(homeTab);
+        settingsBtn->setObjectName(QString::fromUtf8("settingsBtn"));
+        settingsBtn->setMinimumSize(QSize(200, 30));
+        settingsBtn->setMaximumSize(QSize(200, 30));
+
+        settingsL->addWidget(settingsBtn);
+
+
+        verticalLayout->addLayout(settingsL);
 
         tabs->addTab(homeTab, QString());
         notesTab = new QWidget();
@@ -221,8 +251,9 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "CodeKeeper", nullptr));
         title->setText(QCoreApplication::translate("MainWindow", "CodeKeeper", nullptr));
-        settingsBtn->setText(QCoreApplication::translate("MainWindow", "Settings", nullptr));
+        pushButton->setText(QCoreApplication::translate("MainWindow", "Open folder", nullptr));
         syncBtn->setText(QCoreApplication::translate("MainWindow", "Sync data", nullptr));
+        settingsBtn->setText(QCoreApplication::translate("MainWindow", "Settings", nullptr));
         tabs->setTabText(tabs->indexOf(homeTab), QCoreApplication::translate("MainWindow", "Homepage", nullptr));
         QTreeWidgetItem *___qtreewidgetitem = notesTree->headerItem();
         ___qtreewidgetitem->setText(0, QCoreApplication::translate("MainWindow", "Notes", nullptr));
