@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>776</width>
-    <height>555</height>
+    <width>666</width>
+    <height>612</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,7 +20,8 @@
    <string>CodeKeeper</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="applications-development"/>
+   <iconset theme="applications-development">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QTabWidget::tab-bar { alignment: center; }</string>
@@ -59,6 +60,21 @@
           </property>
           <property name="text">
            <string>CodeKeeper</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <family>Myanmar Text</family>
+           </font>
+          </property>
+          <property name="text">
+           <string>https://github.com/Nighty3098</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -221,7 +237,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QTextEdit" name="noteEdit"/>
+             <widget class="QPlainTextEdit" name="plainTextEdit"/>
             </item>
            </layout>
           </item>

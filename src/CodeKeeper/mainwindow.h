@@ -3,9 +3,9 @@
 
 #include <QMainWindow>
 #include "settingswindow.h"
-#include "syncwindow.h"
 #include <QSettings>
 #include <QCloseEvent>
+#include "qmarkdowntextedit/qmarkdowntextedit.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,6 +28,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QMarkdownTextEdit *markdownTextEdit;
     SettingsWindow *settingsWindow;
 };
 #endif // MAINWINDOW_H

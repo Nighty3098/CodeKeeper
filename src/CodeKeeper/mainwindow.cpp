@@ -3,6 +3,7 @@
 #include <QSettings>
 #include <QCloseEvent>
 #include <QFont>
+#include "qmarkdowntextedit/qmarkdowntextedit.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     QSettings settings("CodeKeeper", "CodeKeeper");
     restoreGeometry(settings.value("geometry").toByteArray());
     restoreState(settings.value("windowState").toByteArray());
+
 
     GlobalSettings = new QSettings("Settings", "Settings");
     QFont selectedFont = GlobalSettings->value("font").value<QFont>();

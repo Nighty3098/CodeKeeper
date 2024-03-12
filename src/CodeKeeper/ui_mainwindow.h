@@ -17,10 +17,10 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -50,7 +50,7 @@ public:
     QVBoxLayout *noteL2;
     QHBoxLayout *noteL;
     QTreeWidget *notesTree;
-    QTextEdit *noteEdit;
+    QPlainTextEdit *plainTextEdit;
     QWidget *tasksTab;
     QHBoxLayout *horizontalLayout_3;
     QVBoxLayout *incompleteTasks;
@@ -162,10 +162,10 @@ public:
 
         noteL->addWidget(notesTree);
 
-        noteEdit = new QTextEdit(notesTab);
-        noteEdit->setObjectName(QString::fromUtf8("noteEdit"));
+        plainTextEdit = new QPlainTextEdit(notesTab);
+        plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
 
-        noteL->addWidget(noteEdit);
+        noteL->addWidget(plainTextEdit);
 
 
         noteL2->addLayout(noteL);
@@ -241,7 +241,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabs->setCurrentIndex(0);
+        tabs->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
