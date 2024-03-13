@@ -6,22 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>666</width>
-    <height>612</height>
+    <width>722</width>
+    <height>624</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
-    <height>300</height>
+    <width>560</width>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>CodeKeeper</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="applications-development">
-    <normaloff>.</normaloff>.</iconset>
+   <iconset theme="applications-development"/>
   </property>
   <property name="styleSheet">
    <string notr="true">QTabWidget::tab-bar { alignment: center; }</string>
@@ -31,7 +30,13 @@
     <item>
      <widget class="QTabWidget" name="tabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
+      <property name="tabBarAutoHide">
+       <bool>false</bool>
       </property>
       <widget class="QWidget" name="homeTab">
        <attribute name="title">
@@ -101,14 +106,19 @@
             <property name="minimumSize">
              <size>
               <width>200</width>
-              <height>30</height>
+              <height>25</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>200</width>
-              <height>30</height>
+              <height>25</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
             </property>
             <property name="text">
              <string>Open folder</string>
@@ -124,14 +134,19 @@
             <property name="minimumSize">
              <size>
               <width>200</width>
-              <height>30</height>
+              <height>25</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>200</width>
-              <height>30</height>
+              <height>25</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
             </property>
             <property name="text">
              <string>Sync data</string>
@@ -160,14 +175,19 @@
             <property name="minimumSize">
              <size>
               <width>200</width>
-              <height>30</height>
+              <height>25</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>200</width>
-              <height>30</height>
+              <height>25</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
             </property>
             <property name="text">
              <string>Settings</string>
@@ -204,11 +224,75 @@
                 <height>16777215</height>
                </size>
               </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+                <italic>true</italic>
+               </font>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+              </property>
+              <property name="tabKeyNavigation">
+               <bool>true</bool>
+              </property>
+              <property name="dragEnabled">
+               <bool>true</bool>
+              </property>
+              <property name="dragDropMode">
+               <enum>QAbstractItemView::DragDrop</enum>
+              </property>
+              <property name="defaultDropAction">
+               <enum>Qt::MoveAction</enum>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectItems</enum>
+              </property>
+              <property name="horizontalScrollMode">
+               <enum>QAbstractItemView::ScrollPerItem</enum>
+              </property>
+              <property name="autoExpandDelay">
+               <number>-2</number>
+              </property>
+              <property name="indentation">
+               <number>15</number>
+              </property>
+              <property name="uniformRowHeights">
+               <bool>false</bool>
+              </property>
+              <property name="sortingEnabled">
+               <bool>false</bool>
+              </property>
+              <property name="animated">
+               <bool>true</bool>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="columnCount">
+               <number>1</number>
+              </property>
+              <attribute name="headerVisible">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="headerShowSortIndicator" stdset="0">
+               <bool>false</bool>
+              </attribute>
               <column>
                <property name="text">
                 <string>Notes</string>
                </property>
               </column>
+              <item>
+               <property name="text">
+                <string>School</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>math</string>
+                </property>
+               </item>
+              </item>
               <item>
                <property name="text">
                 <string>Dev</string>
@@ -224,20 +308,22 @@
                 </property>
                </item>
               </item>
-              <item>
-               <property name="text">
-                <string>School</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>math</string>
-                </property>
-               </item>
-              </item>
              </widget>
             </item>
             <item>
-             <widget class="QPlainTextEdit" name="plainTextEdit"/>
+             <widget class="QPlainTextEdit" name="plainTextEdit">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="documentTitle">
+               <string/>
+              </property>
+              <property name="textInteractionFlags">
+               <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -251,77 +337,227 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <layout class="QVBoxLayout" name="incompleteTasks">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
           <item>
-           <widget class="QLabel" name="title_1">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="leftMargin">
+             <number>0</number>
             </property>
-            <property name="text">
-             <string>Incomplete tasks</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QListWidget" name="incompleteList"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="inprocessTasks">
-          <item>
-           <widget class="QLabel" name="title_2">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Inprocess Tasks</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QListWidget" name="inprocessList"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="completeTasks">
-          <item>
-           <widget class="QLabel" name="title_3">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Complete Tasks</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QListWidget" name="completeList"/>
+            <item>
+             <layout class="QVBoxLayout" name="incompleteTasks">
+              <item>
+               <widget class="QLabel" name="title_1">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Incomplete tasks</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListWidget" name="incompleteList">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="lineWidth">
+                 <number>2</number>
+                </property>
+                <property name="midLineWidth">
+                 <number>2</number>
+                </property>
+                <property name="dragEnabled">
+                 <bool>true</bool>
+                </property>
+                <property name="dragDropOverwriteMode">
+                 <bool>false</bool>
+                </property>
+                <property name="dragDropMode">
+                 <enum>QAbstractItemView::DragDrop</enum>
+                </property>
+                <property name="defaultDropAction">
+                 <enum>Qt::MoveAction</enum>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>false</bool>
+                </property>
+                <property name="spacing">
+                 <number>3</number>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>gfdshgfdhfg</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>dfhdjshgf ljhgds las dhjfk gsdhjlkf gajkhghjfgd gaklsdfghj gldasjfhgasd fasd gf</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>dsgfglsdfgjksd</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>sdgfsgserfm.gert</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="inprocessTasks">
+              <item>
+               <widget class="QLabel" name="title_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Inprocess Tasks</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListWidget" name="inprocessList">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <italic>true</italic>
+                 </font>
+                </property>
+                <property name="lineWidth">
+                 <number>2</number>
+                </property>
+                <property name="midLineWidth">
+                 <number>2</number>
+                </property>
+                <property name="dragEnabled">
+                 <bool>true</bool>
+                </property>
+                <property name="dragDropOverwriteMode">
+                 <bool>false</bool>
+                </property>
+                <property name="dragDropMode">
+                 <enum>QAbstractItemView::DragDrop</enum>
+                </property>
+                <property name="defaultDropAction">
+                 <enum>Qt::MoveAction</enum>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>false</bool>
+                </property>
+                <property name="spacing">
+                 <number>3</number>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="completeTasks">
+              <item>
+               <widget class="QLabel" name="title_3">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Complete Tasks</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListWidget" name="completeList">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <strikeout>true</strikeout>
+                 </font>
+                </property>
+                <property name="lineWidth">
+                 <number>2</number>
+                </property>
+                <property name="midLineWidth">
+                 <number>2</number>
+                </property>
+                <property name="dragEnabled">
+                 <bool>true</bool>
+                </property>
+                <property name="dragDropOverwriteMode">
+                 <bool>false</bool>
+                </property>
+                <property name="dragDropMode">
+                 <enum>QAbstractItemView::DragDrop</enum>
+                </property>
+                <property name="defaultDropAction">
+                 <enum>Qt::MoveAction</enum>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>false</bool>
+                </property>
+                <property name="spacing">
+                 <number>3</number>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>

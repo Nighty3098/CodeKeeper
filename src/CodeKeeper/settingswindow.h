@@ -2,7 +2,6 @@
 #define SETTINGSWINDOW_H
 
 #include <QMainWindow>
-#include "syncwindow.h"
 #include <QSettings>
 
 namespace Ui {
@@ -19,11 +18,9 @@ public:
     ~SettingsWindow();
 
 private slots:
-    void on_setupSyncBtn_clicked();
 
 private:
     Ui::SettingsWindow *ui;
-    SyncWindow *syncWindow;
 };
 
 #endif // SETTINGSWINDOW_H

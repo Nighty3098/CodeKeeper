@@ -10,6 +10,10 @@ QWidget {
     background-color: #2f343f;
 }
 
+QCheckBox {
+    color: #ffffff;
+}
+
 QFontComboBox {
     color: #ffffff;
     background-color: #2f343f;
@@ -40,10 +44,13 @@ QTabWidget::pane {
     background: #2f343f;; 
 } 
 
+
+
+
 QTabWidget::tab-bar { alignment: center; }
 
 QTabBar::tab {
-    width: 70px;
+    width: 100px;
     font-size: 10px;
     background: #3c4251; 
     color: #d9dee8;
@@ -55,10 +62,10 @@ QTabBar::tab {
 } 
 
 QTabBar::tab:selected { 
-    width: 70px;
+    width: 100px;
     font-size: 10px;
     color: #d9dee8;
-    background: #4d5669; 
+    background: #6280a9; 
     border-radius: 5px;
     padding: 6px;
     margin-bottom: 5px; 
@@ -66,6 +73,7 @@ QTabBar::tab:selected {
 
 QPushButton {
         background-color: #444c5d;
+        selection-background-color: #6280a9;
         color: #ffffff;
         border-width: 2px;
         border-style: solid;
@@ -105,14 +113,19 @@ QPlainTextEdit {
 
 QListWidget {
         background-color: #3c4251;
-        selection-background-color: #999999;
-        selection-color: #ffffff;
         color: #ffffff;
+        selection-color: #ffffff;
         border-width: 0px;
         border-style: solid;
-        border-radius: 10px;
+        border-radius: 5px;
         border-color: #3c4251;
         alternate-background-color: #181818;
+}
+
+QListWidget::item:selected {
+    color: #ffffff;
+    background-color: #6280a9;
+    border-radius: 5px;
 }
 
 QGroupBox {
@@ -123,35 +136,35 @@ QGroupBox {
 
 QTreeWidget {
         background-color: #3c4251;
-        selection-background-color: #999999;
+        selection-background-color: #6280a9;
         selection-color: #ffffff;
         color: #ffffff;
         border-width: 0px;
         border-style: solid;
         border-radius: 10px;
-        border-color: #3c4251;
-        alternate-background-color: #181818;
+        border-color: #6280a9;
+        alternate-background-color: #6280a9;
 }
 
 
 QTreeWidget::item:alternate {
     background-color: #3c4251;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
 QTreeWidget::item:selected {
-    background-color: #3c4251;
-    border: 3px solid #3c4251;
+    background-color: #6280a9;
+    border: 0px solid #3c4251;
     border-radius: 5px;
 }
 
 QTreeWidget::item:selected:!active {
-    background-color: #3c4251;
+    background-color: #6280a9;
     border-radius: 5px;
 }
 
 QTreeWidget::item:selected:active {
-    background-color: #3c4251;
+    background-color: #6280a9;
     border-radius: 5px;
 }
 

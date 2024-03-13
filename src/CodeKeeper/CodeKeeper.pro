@@ -12,18 +12,15 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    settingswindow.cpp \
-    syncwindow.cpp
+    settingswindow.cpp
 
 HEADERS += \
     mainwindow.h \
-    settingswindow.h \
-    syncwindow.h
+    settingswindow.h
 
 FORMS += \
     mainwindow.ui \
-    settingswindow.ui \
-    syncwindow.ui
+    settingswindow.ui
 
 RESOURCES += \
     ../stylesheet/stylesheet.qss

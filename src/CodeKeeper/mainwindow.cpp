@@ -13,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
     restoreGeometry(settings.value("geometry").toByteArray());
     restoreState(settings.value("windowState").toByteArray());
 
-
     GlobalSettings = new QSettings("Settings", "Settings");
     QFont selectedFont = GlobalSettings->value("font").value<QFont>();
 
@@ -23,8 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     QSettings settings("CodeKeeper", "CodeKeeper");
-    settings.setValue("myWidget/geometry", saveGeometry());
-    settings.setValue("myWidget/windowState", saveState());
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowState", saveState());
 
     delete ui;
 }
@@ -39,8 +38,8 @@ void MainWindow::on_settingsBtn_clicked()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     QSettings settings("CodeKeeper", "CodeKeeper");
-    settings.setValue("myWidget/geometry", saveGeometry());
-    settings.setValue("myWidget/windowState", saveState());
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowState", saveState());
 
     event->accept();
 }
