@@ -1,5 +1,4 @@
-QT       += core gui \
-    quick
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -11,21 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
-    settingswindow.cpp
+    mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h \
-    settingswindow.h
-
-FORMS += \
-    mainwindow.ui \
-    settingswindow.ui
+    mainwindow.h
 
 RESOURCES += \
     ../stylesheet/stylesheet.qss
-
-
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

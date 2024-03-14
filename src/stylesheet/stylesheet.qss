@@ -56,7 +56,7 @@ QTabBar::tab {
     color: #d9dee8;
     border: 0px solid lightgray; 
     border-radius: 5px;
-    padding: 6px;
+    padding: 5px;
     margin: 5px;
     margin-bottom: 5px; 
 } 
@@ -67,9 +67,22 @@ QTabBar::tab:selected {
     color: #d9dee8;
     background: #6280a9; 
     border-radius: 5px;
-    padding: 6px;
+    padding: 5px;
     margin-bottom: 5px; 
 }
+
+QToolButton {
+        background-color: #444c5d;
+        selection-background-color: #6280a9;
+        color: #ffffff;
+        border-width: 2px;
+        border-style: solid;
+        border-radius: 10px;
+        alignment: center;
+        border-color: #444c5d;
+}
+
+
 
 QPushButton {
         background-color: #444c5d;
