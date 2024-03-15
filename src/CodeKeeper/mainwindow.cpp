@@ -79,39 +79,42 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *incompleteLayout = new QVBoxLayout;
     label_1 = new QLabel("Incomplete");
     label_1->setFixedHeight(20);
-    label_1->setStyleSheet("color: #b9676b;");
+    // label_1->setStyleSheet("color: #b9676b;");
     label_1->setAlignment(Qt::AlignHCenter);
 
     incompleteTasks = new QListWidget();
-    incompleteTasks->setStyleSheet("color: #b9676b;");
+    incompleteTasks->setStyleSheet("color: #b9676b; border-width: 3px; border-color: #b9676b;");
     incompleteTasks->setDragEnabled(true);
     incompleteTasks->setDragDropMode(QListWidget::DragDrop);
     incompleteTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     incompleteTasks->setWordWrap(true);
 
+
+
     QVBoxLayout *inprocessLayout = new QVBoxLayout;
     label_2 = new QLabel("Inprocess");
-    label_2->setStyleSheet("color: #e8cc91;");
+    // label_2->setStyleSheet("color: #e8cc91;");
     label_2->setFixedHeight(20);
     label_2->setAlignment(Qt::AlignHCenter);
 
     inprocessTasks = new QListWidget();
     inprocessTasks->setDragEnabled(true);
-    inprocessTasks->setStyleSheet("color: #e8cc91; text-decoration: underline;");
+    inprocessTasks->setStyleSheet("color: #e8cc91; text-decoration: underline; border-width: 3px; border-color: #e8cc91;");
     inprocessTasks->setDragDropMode(QListWidget::DragDrop);
     inprocessTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     inprocessTasks->setWordWrap(true);
 
 
+
     QVBoxLayout *completeLayout = new QVBoxLayout;
     label_3 = new QLabel("Complete");
     label_3->setFixedHeight(20);
-    label_3->setStyleSheet("color: #9dda67;");
+    // label_3->setStyleSheet("color: #9dda67;");
     label_3->setAlignment(Qt::AlignHCenter);
 
     completeTasks = new QListWidget();
     completeTasks->setDragEnabled(true);
-    completeTasks->setStyleSheet("color: #9dda67; text-decoration: line-through;");
+    completeTasks->setStyleSheet("color: #9dda67; text-decoration: line-through; border-width: 3px; border-color: #9dda67;");
     completeTasks->setDragDropMode(QListWidget::DragDrop);
     completeTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     completeTasks->setWordWrap(true);
@@ -192,7 +195,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     // ========================================================
 
+    // tasks
     connect(addTask, SIGNAL(clicked()), this, SLOT(addNewTask()));
+
+    // main
+    connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));
+
     connect(incompleteTasks, SIGNAL(itemDoubleClicked(QListWidgetItem*)),this, SLOT(on_item_double_clicked(QListWidgetItem *item)));
     connect(inprocessTasks, SIGNAL(itemDoubleClicked(QListWidgetItem*)),this, SLOT(on_item_double_clicked(QListWidgetItem *item)));
     connect(completeTasks, SIGNAL(itemDoubleClicked(QListWidgetItem*)),this, SLOT(on_item_double_clicked(QListWidgetItem *item)));
@@ -212,4 +220,9 @@ void MainWindow::addNewTask() {
 
 void MainWindow::on_item_double_clicked(QListWidgetItem *item) {
     // item->setFlags (item->flags () | Qt::ItemIsEditable);
+}
+
+void MainWindow::openSettingsWindow() {
+    settingsWindow = new SettingsWindow(this);
+    settingsWindow->show();
 }

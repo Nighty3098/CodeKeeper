@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
 
     a.setStyleSheet(file.readAll());
 
+    w.setWindowIcon(QIcon("://icon.png"));
+
     w.show();
     return a.exec();
 }

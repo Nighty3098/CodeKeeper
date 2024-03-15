@@ -10,12 +10,15 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    settingswindow.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    settingswindow.h
 
 RESOURCES += \
+    ../resources/resources.qrc \
     ../stylesheet/stylesheet.qss
 
 # Default rules for deployment.

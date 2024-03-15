@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include "settingswindow.h"
 
 class MainWindow : public QMainWindow
 {
@@ -15,6 +16,8 @@ public:
 private slots:
     void addNewTask();
     void on_item_double_clicked(QListWidgetItem *item);
+
+    void openSettingsWindow();
 
 private:
     QWidget *centralWidget;
@@ -51,6 +54,9 @@ private:
     QLineEdit *taskText;
     QPushButton *addTask;
     QPushButton *rmTask;
+
+    // ========================================================
+    SettingsWindow *settingsWindow;
 
 };
 #endif // MAINWINDOW_H
