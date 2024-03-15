@@ -50,8 +50,31 @@ MainWindow::MainWindow(QWidget *parent)
     notesList->setDragEnabled(true);
     notesList->setMaximumWidth(200);
 
-    menuButton = new QPushButton("...");
+
+    // menu
+    menuButton = new QToolButton;
+    // menuButton->setIcon(QIcon(":/menu.png"));
+    menuButton->setText("...");
+    menuButton->setPopupMode(QToolButton::InstantPopup);
     menuButton->setFixedSize(40, 30);
+
+    QMenu* menu = new QMenu(menuButton);
+
+    // actions for menu
+    QAction *newNote = menu->addAction(QPixmap(":/new_file.png"),"New Note");
+    QAction *rmNote = menu->addAction(QPixmap(":/rm_file.png"),"Remove Note");
+
+    QAction *showList = menu->addAction("Show notes list");
+    showList->setCheckable(true);
+    showList->setChecked(false);
+
+    QAction *showPreview = menu->addAction("Show notes list");
+    showPreview->setCheckable(true);
+    showPreview->setChecked(true);
+
+    menuButton->setMenu(menu);
+
+    // other
 
     noteName = new QLineEdit();
     noteName->setFixedHeight(30);
@@ -132,8 +155,6 @@ MainWindow::MainWindow(QWidget *parent)
     rmTask->setFixedSize(40, 30);
 
 
-
-
     incompleteLayout->addWidget(label_1);
     incompleteLayout->addWidget(incompleteTasks);
 
@@ -153,6 +174,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     tasksL1->addLayout(tasksL3);
     tasksL1->addLayout(tasksL2);
+
+    // ========================================================
+    
+    // projects tab 
+    QVBoxLayout *projectsL1 = new QVBoxLayout;
+    QVBoxLayout *projectsL2 = new QVBoxLayout;
+
+    QHBoxLayout *projectsSubL1 = new QHBoxLayout;
+    QHBoxLayout *projectsSubL2 = new QHBoxLayout;
+
+
 
     // ========================================================
 

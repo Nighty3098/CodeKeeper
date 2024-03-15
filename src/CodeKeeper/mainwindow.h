@@ -38,7 +38,7 @@ private:
     QTreeWidget *notesList;
     QPlainTextEdit *noteEdit;
     QLineEdit *noteName;
-    QPushButton *menuButton;
+    QToolButton *menuButton;
 
     // ========================================================
     // tasks tab
