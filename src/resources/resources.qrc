@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <file>icon.png</file>
+        <file>file.png</file>
+        <file>github.png</file>
+        <file>menu.png</file>
+        <file>new_file.png</file>
+        <file>rm_file.png</file>
     </qresource>
 </RCC>
