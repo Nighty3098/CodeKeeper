@@ -56,6 +56,17 @@ private:
     QPushButton *rmTask;
 
     // ========================================================
+    // projects tab
+    
+    QLabel *projectsMainLabel;
+
+    QListWidget *notStartedProjects;
+    QListWidget *startedProjects;
+    QListWidget *finishedProjects;
+    QListWidget *finishlineProjects;
+    
+    QToolButton *projectsMenuButton;
+    
     SettingsWindow *settingsWindow;
 
 };

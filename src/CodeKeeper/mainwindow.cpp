@@ -178,13 +178,101 @@ MainWindow::MainWindow(QWidget *parent)
     // ========================================================
     
     // projects tab 
+    QVBoxLayout *FinalProjectsL = new QVBoxLayout;
+
     QVBoxLayout *projectsL1 = new QVBoxLayout;
     QVBoxLayout *projectsL2 = new QVBoxLayout;
 
     QHBoxLayout *projectsSubL1 = new QHBoxLayout;
     QHBoxLayout *projectsSubL2 = new QHBoxLayout;
 
+    projectsMainLabel = new QLabel("Projects");
+    projectsMainLabel->setAlignment(Qt::AlignCenter);
+    projectsMainLabel->setStyleSheet("font-size: 32px;");
 
+    QLabel *nsProjects = new QLabel("Not started");
+    notStartedProjects = new QListWidget();
+    notStartedProjects->setStyleSheet("color: #b9676b; border-width: 3px; border-color: #b9676b;");
+    notStartedProjects->setDragEnabled(true);
+    notStartedProjects->setDragDropMode(QListWidget::DragDrop);
+    notStartedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
+    notStartedProjects->setWordWrap(true);
+
+    QLabel *sProjects = new QLabel("Started");
+    startedProjects = new QListWidget();
+    startedProjects->setStyleSheet("color: #e8cc91; border-width: 3px; border-color: #e8cc91;");
+    startedProjects->setDragEnabled(true);
+    startedProjects->setDragDropMode(QListWidget::DragDrop);
+    startedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
+    startedProjects->setWordWrap(true);
+
+    QLabel *flProjects = new QLabel("Finishline");
+    finishlineProjects = new QListWidget();
+    finishlineProjects->setStyleSheet("color: #8ebecf; border-width: 3px; border-color: #8ebecf;");
+    finishlineProjects->setDragEnabled(true);
+    finishlineProjects->setDragDropMode(QListWidget::DragDrop);
+    finishlineProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
+    finishlineProjects->setWordWrap(true);
+
+    QLabel *fProjects = new QLabel("Finished");
+    finishedProjects = new QListWidget();
+    finishedProjects->setStyleSheet("color: #9dda67; border-width: 3px; border-color: #9dda67;");
+    finishedProjects->setDragEnabled(true);
+    finishedProjects->setDragDropMode(QListWidget::DragDrop);
+    finishedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
+    finishedProjects->setWordWrap(true);
+
+    // actions
+    // menu
+    projectsMenuButton = new QToolButton;
+    projectsMenuButton->setText("...");
+    projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
+    projectsMenuButton->setFixedSize(40, 30);
+
+    QMenu* projectsMenu = new QMenu(projectsMenuButton);
+
+    // actions for menu
+    QAction *newProject = projectsMenu->addAction(QPixmap(":/new_file.png"),"New project");
+    QAction *rmProject = projectsMenu->addAction(QPixmap(":/rm_file.png"),"Remove project");
+
+    QAction *showAddInfo = projectsMenu->addAction("Show additional info");
+    showAddInfo->setCheckable(true);
+    showAddInfo->setChecked(false);
+
+    projectsMenuButton->setMenu(projectsMenu);
+
+
+
+    QHBoxLayout *headerProjectsL = new QHBoxLayout;
+    QVBoxLayout *notStartedL = new QVBoxLayout;
+    QVBoxLayout *StartedL = new QVBoxLayout;
+    QVBoxLayout *finishlineL = new QVBoxLayout;
+    QVBoxLayout *finishedL = new QVBoxLayout;
+
+    notStartedL->addWidget(nsProjects);
+    notStartedL->addWidget(notStartedProjects);
+
+    StartedL->addWidget(sProjects);
+    StartedL->addWidget(startedProjects);
+
+    finishlineL->addWidget(flProjects);
+    finishlineL->addWidget(finishlineProjects);
+
+    finishedL->addWidget(fProjects);
+    finishedL->addWidget(finishedProjects);
+
+    projectsSubL1->addLayout(notStartedL);
+    projectsSubL1->addLayout(StartedL);
+
+    projectsSubL2->addLayout(finishlineL);
+    projectsSubL2->addLayout(finishedL);
+
+    headerProjectsL->addWidget(projectsMainLabel);
+    headerProjectsL->addWidget(projectsMenuButton);
+
+    FinalProjectsL->addLayout(headerProjectsL);
+    FinalProjectsL->addLayout(projectsSubL1);
+    FinalProjectsL->addLayout(projectsSubL2);
 
     // ========================================================
 
@@ -223,6 +311,9 @@ MainWindow::MainWindow(QWidget *parent)
     // projects tab
     QWidget *projectsTab = new QWidget();
     QVBoxLayout *projectsLayout = new QVBoxLayout(projectsTab);
+
+    projectsLayout->addLayout(FinalProjectsL);
+
     tabs->addTab(projectsTab, "Projects");
 
     // ========================================================
