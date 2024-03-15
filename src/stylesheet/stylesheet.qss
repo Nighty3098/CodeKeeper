@@ -44,8 +44,36 @@ QTabWidget::pane {
     background: #2f343f;; 
 } 
 
+QMenu {
+    background-color: #3c4251;
+    color: #fff;
+    border: 3px solid #3c4251;
+    border-radius: 10px;
+}
 
+QMenu::item {
+    border-radius: 10px;
+    background-color: #3c4251;
+    color: #fff;
+    padding: 5px 10px;
+}
 
+QMenu::item:selected {
+    border-radius: 10px;
+    color: #84a0bf;
+    text-decoration: underline;
+}
+
+QToolButton {
+    background-color: #2f343f;
+    color: #fff;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+QToolButton:pressed {
+    background-color: #505a6a;
+}
 
 QTabWidget::tab-bar { alignment: center; }
 
