@@ -15,6 +15,7 @@ private slots:
     void SaveData();
     void closeEvent(QCloseEvent *event);
     void QuitW();
+    void checkUpdates();
 
 private:
     QWidget *centralWidget;

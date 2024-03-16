@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "QMarkdownTextedit/qmarkdowntextedit.h"
+#include "keeperFunc/functional.cpp"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -299,7 +300,7 @@ MainWindow::MainWindow(QWidget *parent)
     tabs->addTab(mainTab, "Homepage");
 
     // notes tab
-    QWidget *notesTab = new QWidget();
+    QWidget *notesTab = new QWidget(); 
     QVBoxLayout *notesLayout = new QVBoxLayout(notesTab);
 
     notesLayout->addLayout(notesL1);
@@ -335,18 +336,3 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {}
 
-void MainWindow::addNewTask() {
-    QString text = taskText->text();
-    taskText->clear();
-    incompleteTasks->addItem(text);
-}
-
-void MainWindow::openSettingsWindow() {
-    QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect(this);
-    blurEffect->setBlurRadius(10);
-    this->setGraphicsEffect(blurEffect);
-
-    settingsWindow = new SettingsWindow(this);
-
-    settingsWindow->show();
-}

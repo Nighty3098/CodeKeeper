@@ -4,6 +4,7 @@
 #include <QGraphicsBlurEffect>
 #include "mainwindow.h"
 #include "mainwindow.cpp"
+#include "settingsFunc/functional.cpp"
 
 SettingsWindow::SettingsWindow(QWidget *parent)
     : QMainWindow{parent}
@@ -216,25 +217,10 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     mainLayout->addLayout(BtnsL);
 
     // connects
-
     connect(saveBtn, SIGNAL(clicked()), this, SLOT(SaveData()));
     connect(quitBtn, SIGNAL(clicked()), this, SLOT(QuitW()));
+    connect(checkUpdatesBtnL, SIGNAL(clicked()), this, SLOT(checkUpdates()));
 }
 
 SettingsWindow::~SettingsWindow() {
-}
-
-void SettingsWindow::SaveData() {
-    this->close();
-}
-
-void SettingsWindow::QuitW() {
-    this->close();
-}
-
-
-void SettingsWindow::closeEvent(QCloseEvent *event) {
-    MainWindow *mainWindow = static_cast<MainWindow*>(parent());
-    mainWindow->setGraphicsEffect(nullptr);
-    QMainWindow::closeEvent(event);
 }
