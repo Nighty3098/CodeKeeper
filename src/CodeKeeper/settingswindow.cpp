@@ -1,14 +1,14 @@
 #include "settingswindow.h"
-#include <QtWidgets>
-#include <QSpacerItem>
+
 #include <QGraphicsBlurEffect>
-#include "mainwindow.h"
+#include <QSpacerItem>
+#include <QtWidgets>
+
 #include "mainwindow.cpp"
+#include "mainwindow.h"
 #include "settingsFunc/functional.cpp"
 
-SettingsWindow::SettingsWindow(QWidget *parent)
-    : QMainWindow{parent}
-{
+SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     // visual
     QFile file(":/stylesheet/stylesheet_setting_window.qss");
     file.open(QFile::ReadOnly);
@@ -28,20 +28,19 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     tabs = new QTabWidget();
     tabs->setMovable(true);
     // tabs->setTabPosition(QTabWidget::South);
-   
+
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
     saveBtn = new QPushButton("Save");
-    saveBtn->setFixedSize(200, 30);
+    saveBtn->setFixedSize(100, 30);
 
     quitBtn = new QPushButton("Quit");
-    quitBtn->setFixedSize(200, 30);
+    quitBtn->setFixedSize(100, 30);
 
     BtnsL->addWidget(saveBtn);
     BtnsL->addWidget(quitBtn);
 
     // control buttons
-
 
     // main
     QVBoxLayout *appInfoL = new QVBoxLayout();
@@ -53,7 +52,11 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     appName->setStyleSheet("font-size: 32px;");
 
     urlToRepo = new QLabel();
-    urlToRepo->setText("<a style='color: #84a0bf' href=\"https://github.com/Nighty3098/CodeKeeper\">Nighty3098/CodeKeeper</a>");
+    urlToRepo->setPixmap(QPixmap(":/github.png"));
+    urlToRepo->setText(
+        "<a style='color: #84a0bf' "
+        "href=\"https://github.com/Nighty3098/CodeKeeper\">Nighty3098/"
+        "CodeKeeper</a>");
     urlToRepo->setTextFormat(Qt::RichText);
     urlToRepo->setTextInteractionFlags(Qt::TextBrowserInteraction);
     urlToRepo->setOpenExternalLinks(true);
@@ -63,10 +66,10 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     versionInfo->setText("Version: 0.0.3");
     versionInfo->setAlignment(Qt::AlignCenter);
 
-    checkUpdatesBtn = new QPushButton("Chech for updates");
+    checkUpdatesBtn =
+        new QPushButton(QPixmap(":/retry.png"), "Chech for updates");
     checkUpdatesBtn->setFixedSize(200, 30);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
-
 
     subAppInfoL->addWidget(appName);
     subAppInfoL->addWidget(urlToRepo);
@@ -75,7 +78,7 @@ SettingsWindow::SettingsWindow(QWidget *parent)
 
     appInfoL->addLayout(subAppInfoL);
 
-    // sync 
+    // sync
     QVBoxLayout *mainSyncLayout = new QVBoxLayout();
 
     gitLabel = new QLabel("Sync settings");
@@ -110,7 +113,6 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     gitRepo->setFixedSize(200, 30);
 
     autoSyncAfterStart = new QCheckBox("Auto sync after start");
-
 
     isDate = new QCheckBox("Date");
     isTime = new QCheckBox("Time");
@@ -178,8 +180,6 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     layout1->addLayout(fontSizeL);
     layout1->addLayout(themeL);
 
-
-
     // info tab
     QWidget *aboutTab = new QWidget();
     QVBoxLayout *aboutTabLayout = new QVBoxLayout(aboutTab);
@@ -188,7 +188,7 @@ SettingsWindow::SettingsWindow(QWidget *parent)
 
     tabs->addTab(aboutTab, "About");
 
-    // sync tab 
+    // sync tab
     QWidget *syncTab = new QWidget();
     QVBoxLayout *syncTabLayout = new QVBoxLayout(syncTab);
 
@@ -196,12 +196,11 @@ SettingsWindow::SettingsWindow(QWidget *parent)
 
     tabs->addTab(syncTab, "Sync");
 
-    // storage tab 
+    // storage tab
     QWidget *storageTab = new QWidget();
     QVBoxLayout *storageTabLayout = new QVBoxLayout(storageTab);
 
     tabs->addTab(storageTab, "Storage");
-
 
     // main tab
     QWidget *appereanceTab = new QWidget();
@@ -210,8 +209,6 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     appereanceTabLayout->addLayout(layout1);
 
     tabs->addTab(appereanceTab, "Appereance");
-
-
 
     mainLayout->addWidget(tabs);
     mainLayout->addLayout(BtnsL);
@@ -222,5 +219,4 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     connect(checkUpdatesBtnL, SIGNAL(clicked()), this, SLOT(checkUpdates()));
 }
 
-SettingsWindow::~SettingsWindow() {
-}
+SettingsWindow::~SettingsWindow() {}

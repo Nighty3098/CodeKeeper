@@ -4,20 +4,19 @@
 #include <QMainWindow>
 #include <QtWidgets>
 
-class SettingsWindow : public QMainWindow
-{
+class SettingsWindow : public QMainWindow {
     Q_OBJECT
-public:
+   public:
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
 
-private slots:
+   private slots:
     void SaveData();
     void closeEvent(QCloseEvent *event);
     void QuitW();
     void checkUpdates();
 
-private:
+   private:
     QWidget *centralWidget;
     QVBoxLayout *mainLayout;
     QTabWidget *tabs;
@@ -38,17 +37,17 @@ private:
     QFontComboBox *fontSelector;
     QComboBox *themeSelector;
 
-    // sync settings 
-    
+    // sync settings
+
     QLabel *gitLabel;
     QLabel *gitLabel2;
 
     QLineEdit *gitToken;
     QLineEdit *gitUser;
     QLineEdit *gitRepo;
-    
+
     QCheckBox *autoSyncAfterStart;
-    
+
     QCheckBox *isDate;
     QCheckBox *isTime;
     QCheckBox *isHost;
@@ -59,7 +58,6 @@ private:
     QLabel *fontLabel;
     QLabel *fontSizeLabel;
     QLabel *themeLabel;
-
 };
 
-#endif // SETTINGSWINDOW_H
+#endif  // SETTINGSWINDOW_H

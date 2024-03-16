@@ -6,5 +6,10 @@
         <file>menu.png</file>
         <file>new_file.png</file>
         <file>rm_file.png</file>
+        <file>retry.png</file>
+        <file>copy.png</file>
+        <file>paste.png</file>
+        <file>undo.png</file>
+        <file>search.png</file>
     </qresource>
 </RCC>

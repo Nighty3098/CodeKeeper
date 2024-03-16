@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtWidgets>
 #include "settingswindow.h"
+#include "qmarkdowntextedit/qmarkdowntextedit.h"
 
 class MainWindow : public QMainWindow
 {
@@ -16,6 +17,7 @@ public:
 private slots:
     void addNewTask();
     void openSettingsWindow();
+    void hideNotesList();
 
 private:
     QWidget *centralWidget;
@@ -34,9 +36,11 @@ private:
     // notes tab
 
     QTreeWidget *notesList;
-    QPlainTextEdit *noteEdit;
+    QMarkdownTextEdit *noteEdit;
+    // QPlainTextEdit *noteEdit;
     QLineEdit *noteName;
     QToolButton *menuButton;
+    QLabel *timeLabel;
 
     // ========================================================
     // tasks tab

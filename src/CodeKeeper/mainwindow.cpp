@@ -1,10 +1,9 @@
 #include "mainwindow.h"
-#include "QMarkdownTextedit/qmarkdowntextedit.h"
+
 #include "keeperFunc/functional.cpp"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-{
+
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
@@ -38,9 +37,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     // ========================================================
 
+    QVBoxLayout *notesL0 = new QVBoxLayout;
     QHBoxLayout *notesL1 = new QHBoxLayout;
     QVBoxLayout *notesL2 = new QVBoxLayout;
     QHBoxLayout *notesL3 = new QHBoxLayout;
+    QHBoxLayout *notesL4 = new QHBoxLayout;
 
     notesList = new QTreeWidget();
     notesList->setAnimated(true);
@@ -51,7 +52,6 @@ MainWindow::MainWindow(QWidget *parent)
     notesList->setDragEnabled(true);
     notesList->setMaximumWidth(200);
 
-
     // menu
     menuButton = new QToolButton;
     // menuButton->setIcon(QIcon(":/menu.png"));
@@ -59,42 +59,58 @@ MainWindow::MainWindow(QWidget *parent)
     menuButton->setPopupMode(QToolButton::InstantPopup);
     menuButton->setFixedSize(40, 30);
 
-    QMenu* menu = new QMenu(menuButton);
+    QMenu *menu = new QMenu(menuButton);
 
     // actions for menu
-    QAction *newNote = menu->addAction(QPixmap(":/new_file.png"),"New Note");
-    QAction *rmNote = menu->addAction(QPixmap(":/rm_file.png"),"Remove Note");
+    QAction *newNote = menu->addAction(QPixmap(":/new_file.png"), "New Note");
+    QAction *rmNote = menu->addAction(QPixmap(":/rm_file.png"), "Remove Note");
 
     menu->addSeparator();
 
-    QAction *showList = menu->addAction("Show notes list");
+    QAction *showList = menu->addAction("Show notes list", this, SLOT());
     showList->setCheckable(true);
     showList->setChecked(false);
 
-    QAction *showPreview = menu->addAction("Show notes list");
+    QAction *showPreview = menu->addAction("Show md preview");
     showPreview->setCheckable(true);
     showPreview->setChecked(true);
 
     menuButton->setMenu(menu);
 
     // other
-
     noteName = new QLineEdit();
     noteName->setFixedHeight(30);
     noteName->setPlaceholderText(" Note name ...");
+    noteName->setStyleSheet("font-size: 16px; color: #8ebecf;");
 
-    noteEdit = new QPlainTextEdit();
+    noteEdit = new QMarkdownTextEdit();
+    // noteEdit = new QPlainTextEdit();
     noteEdit->setPlaceholderText(" Note ...");
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
 
-    notesL3->addWidget(noteName);
-    notesL3->addWidget(menuButton);
+    timeLabel = new QLabel(getCurrentDateTimeString());
+    timeLabel->setStyleSheet("font-size: 13px; color: #8ebecf;");
+    timeLabel->setAlignment(Qt::AlignHCenter);
 
+
+
+
+
+    notesL4->addWidget(timeLabel);
+    notesL4->addWidget(menuButton);
+
+    notesL3->addWidget(noteName);
+    // notesL3->addWidget(menuButton);
+    
+    // notesL2->addLayout(notesL4);
     notesL2->addLayout(notesL3);
     notesL2->addWidget(noteEdit);
 
     notesL1->addWidget(notesList);
     notesL1->addLayout(notesL2);
+
+    notesL0->addLayout(notesL4);
+    notesL0->addLayout(notesL1);
 
     // ========================================================
 
@@ -109,13 +125,12 @@ MainWindow::MainWindow(QWidget *parent)
     label_1->setAlignment(Qt::AlignHCenter);
 
     incompleteTasks = new QListWidget();
-    incompleteTasks->setStyleSheet("color: #b9676b; border-width: 3px; border-color: #b9676b;");
+    incompleteTasks->setStyleSheet(
+        "color: #b9676b; border-width: 3px; border-color: #b9676b;");
     incompleteTasks->setDragEnabled(true);
     incompleteTasks->setDragDropMode(QListWidget::DragDrop);
     incompleteTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     incompleteTasks->setWordWrap(true);
-
-
 
     QVBoxLayout *inprocessLayout = new QVBoxLayout;
     label_2 = new QLabel("Inprocess");
@@ -125,12 +140,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     inprocessTasks = new QListWidget();
     inprocessTasks->setDragEnabled(true);
-    inprocessTasks->setStyleSheet("color: #e8cc91; text-decoration: underline; border-width: 3px; border-color: #e8cc91;");
+    inprocessTasks->setStyleSheet(
+        "color: #e8cc91; text-decoration: underline; border-width: 3px; "
+        "border-color: #e8cc91;");
     inprocessTasks->setDragDropMode(QListWidget::DragDrop);
     inprocessTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     inprocessTasks->setWordWrap(true);
-
-
 
     QVBoxLayout *completeLayout = new QVBoxLayout;
     label_3 = new QLabel("Complete");
@@ -140,12 +155,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     completeTasks = new QListWidget();
     completeTasks->setDragEnabled(true);
-    completeTasks->setStyleSheet("color: #9dda67; text-decoration: line-through; border-width: 3px; border-color: #9dda67;");
+    completeTasks->setStyleSheet(
+        "color: #9dda67; text-decoration: line-through; border-width: 3px; "
+        "border-color: #9dda67;");
     completeTasks->setDragDropMode(QListWidget::DragDrop);
     completeTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     completeTasks->setWordWrap(true);
-
-
 
     taskText = new QLineEdit();
     taskText->setPlaceholderText("Task...");
@@ -156,7 +171,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     rmTask = new QPushButton(" - ");
     rmTask->setFixedSize(40, 30);
-
 
     incompleteLayout->addWidget(label_1);
     incompleteLayout->addWidget(incompleteTasks);
@@ -179,8 +193,8 @@ MainWindow::MainWindow(QWidget *parent)
     tasksL1->addLayout(tasksL2);
 
     // ========================================================
-    
-    // projects tab 
+
+    // projects tab
     QVBoxLayout *FinalProjectsL = new QVBoxLayout;
 
     QVBoxLayout *projectsL1 = new QVBoxLayout;
@@ -195,7 +209,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     QLabel *nsProjects = new QLabel("Not started");
     notStartedProjects = new QListWidget();
-    notStartedProjects->setStyleSheet("color: #b9676b; border-width: 3px; border-color: #b9676b;");
+    notStartedProjects->setStyleSheet(
+        "color: #b9676b; border-width: 3px; border-color: #b9676b;");
     notStartedProjects->setDragEnabled(true);
     notStartedProjects->setDragDropMode(QListWidget::DragDrop);
     notStartedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -203,7 +218,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     QLabel *sProjects = new QLabel("Started");
     startedProjects = new QListWidget();
-    startedProjects->setStyleSheet("color: #e8cc91; border-width: 3px; border-color: #e8cc91;");
+    startedProjects->setStyleSheet(
+        "color: #e8cc91; border-width: 3px; border-color: #e8cc91;");
     startedProjects->setDragEnabled(true);
     startedProjects->setDragDropMode(QListWidget::DragDrop);
     startedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -211,7 +227,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     QLabel *flProjects = new QLabel("Finishline");
     finishlineProjects = new QListWidget();
-    finishlineProjects->setStyleSheet("color: #8ebecf; border-width: 3px; border-color: #8ebecf;");
+    finishlineProjects->setStyleSheet(
+        "color: #8ebecf; border-width: 3px; border-color: #8ebecf;");
     finishlineProjects->setDragEnabled(true);
     finishlineProjects->setDragDropMode(QListWidget::DragDrop);
     finishlineProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -219,7 +236,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     QLabel *fProjects = new QLabel("Finished");
     finishedProjects = new QListWidget();
-    finishedProjects->setStyleSheet("color: #9dda67; border-width: 3px; border-color: #9dda67;");
+    finishedProjects->setStyleSheet(
+        "color: #9dda67; border-width: 3px; border-color: #9dda67;");
     finishedProjects->setDragEnabled(true);
     finishedProjects->setDragDropMode(QListWidget::DragDrop);
     finishedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -234,11 +252,13 @@ MainWindow::MainWindow(QWidget *parent)
     projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
     projectsMenuButton->setFixedSize(40, 30);
 
-    QMenu* projectsMenu = new QMenu(projectsMenuButton);
+    QMenu *projectsMenu = new QMenu(projectsMenuButton);
 
     // actions for menu
-    QAction *newProject = projectsMenu->addAction(QPixmap(":/new_file.png"),"New project");
-    QAction *rmProject = projectsMenu->addAction(QPixmap(":/rm_file.png"),"Remove project");
+    QAction *newProject =
+        projectsMenu->addAction(QPixmap(":/new_file.png"), "New project");
+    QAction *rmProject =
+        projectsMenu->addAction(QPixmap(":/rm_file.png"), "Remove project");
 
     projectsMenu->addSeparator();
 
@@ -247,8 +267,6 @@ MainWindow::MainWindow(QWidget *parent)
     showAddInfo->setChecked(false);
 
     projectsMenuButton->setMenu(projectsMenu);
-
-
 
     QHBoxLayout *headerProjectsL = new QHBoxLayout;
     QVBoxLayout *notStartedL = new QVBoxLayout;
@@ -300,14 +318,14 @@ MainWindow::MainWindow(QWidget *parent)
     tabs->addTab(mainTab, "Homepage");
 
     // notes tab
-    QWidget *notesTab = new QWidget(); 
+    QWidget *notesTab = new QWidget();
     QVBoxLayout *notesLayout = new QVBoxLayout(notesTab);
 
-    notesLayout->addLayout(notesL1);
+    notesLayout->addLayout(notesL0);
 
     tabs->addTab(notesTab, "Notes");
 
-    //tasks tab
+    // tasks tab
     QWidget *tasksTab = new QWidget();
     QVBoxLayout *tasksLayout = new QVBoxLayout(tasksTab);
 
@@ -329,7 +347,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(addTask, SIGNAL(clicked()), this, SLOT(addNewTask()));
 
     // main
-    connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));
+    connect(openSettingsBtn, SIGNAL(clicked()), this,
+            SLOT(openSettingsWindow()));
 
     mainLayout->addWidget(tabs);
 }

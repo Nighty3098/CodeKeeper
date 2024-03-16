@@ -1,8 +1,12 @@
-QT       += core gui
+QT       += core gui widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
+
+LIBS += -lQMarkdownTextedit -L$$OUT_PWD
+
+win32: LIBS +=  -L$$OUT_PWD/release -L$$OUT_PWD/debug
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
