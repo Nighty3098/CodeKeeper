@@ -19,7 +19,8 @@ HEADERS += \
 
 RESOURCES += \
     ../resources/resources.qrc \
-    ../stylesheet/stylesheet.qss
+    ../stylesheet/stylesheet.qss \
+    ../stylesheet/stylesheet_setting_window.qss
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
