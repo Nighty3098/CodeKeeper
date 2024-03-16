@@ -15,8 +15,6 @@ public:
 
 private slots:
     void addNewTask();
-    void on_item_double_clicked(QListWidgetItem *item);
-
     void openSettingsWindow();
 
 private:

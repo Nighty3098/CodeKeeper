@@ -64,6 +64,8 @@ MainWindow::MainWindow(QWidget *parent)
     QAction *newNote = menu->addAction(QPixmap(":/new_file.png"),"New Note");
     QAction *rmNote = menu->addAction(QPixmap(":/rm_file.png"),"Remove Note");
 
+    menu->addSeparator();
+
     QAction *showList = menu->addAction("Show notes list");
     showList->setCheckable(true);
     showList->setChecked(false);
@@ -222,6 +224,8 @@ MainWindow::MainWindow(QWidget *parent)
     finishedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
     finishedProjects->setWordWrap(true);
 
+    notStartedProjects->addItem("CodeKeeper");
+
     // actions
     // menu
     projectsMenuButton = new QToolButton;
@@ -234,6 +238,8 @@ MainWindow::MainWindow(QWidget *parent)
     // actions for menu
     QAction *newProject = projectsMenu->addAction(QPixmap(":/new_file.png"),"New project");
     QAction *rmProject = projectsMenu->addAction(QPixmap(":/rm_file.png"),"Remove project");
+
+    projectsMenu->addSeparator();
 
     QAction *showAddInfo = projectsMenu->addAction("Show additional info");
     showAddInfo->setCheckable(true);
@@ -275,8 +281,8 @@ MainWindow::MainWindow(QWidget *parent)
     FinalProjectsL->addLayout(projectsSubL2);
 
     // ========================================================
-
     // tabs
+
     tabs = new QTabWidget();
     tabs->setMovable(true);
     tabs->setTabPosition(QTabWidget::South);
@@ -324,10 +330,6 @@ MainWindow::MainWindow(QWidget *parent)
     // main
     connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));
 
-    connect(incompleteTasks, SIGNAL(itemDoubleClicked(QListWidgetItem*)),this, SLOT(on_item_double_clicked(QListWidgetItem *item)));
-    connect(inprocessTasks, SIGNAL(itemDoubleClicked(QListWidgetItem*)),this, SLOT(on_item_double_clicked(QListWidgetItem *item)));
-    connect(completeTasks, SIGNAL(itemDoubleClicked(QListWidgetItem*)),this, SLOT(on_item_double_clicked(QListWidgetItem *item)));
-
     mainLayout->addWidget(tabs);
 }
 
@@ -335,17 +337,16 @@ MainWindow::~MainWindow() {}
 
 void MainWindow::addNewTask() {
     QString text = taskText->text();
-
     taskText->clear();
-
     incompleteTasks->addItem(text);
 }
 
-void MainWindow::on_item_double_clicked(QListWidgetItem *item) {
-    // item->setFlags (item->flags () | Qt::ItemIsEditable);
-}
-
 void MainWindow::openSettingsWindow() {
+    QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect(this);
+    blurEffect->setBlurRadius(10);
+    this->setGraphicsEffect(blurEffect);
+
     settingsWindow = new SettingsWindow(this);
+
     settingsWindow->show();
 }

@@ -9,6 +9,12 @@ class SettingsWindow : public QMainWindow
     Q_OBJECT
 public:
     explicit SettingsWindow(QWidget *parent = nullptr);
+    ~SettingsWindow();
+
+private slots:
+    void SaveData();
+    void closeEvent(QCloseEvent *event);
+    void QuitW();
 
 private:
     QWidget *centralWidget;
@@ -16,13 +22,15 @@ private:
     QTabWidget *tabs;
 
     QPushButton *saveBtn;
+    QPushButton *quitBtn;
 
-    // app settings tab 
-    QLabel *mainTitle;
+    // main tab
+    QLabel *appName;
+    QLabel *urlToRepo;
+    QLabel *versionInfo;
 
-    QLabel *fontLabel;
-    QLabel *fontSizeLabel;
-    QLabel *themeLabel;
+    QPushButton *checkUpdatesBtn;
+
     // QLabel *languageLabel;
 
     QSpinBox *fontSize;
@@ -44,7 +52,13 @@ private:
     QCheckBox *isTime;
     QCheckBox *isHost;
 
-signals:
+    // appereance
+    QLabel *mainTitle;
+
+    QLabel *fontLabel;
+    QLabel *fontSizeLabel;
+    QLabel *themeLabel;
+
 };
 
 #endif // SETTINGSWINDOW_H

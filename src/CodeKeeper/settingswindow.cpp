@@ -1,10 +1,22 @@
 #include "settingswindow.h"
 #include <QtWidgets>
 #include <QSpacerItem>
+#include <QGraphicsBlurEffect>
+#include "mainwindow.h"
+#include "mainwindow.cpp"
 
 SettingsWindow::SettingsWindow(QWidget *parent)
     : QMainWindow{parent}
 {
+    // visual
+    QFile file(":/stylesheet/stylesheet_setting_window.qss");
+    file.open(QFile::ReadOnly);
+
+    this->setStyleSheet(file.readAll());
+
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    // setStyleSheet("background-color: #444c5d; color: #ffffff;");
+
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
@@ -16,48 +28,51 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     tabs->setMovable(true);
     // tabs->setTabPosition(QTabWidget::South);
    
-    QHBoxLayout *saveBtnL = new QHBoxLayout();
-    saveBtn = new QPushButton("Save Quit");
+    QHBoxLayout *BtnsL = new QHBoxLayout();
+
+    saveBtn = new QPushButton("Save");
     saveBtn->setFixedSize(200, 30);
-    saveBtnL->addWidget(saveBtn);
+
+    quitBtn = new QPushButton("Quit");
+    quitBtn->setFixedSize(200, 30);
+
+    BtnsL->addWidget(saveBtn);
+    BtnsL->addWidget(quitBtn);
+
+    // control buttons
 
 
     // main
+    QVBoxLayout *appInfoL = new QVBoxLayout();
+    QVBoxLayout *subAppInfoL = new QVBoxLayout();
+    QHBoxLayout *checkUpdatesBtnL = new QHBoxLayout();
 
-    QVBoxLayout *layout1 = new QVBoxLayout();
-    QHBoxLayout *fontSizeL = new QHBoxLayout();
-    QHBoxLayout *fontL = new QHBoxLayout();
-    QHBoxLayout *themeL = new QHBoxLayout();
+    appName = new QLabel("CodeKeeper");
+    appName->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
+    appName->setStyleSheet("font-size: 32px;");
 
-    mainTitle = new QLabel("App settings");
-    mainTitle->setAlignment(Qt::AlignCenter);
-    mainTitle->setStyleSheet("font-size: 32px;");
+    urlToRepo = new QLabel();
+    urlToRepo->setText("<a style='color: #84a0bf' href=\"https://github.com/Nighty3098/CodeKeeper\">Nighty3098/CodeKeeper</a>");
+    urlToRepo->setTextFormat(Qt::RichText);
+    urlToRepo->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    urlToRepo->setOpenExternalLinks(true);
+    urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
-    fontLabel = new QLabel("Font:");
-    fontSizeLabel = new QLabel("Font size:");
-    themeLabel = new QLabel("Theme:");
+    versionInfo = new QLabel();
+    versionInfo->setText("Version: 0.0.3");
+    versionInfo->setAlignment(Qt::AlignCenter);
 
-    fontSize = new QSpinBox();
-    fontSelector = new QFontComboBox();
-    themeSelector = new QComboBox();
+    checkUpdatesBtn = new QPushButton("Chech for updates");
+    checkUpdatesBtn->setFixedSize(200, 30);
+    checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
-    themeSelector->addItem("Dark");
-    themeSelector->addItem("Light");
 
-    fontSizeL->addWidget(fontSizeLabel);
-    fontSizeL->addWidget(fontSize);
+    subAppInfoL->addWidget(appName);
+    subAppInfoL->addWidget(urlToRepo);
+    subAppInfoL->addWidget(versionInfo);
+    subAppInfoL->addLayout(checkUpdatesBtnL);
 
-    fontL->addWidget(fontLabel);
-    fontL->addWidget(fontSelector);
-
-    themeL->addWidget(themeLabel);
-    themeL->addWidget(themeSelector);
-
-    layout1->addWidget(mainTitle);
-    layout1->addLayout(fontL);
-    layout1->addLayout(fontSizeL);
-    layout1->addLayout(themeL);
-
+    appInfoL->addLayout(subAppInfoL);
 
     // sync 
     QVBoxLayout *mainSyncLayout = new QVBoxLayout();
@@ -126,14 +141,51 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     mainSyncLayout->addLayout(syncLayout);
     mainSyncLayout->addLayout(sync2LayoutL);
 
+    // appereance
 
-    // main tab
-    QWidget *mainTab = new QWidget();
-    QVBoxLayout *mainTabLayout = new QVBoxLayout(mainTab);
+    QVBoxLayout *layout1 = new QVBoxLayout();
+    QHBoxLayout *fontSizeL = new QHBoxLayout();
+    QHBoxLayout *fontL = new QHBoxLayout();
+    QHBoxLayout *themeL = new QHBoxLayout();
 
-    mainTabLayout->addLayout(layout1);
+    mainTitle = new QLabel("App settings");
+    mainTitle->setAlignment(Qt::AlignCenter);
+    mainTitle->setStyleSheet("font-size: 32px;");
 
-    tabs->addTab(mainTab, "App settings");
+    fontLabel = new QLabel("Font:");
+    fontSizeLabel = new QLabel("Font size:");
+    themeLabel = new QLabel("Theme:");
+
+    fontSize = new QSpinBox();
+    fontSelector = new QFontComboBox();
+    themeSelector = new QComboBox();
+
+    themeSelector->addItem("Dark");
+    themeSelector->addItem("Light");
+
+    fontSizeL->addWidget(fontSizeLabel);
+    fontSizeL->addWidget(fontSize);
+
+    fontL->addWidget(fontLabel);
+    fontL->addWidget(fontSelector);
+
+    themeL->addWidget(themeLabel);
+    themeL->addWidget(themeSelector);
+
+    layout1->addWidget(mainTitle);
+    layout1->addLayout(fontL);
+    layout1->addLayout(fontSizeL);
+    layout1->addLayout(themeL);
+
+
+
+    // info tab
+    QWidget *aboutTab = new QWidget();
+    QVBoxLayout *aboutTabLayout = new QVBoxLayout(aboutTab);
+
+    aboutTabLayout->addLayout(appInfoL);
+
+    tabs->addTab(aboutTab, "About");
 
     // sync tab 
     QWidget *syncTab = new QWidget();
@@ -141,7 +193,7 @@ SettingsWindow::SettingsWindow(QWidget *parent)
 
     syncTabLayout->addLayout(mainSyncLayout);
 
-    tabs->addTab(syncTab, "Sync settings");
+    tabs->addTab(syncTab, "Sync");
 
     // storage tab 
     QWidget *storageTab = new QWidget();
@@ -150,7 +202,39 @@ SettingsWindow::SettingsWindow(QWidget *parent)
     tabs->addTab(storageTab, "Storage");
 
 
+    // main tab
+    QWidget *appereanceTab = new QWidget();
+    QVBoxLayout *appereanceTabLayout = new QVBoxLayout(appereanceTab);
+
+    appereanceTabLayout->addLayout(layout1);
+
+    tabs->addTab(appereanceTab, "Appereance");
+
+
 
     mainLayout->addWidget(tabs);
-    mainLayout->addLayout(saveBtnL);
+    mainLayout->addLayout(BtnsL);
+
+    // connects
+
+    connect(saveBtn, SIGNAL(clicked()), this, SLOT(SaveData()));
+    connect(quitBtn, SIGNAL(clicked()), this, SLOT(QuitW()));
+}
+
+SettingsWindow::~SettingsWindow() {
+}
+
+void SettingsWindow::SaveData() {
+    this->close();
+}
+
+void SettingsWindow::QuitW() {
+    this->close();
+}
+
+
+void SettingsWindow::closeEvent(QCloseEvent *event) {
+    MainWindow *mainWindow = static_cast<MainWindow*>(parent());
+    mainWindow->setGraphicsEffect(nullptr);
+    QMainWindow::closeEvent(event);
 }
