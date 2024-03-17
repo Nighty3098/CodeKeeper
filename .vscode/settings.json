@@ -1,36 +1,65 @@
 {
+    "workbench.colorTheme": "Catppuccin Macchiato",
+    "workbench.iconTheme": "catppuccin-perfect-mocha",
+    "editor.fontFamily": "Maple Mono",
+    "editor.fontLigatures": true,
+    "workbench.productIconTheme": "fluent-icons",
+    "animations.Install-Method": "Apc Customize UI++",
+    "apc.imports": [
+        "file:///home/night/.vscode/extensions/brandonkirbyson.vscode-animations-2.0.1/dist/updateHandler.js"
+    ],
+
+
+    "editor.wrappingIndent": "same",
+    "editor.folding": false,
+    "editor.smoothScrolling": true,
+    "editor.minimap.enabled": false,
+    "editor.fontWeight": "normal",
+    "editor.linkedEditing": true,
+    "editor.fontSize": 14,
+    "editor.multiCursorModifier": "alt",
+    "editor.minimap.enabled": false,
+    "editor.glyphMargin": false,
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+
+    "window.menuBarVisibility": "compact",
+    "window.dialogStyle": "custom",
+    "window.titleBarStyle": "custom",
+    "window.density.editorTabHeight": "compact",
+    "window.commandCenter": false,
+    "workbench.layoutControl.enabled" : false,
+    "workbench.editor.enablePreview": false,
+    "workbench.statusBar.visible": false,
+
+
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.fontFamily": "FiraCode Nerd font Mono",
+    "terminal.external.linuxExec": "kitty",
+    "terminal.integrated.cursorStyle": "line",
+    "workbench.settings.applyToAllProfiles": [
+        "monospace"
+    ],
+
+    "html.autoClosingTags": true,
+    "javascript.autoClosingTags": true,
+    "typescript.autoClosingTags": true,
+
+    "accessibility.dimUnfocused.opacity": 0.1,
+    "cmake.configureOnOpen": true,
+    "animations.Enabled": true,
+    "editor.detectIndentation": false,
+
+    "editor.cursorBlinking": "expand",
+    "editor.cursorStyle": "line-thin",
+    "editor.cursorSmoothCaretAnimation": "explicit",
+
+    "explorer.confirmDragAndDrop": false,
+
+    "workbench.editor.tabSizing": "shrink",
     "files.associations": {
-        "*.tcc": "cpp",
-        "fstream": "cpp",
-        "locale": "cpp",
-        "quat": "cpp",
-        "vec2b": "cpp",
-        "vec2d": "cpp",
-        "vec2f": "cpp",
-        "vec2i": "cpp",
-        "vec2s": "cpp",
-        "vec2ub": "cpp",
-        "vec2ui": "cpp",
-        "vec2us": "cpp",
-        "vec3b": "cpp",
-        "vec3d": "cpp",
-        "vec3f": "cpp",
-        "vec3i": "cpp",
-        "vec3s": "cpp",
-        "vec3ub": "cpp",
-        "vec3ui": "cpp",
-        "vec3us": "cpp",
-        "vec4b": "cpp",
-        "vec4d": "cpp",
-        "vec4f": "cpp",
-        "vec4i": "cpp",
-        "vec4s": "cpp",
-        "vec4ub": "cpp",
-        "vec4ui": "cpp",
-        "vec4us": "cpp",
-        "viewport": "cpp",
-        "__bit_reference": "cpp",
-        "future": "cpp",
-        "ios": "cpp"
-    }
+        "ios": "cpp",
+        "camera": "cpp",
+        "graphicscontext": "cpp",
+        "viewport": "cpp"
+    },
 }
