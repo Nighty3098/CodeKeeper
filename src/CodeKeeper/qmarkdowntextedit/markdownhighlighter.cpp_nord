@@ -186,13 +186,13 @@ void MarkdownHighlighter::initTextFormats(int defaultFontSize) {
 
     // set character formats for headlines
     format = QTextCharFormat();
-    format.setForeground(QColor(79, 214, 190));
+    format.setForeground(QColor(142, 190, 207));
     format.setFontWeight(QFont::Bold);
-    format.setFontPointSize(defaultFontSize * 1.8);
+    format.setFontPointSize(defaultFontSize * 1.6);
     _formats[H1] = format;
-    format.setFontPointSize(defaultFontSize * 1.7);
-    _formats[H2] = format;
     format.setFontPointSize(defaultFontSize * 1.5);
+    _formats[H2] = format;
+    format.setFontPointSize(defaultFontSize * 1.4);
     _formats[H3] = format;
     format.setFontPointSize(defaultFontSize * 1.3);
     _formats[H4] = format;
@@ -210,21 +210,21 @@ void MarkdownHighlighter::initTextFormats(int defaultFontSize) {
 
     // set character format for lists
     format = QTextCharFormat();
-    format.setForeground(QColor(255, 117, 127));
+    format.setForeground(QColor(177, 144, 171));
     _formats[List] = format;
 
     // set character format for checkbox
     format = QTextCharFormat();
-    format.setForeground(QColor(255, 199, 119));
+    format.setForeground(QColor(131, 118, 183));
     _formats[CheckBoxUnChecked] = std::move(format);
     // set character format for checked checkbox
     format = QTextCharFormat();
-    format.setForeground(QColor(195, 232, 141));
+    format.setForeground(QColor(185, 103, 107));
     _formats[CheckBoxChecked] = std::move(format);
 
     // set character format for links
     format = QTextCharFormat();
-    format.setForeground(QColor(79, 214, 190));
+    format.setForeground(QColor(98, 128, 169));
     format.setFontUnderline(true);
     _formats[Link] = std::move(format);
 
@@ -237,7 +237,7 @@ void MarkdownHighlighter::initTextFormats(int defaultFontSize) {
     // set character format for code blocks
     format = QTextCharFormat();
     format.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-    format.setBackground(QColor(45, 63, 118));
+    format.setBackground(QColor(77, 86, 105));
     _formats[CodeBlock] = format;
     _formats[InlineCodeBlock] = format;
 
@@ -264,13 +264,13 @@ void MarkdownHighlighter::initTextFormats(int defaultFontSize) {
 
     // set character format for masked syntax
     format = QTextCharFormat();
-    format.setForeground(QColor(130, 170, 255));
+    format.setForeground(QColor(204, 204, 204));
     _formats[MaskedSyntax] = std::move(format);
 
     // set character format for tables
     format = QTextCharFormat();
     format.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-    format.setForeground(QColor(79, 214, 190));
+    format.setForeground(QColor(165, 189, 144));
     _formats[Table] = std::move(format);
 
     // set character format for block quotes
