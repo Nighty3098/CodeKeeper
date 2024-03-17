@@ -2,13 +2,20 @@
 
 #include "keeperFunc/functional.cpp"
 
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
     mainLayout = new QVBoxLayout(centralWidget);
     setMinimumSize(560, 400);
+
+    globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
+    restoreGeometry(globalSettings->value("geometry").toByteArray());
+
+    bool isVisibleNotesList =
+        globalSettings->value("isVisibleNotesList", true).toBool();
+    bool isVisiblePreview =
+        globalSettings->value("isVisiblePreview", false).toBool();
 
     // ========================================================
 
@@ -52,6 +59,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setDragEnabled(true);
     notesList->setMaximumWidth(200);
 
+    notesList->setVisible(isVisibleNotesList);
+
     // menu
     menuButton = new QToolButton;
     // menuButton->setIcon(QIcon(":/menu.png"));
@@ -67,13 +76,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     menu->addSeparator();
 
-    QAction *showList = menu->addAction("Show notes list", this, SLOT());
+    QAction *showList =
+        menu->addAction("Show notes list", this, SLOT(hideNotesList()));
     showList->setCheckable(true);
-    showList->setChecked(false);
+    showList->setChecked(notesList->isVisible());
 
-    QAction *showPreview = menu->addAction("Show md preview");
+    QAction *showPreview =
+        menu->addAction("Show md preview", this, SLOT(showPreview()));
     showPreview->setCheckable(true);
-    showPreview->setChecked(true);
+    showPreview->setChecked(false);
 
     menuButton->setMenu(menu);
 
@@ -82,6 +93,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteName->setFixedHeight(30);
     noteName->setPlaceholderText(" Note name ...");
     noteName->setStyleSheet("font-size: 16px; color: #8ebecf;");
+
+    mdPreview = new QTextBrowser();
+    mdPreview->setVisible(false);
 
     noteEdit = new QMarkdownTextEdit();
     // noteEdit = new QPlainTextEdit();
@@ -92,22 +106,32 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     timeLabel->setStyleSheet("font-size: 13px; color: #8ebecf;");
     timeLabel->setAlignment(Qt::AlignHCenter);
 
+    noteNameLabel = new QLabel("Note");
+    noteNameLabel->setStyleSheet("font-size: 13px; color: #8ebecf;");
+    noteNameLabel->setAlignment(Qt::AlignHCenter);
 
+    // md preview
+    // connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
+    // &MainWindow::updateMDPreview);
 
+    // update title
+    connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
+            &MainWindow::setHeader);
 
-
+    notesL4->addWidget(noteNameLabel);
     notesL4->addWidget(timeLabel);
     notesL4->addWidget(menuButton);
 
-    notesL3->addWidget(noteName);
-    // notesL3->addWidget(menuButton);
-    
+    // notesL3->addWidget(noteName);
+    //  notesL3->addWidget(menuButton);
+
     // notesL2->addLayout(notesL4);
-    notesL2->addLayout(notesL3);
+    // notesL2->addLayout(notesL3);
     notesL2->addWidget(noteEdit);
 
     notesL1->addWidget(notesList);
     notesL1->addLayout(notesL2);
+    notesL1->addWidget(mdPreview);
 
     notesL0->addLayout(notesL4);
     notesL0->addLayout(notesL1);
@@ -208,6 +232,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     projectsMainLabel->setStyleSheet("font-size: 32px;");
 
     QLabel *nsProjects = new QLabel("Not started");
+    nsProjects->setAlignment(Qt::AlignHCenter);
     notStartedProjects = new QListWidget();
     notStartedProjects->setStyleSheet(
         "color: #b9676b; border-width: 3px; border-color: #b9676b;");
@@ -217,6 +242,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notStartedProjects->setWordWrap(true);
 
     QLabel *sProjects = new QLabel("Started");
+    sProjects->setAlignment(Qt::AlignHCenter);
     startedProjects = new QListWidget();
     startedProjects->setStyleSheet(
         "color: #e8cc91; border-width: 3px; border-color: #e8cc91;");
@@ -226,6 +252,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     startedProjects->setWordWrap(true);
 
     QLabel *flProjects = new QLabel("Finishline");
+    flProjects->setAlignment(Qt::AlignHCenter);
     finishlineProjects = new QListWidget();
     finishlineProjects->setStyleSheet(
         "color: #8ebecf; border-width: 3px; border-color: #8ebecf;");
@@ -235,6 +262,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     finishlineProjects->setWordWrap(true);
 
     QLabel *fProjects = new QLabel("Finished");
+    fProjects->setAlignment(Qt::AlignHCenter);
     finishedProjects = new QListWidget();
     finishedProjects->setStyleSheet(
         "color: #9dda67; border-width: 3px; border-color: #9dda67;");
@@ -353,5 +381,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mainLayout->addWidget(tabs);
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow() {
+    globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
+    globalSettings->setValue("geometry", saveGeometry());
+}
 

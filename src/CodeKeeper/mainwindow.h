@@ -5,12 +5,17 @@
 #include <QtWidgets>
 #include "settingswindow.h"
 #include "qmarkdowntextedit/qmarkdowntextedit.h"
+#include <QSettings>
+#include <QTextBrowser>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    QSettings *globalSettings;
+    bool isVisibleNotesList;
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -18,6 +23,9 @@ private slots:
     void addNewTask();
     void openSettingsWindow();
     void hideNotesList();
+    void showPreview();
+    void updateMDPreview();
+    void setHeader();
 
 private:
     QWidget *centralWidget;
@@ -37,10 +45,11 @@ private:
 
     QTreeWidget *notesList;
     QMarkdownTextEdit *noteEdit;
-    // QPlainTextEdit *noteEdit;
+    QTextBrowser *mdPreview;
     QLineEdit *noteName;
     QToolButton *menuButton;
     QLabel *timeLabel;
+    QLabel *noteNameLabel;
 
     // ========================================================
     // tasks tab
