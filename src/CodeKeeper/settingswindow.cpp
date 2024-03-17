@@ -52,7 +52,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     appName->setStyleSheet("font-size: 32px;");
 
     urlToRepo = new QLabel();
-    urlToRepo->setPixmap(QPixmap(":/github.png"));
+    // urlToRepo->setPixmap(QPixmap(":/github.png"));
     urlToRepo->setText(
         "<a style='color: #84a0bf' "
         "href=\"https://github.com/Nighty3098/CodeKeeper\">Nighty3098/"

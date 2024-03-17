@@ -71,8 +71,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QMenu *menu = new QMenu(menuButton);
 
     // actions for menu
-    QAction *newNote = menu->addAction(QPixmap(":/new_file.png"), "New Note");
-    QAction *rmNote = menu->addAction(QPixmap(":/rm_file.png"), "Remove Note");
+    QAction *newNote = menu->addAction(QPixmap(":/new.png"), "New Note");
+    QAction *rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note");
+    QAction *newFolder = menu->addAction(QPixmap(":/new_folder.png"), "New folder");
 
     menu->addSeparator();
 
@@ -118,9 +119,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::setHeader);
 
+    notesL4->addWidget(menuButton);
     notesL4->addWidget(noteNameLabel);
     notesL4->addWidget(timeLabel);
-    notesL4->addWidget(menuButton);
 
     // notesL3->addWidget(noteName);
     //  notesL3->addWidget(menuButton);
@@ -284,9 +285,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // actions for menu
     QAction *newProject =
-        projectsMenu->addAction(QPixmap(":/new_file.png"), "New project");
+        projectsMenu->addAction(QPixmap(":/new.png"), "New project");
     QAction *rmProject =
-        projectsMenu->addAction(QPixmap(":/rm_file.png"), "Remove project");
+        projectsMenu->addAction(QPixmap(":/delete.png"), "Remove project");
 
     projectsMenu->addSeparator();
 
