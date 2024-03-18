@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     restoreGeometry(globalSettings->value("geometry").toByteArray());
 
     QFont selectedFont = globalSettings->value("font").value<QFont>();
-    int font_size = globalSettings->value("fontSize").value<int>();
+    QString font_size = globalSettings->value("fontSize").value<QString>();
     QString theme = globalSettings->value("theme").value<QString>();
 
     bool isVisibleNotesList =
@@ -25,24 +25,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // title
     mainTitle = new QLabel("CodeKeeper");
+    mainTitle->setFont(selectedFont);
     mainTitle->setAlignment(Qt::AlignCenter);
     mainTitle->setStyleSheet("font-size: 32px;");
 
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
     openSettingsBtn = new QPushButton("Settings");
+    openSettingsBtn->setFont(selectedFont);
+    openSettingsBtn->setStyleSheet("font-size: " + font_size + "pt;");
     openSettingsBtn->setFixedSize(200, 30);
     settingsBtnLayout->addWidget(openSettingsBtn);
 
     // sync btn
     QHBoxLayout *syncDataLayout = new QHBoxLayout;
     syncDataBtn = new QPushButton("Sync data");
+    syncDataBtn->setFont(selectedFont);
+    syncDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
     syncDataBtn->setFixedSize(200, 30);
     syncDataLayout->addWidget(syncDataBtn);
 
     // folder btn
     QHBoxLayout *openFolderlayout = new QHBoxLayout;
     openFolderBtn = new QPushButton("Open folder");
+    openFolderBtn->setFont(selectedFont);
+    openFolderBtn->setStyleSheet("font-size: " + font_size + "pt;");
     openFolderBtn->setFixedSize(200, 30);
     openFolderlayout->addWidget(openFolderBtn);
 
@@ -56,6 +63,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     notesList = new QTreeWidget();
     notesList->setAnimated(true);
+    notesList->setFont(selectedFont);
+    notesList->setStyleSheet("font-size: " + font_size + "pt;");
     notesList->setHeaderHidden(true);
     notesList->setWordWrap(true);
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
@@ -71,8 +80,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuButton->setText("...");
     menuButton->setPopupMode(QToolButton::InstantPopup);
     menuButton->setFixedSize(40, 30);
+    menuButton->setFont(selectedFont);
+    menuButton->setStyleSheet("font-size: " + font_size + "pt;");
 
     QMenu *menu = new QMenu(menuButton);
+    menu->setFont(selectedFont);
 
     // actions for menu
     QAction *newNote = menu->addAction(QPixmap(":/new.png"), "New Note");
@@ -98,22 +110,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteName = new QLineEdit();
     noteName->setFixedHeight(30);
     noteName->setPlaceholderText(" Note name ...");
-    noteName->setStyleSheet("font-size: 16px; color: #8ebecf;");
+    noteName->setFont(selectedFont);
+    noteName->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
     mdPreview = new QTextBrowser();
+    mdPreview->setFont(selectedFont);
+    mdPreview->setStyleSheet("font-size: " + font_size + "pt;");
     mdPreview->setVisible(false);
 
     noteEdit = new QMarkdownTextEdit();
-    // noteEdit = new QPlainTextEdit();
+    noteEdit->setFont(selectedFont);
+    noteEdit->setStyleSheet("font-size: " + font_size + "pt;");
     noteEdit->setPlaceholderText(" Note ...");
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
 
     timeLabel = new QLabel(getCurrentDateTimeString());
-    timeLabel->setStyleSheet("font-size: 13px; color: #8ebecf;");
+    timeLabel->setFont(selectedFont);
+    timeLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
     timeLabel->setAlignment(Qt::AlignHCenter);
 
     noteNameLabel = new QLabel("Note");
-    noteNameLabel->setStyleSheet("font-size: 13px; color: #8ebecf;");
+    noteNameLabel->setFont(selectedFont);
+    noteNameLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
     noteNameLabel->setAlignment(Qt::AlignHCenter);
 
     // md preview
@@ -156,7 +174,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     incompleteTasks = new QListWidget();
     incompleteTasks->setStyleSheet(
-        "color: #b9676b; border-width: 3px; border-color: #b9676b;");
+        "color: #b9676b; border-width: 3px; border-color: #b9676b; font-size: " + font_size + "pt;");
     incompleteTasks->setDragEnabled(true);
     incompleteTasks->setDragDropMode(QListWidget::DragDrop);
     incompleteTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -171,7 +189,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     inprocessTasks = new QListWidget();
     inprocessTasks->setDragEnabled(true);
     inprocessTasks->setStyleSheet(
-        "color: #e8cc91; text-decoration: underline; border-width: 3px; "
+        "color: #e8cc91; text-decoration: underline; border-width: 3px; font-size: " + font_size + "pt;"
         "border-color: #e8cc91;");
     inprocessTasks->setDragDropMode(QListWidget::DragDrop);
     inprocessTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -186,7 +204,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     completeTasks = new QListWidget();
     completeTasks->setDragEnabled(true);
     completeTasks->setStyleSheet(
-        "color: #9dda67; text-decoration: line-through; border-width: 3px; "
+        "color: #9dda67; text-decoration: line-through; border-width: 3px; font-size: " + font_size + "pt;"
         "border-color: #9dda67;");
     completeTasks->setDragDropMode(QListWidget::DragDrop);
     completeTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -195,12 +213,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     taskText = new QLineEdit();
     taskText->setPlaceholderText("Task...");
     taskText->setMaximumHeight(30);
+    taskText->setFont(selectedFont);
+    taskText->setStyleSheet("font-size: " + font_size + "pt;");
 
     addTask = new QPushButton(" + ");
     addTask->setFixedSize(40, 30);
+    addTask->setFont(selectedFont);
+    addTask->setStyleSheet("font-size: " + font_size + "pt;");
 
     rmTask = new QPushButton(" - ");
     rmTask->setFixedSize(40, 30);
+    rmTask->setFont(selectedFont);
+    rmTask->setStyleSheet("font-size: " + font_size + "pt;");
+
 
     incompleteLayout->addWidget(label_1);
     incompleteLayout->addWidget(incompleteTasks);
@@ -238,44 +263,54 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     projectsMainLabel->setStyleSheet("font-size: 32px;");
 
     QLabel *nsProjects = new QLabel("Not started");
+    nsProjects->setFont(selectedFont);
     nsProjects->setAlignment(Qt::AlignHCenter);
     notStartedProjects = new QListWidget();
     notStartedProjects->setStyleSheet(
-        "color: #b9676b; border-width: 3px; border-color: #b9676b;");
+        "color: #b9676b; border-width: 3px; border-color: #b9676b; font-size: " + font_size + "pt;");
     notStartedProjects->setDragEnabled(true);
     notStartedProjects->setDragDropMode(QListWidget::DragDrop);
     notStartedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
     notStartedProjects->setWordWrap(true);
 
     QLabel *sProjects = new QLabel("Started");
+    sProjects->setFont(selectedFont);
     sProjects->setAlignment(Qt::AlignHCenter);
     startedProjects = new QListWidget();
     startedProjects->setStyleSheet(
-        "color: #e8cc91; border-width: 3px; border-color: #e8cc91;");
+        "color: #e8cc91; border-width: 3px; border-color: #e8cc91; font-size: " + font_size + "pt;");
     startedProjects->setDragEnabled(true);
     startedProjects->setDragDropMode(QListWidget::DragDrop);
     startedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
     startedProjects->setWordWrap(true);
 
     QLabel *flProjects = new QLabel("Finishline");
+    flProjects->setFont(selectedFont);
     flProjects->setAlignment(Qt::AlignHCenter);
     finishlineProjects = new QListWidget();
     finishlineProjects->setStyleSheet(
-        "color: #8ebecf; border-width: 3px; border-color: #8ebecf;");
+        "color: #8ebecf; border-width: 3px; border-color: #8ebecf; font-size: " + font_size + "pt;");
     finishlineProjects->setDragEnabled(true);
     finishlineProjects->setDragDropMode(QListWidget::DragDrop);
     finishlineProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
     finishlineProjects->setWordWrap(true);
 
     QLabel *fProjects = new QLabel("Finished");
+    fProjects->setFont(selectedFont);
     fProjects->setAlignment(Qt::AlignHCenter);
     finishedProjects = new QListWidget();
     finishedProjects->setStyleSheet(
-        "color: #9dda67; border-width: 3px; border-color: #9dda67;");
+        "color: #9dda67; border-width: 3px; border-color: #9dda67; font-size: " + font_size + "pt;");
     finishedProjects->setDragEnabled(true);
     finishedProjects->setDragDropMode(QListWidget::DragDrop);
     finishedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
     finishedProjects->setWordWrap(true);
+
+    projectsMainLabel->setFont(selectedFont);
+    notStartedProjects->setFont(selectedFont);
+    startedProjects->setFont(selectedFont);
+    finishlineProjects->setFont(selectedFont);
+    finishedProjects->setFont(selectedFont);
 
     notStartedProjects->addItem(
         "CodeKeeper\nNighty3098/CodeKeeper\n16.02.2024");
@@ -284,10 +319,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // menu
     projectsMenuButton = new QToolButton;
     projectsMenuButton->setText("...");
+    projectsMenuButton->setFont(selectedFont);
     projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
     projectsMenuButton->setFixedSize(40, 30);
 
     QMenu *projectsMenu = new QMenu(projectsMenuButton);
+    projectsMenu->setFont(selectedFont);
 
     // actions for menu
     QAction *newProject =
@@ -380,32 +417,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // set font and font size
 
     tabs->setFont(selectedFont);
-    mainTitle->setFont(selectedFont);
-    openFolderBtn->setFont(selectedFont);
-    syncDataBtn->setFont(selectedFont);
-    openSettingsBtn->setFont(selectedFont);
-    notesList->setFont(selectedFont);
-    noteEdit->setFont(selectedFont);
-    mdPreview->setFont(selectedFont);
-    noteName->setFont(selectedFont);
-    menuButton->setFont(selectedFont);
-    timeLabel->setFont(selectedFont);
-    noteNameLabel->setFont(selectedFont);
+    tabs->setStyleSheet("font-size: " + font_size + "pt;");
+
     incompleteTasks->setFont(selectedFont);
     inprocessTasks->setFont(selectedFont);
     completeTasks->setFont(selectedFont);
+
     label_1->setFont(selectedFont);
     label_2->setFont(selectedFont);
     label_3->setFont(selectedFont);
-    taskText->setFont(selectedFont);
-    addTask->setFont(selectedFont);
-    rmTask->setFont(selectedFont);
-    projectsMainLabel->setFont(selectedFont);
-    notStartedProjects->setFont(selectedFont);
-    startedProjects->setFont(selectedFont);
-    finishlineProjects->setFont(selectedFont);
-    finishedProjects->setFont(selectedFont);
-    projectsMenuButton->setFont(selectedFont);
+
+
+
 
     // tasks
     connect(addTask, SIGNAL(clicked()), this, SLOT(addNewTask()));
