@@ -2,8 +2,13 @@ QStatusBar {
     color: #c8d3f5;
 }
 
+QMessageBox {
+    background-color: #2f334d;
+}
+
 QMainWindow {
     background-color: #2f334d;
+    color: #c8d3f5;
 }
 
 QWidget {

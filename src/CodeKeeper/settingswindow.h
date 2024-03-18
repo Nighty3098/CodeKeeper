@@ -3,18 +3,20 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include <QSettings>
 
 class SettingsWindow : public QMainWindow {
     Q_OBJECT
    public:
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
+    QSettings *globalSettings;
 
    private slots:
-    void SaveData();
     void closeEvent(QCloseEvent *event);
     void QuitW();
     void checkUpdates();
+    void saveData();
 
    private:
     QWidget *centralWidget;

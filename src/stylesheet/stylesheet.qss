@@ -4,6 +4,12 @@ QStatusBar {
 
 QMainWindow {
     background-color: #222436;
+    color: #c8d3f5;
+}
+
+
+QMainWindow {
+    background-color: #222436;
 }
 
 QWidget {

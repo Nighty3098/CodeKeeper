@@ -12,6 +12,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     restoreGeometry(globalSettings->value("geometry").toByteArray());
 
+    QFont selectedFont = globalSettings->value("font").value<QFont>();
+    int font_size = globalSettings->value("fontSize").value<int>();
+    QString theme = globalSettings->value("theme").value<QString>();
+
     bool isVisibleNotesList =
         globalSettings->value("isVisibleNotesList", true).toBool();
     bool isVisiblePreview =
@@ -73,7 +77,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // actions for menu
     QAction *newNote = menu->addAction(QPixmap(":/new.png"), "New Note");
     QAction *rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note");
-    QAction *newFolder = menu->addAction(QPixmap(":/new_folder.png"), "New folder");
+    QAction *newFolder =
+        menu->addAction(QPixmap(":/new_folder.png"), "New folder");
 
     menu->addSeparator();
 
@@ -272,7 +277,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     finishedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
     finishedProjects->setWordWrap(true);
 
-    notStartedProjects->addItem("CodeKeeper");
+    notStartedProjects->addItem(
+        "CodeKeeper\nNighty3098/CodeKeeper\n16.02.2024");
 
     // actions
     // menu
@@ -371,6 +377,35 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tabs->addTab(projectsTab, "Projects");
 
     // ========================================================
+    // set font and font size
+
+    tabs->setFont(selectedFont);
+    mainTitle->setFont(selectedFont);
+    openFolderBtn->setFont(selectedFont);
+    syncDataBtn->setFont(selectedFont);
+    openSettingsBtn->setFont(selectedFont);
+    notesList->setFont(selectedFont);
+    noteEdit->setFont(selectedFont);
+    mdPreview->setFont(selectedFont);
+    noteName->setFont(selectedFont);
+    menuButton->setFont(selectedFont);
+    timeLabel->setFont(selectedFont);
+    noteNameLabel->setFont(selectedFont);
+    incompleteTasks->setFont(selectedFont);
+    inprocessTasks->setFont(selectedFont);
+    completeTasks->setFont(selectedFont);
+    label_1->setFont(selectedFont);
+    label_2->setFont(selectedFont);
+    label_3->setFont(selectedFont);
+    taskText->setFont(selectedFont);
+    addTask->setFont(selectedFont);
+    rmTask->setFont(selectedFont);
+    projectsMainLabel->setFont(selectedFont);
+    notStartedProjects->setFont(selectedFont);
+    startedProjects->setFont(selectedFont);
+    finishlineProjects->setFont(selectedFont);
+    finishedProjects->setFont(selectedFont);
+    projectsMenuButton->setFont(selectedFont);
 
     // tasks
     connect(addTask, SIGNAL(clicked()), this, SLOT(addNewTask()));

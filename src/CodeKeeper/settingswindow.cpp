@@ -13,6 +13,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     QFile file(":/stylesheet/stylesheet_setting_window.qss");
     file.open(QFile::ReadOnly);
 
+    globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
+    QFont selectedFont = globalSettings->value("font").value<QFont>();
+    int font_size = globalSettings->value("fontSize").value<int>();
+    QString theme = globalSettings->value("theme").value<QString>();
+
     this->setStyleSheet(file.readAll());
 
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
@@ -213,8 +218,34 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     mainLayout->addWidget(tabs);
     mainLayout->addLayout(BtnsL);
 
+
+
+    // set font 
+    tabs->setFont(selectedFont);
+    saveBtn->setFont(selectedFont);
+    quitBtn->setFont(selectedFont);
+    appName->setFont(selectedFont);
+    urlToRepo->setFont(selectedFont);
+    versionInfo->setFont(selectedFont);
+    checkUpdatesBtn->setFont(selectedFont);
+    fontSize->setFont(selectedFont);
+    fontSelector->setFont(selectedFont);
+    themeSelector->setFont(selectedFont);
+    gitLabel->setFont(selectedFont);
+    gitLabel2->setFont(selectedFont);
+    gitUser->setFont(selectedFont);
+    gitRepo->setFont(selectedFont);
+    autoSyncAfterStart->setFont(selectedFont);
+    isDate->setFont(selectedFont);
+    isTime->setFont(selectedFont);
+    isHost->setFont(selectedFont);
+    mainTitle->setFont(selectedFont);
+    fontLabel->setFont(selectedFont);
+    fontSizeLabel->setFont(selectedFont);
+    themeLabel->setFont(selectedFont);
+
     // connects
-    connect(saveBtn, SIGNAL(clicked()), this, SLOT(SaveData()));
+    connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveData()));
     connect(quitBtn, SIGNAL(clicked()), this, SLOT(QuitW()));
     connect(checkUpdatesBtnL, SIGNAL(clicked()), this, SLOT(checkUpdates()));
 }
