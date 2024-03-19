@@ -1,8 +1,5 @@
 #include "mainwindow.h"
 #include "keeperFunc/functional.cpp"
-#include "db/create_connect_to_keeper.cpp"
-#include "db/keeper_db.cpp"
-// #include "db/restore_data.cpp"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
@@ -17,8 +14,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QFont selectedFont = globalSettings->value("font").value<QFont>();
     QString font_size = globalSettings->value("fontSize").value<QString>();
     QString theme = globalSettings->value("theme").value<QString>();
-
-    createConnectionToKeeper();
 
     bool isVisibleNotesList =
         globalSettings->value("isVisibleNotesList", true).toBool();
@@ -279,7 +274,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     nsProjects->setAlignment(Qt::AlignHCenter);
     notStartedProjects = new QListWidget();
     notStartedProjects->setStyleSheet(
-        "color: #b9676b; border-width: 3px; border-color: #b9676b; "
+        "background-color: #b9676b; border-width: 3px; border-color: #b9676b; "
         "font-size: " +
         font_size + "pt;");
     notStartedProjects->setDragEnabled(true);
@@ -292,7 +287,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     sProjects->setAlignment(Qt::AlignHCenter);
     startedProjects = new QListWidget();
     startedProjects->setStyleSheet(
-        "color: #e8cc91; border-width: 3px; border-color: #e8cc91; "
+        "background-color: #e8cc91; border-width: 3px; border-color: #e8cc91; "
         "font-size: " +
         font_size + "pt;");
     startedProjects->setDragEnabled(true);
@@ -305,7 +300,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     flProjects->setAlignment(Qt::AlignHCenter);
     finishlineProjects = new QListWidget();
     finishlineProjects->setStyleSheet(
-        "color: #8ebecf; border-width: 3px; border-color: #8ebecf; "
+        "background-color: #8ebecf; border-width: 3px; border-color: #8ebecf; "
         "font-size: " +
         font_size + "pt;");
     finishlineProjects->setDragEnabled(true);
@@ -318,7 +313,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     fProjects->setAlignment(Qt::AlignHCenter);
     finishedProjects = new QListWidget();
     finishedProjects->setStyleSheet(
-        "color: #9dda67; border-width: 3px; border-color: #9dda67; "
+        "background-color: #c1e68c; border-width: 3px; border-color: #c1e68c; "
         "font-size: " +
         font_size + "pt;");
     finishedProjects->setDragEnabled(true);
@@ -461,80 +456,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
 
     mainLayout->addWidget(tabs);
-
-    QSqlQuery query;
-
-    query.exec("SELECT * FROM notes");
-    while (query.next()) {
-        QString name = query.value("name").toString();
-        QString createdTime = query.value("createdTime").toString();
-
-        QString itemText = name + "\n" + createdTime;
-
-        QTreeWidgetItem *item = new QTreeWidgetItem();
-        item->setText(0, itemText);
-
-        notesList->addTopLevelItem(item);
-
-        qDebug() << name << " was loaded";
-    }
-
-    query.exec("SELECT * FROM tasks");
-    while (query.next()) {
-        QString task = query.value("text").toString();
-        QString createdTime = query.value("createdTime").toString();
-        QString category = query.value("category").toString();
-
-        QString itemText = task + "\n" + createdTime;
-
-        if(category == "Incomplete") {
-            QListWidgetItem *item = new QListWidgetItem(itemText);
-            incompleteTasks->addItem(item);
-        }
-        if(category == "Inprocess") {
-            QListWidgetItem *item = new QListWidgetItem(itemText);
-            inprocessTasks->addItem(item);
-        }
-        if(category == "Complete") {
-            QListWidgetItem *item = new QListWidgetItem(itemText);
-            completeTasks->addItem(item);
-        }
-        else {
-            qDebug() << "Unknown category";
-        }
-    }
-
-    query.exec("SELECT * FROM projects");
-    while (query.next()) {
-        QString name = query.value("name").toString();
-        QString createdTime = query.value("createdTime").toString();
-        QString category = query.value("category").toString();
-        QString git = query.value("git").toString();
-
-        QString itemText = name + "\n" + git + "\n" + createdTime;
-
-        if(category == "Notstarted") {
-            QListWidgetItem *item = new QListWidgetItem(itemText);
-            notStartedProjects->addItem(item);
-        }
-
-        if(category == "Started") {
-            QListWidgetItem *item = new QListWidgetItem(itemText);
-            startedProjects->addItem(item);
-        }
-
-        if(category == "Finishline") {
-            QListWidgetItem *item = new QListWidgetItem(itemText);
-            finishlineProjects->addItem(item);
-        }
-
-        if(category == "Finished") {
-            QListWidgetItem *item = new QListWidgetItem(itemText);
-            finishedProjects->addItem(item);
-        }
-    }
-
-
 
 }
 
