@@ -1,6 +1,8 @@
 #include "mainwindow.h"
-
 #include "keeperFunc/functional.cpp"
+#include "db/create_connect_to_keeper.cpp"
+#include "db/keeper_db.cpp"
+// #include "db/restore_data.cpp"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
@@ -15,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QFont selectedFont = globalSettings->value("font").value<QFont>();
     QString font_size = globalSettings->value("fontSize").value<QString>();
     QString theme = globalSettings->value("theme").value<QString>();
+
+    createConnectionToKeeper();
 
     bool isVisibleNotesList =
         globalSettings->value("isVisibleNotesList", true).toBool();
@@ -131,7 +135,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     noteNameLabel = new QLabel("Note");
     noteNameLabel->setFont(selectedFont);
-    noteNameLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
+    noteNameLabel->setStyleSheet("font-size: " + font_size +
+                                 "pt; color: #8ebecf;");
     noteNameLabel->setAlignment(Qt::AlignHCenter);
 
     // md preview
@@ -174,7 +179,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     incompleteTasks = new QListWidget();
     incompleteTasks->setStyleSheet(
-        "color: #b9676b; border-width: 3px; border-color: #b9676b; font-size: " + font_size + "pt;");
+        "color: #b9676b; border-width: 3px; border-color: #b9676b; "
+        "font-size: " +
+        font_size + "pt;");
     incompleteTasks->setDragEnabled(true);
     incompleteTasks->setDragDropMode(QListWidget::DragDrop);
     incompleteTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -189,7 +196,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     inprocessTasks = new QListWidget();
     inprocessTasks->setDragEnabled(true);
     inprocessTasks->setStyleSheet(
-        "color: #e8cc91; text-decoration: underline; border-width: 3px; font-size: " + font_size + "pt;"
+        "color: #e8cc91; text-decoration: underline; border-width: 3px; "
+        "font-size: " +
+        font_size +
+        "pt;"
         "border-color: #e8cc91;");
     inprocessTasks->setDragDropMode(QListWidget::DragDrop);
     inprocessTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -204,7 +214,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     completeTasks = new QListWidget();
     completeTasks->setDragEnabled(true);
     completeTasks->setStyleSheet(
-        "color: #9dda67; text-decoration: line-through; border-width: 3px; font-size: " + font_size + "pt;"
+        "color: #9dda67; text-decoration: line-through; border-width: 3px; "
+        "font-size: " +
+        font_size +
+        "pt;"
         "border-color: #9dda67;");
     completeTasks->setDragDropMode(QListWidget::DragDrop);
     completeTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -225,7 +238,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     rmTask->setFixedSize(40, 30);
     rmTask->setFont(selectedFont);
     rmTask->setStyleSheet("font-size: " + font_size + "pt;");
-
 
     incompleteLayout->addWidget(label_1);
     incompleteLayout->addWidget(incompleteTasks);
@@ -267,7 +279,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     nsProjects->setAlignment(Qt::AlignHCenter);
     notStartedProjects = new QListWidget();
     notStartedProjects->setStyleSheet(
-        "color: #b9676b; border-width: 3px; border-color: #b9676b; font-size: " + font_size + "pt;");
+        "color: #b9676b; border-width: 3px; border-color: #b9676b; "
+        "font-size: " +
+        font_size + "pt;");
     notStartedProjects->setDragEnabled(true);
     notStartedProjects->setDragDropMode(QListWidget::DragDrop);
     notStartedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -278,7 +292,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     sProjects->setAlignment(Qt::AlignHCenter);
     startedProjects = new QListWidget();
     startedProjects->setStyleSheet(
-        "color: #e8cc91; border-width: 3px; border-color: #e8cc91; font-size: " + font_size + "pt;");
+        "color: #e8cc91; border-width: 3px; border-color: #e8cc91; "
+        "font-size: " +
+        font_size + "pt;");
     startedProjects->setDragEnabled(true);
     startedProjects->setDragDropMode(QListWidget::DragDrop);
     startedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -289,7 +305,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     flProjects->setAlignment(Qt::AlignHCenter);
     finishlineProjects = new QListWidget();
     finishlineProjects->setStyleSheet(
-        "color: #8ebecf; border-width: 3px; border-color: #8ebecf; font-size: " + font_size + "pt;");
+        "color: #8ebecf; border-width: 3px; border-color: #8ebecf; "
+        "font-size: " +
+        font_size + "pt;");
     finishlineProjects->setDragEnabled(true);
     finishlineProjects->setDragDropMode(QListWidget::DragDrop);
     finishlineProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -300,7 +318,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     fProjects->setAlignment(Qt::AlignHCenter);
     finishedProjects = new QListWidget();
     finishedProjects->setStyleSheet(
-        "color: #9dda67; border-width: 3px; border-color: #9dda67; font-size: " + font_size + "pt;");
+        "color: #9dda67; border-width: 3px; border-color: #9dda67; "
+        "font-size: " +
+        font_size + "pt;");
     finishedProjects->setDragEnabled(true);
     finishedProjects->setDragDropMode(QListWidget::DragDrop);
     finishedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
@@ -427,17 +447,95 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     label_2->setFont(selectedFont);
     label_3->setFont(selectedFont);
 
-
-
-
     // tasks
     connect(addTask, SIGNAL(clicked()), this, SLOT(addNewTask()));
+    connect(rmTask, SIGNAL(clicked()), this, SLOT(removeTask()));
 
     // main
     connect(openSettingsBtn, SIGNAL(clicked()), this,
             SLOT(openSettingsWindow()));
 
+    // notes
+    // connect(notesList, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
+    //        SLOT(doubleClick(QListWidgetItem *)));
+
+
     mainLayout->addWidget(tabs);
+
+    QSqlQuery query;
+
+    query.exec("SELECT * FROM notes");
+    while (query.next()) {
+        QString name = query.value("name").toString();
+        QString createdTime = query.value("createdTime").toString();
+
+        QString itemText = name + "\n" + createdTime;
+
+        QTreeWidgetItem *item = new QTreeWidgetItem();
+        item->setText(0, itemText);
+
+        notesList->addTopLevelItem(item);
+
+        qDebug() << name << " was loaded";
+    }
+
+    query.exec("SELECT * FROM tasks");
+    while (query.next()) {
+        QString task = query.value("text").toString();
+        QString createdTime = query.value("createdTime").toString();
+        QString category = query.value("category").toString();
+
+        QString itemText = task + "\n" + createdTime;
+
+        if(category == "Incomplete") {
+            QListWidgetItem *item = new QListWidgetItem(itemText);
+            incompleteTasks->addItem(item);
+        }
+        if(category == "Inprocess") {
+            QListWidgetItem *item = new QListWidgetItem(itemText);
+            inprocessTasks->addItem(item);
+        }
+        if(category == "Complete") {
+            QListWidgetItem *item = new QListWidgetItem(itemText);
+            completeTasks->addItem(item);
+        }
+        else {
+            qDebug() << "Unknown category";
+        }
+    }
+
+    query.exec("SELECT * FROM projects");
+    while (query.next()) {
+        QString name = query.value("name").toString();
+        QString createdTime = query.value("createdTime").toString();
+        QString category = query.value("category").toString();
+        QString git = query.value("git").toString();
+
+        QString itemText = name + "\n" + git + "\n" + createdTime;
+
+        if(category == "Notstarted") {
+            QListWidgetItem *item = new QListWidgetItem(itemText);
+            notStartedProjects->addItem(item);
+        }
+
+        if(category == "Started") {
+            QListWidgetItem *item = new QListWidgetItem(itemText);
+            startedProjects->addItem(item);
+        }
+
+        if(category == "Finishline") {
+            QListWidgetItem *item = new QListWidgetItem(itemText);
+            finishlineProjects->addItem(item);
+        }
+
+        if(category == "Finished") {
+            QListWidgetItem *item = new QListWidgetItem(itemText);
+            finishedProjects->addItem(item);
+        }
+    }
+
+
+
 }
 
 MainWindow::~MainWindow() {

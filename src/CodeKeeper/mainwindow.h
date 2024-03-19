@@ -26,6 +26,7 @@ private slots:
     void showPreview();
     void updateMDPreview();
     void setHeader();
+    void removeTask();
 
 private:
     QWidget *centralWidget;

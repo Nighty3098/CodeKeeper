@@ -284,7 +284,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     themeLabel->setStyleSheet("font-size: " + font_size + "pt;");
 
     // set Data
-    fontSelector->setCurrentText(selectedFont.toString());
+    fontSelector->setCurrentFont(selectedFont);
     fontSize->setValue(font_size.toInt());
     themeSelector->setCurrentText(theme);
 

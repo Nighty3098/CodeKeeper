@@ -33,6 +33,8 @@ void MainWindow::addNewTask() {
     incompleteTasks->addItem(text);
 }
 
+void MainWindow::removeTask() {}
+
 void MainWindow::hideNotesList() {
     notesList->setVisible(!notesList->isVisible());
     globalSettings->setValue("isVisibleNotesList", notesList->isVisible());
