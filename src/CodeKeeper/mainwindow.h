@@ -27,6 +27,7 @@ private slots:
     void updateMDPreview();
     void setHeader();
     void removeTask();
+    // void populateTreeWidget(const QString& directory, QTreeWidget* treeWidget)  ;
 
 private:
     QWidget *centralWidget;
