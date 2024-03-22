@@ -36,10 +36,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
-    saveBtn = new QPushButton("Save");
+    saveBtn = new QPushButton(QPixmap(":/save.png"), "Save");
     saveBtn->setFixedSize(100, 30);
 
-    quitBtn = new QPushButton("Quit");
+    quitBtn = new QPushButton(QPixmap(":/quit.png"), "Quit");
     quitBtn->setFixedSize(100, 30);
 
     BtnsL->addWidget(saveBtn);
@@ -115,7 +115,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     isTime = new QCheckBox("Time");
     isHost = new QCheckBox("Host");
 
-
     mainSyncLayout->addWidget(gitLabel, 0, 2);
     mainSyncLayout->addWidget(gitToken, 1, 2);
     mainSyncLayout->addWidget(gitUser, 2, 2);
@@ -168,10 +167,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
 
     pathToFolder = new QLineEdit();
     pathToFolder->setText("Directory");
+    pathToFolder->setPlaceholderText("Directory");
     pathToFolder->setMaximumHeight(30);
 
-    openFolder = new QPushButton();
-    openFolder->setText("Browse");
+    openFolder = new QPushButton(QPixmap(":/open.png"), "Browse");
     openFolder->setMaximumHeight(30);
 
     storageL->setSpacing(10);

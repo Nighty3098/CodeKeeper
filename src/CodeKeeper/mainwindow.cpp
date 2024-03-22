@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
-    openSettingsBtn = new QPushButton("Settings");
+    openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), "Settings");
     openSettingsBtn->setFont(selectedFont);
     openSettingsBtn->setStyleSheet("font-size: " + font_size + "pt;");
     openSettingsBtn->setFixedSize(200, 30);
@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // sync btn
     QHBoxLayout *syncDataLayout = new QHBoxLayout;
-    syncDataBtn = new QPushButton("Sync data");
+    syncDataBtn = new QPushButton(QPixmap(":/retry.png"), "Sync data");
     syncDataBtn->setFont(selectedFont);
     syncDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
     syncDataBtn->setFixedSize(200, 30);
@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // folder btn
     QHBoxLayout *openFolderlayout = new QHBoxLayout;
-    openFolderBtn = new QPushButton("Open folder");
+    openFolderBtn = new QPushButton(QPixmap(":/open.png"), "Open folder");
     openFolderBtn->setFont(selectedFont);
     openFolderBtn->setStyleSheet("font-size: " + font_size + "pt;");
     openFolderBtn->setFixedSize(200, 30);
@@ -176,7 +176,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     incompleteTasks = new QListWidget();
     incompleteTasks->setStyleSheet(
-        "background-color: rgb(255, 117, 127, 180); color: #000000; "
+        "background-color: rgba(255, 117, 127, 180); color: #000000; "
         "border-width: 0px; border-color: rgb(255, 117, 127); "
         "font-size: " +
         font_size + "pt;");
@@ -195,7 +195,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     inprocessTasks = new QListWidget();
     inprocessTasks->setDragEnabled(true);
     inprocessTasks->setStyleSheet(
-        "background-color: rgb(255, 199, 119, 180); "
+        "background-color: rgba(255, 199, 119, 180); "
         "color: #000000; text-decoration: underline; "
         "border-width: 0px; "
         "font-size: " +
@@ -216,7 +216,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     completeTasks = new QListWidget();
     completeTasks->setDragEnabled(true);
     completeTasks->setStyleSheet(
-        "background-color: rgb(195, 232, 141, 180); "
+        "background-color: rgba(195, 232, 141, 180); "
         "color: #000000; text-decoration: "
         "line-through; border-width: 0px; "
         "font-size: " +
@@ -284,7 +284,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     nsProjects->setAlignment(Qt::AlignHCenter);
     notStartedProjects = new QListWidget();
     notStartedProjects->setStyleSheet(
-        "background-color: rgb(255, 117, 127, "
+        "background-color: rgba(255, 117, 127, "
         "180); color: #000000; border-width: 0px; "
         "border-color: #ff757f; "
         "font-size: " +
@@ -300,7 +300,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     sProjects->setAlignment(Qt::AlignHCenter);
     startedProjects = new QListWidget();
     startedProjects->setStyleSheet(
-        "background-color: rgb(255, 199, 119, 180); color: #000000; "
+        "background-color: rgba(255, 199, 119, 180); color: #000000; "
         "border-width: 0px; border-color: #ffc777; "
         "font-size: " +
         font_size + "pt;");
@@ -315,7 +315,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     flProjects->setAlignment(Qt::AlignHCenter);
     finishlineProjects = new QListWidget();
     finishlineProjects->setStyleSheet(
-        "background-color: rgb(130, 170, 255, "
+        "background-color: rgba(130, 170, 255, "
         "180); color: #000000; border-width: 0px; "
         "border-color: #82aaff; "
         "font-size: " +
@@ -331,7 +331,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     fProjects->setAlignment(Qt::AlignHCenter);
     finishedProjects = new QListWidget();
     finishedProjects->setStyleSheet(
-        "background-color: rgb(195, 232, 141, 180); color: #000000; "
+        "background-color: rgba(195, 232, 141, 180); color: #000000; "
         "border-width: 0px; border-color: #c3e88d; "
         "font-size: " +
         font_size + "pt;");
