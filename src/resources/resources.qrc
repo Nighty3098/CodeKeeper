@@ -1,12 +1,16 @@
 <RCC>
     <qresource prefix="/">
-        <file>icon.png</file>
         <file>copy.png</file>
-        <file>paste.png</file>
         <file>delete.png</file>
+        <file>icon.png</file>
         <file>new.png</file>
-        <file>search.png</file>
-        <file>retry.png</file>
         <file>new_folder.png</file>
+        <file>open.png</file>
+        <file>paste.png</file>
+        <file>retry.png</file>
+        <file>search.png</file>
+        <file>save.png</file>
+        <file>quit.png</file>
+        <file>settings.png</file>
     </qresource>
 </RCC>
