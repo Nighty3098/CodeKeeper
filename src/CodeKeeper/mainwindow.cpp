@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "keeperFunc/functional.cpp"
+#include <QPropertyAnimation>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
@@ -7,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     mainLayout = new QVBoxLayout(centralWidget);
     setMinimumSize(560, 400);
+    setAttribute(Qt::WA_TranslucentBackground);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     restoreGeometry(globalSettings->value("geometry").toByteArray());
@@ -131,7 +133,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteNameLabel = new QLabel("Note");
     noteNameLabel->setFont(selectedFont);
     noteNameLabel->setStyleSheet("font-size: " + font_size +
-                                 "pt; color: #8ebecf;");
+                                "pt; color: #8ebecf;");
     noteNameLabel->setAlignment(Qt::AlignHCenter);
 
     // md preview
@@ -474,7 +476,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     mainLayout->addWidget(tabs);
 
-    // populateTreeWidget("Notes", notesList);
+    // openNotesFolder();
 }
 
 MainWindow::~MainWindow() {

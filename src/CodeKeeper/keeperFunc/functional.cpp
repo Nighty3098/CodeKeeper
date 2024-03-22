@@ -78,16 +78,6 @@ void MainWindow::setHeader() {
     noteNameLabel->setText(noteName);
 }
 
-/*
-void MainWindow::populateTreeWidget(const QString& directory, QTreeWidget* treeWidget) {
-    treeWidget->setModel(nullptr);
-    QFileSystemModel* model = new QFileSystemModel;
-    model->setRootPath(directory);
-    treeWidget->setRootIndex(model->index(directory));
-    treeWidget->setModel(model);
-    treeWidget->setColumnWidth(0, 250);
-    for (int i = 0; i < model->columnCount(); ++i) {
-        treeWidget->resizeColumnToContents(i);
-    }
+void MainWindow::openNotesFolder(QString& path, QString folderName) {
+
 }
-*/

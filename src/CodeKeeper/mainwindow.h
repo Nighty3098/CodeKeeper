@@ -27,7 +27,7 @@ private slots:
     void updateMDPreview();
     void setHeader();
     void removeTask();
-    // void populateTreeWidget(const QString& directory, QTreeWidget* treeWidget)  ;
+    void openNotesFolder(QString& path, QString folderName);
 
 private:
     QWidget *centralWidget;

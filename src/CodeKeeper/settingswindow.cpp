@@ -84,7 +84,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     appInfoL->addLayout(subAppInfoL);
 
     // sync
-    QVBoxLayout *mainSyncLayout = new QVBoxLayout();
+    QGridLayout *mainSyncLayout = new QGridLayout();
 
     gitLabel = new QLabel("Sync settings");
     gitLabel->setStyleSheet("font-size: 24px;");
@@ -93,14 +93,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     gitLabel2 = new QLabel("Data in commit");
     gitLabel2->setStyleSheet("font-size: 24px;");
     gitLabel2->setAlignment(Qt::AlignCenter);
-
-    QVBoxLayout *syncLayout = new QVBoxLayout();
-    QHBoxLayout *tokenL = new QHBoxLayout();
-    QHBoxLayout *userL = new QHBoxLayout();
-    QHBoxLayout *repoL = new QHBoxLayout();
-    QHBoxLayout *autoSyncL = new QHBoxLayout();
-
-    QVBoxLayout *sync2Layout = new QVBoxLayout();
 
     gitToken = new QLineEdit();
     gitToken->setPlaceholderText("GitHub token");
@@ -123,46 +115,29 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     isTime = new QCheckBox("Time");
     isHost = new QCheckBox("Host");
 
-    tokenL->addWidget(gitToken);
-    userL->addWidget(gitUser);
-    repoL->addWidget(gitRepo);
 
-    autoSyncL->addWidget(autoSyncAfterStart);
-    autoSyncL->setAlignment(Qt::AlignCenter);
-
-    syncLayout->addWidget(gitLabel);
-    syncLayout->addLayout(tokenL);
-    syncLayout->addLayout(userL);
-    syncLayout->addLayout(repoL);
-    syncLayout->addLayout(autoSyncL);
-
-    QVBoxLayout *sync2LayoutL = new QVBoxLayout();
-    sync2LayoutL->addWidget(gitLabel2);
-
-    sync2Layout->addWidget(isDate);
-    sync2Layout->addWidget(isTime);
-    sync2Layout->addWidget(isHost);
-    sync2Layout->setAlignment(Qt::AlignCenter);
-
-    sync2LayoutL->addLayout(sync2Layout);
-
-    mainSyncLayout->addLayout(syncLayout);
-    mainSyncLayout->addLayout(sync2LayoutL);
+    mainSyncLayout->addWidget(gitLabel, 0, 2);
+    mainSyncLayout->addWidget(gitToken, 1, 2);
+    mainSyncLayout->addWidget(gitUser, 2, 2);
+    mainSyncLayout->addWidget(gitRepo, 3, 2);
+    mainSyncLayout->addWidget(gitLabel2, 4, 2);
+    mainSyncLayout->addWidget(isDate, 5, 2);
+    mainSyncLayout->addWidget(isTime, 6, 2);
+    mainSyncLayout->addWidget(isHost, 7, 2);
 
     // appereance
-
-    QVBoxLayout *layout1 = new QVBoxLayout();
-    QHBoxLayout *fontSizeL = new QHBoxLayout();
-    QHBoxLayout *fontL = new QHBoxLayout();
-    QHBoxLayout *themeL = new QHBoxLayout();
+    QGridLayout* layout1 = new QGridLayout();
 
     mainTitle = new QLabel("App settings");
     mainTitle->setAlignment(Qt::AlignCenter);
     mainTitle->setStyleSheet("font-size: 32px;");
 
     fontLabel = new QLabel("Font:");
+    fontLabel->setAlignment(Qt::AlignCenter);
     fontSizeLabel = new QLabel("Font size:");
+    fontSizeLabel->setAlignment(Qt::AlignCenter);
     themeLabel = new QLabel("Theme:");
+    themeLabel->setAlignment(Qt::AlignCenter);
 
     fontSize = new QSpinBox();
     fontSelector = new QFontComboBox();
@@ -171,19 +146,38 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     themeSelector->addItem("Dark");
     themeSelector->addItem("Light");
 
-    fontSizeL->addWidget(fontSizeLabel);
-    fontSizeL->addWidget(fontSize);
 
-    fontL->addWidget(fontLabel);
-    fontL->addWidget(fontSelector);
+    layout1->addWidget(mainTitle, 0, 2, 0, 4);
+    layout1->addWidget(fontLabel, 1, 3);
+    layout1->addWidget(fontSelector, 1, 4);
+    layout1->addWidget(fontSizeLabel, 2, 3);
+    layout1->addWidget(fontSize, 2, 4);
+    layout1->addWidget(themeLabel, 3, 3);
+    layout1->addWidget(themeSelector, 3, 4);
 
-    themeL->addWidget(themeLabel);
-    themeL->addWidget(themeSelector);
 
-    layout1->addWidget(mainTitle);
-    layout1->addLayout(fontL);
-    layout1->addLayout(fontSizeL);
-    layout1->addLayout(themeL);
+
+    // storage tab
+    QGridLayout* storageL = new QGridLayout;
+    storageL->setSpacing(30);
+
+    storageLabel = new QLabel();
+    storageLabel->setText("Storage settings");
+    storageLabel->setAlignment(Qt::AlignCenter);
+    storageLabel->setStyleSheet("font-size: 32px;");
+
+    pathToFolder = new QLineEdit();
+    pathToFolder->setText("Directory");
+    pathToFolder->setMaximumHeight(30);
+
+    openFolder = new QPushButton();
+    openFolder->setText("Browse");
+    openFolder->setMaximumHeight(30);
+
+    storageL->setSpacing(10);
+    storageL->addWidget(storageLabel, 0, 1, 0, 4);
+    storageL->addWidget(pathToFolder, 1, 3);
+    storageL->addWidget(openFolder, 2, 3);
 
     // info tab
     QWidget *aboutTab = new QWidget();
@@ -204,6 +198,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     // storage tab
     QWidget *storageTab = new QWidget();
     QVBoxLayout *storageTabLayout = new QVBoxLayout(storageTab);
+
+    storageTabLayout->addLayout(storageL);
 
     tabs->addTab(storageTab, "Storage");
 
@@ -254,6 +250,9 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
 
     gitLabel2->setFont(selectedFont);
 
+    gitToken->setFont(selectedFont);
+    gitToken->setStyleSheet("font-size: " + font_size + "pt;");
+
     gitUser->setFont(selectedFont);
     gitUser->setStyleSheet("font-size: " + font_size + "pt;");
 
@@ -282,6 +281,14 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
 
     themeLabel->setFont(selectedFont);
     themeLabel->setStyleSheet("font-size: " + font_size + "pt;");
+
+    storageLabel->setFont(selectedFont);
+
+    pathToFolder->setFont(selectedFont);
+    pathToFolder->setStyleSheet("font-size: " + font_size + "pt;");
+
+    openFolder->setFont(selectedFont);
+    openFolder->setStyleSheet("font-size: " + font_size + "pt;");
 
     // set Data
     fontSelector->setCurrentFont(selectedFont);

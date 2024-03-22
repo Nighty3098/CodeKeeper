@@ -60,6 +60,11 @@ class SettingsWindow : public QMainWindow {
     QLabel *fontLabel;
     QLabel *fontSizeLabel;
     QLabel *themeLabel;
+
+    // storage
+    QLabel *storageLabel;
+    QLineEdit *pathToFolder;
+    QPushButton *openFolder;
 };
 
 #endif  // SETTINGSWINDOW_H
