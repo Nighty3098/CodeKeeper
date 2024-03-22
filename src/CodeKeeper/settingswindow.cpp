@@ -36,10 +36,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
-    saveBtn = new QPushButton(QPixmap(":/save.png"), "Save");
+    saveBtn = new QPushButton(QPixmap(":/save.png"), " Save");
     saveBtn->setFixedSize(100, 30);
 
-    quitBtn = new QPushButton(QPixmap(":/quit.png"), "Quit");
+    quitBtn = new QPushButton(QPixmap(":/quit.png"), " Quit");
     quitBtn->setFixedSize(100, 30);
 
     BtnsL->addWidget(saveBtn);
@@ -72,7 +72,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn =
-        new QPushButton(QPixmap(":/retry.png"), "Chech for updates");
+        new QPushButton(QPixmap(":/retry.png"), " Chech for updates");
     checkUpdatesBtn->setFixedSize(200, 30);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
@@ -170,7 +170,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     pathToFolder->setPlaceholderText("Directory");
     pathToFolder->setMaximumHeight(30);
 
-    openFolder = new QPushButton(QPixmap(":/open.png"), "Browse");
+    openFolder = new QPushButton(QPixmap(":/open.png"), " Browse");
     openFolder->setMaximumHeight(30);
 
     storageL->setSpacing(10);

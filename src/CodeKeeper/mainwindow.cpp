@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
-    openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), "Settings");
+    openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), " Settings");
     openSettingsBtn->setFont(selectedFont);
     openSettingsBtn->setStyleSheet("font-size: " + font_size + "pt;");
     openSettingsBtn->setFixedSize(200, 30);
@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // sync btn
     QHBoxLayout *syncDataLayout = new QHBoxLayout;
-    syncDataBtn = new QPushButton(QPixmap(":/retry.png"), "Sync data");
+    syncDataBtn = new QPushButton(QPixmap(":/retry.png"), " Sync data");
     syncDataBtn->setFont(selectedFont);
     syncDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
     syncDataBtn->setFixedSize(200, 30);
@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // folder btn
     QHBoxLayout *openFolderlayout = new QHBoxLayout;
-    openFolderBtn = new QPushButton(QPixmap(":/open.png"), "Open folder");
+    openFolderBtn = new QPushButton(QPixmap(":/open.png"), " Open folder");
     openFolderBtn->setFont(selectedFont);
     openFolderBtn->setStyleSheet("font-size: " + font_size + "pt;");
     openFolderBtn->setFixedSize(200, 30);
