@@ -78,6 +78,10 @@ void MainWindow::setHeader() {
     noteNameLabel->setText(noteName);
 }
 
-void MainWindow::openNotesFolder(QString& path, QString folderName) {
-
+void MainWindow::openFolder() {
+    QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
+    if(!str.isEmpty()) {
+        globalSettings->setValue("path", str);
+        qDebug() << str;
+    }
 }

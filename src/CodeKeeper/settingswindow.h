@@ -17,6 +17,7 @@ class SettingsWindow : public QMainWindow {
     void QuitW();
     void checkUpdates();
     void saveData();
+    void fopenFolder();
 
    private:
     QWidget *centralWidget;

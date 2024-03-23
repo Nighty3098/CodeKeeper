@@ -16,6 +16,53 @@ QWidget {
     background-color: #222436;
 }
 
+
+
+QFileDialog {
+    background-color: #1a1b26;
+}
+
+QFileDialog QLabel {
+    color: #a9b1d6;
+}
+
+QFileDialog QListView {
+    background-color: #1a1b26;
+    color: #a9b1d6;
+}
+
+QFileDialog QTreeView {
+    background-color: #1a1b26;
+    color: #a9b1d6;
+}
+
+QFileDialog QListView::item {
+    padding: 6px;
+}
+
+QFileDialog QListView::item:hover {
+    background: #34354a;
+}
+
+QFileDialog QListView::item:selected {
+    background: #2a2b3b;
+}
+
+QFileDialog QPushButton {
+    background-color: #565f89;
+    color: #ffffff;
+    border: 1px solid #565f89;
+    border-radius: 5px;
+    min-width: 80px;
+}
+
+QFileDialog QPushButton:hover {
+    background-color: #7785a2;
+    border: 1px solid #7785a2;
+}
+
+
+
 QCheckBox {
     color: #c8d3f5;
 }

@@ -30,3 +30,12 @@ void SettingsWindow::saveData() {
     messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     messageBox->exec();
 }
+
+void SettingsWindow::fopenFolder() {
+    QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
+    if(!str.isEmpty()) {
+        globalSettings->setValue("path", str);
+        qDebug() << str;
+        pathToFolder->setText(str);
+    }
+}

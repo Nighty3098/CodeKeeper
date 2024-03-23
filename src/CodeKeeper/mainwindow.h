@@ -27,7 +27,7 @@ private slots:
     void updateMDPreview();
     void setHeader();
     void removeTask();
-    void openNotesFolder(QString& path, QString folderName);
+    void openFolder();
 
 private:
     QWidget *centralWidget;

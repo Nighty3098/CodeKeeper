@@ -17,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QString font_size = globalSettings->value("fontSize").value<QString>();
     QString theme = globalSettings->value("theme").value<QString>();
 
+    QString path = globalSettings->value("path").value<QString>();
+    qDebug() << path;
+
     bool isVisibleNotesList =
         globalSettings->value("isVisibleNotesList", true).toBool();
     bool isVisiblePreview =
@@ -469,6 +472,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // main
     connect(openSettingsBtn, SIGNAL(clicked()), this,
             SLOT(openSettingsWindow()));
+
+    connect(openFolderBtn, SIGNAL(clicked()), this, SLOT(openFolder()));
 
     // notes
     // connect(notesList, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
