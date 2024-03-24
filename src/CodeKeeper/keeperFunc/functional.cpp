@@ -63,7 +63,7 @@ void MainWindow::updateMDPreview() {
 
 QString getCurrentDateTimeString() {
     QDateTime currentDateTime = QDateTime::currentDateTime();
-    QString dateTimeString = currentDateTime.toString("yyyy-MM-dd hh:mm:ss");
+    QString dateTimeString = currentDateTime.toString("dd-MM-YYYY hh:mm:ss");
     return dateTimeString;
 }
 
@@ -80,8 +80,41 @@ void MainWindow::setHeader() {
 
 void MainWindow::openFolder() {
     QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
-    if(!str.isEmpty()) {
+    if (!str.isEmpty()) {
         globalSettings->setValue("path", str);
         qDebug() << str;
     }
 }
+
+void MainWindow::createProject() {
+    QString newProjectTeamplate =
+        "New project\nGitHub\n" + getCurrentDateTimeString();
+    notStartedProjects->addItem(newProjectTeamplate);
+}
+
+void MainWindow::removeProject() {
+    QListWidget *listWidgets[] = {notStartedProjects, startedProjects,
+                                  finishlineProjects, finishedProjects};
+
+    for (QListWidget *listWidget : listWidgets) {
+        QListWidgetItem *item = listWidget->currentItem();
+        if (item) {
+            listWidget->takeItem(listWidget->row(item));
+            delete item;
+            break;
+        }
+    }
+}
+
+void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
+    QListWidget *lists[] = {notStartedProjects, startedProjects,
+                            finishlineProjects, finishedProjects};
+
+    for (QListWidget *list : lists) {
+        QListWidgetItem *selectedItem = list->currentItem();
+        if (selectedItem && selectedItem != item) {
+            list->setCurrentItem(nullptr);
+        }
+    }
+}
+

@@ -28,6 +28,9 @@ private slots:
     void setHeader();
     void removeTask();
     void openFolder();
+    void createProject();
+    void removeProject();
+    void on_listWidget_itemClicked(QListWidgetItem *item);
 
 private:
     QWidget *centralWidget;

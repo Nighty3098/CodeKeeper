@@ -1,6 +1,8 @@
 #include "mainwindow.h"
-#include "keeperFunc/functional.cpp"
+
 #include <QPropertyAnimation>
+
+#include "keeperFunc/functional.cpp"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
@@ -136,7 +138,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteNameLabel = new QLabel("Note");
     noteNameLabel->setFont(selectedFont);
     noteNameLabel->setStyleSheet("font-size: " + font_size +
-                                "pt; color: #8ebecf;");
+                                 "pt; color: #8ebecf;");
     noteNameLabel->setAlignment(Qt::AlignHCenter);
 
     // md preview
@@ -350,9 +352,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     finishlineProjects->setFont(selectedFont);
     finishedProjects->setFont(selectedFont);
 
-    notStartedProjects->addItem(
-        "CodeKeeper\nNighty3098/CodeKeeper\n16.02.2024");
-
     // actions
     // menu
     projectsMenuButton = new QToolButton;
@@ -365,10 +364,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     projectsMenu->setFont(selectedFont);
 
     // actions for menu
-    QAction *newProject =
-        projectsMenu->addAction(QPixmap(":/new.png"), "New project");
-    QAction *rmProject =
-        projectsMenu->addAction(QPixmap(":/delete.png"), "Remove project");
+    QAction *newProject = projectsMenu->addAction(
+        QPixmap(":/new.png"), "New project", this, SLOT(createProject()));
+    QAction *rmProject = projectsMenu->addAction(
+        QPixmap(":/delete.png"), "Remove project", this, SLOT(removeProject()));
 
     projectsMenu->addSeparator();
 
@@ -478,6 +477,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // notes
     // connect(notesList, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
     //        SLOT(doubleClick(QListWidgetItem *)));
+
+    connect(notStartedProjects, &QListWidget::itemClicked, this,
+            &MainWindow::on_listWidget_itemClicked);
+    connect(startedProjects, &QListWidget::itemClicked, this,
+            &MainWindow::on_listWidget_itemClicked);
+    connect(finishlineProjects, &QListWidget::itemClicked, this,
+            &MainWindow::on_listWidget_itemClicked);
+    connect(finishedProjects, &QListWidget::itemClicked, this,
+            &MainWindow::on_listWidget_itemClicked);
 
     mainLayout->addWidget(tabs);
 
