@@ -10,6 +10,10 @@
   - [ ] - Project creation functionality
   - [ ] - Note-taking functionality
   - [X] - Task creation functionality
+  - [ ] - Crossplatform app
+    - [ ] - Linux ( AppImage )
+    - [ ] - Windows
+    - [ ] - Mac
   
 
 <h2 align="center">UI:</h2>
