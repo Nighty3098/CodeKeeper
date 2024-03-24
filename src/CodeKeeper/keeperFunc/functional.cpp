@@ -37,7 +37,19 @@ void MainWindow::addNewTask() {
     }
 }
 
-void MainWindow::removeTask() {}
+void MainWindow::removeTask() {
+    QListWidget *listWidgets[] = {incompleteTasks, inprocessTasks,
+                                  completeTasks};
+
+    for (QListWidget *listWidget : listWidgets) {
+        QListWidgetItem *item = listWidget->currentItem();
+        if (item) {
+            listWidget->takeItem(listWidget->row(item));
+            delete item;
+            break;
+        }
+    }
+}
 
 void MainWindow::hideNotesList() {
     notesList->setVisible(!notesList->isVisible());
@@ -108,7 +120,9 @@ void MainWindow::removeProject() {
 
 void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
     QListWidget *lists[] = {notStartedProjects, startedProjects,
-                            finishlineProjects, finishedProjects};
+                            finishlineProjects, finishedProjects,
+                            incompleteTasks,    inprocessTasks,
+                            completeTasks};
 
     for (QListWidget *list : lists) {
         QListWidgetItem *selectedItem = list->currentItem();

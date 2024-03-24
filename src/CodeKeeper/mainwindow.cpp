@@ -487,6 +487,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(finishedProjects, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
 
+    connect(incompleteTasks, &QListWidget::itemClicked, this,
+            &MainWindow::on_listWidget_itemClicked);
+    connect(inprocessTasks, &QListWidget::itemClicked, this,
+            &MainWindow::on_listWidget_itemClicked);
+    connect(completeTasks, &QListWidget::itemClicked, this,
+            &MainWindow::on_listWidget_itemClicked);
+
     mainLayout->addWidget(tabs);
 
     // openNotesFolder();
