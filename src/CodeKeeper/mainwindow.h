@@ -20,17 +20,27 @@ public:
     ~MainWindow();
 
 private slots:
-    void addNewTask();
     void openSettingsWindow();
+    void openFolder();
+    
     void hideNotesList();
     void showPreview();
+    
     void updateMDPreview();
     void setHeader();
+
+    void addNewTask();
     void removeTask();
-    void openFolder();
+    
     void createProject();
     void removeProject();
+    
     void on_listWidget_itemClicked(QListWidgetItem *item);
+
+    // load data from folder 
+    void loadNotes();
+    void loadTasks();
+    void loadProjects();
 
 private:
     QWidget *centralWidget;

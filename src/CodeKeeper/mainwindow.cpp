@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // menuButton->setIcon(QIcon(":/menu.png"));
     menuButton->setText("...");
     menuButton->setPopupMode(QToolButton::InstantPopup);
-    menuButton->setFixedSize(40, 30);
+    // menuButton->setFixedSize(40, 30);
     menuButton->setFont(selectedFont);
     menuButton->setStyleSheet("font-size: " + font_size + "pt;");
 
@@ -133,13 +133,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     timeLabel = new QLabel(getCurrentDateTimeString());
     timeLabel->setFont(selectedFont);
     timeLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
-    timeLabel->setAlignment(Qt::AlignHCenter);
+    timeLabel->setAlignment(Qt::AlignCenter);
 
     noteNameLabel = new QLabel("Note");
     noteNameLabel->setFont(selectedFont);
     noteNameLabel->setStyleSheet("font-size: " + font_size +
                                  "pt; color: #8ebecf;");
-    noteNameLabel->setAlignment(Qt::AlignHCenter);
+    noteNameLabel->setAlignment(Qt::AlignCenter);
 
     // md preview
     // connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
@@ -369,11 +369,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QAction *rmProject = projectsMenu->addAction(
         QPixmap(":/delete.png"), "Remove project", this, SLOT(removeProject()));
 
-    projectsMenu->addSeparator();
+    // projectsMenu->addSeparator();
 
-    QAction *showAddInfo = projectsMenu->addAction("Show additional info");
-    showAddInfo->setCheckable(true);
-    showAddInfo->setChecked(false);
+    // QAction *showAddInfo = projectsMenu->addAction("Show additional info");
+    // showAddInfo->setCheckable(true);
+    // showAddInfo->setChecked(false);
 
     projectsMenuButton->setMenu(projectsMenu);
 
@@ -474,9 +474,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     connect(openFolderBtn, SIGNAL(clicked()), this, SLOT(openFolder()));
 
-    // notes
-    // connect(notesList, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
-    //        SLOT(doubleClick(QListWidgetItem *)));
+
+
+
 
     connect(notStartedProjects, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);

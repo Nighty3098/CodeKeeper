@@ -75,7 +75,7 @@ void MainWindow::updateMDPreview() {
 
 QString getCurrentDateTimeString() {
     QDateTime currentDateTime = QDateTime::currentDateTime();
-    QString dateTimeString = currentDateTime.toString("dd-MM-YYYY hh:mm:ss");
+    QString dateTimeString = currentDateTime.toString("dd-MM-yyyy hh:mm:ss");
     return dateTimeString;
 }
 
@@ -132,3 +132,15 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
     }
 }
 
+
+void MainWindow::loadNotes() {
+
+}
+
+void MainWindow::loadTasks() {
+
+}
+
+void MainWindow::loadProjects() {
+
+}
