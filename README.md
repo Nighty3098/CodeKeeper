@@ -7,8 +7,8 @@
     - [ ] - Saving notes to MD files
     - [ ] - Saving a list of tasks in the DB
     - [ ] - Saving a projects list  in the DB
-  - [ ] - Project creation functionality
-  - [ ] - Note-taking functionality
+  - [X] - Project creation functionality
+  - [X] - Note-taking functionality
   - [X] - Task creation functionality
   - [ ] - Crossplatform app
     - [ ] - Linux ( AppImage )
