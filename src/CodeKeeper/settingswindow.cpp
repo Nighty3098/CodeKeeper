@@ -14,10 +14,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     file.open(QFile::ReadOnly);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
-    QFont selectedFont = globalSettings->value("font").value<QFont>();
-    QString font_size = globalSettings->value("fontSize").value<QString>();
-    QString theme = globalSettings->value("theme").value<QString>();
-    QString path = globalSettings->value("path").value<QString>();
+    selectedFont = globalSettings->value("font").value<QFont>();
+    font_size = globalSettings->value("fontSize").value<QString>();
+    theme = globalSettings->value("theme").value<QString>();
+    path = globalSettings->value("path").value<QString>();
 
     this->setStyleSheet(file.readAll());
 
@@ -216,91 +216,13 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     mainLayout->addLayout(BtnsL);
 
 
-
-    // set font 
-    tabs->setFont(selectedFont);
-    tabs->setStyleSheet("font-size: " + font_size + "pt;");
-
-    saveBtn->setFont(selectedFont);
-    saveBtn->setStyleSheet("font-size: " + font_size + "pt;");
-
-    quitBtn->setFont(selectedFont);
-    quitBtn->setStyleSheet("font-size: " + font_size + "pt;");
-
-    appName->setFont(selectedFont);
-
-    urlToRepo->setFont(selectedFont);
-    urlToRepo->setStyleSheet("font-size: " + font_size + "pt;");
-
-    versionInfo->setFont(selectedFont);
-    versionInfo->setStyleSheet("font-size: " + font_size + "pt;");
-
-    checkUpdatesBtn->setFont(selectedFont);
-    checkUpdatesBtn->setStyleSheet("font-size: " + font_size + "pt;");
-
-    fontSize->setFont(selectedFont);
-    fontSize->setStyleSheet("font-size: " + font_size + "pt;");
-
-    fontSelector->setFont(selectedFont);
-    fontSelector->setStyleSheet("font-size: " + font_size + "pt;");
-
-    themeSelector->setFont(selectedFont);
-    themeSelector->setStyleSheet("font-size: " + font_size + "pt;");
-
-    gitLabel->setFont(selectedFont);
-
-    gitLabel2->setFont(selectedFont);
-
-    gitToken->setFont(selectedFont);
-    gitToken->setStyleSheet("font-size: " + font_size + "pt;");
-
-    gitUser->setFont(selectedFont);
-    gitUser->setStyleSheet("font-size: " + font_size + "pt;");
-
-    gitRepo->setFont(selectedFont);
-    gitRepo->setStyleSheet("font-size: " + font_size + "pt;");
-
-    autoSyncAfterStart->setFont(selectedFont);
-    autoSyncAfterStart->setStyleSheet("font-size: " + font_size + "pt;");
-
-    isDate->setFont(selectedFont);
-    isDate->setStyleSheet("font-size: " + font_size + "pt;");
-
-    isTime->setFont(selectedFont);
-    isTime->setStyleSheet("font-size: " + font_size + "pt;");
-
-    isHost->setFont(selectedFont);
-    isHost->setStyleSheet("font-size: " + font_size + "pt;");
-
-    mainTitle->setFont(selectedFont);
-
-    fontLabel->setFont(selectedFont);
-    fontSizeLabel->setFont(selectedFont);
-
-    fontSizeLabel->setFont(selectedFont);
-    fontSizeLabel->setStyleSheet("font-size: " + font_size + "pt;");
-
-    themeLabel->setFont(selectedFont);
-    themeLabel->setStyleSheet("font-size: " + font_size + "pt;");
-
-    storageLabel->setFont(selectedFont);
-
-    pathToFolder->setFont(selectedFont);
-    pathToFolder->setStyleSheet("font-size: " + font_size + "pt;");
-
-    openFolder->setFont(selectedFont);
-    openFolder->setStyleSheet("font-size: " + font_size + "pt;");
-
-    // set Data
-    fontSelector->setCurrentFont(selectedFont);
-    fontSize->setValue(font_size.toInt());
-    themeSelector->setCurrentText(theme);
-
     // connects
     connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveData()));
     connect(quitBtn, SIGNAL(clicked()), this, SLOT(QuitW()));
     connect(checkUpdatesBtnL, SIGNAL(clicked()), this, SLOT(checkUpdates()));
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
+
+    setFontPr2();
 }
 
 SettingsWindow::~SettingsWindow() {}

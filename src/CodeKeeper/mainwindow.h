@@ -16,6 +16,11 @@ public:
     QSettings *globalSettings;
     bool isVisibleNotesList;
 
+    QFont selectedFont;
+    QString font_size;
+    QString theme;
+    QString path;
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -38,9 +43,11 @@ private slots:
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
     // load data from folder 
-    void loadNotes();
+    void loadNotes(const QDir &dir);
     void loadTasks();
     void loadProjects();
+
+    void setFontPr1();
 
 private:
     QWidget *centralWidget;
@@ -85,13 +92,19 @@ private:
     // projects tab
     
     QLabel *projectsMainLabel;
+    QToolButton *projectsMenuButton;
+    QMenu *projectsMenu;
+
+
+    QLabel *fProjects;
+    QLabel *flProjects;
+    QLabel *sProjects;
+    QLabel *nsProjects;
 
     QListWidget *notStartedProjects;
     QListWidget *startedProjects;
     QListWidget *finishedProjects;
     QListWidget *finishlineProjects;
-    
-    QToolButton *projectsMenuButton;
     
     SettingsWindow *settingsWindow;
 

@@ -132,15 +132,153 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
     }
 }
 
+void MainWindow::loadNotes(const QDir &dir) {
+/*
+    QApplication::processEvents();
+    QStringList listFiles =
+        dir.entryList("*.md", QDir::Files);
 
-void MainWindow::loadNotes() {
+    foreach (QString file, listFiles) {
+        notesList->addItem(file);
+        // m_ptxtResult->append(dir.absoluteFilePath(file));
+        // total_files += 1;
+    }
 
+    QStringList listDir = dir.entryList(QDir::Dirs);
+
+    foreach (QString subdir, listDir) {
+        if (subdir == "." || subdir == "..") {
+            continue;
+        }
+        loadNotes(QDir(dir.absoluteFilePath(subdir)));
+    }
+*/
 }
 
-void MainWindow::loadTasks() {
+void MainWindow::loadTasks() {}
 
-}
+void MainWindow::loadProjects() {}
 
-void MainWindow::loadProjects() {
+void MainWindow::setFontPr1() {
+    mainTitle->setFont(selectedFont);
+
+    openSettingsBtn->setFont(selectedFont);
+    openSettingsBtn->setStyleSheet("font-size: " + font_size + "pt;");
+
+    syncDataBtn->setFont(selectedFont);
+    syncDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
+
+    openFolderBtn->setFont(selectedFont);
+    openFolderBtn->setStyleSheet("font-size: " + font_size + "pt;");
+
+    notesList->setFont(selectedFont);
+    notesList->setStyleSheet("font-size: " + font_size + "pt;");
+
+    menuButton->setFont(selectedFont);
+    menuButton->setStyleSheet("font-size: " + font_size + "pt;");
+
+    noteName->setFont(selectedFont);
+    noteName->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
+
+    mdPreview->setFont(selectedFont);
+    mdPreview->setStyleSheet("font-size: " + font_size + "pt;");
+
+    noteEdit->setFont(selectedFont);
+    noteEdit->setStyleSheet("font-size: " + font_size + "pt;");
+
+    timeLabel->setFont(selectedFont);
+    timeLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
+
+    noteNameLabel->setFont(selectedFont);
+    noteNameLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
+
+    incompleteTasks->setStyleSheet(
+        "background-color: rgba(255, 117, 127, 180); color: #000000; "
+        "border-width: 0px; border-color: rgb(255, 117, 127); "
+        "font-size: " +
+        font_size + "pt;");
+
+    inprocessTasks->setStyleSheet(
+        "background-color: rgba(255, 199, 119, 180); "
+        "color: #000000; text-decoration: underline; "
+        "border-width: 0px; "
+        "font-size: " +
+        font_size +
+        "pt;"
+        "border-color: rgb(255, 199, 119);");
+
+    completeTasks->setStyleSheet(
+        "background-color: rgba(195, 232, 141, 180); "
+        "color: #000000; text-decoration: "
+        "line-through; border-width: 0px; "
+        "font-size: " +
+        font_size +
+        "pt;"
+        "border-color: rgb(195, 232, 141);");
+
+    taskText->setFont(selectedFont);
+    taskText->setStyleSheet("font-size: " + font_size + "pt;");
+
+    addTask->setFont(selectedFont);
+    addTask->setStyleSheet("font-size: " + font_size + "pt;");
+
+    rmTask->setFont(selectedFont);
+    rmTask->setStyleSheet("font-size: " + font_size + "pt;");
+
+    notStartedProjects->setStyleSheet(
+        "background-color: rgba(255, 117, 127, "
+        "180); color: #000000; border-width: 0px; "
+        "border-color: #ff757f; "
+        "font-size: " +
+        font_size + "pt;");
+
+    nsProjects->setFont(selectedFont);
+
+    sProjects->setFont(selectedFont);
+
+    startedProjects->setStyleSheet(
+        "background-color: rgba(255, 199, 119, 180); color: #000000; "
+        "border-width: 0px; border-color: #ffc777; "
+        "font-size: " +
+        font_size + "pt;");
+
+    flProjects->setFont(selectedFont);
+
+    finishlineProjects->setStyleSheet(
+        "background-color: rgba(130, 170, 255, "
+        "180); color: #000000; border-width: 0px; "
+        "border-color: #82aaff; "
+        "font-size: " +
+        font_size + "pt;");
+
+    fProjects->setFont(selectedFont);
+
+    finishedProjects->setStyleSheet(
+        "background-color: rgba(195, 232, 141, 180); color: #000000; "
+        "border-width: 0px; border-color: #c3e88d; "
+        "font-size: " +
+        font_size + "pt;");
+
+    projectsMainLabel->setFont(selectedFont);
+    notStartedProjects->setFont(selectedFont);
+    startedProjects->setFont(selectedFont);
+    finishlineProjects->setFont(selectedFont);
+    finishedProjects->setFont(selectedFont);
+
+    projectsMenuButton->setFont(selectedFont);
+
+    projectsMenu->setFont(selectedFont);
+
+    tabs->setFont(selectedFont);
+    // tabs->setStyleSheet("font-size: " + font_size + "pt;");
+
+    incompleteTasks->setFont(selectedFont);
+    inprocessTasks->setFont(selectedFont);
+    completeTasks->setFont(selectedFont);
+
+    label_1->setFont(selectedFont);
+    label_2->setFont(selectedFont);
+    label_3->setFont(selectedFont);
+
 
 }

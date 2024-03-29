@@ -12,12 +12,20 @@ class SettingsWindow : public QMainWindow {
     ~SettingsWindow();
     QSettings *globalSettings;
 
+    QFont selectedFont;
+    QString font_size;
+    QString theme;
+    QString path;
+
    private slots:
     void closeEvent(QCloseEvent *event);
     void QuitW();
     void checkUpdates();
     void saveData();
     void fopenFolder();
+
+    void setFontPr2();
+
 
    private:
     QWidget *centralWidget;
