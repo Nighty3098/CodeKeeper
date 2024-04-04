@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     theme = globalSettings->value("theme").value<QString>();
 
     path = globalSettings->value("path").value<QString>();
-    
+
     qDebug() << path;
 
     bool isVisibleNotesList =
@@ -74,10 +74,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // menu
     menuButton = new QToolButton;
-    // menuButton->setIcon(QIcon(":/menu.png"));
     menuButton->setText("...");
     menuButton->setPopupMode(QToolButton::InstantPopup);
-    // menuButton->setFixedSize(40, 30);
 
     QMenu *menu = new QMenu(menuButton);
     menu->setFont(selectedFont);
@@ -105,13 +103,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // other
     noteName = new QLineEdit();
     noteName->setFixedHeight(30);
-    noteName->setPlaceholderText(" Note name ...");
+    noteName->setPlaceholderText(" Doc name ...");
 
     mdPreview = new QTextBrowser();
     mdPreview->setVisible(false);
 
     noteEdit = new QMarkdownTextEdit();
-    noteEdit->setPlaceholderText(" Note ...");
+    noteEdit->setPlaceholderText(" Write ...");
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
 
     timeLabel = new QLabel(getCurrentDateTimeString());
@@ -120,23 +118,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteNameLabel = new QLabel("Note");
     noteNameLabel->setAlignment(Qt::AlignCenter);
 
-    // md preview
-    // connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
-    // &MainWindow::updateMDPreview);
-
     // update title
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::setHeader);
 
     notesL4->addWidget(menuButton);
     notesL4->addWidget(noteNameLabel);
-    notesL4->addWidget(timeLabel);
+    // notesL4->addWidget(timeLabel);
 
-    // notesL3->addWidget(noteName);
-    //  notesL3->addWidget(menuButton);
-
-    // notesL2->addLayout(notesL4);
-    // notesL2->addLayout(notesL3);
     notesL2->addWidget(noteEdit);
 
     notesL1->addWidget(notesList);
@@ -201,8 +190,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     rmTask = new QPushButton(" - ");
     rmTask->setFixedSize(40, 30);
 
-
-
     incompleteLayout->addWidget(label_1);
     incompleteLayout->addWidget(incompleteTasks);
 
@@ -236,7 +223,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     projectsMainLabel = new QLabel("Projects");
     projectsMainLabel->setAlignment(Qt::AlignCenter);
-    projectsMainLabel->setStyleSheet("font-size: 32px;");
 
     nsProjects = new QLabel("Not started");
     nsProjects->setAlignment(Qt::AlignHCenter);
@@ -274,8 +260,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     finishedProjects->setWordWrap(true);
     finishedProjects->setSpacing(5);
 
-
-
     // actions
     // menu
     projectsMenuButton = new QToolButton;
@@ -290,12 +274,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         QPixmap(":/new.png"), "New project", this, SLOT(createProject()));
     QAction *rmProject = projectsMenu->addAction(
         QPixmap(":/delete.png"), "Remove project", this, SLOT(removeProject()));
-
-    // projectsMenu->addSeparator();
-
-    // QAction *showAddInfo = projectsMenu->addAction("Show additional info");
-    // showAddInfo->setCheckable(true);
-    // showAddInfo->setChecked(false);
 
     projectsMenuButton->setMenu(projectsMenu);
 
@@ -375,7 +353,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // ========================================================
     // set font and font size
 
-
     // tasks
     connect(addTask, SIGNAL(clicked()), this, SLOT(addNewTask()));
     connect(rmTask, SIGNAL(clicked()), this, SLOT(removeTask()));
@@ -385,10 +362,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             SLOT(openSettingsWindow()));
 
     connect(openFolderBtn, SIGNAL(clicked()), this, SLOT(openFolder()));
-
-
-
-
 
     connect(notStartedProjects, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
@@ -409,8 +382,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mainLayout->addWidget(tabs);
 
     loadNotes(QDir(path));
+    loadTasks();
+    loadProjects();
     setFontPr1();
-    // openNotesFolder();
 }
 
 MainWindow::~MainWindow() {

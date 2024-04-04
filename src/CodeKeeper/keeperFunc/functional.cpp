@@ -57,9 +57,6 @@ void MainWindow::hideNotesList() {
 }
 
 void MainWindow::showPreview() {
-    // QSyntaxHighlighter *highlighter = new QSyntaxHighlighter(QTextDocument);
-    // highlighter->setDocument(mdPreview->document());
-
     mdPreview->setVisible(!mdPreview->isVisible());
     globalSettings->setValue("isVisiblePreview", mdPreview->isVisible());
 
@@ -133,26 +130,9 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
 }
 
 void MainWindow::loadNotes(const QDir &dir) {
-/*
     QApplication::processEvents();
-    QStringList listFiles =
-        dir.entryList("*.md", QDir::Files);
+    QString pattern = "*.md";
 
-    foreach (QString file, listFiles) {
-        notesList->addItem(file);
-        // m_ptxtResult->append(dir.absoluteFilePath(file));
-        // total_files += 1;
-    }
-
-    QStringList listDir = dir.entryList(QDir::Dirs);
-
-    foreach (QString subdir, listDir) {
-        if (subdir == "." || subdir == "..") {
-            continue;
-        }
-        loadNotes(QDir(dir.absoluteFilePath(subdir)));
-    }
-*/
 }
 
 void MainWindow::loadTasks() {}
@@ -161,6 +141,10 @@ void MainWindow::loadProjects() {}
 
 void MainWindow::setFontPr1() {
     mainTitle->setFont(selectedFont);
+
+    projectsMainLabel->setFont(selectedFont);
+    projectsMainLabel->setStyleSheet("font-size: " + font_size +
+                                     "pt; color: #8ebecf;");
 
     openSettingsBtn->setFont(selectedFont);
     openSettingsBtn->setStyleSheet("font-size: " + font_size + "pt;");
@@ -190,7 +174,8 @@ void MainWindow::setFontPr1() {
     timeLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
     noteNameLabel->setFont(selectedFont);
-    noteNameLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
+    noteNameLabel->setStyleSheet("font-size: " + font_size +
+                                 "pt; color: #8ebecf;");
 
     incompleteTasks->setStyleSheet(
         "background-color: rgba(255, 117, 127, 180); color: #000000; "
@@ -270,7 +255,7 @@ void MainWindow::setFontPr1() {
     projectsMenu->setFont(selectedFont);
 
     tabs->setFont(selectedFont);
-    // tabs->setStyleSheet("font-size: " + font_size + "pt;");
+    tabs->setStyleSheet("font-size: " + font_size + "pt;");
 
     incompleteTasks->setFont(selectedFont);
     inprocessTasks->setFont(selectedFont);
@@ -279,6 +264,4 @@ void MainWindow::setFontPr1() {
     label_1->setFont(selectedFont);
     label_2->setFont(selectedFont);
     label_3->setFont(selectedFont);
-
-
 }

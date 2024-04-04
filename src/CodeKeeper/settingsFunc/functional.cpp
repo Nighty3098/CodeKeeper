@@ -125,5 +125,5 @@ void SettingsWindow::setFontPr2() {
     fontSize->setValue(font_size.toInt());
     themeSelector->setCurrentText(theme);
 
-
+    
 }

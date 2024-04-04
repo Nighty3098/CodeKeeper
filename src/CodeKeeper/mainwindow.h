@@ -2,14 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtWidgets>
-#include "settingswindow.h"
-#include "qmarkdowntextedit/qmarkdowntextedit.h"
 #include <QSettings>
 #include <QTextBrowser>
+#include <QtWidgets>
 
-class MainWindow : public QMainWindow
-{
+#include "qmarkdowntextedit/qmarkdowntextedit.h"
+#include "settingswindow.h"
+
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -27,22 +27,22 @@ public:
 private slots:
     void openSettingsWindow();
     void openFolder();
-    
+
     void hideNotesList();
     void showPreview();
-    
+
     void updateMDPreview();
     void setHeader();
 
     void addNewTask();
     void removeTask();
-    
+
     void createProject();
     void removeProject();
-    
+
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
-    // load data from folder 
+    // load data from folder
     void loadNotes(const QDir &dir);
     void loadTasks();
     void loadProjects();
@@ -90,11 +90,10 @@ private:
 
     // ========================================================
     // projects tab
-    
+
     QLabel *projectsMainLabel;
     QToolButton *projectsMenuButton;
     QMenu *projectsMenu;
-
 
     QLabel *fProjects;
     QLabel *flProjects;
@@ -105,8 +104,7 @@ private:
     QListWidget *startedProjects;
     QListWidget *finishedProjects;
     QListWidget *finishlineProjects;
-    
-    SettingsWindow *settingsWindow;
 
+    SettingsWindow *settingsWindow;
 };
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H
