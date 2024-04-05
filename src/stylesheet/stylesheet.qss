@@ -21,18 +21,18 @@ QMarkdownTextEdit {
     border-radius: 10px;
 }
 
-QMarkdownTextEdit::LineNumber {
+QMarkdownTextEdit::lineNumber {
     background-color: #2f334d;
     border-radius: 10px;
 }
 
-QMarkdownTextEdit::LineNumber:selected {
+QMarkdownTextEdit::lineNumber:selected {
     color: #ffffff;
     background-color: #2f334d;
     border-radius: 10px;
 }
 
-QMarkdownTextEdit::LineNumber::selected:active {
+QMarkdownTextEdit::lineNumber::selected:active {
     color: #05ff00;
     background-color: #2f334d;
     border-radius: 10px;
