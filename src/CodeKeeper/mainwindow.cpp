@@ -103,13 +103,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // other
     noteName = new QLineEdit();
     noteName->setFixedHeight(30);
-    noteName->setPlaceholderText(" Doc name ...");
+    noteName->setPlaceholderText(" Name ...");
 
     mdPreview = new QTextBrowser();
     mdPreview->setVisible(false);
 
     noteEdit = new QMarkdownTextEdit();
-    noteEdit->setPlaceholderText(" Write ...");
+    noteEdit->setPlaceholderText(" Just start typing");
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
 
     timeLabel = new QLabel(getCurrentDateTimeString());
@@ -378,6 +378,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             &MainWindow::on_listWidget_itemClicked);
     connect(completeTasks, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
+
+    // sync scroll
+    connect(noteEdit->verticalScrollBar(), &QAbstractSlider::valueChanged, [=](int value) {mdPreview->verticalScrollBar()->setValue(value);});
+    connect(mdPreview->verticalScrollBar(), &QAbstractSlider::valueChanged, [=](int value) {noteEdit->verticalScrollBar()->setValue(value);});
 
     mainLayout->addWidget(tabs);
 

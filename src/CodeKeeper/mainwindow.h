@@ -24,6 +24,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
     void openSettingsWindow();
     void openFolder();
