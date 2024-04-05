@@ -38,6 +38,10 @@ private slots:
     void addNewTask();
     void removeTask();
 
+    void createNote();
+    void removeNote();
+    void createFolder();
+
     void createProject();
     void removeProject();
 
@@ -68,6 +72,7 @@ private:
 
     QTreeWidget *notesList;
     QMarkdownTextEdit *noteEdit;
+    MarkdownHighlighter *highlighter;
     QTextBrowser *mdPreview;
     QLineEdit *noteName;
     QToolButton *menuButton;

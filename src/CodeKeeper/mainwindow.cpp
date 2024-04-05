@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-
+#include "qmarkdowntextedit/markdownhighlighter.h"
 #include <QPropertyAnimation>
 
 #include "keeperFunc/functional.cpp"
@@ -70,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setDragEnabled(true);
     notesList->setMaximumWidth(200);
 
+
     notesList->setVisible(isVisibleNotesList);
 
     // menu
@@ -81,15 +82,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menu->setFont(selectedFont);
 
     // actions for menu
-    QAction *newNote = menu->addAction(QPixmap(":/new.png"), "New Note");
-    QAction *rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note");
+    QAction *newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()));
+    QAction *rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note", this, SLOT(removeNote()));
     QAction *newFolder =
-        menu->addAction(QPixmap(":/new_folder.png"), "New folder");
+        menu->addAction(QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
 
     menu->addSeparator();
 
-    QAction *showList =
-        menu->addAction("Show notes list", this, SLOT(hideNotesList()));
+    QAction *showList = menu->addAction("Show notes list", this, SLOT(hideNotesList()));
     showList->setCheckable(true);
     showList->setChecked(notesList->isVisible());
 
@@ -107,10 +107,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     mdPreview = new QTextBrowser();
     mdPreview->setVisible(false);
+    mdPreview->setOpenLinks(true);
+    mdPreview->setOpenExternalLinks(true);
 
     noteEdit = new QMarkdownTextEdit();
     noteEdit->setPlaceholderText(" Just start typing");
+
+    MarkdownHighlighter *highlighter = new MarkdownHighlighter(mdPreview->document());
+
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+    noteEdit->setLineNumberEnabled(true);
+    noteEdit->setLineNumbersCurrentLineColor("#fbcd76");
+    // noteEdit->setHighlightCurrentLine(true);
+    noteEdit->setHighlightingEnabled(true);
 
     timeLabel = new QLabel(getCurrentDateTimeString());
     timeLabel->setAlignment(Qt::AlignCenter);
@@ -379,9 +388,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(completeTasks, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
 
+
     // sync scroll
     connect(noteEdit->verticalScrollBar(), &QAbstractSlider::valueChanged, [=](int value) {mdPreview->verticalScrollBar()->setValue(value);});
     connect(mdPreview->verticalScrollBar(), &QAbstractSlider::valueChanged, [=](int value) {noteEdit->verticalScrollBar()->setValue(value);});
+
 
     mainLayout->addWidget(tabs);
 

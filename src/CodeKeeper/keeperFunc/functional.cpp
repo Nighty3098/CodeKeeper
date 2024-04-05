@@ -139,6 +139,24 @@ void MainWindow::loadTasks() {}
 
 void MainWindow::loadProjects() {}
 
+
+void MainWindow::createFolder() {
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    item->setText(0, "Folder");
+    item->setIcon(0, QIcon(":/folder.png"));
+    notesList->addTopLevelItem(item);
+}
+
+void MainWindow::createNote() {
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    item->setText(0, "New Note");
+    item->setIcon(0, QIcon(":/note.png"));
+    notesList->addTopLevelItem(item);
+}
+
+void MainWindow::removeNote() {}
+
+
 void MainWindow::setFontPr1() {
     mainTitle->setFont(selectedFont);
 

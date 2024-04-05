@@ -16,6 +16,27 @@ QWidget {
     background-color: #222436;
 }
 
+QMarkdownTextEdit {
+    background-color: #2f334d;
+    border-radius: 10px;
+}
+
+QMarkdownTextEdit::LineNumber {
+    background-color: #2f334d;
+    border-radius: 10px;
+}
+
+QMarkdownTextEdit::LineNumber:selected {
+    color: #ffffff;
+    background-color: #2f334d;
+    border-radius: 10px;
+}
+
+QMarkdownTextEdit::LineNumber::selected:active {
+    color: #05ff00;
+    background-color: #2f334d;
+    border-radius: 10px;
+}
 
 
 QFileDialog {
