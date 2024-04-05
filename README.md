@@ -10,6 +10,7 @@
   - [X] - Project creation functionality
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
+  - [ ] - Multilang
   - [ ] - Crossplatform app
     - [ ] - Linux ( AppImage )
     - [ ] - Windows
