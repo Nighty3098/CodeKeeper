@@ -11,6 +11,7 @@
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
   - [ ] - Multilang
+  - [ ] - Fix visual bugs
   - [ ] - Crossplatform app
     - [ ] - Linux ( AppImage )
     - [ ] - Windows
