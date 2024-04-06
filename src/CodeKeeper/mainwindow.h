@@ -31,6 +31,7 @@ private slots:
 
     void hideNotesList();
     void showPreview();
+    void showFolders();
 
     void updateMDPreview();
     void setHeader();
@@ -40,6 +41,7 @@ private slots:
 
     void createNote();
     void removeNote();
+    void removeFolder();
     void createFolder();
 
     void createProject();
@@ -70,7 +72,8 @@ private:
     // ========================================================
     // notes tab
 
-    QTreeWidget *notesList;
+    QListWidget *foldersList;
+    QListWidget *notesList;
     QMarkdownTextEdit *noteEdit;
     MarkdownHighlighter *highlighter;
     QTextBrowser *mdPreview;

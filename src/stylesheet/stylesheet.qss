@@ -17,6 +17,7 @@ QWidget {
 }
 
 QMarkdownTextEdit {
+    line-height: 10px;
     background-color: #2f334d;
     border-radius: 10px;
 }
@@ -232,6 +233,7 @@ QPlainTextEdit {
 }
 
 QTextBrowser {
+        line-height: 10px;
         background-color: #2f334d;
         selection-background-color: #999999;
         selection-color: #c8d3f5;

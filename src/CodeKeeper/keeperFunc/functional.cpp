@@ -64,6 +64,11 @@ void MainWindow::showPreview() {
             &MainWindow::updateMDPreview);
 }
 
+void MainWindow::showFolders() {
+    foldersList->setVisible(!foldersList->isVisible());
+    globalSettings->setValue("isVisibleFoldersList", foldersList->isVisible());
+}
+
 void MainWindow::updateMDPreview() {
     QString text = noteEdit->toPlainText();
 
@@ -119,7 +124,7 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
     QListWidget *lists[] = {notStartedProjects, startedProjects,
                             finishlineProjects, finishedProjects,
                             incompleteTasks,    inprocessTasks,
-                            completeTasks};
+                            completeTasks, foldersList};
 
     for (QListWidget *list : lists) {
         QListWidgetItem *selectedItem = list->currentItem();
@@ -132,30 +137,37 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
 void MainWindow::loadNotes(const QDir &dir) {
     QApplication::processEvents();
     QString pattern = "*.md";
-
 }
 
 void MainWindow::loadTasks() {}
 
 void MainWindow::loadProjects() {}
 
-
 void MainWindow::createFolder() {
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-    item->setText(0, "Folder");
-    item->setIcon(0, QIcon(":/folder.png"));
-    notesList->addTopLevelItem(item);
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setText("Folder");
+    item->setIcon(QIcon(":/folder.png"));
+    foldersList->addItem(item);
 }
 
 void MainWindow::createNote() {
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-    item->setText(0, "New Note");
-    item->setIcon(0, QIcon(":/note.png"));
-    notesList->addTopLevelItem(item);
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setText("New Note");
+    item->setIcon(QIcon(":/note.png"));
+    notesList->addItem(item);
 }
 
-void MainWindow::removeNote() {}
+void MainWindow::removeFolder() {
+    QListWidgetItem *currentItem = foldersList->currentItem();
 
+    delete currentItem;
+}
+
+void MainWindow::removeNote() {
+    QListWidgetItem *currentItem = notesList->currentItem();
+
+    delete currentItem;
+}
 
 void MainWindow::setFontPr1() {
     mainTitle->setFont(selectedFont);
@@ -174,7 +186,10 @@ void MainWindow::setFontPr1() {
     openFolderBtn->setStyleSheet("font-size: " + font_size + "pt;");
 
     notesList->setFont(selectedFont);
-    notesList->setStyleSheet("font-size: " + font_size + "pt;");
+    notesList->setStyleSheet("font-size: " + font_size + "pt; background-color: #545c7e;");
+
+    foldersList->setFont(selectedFont);
+    foldersList->setStyleSheet("font-size: " + font_size + "pt; background-color: #545c7e;");
 
     menuButton->setFont(selectedFont);
     menuButton->setStyleSheet("font-size: " + font_size + "pt;");

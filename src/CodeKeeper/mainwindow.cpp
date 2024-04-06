@@ -1,8 +1,9 @@
 #include "mainwindow.h"
-#include "qmarkdowntextedit/markdownhighlighter.h"
+
 #include <QPropertyAnimation>
 
 #include "keeperFunc/functional.cpp"
+#include "qmarkdowntextedit/markdownhighlighter.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
@@ -27,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         globalSettings->value("isVisibleNotesList", true).toBool();
     bool isVisiblePreview =
         globalSettings->value("isVisiblePreview", false).toBool();
+    bool isVisibleFolders =
+        globalSettings->value("isVisibleFolders", true).toBool();
 
     // ========================================================
 
@@ -61,44 +64,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QHBoxLayout *notesL3 = new QHBoxLayout;
     QHBoxLayout *notesL4 = new QHBoxLayout;
 
-    notesList = new QTreeWidget();
-    notesList->setAnimated(true);
-    notesList->setHeaderHidden(true);
+    notesList = new QListWidget();
     notesList->setWordWrap(true);
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
     notesList->setDefaultDropAction(Qt::MoveAction);
     notesList->setDragEnabled(true);
     notesList->setMaximumWidth(200);
 
+    foldersList = new QListWidget();
+    foldersList->setWordWrap(true);
+    foldersList->setDragDropMode(QAbstractItemView::DragDrop);
+    foldersList->setDefaultDropAction(Qt::MoveAction);
+    foldersList->setDragEnabled(true);
+    foldersList->setMaximumWidth(200);
 
     notesList->setVisible(isVisibleNotesList);
-
-    // menu
-    menuButton = new QToolButton;
-    menuButton->setText("...");
-    menuButton->setPopupMode(QToolButton::InstantPopup);
-
-    QMenu *menu = new QMenu(menuButton);
-    menu->setFont(selectedFont);
-
-    // actions for menu
-    QAction *newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()));
-    QAction *rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note", this, SLOT(removeNote()));
-    QAction *newFolder =
-        menu->addAction(QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
-
-    menu->addSeparator();
-
-    QAction *showList = menu->addAction("Show notes list", this, SLOT(hideNotesList()));
-    showList->setCheckable(true);
-    showList->setChecked(notesList->isVisible());
-
-    QAction *showPreview =
-        menu->addAction("Show md preview", this, SLOT(showPreview()));
-    showPreview->setCheckable(true);
-    showPreview->setChecked(false);
-
-    menuButton->setMenu(menu);
+    foldersList->setVisible(isVisibleFolders);
 
     // other
     noteName = new QLineEdit();
@@ -113,12 +94,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteEdit = new QMarkdownTextEdit();
     noteEdit->setPlaceholderText(" Just start typing");
 
-    MarkdownHighlighter *highlighter = new MarkdownHighlighter(mdPreview->document());
+    MarkdownHighlighter *highlighter =
+        new MarkdownHighlighter(mdPreview->document());
 
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
     noteEdit->setLineNumberEnabled(true);
     noteEdit->setLineNumbersCurrentLineColor("#fbcd76");
-    // noteEdit->setHighlightCurrentLine(true);
+    noteEdit->setLineWidth(font_size.toInt());
     noteEdit->setHighlightingEnabled(true);
 
     timeLabel = new QLabel(getCurrentDateTimeString());
@@ -131,12 +113,51 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::setHeader);
 
+    // menu
+    menuButton = new QToolButton;
+    menuButton->setText("...");
+    menuButton->setPopupMode(QToolButton::InstantPopup);
+
+    QMenu *menu = new QMenu(menuButton);
+    menu->setFont(selectedFont);
+
+    // actions for menu
+
+    QAction *newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this,
+                                       SLOT(createNote()));
+    QAction *rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note", this,
+                                      SLOT(removeNote()));
+    QAction *newFolder = menu->addAction(
+        QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
+    QAction *rmFolder = menu->addAction(QPixmap(":/delete.png"), "RM folder",
+                                        this, SLOT(removeFolder()));
+
+    menu->addSeparator();
+
+    QAction *showFolders =
+        menu->addAction("Show folders list", this, SLOT(showFolders()));
+    showFolders->setCheckable(true);
+    showFolders->setChecked(notesList->isVisible());
+
+    QAction *showList =
+        menu->addAction("Show notes list", this, SLOT(hideNotesList()));
+    showList->setCheckable(true);
+    showList->setChecked(notesList->isVisible());
+
+    QAction *showPreview =
+        menu->addAction("Show md preview", this, SLOT(showPreview()));
+    showPreview->setCheckable(true);
+    showPreview->setChecked(mdPreview->isVisible());
+
+    menuButton->setMenu(menu);
+
     notesL4->addWidget(menuButton);
     notesL4->addWidget(noteNameLabel);
     // notesL4->addWidget(timeLabel);
 
     notesL2->addWidget(noteEdit);
 
+    notesL1->addWidget(foldersList);
     notesL1->addWidget(notesList);
     notesL1->addLayout(notesL2);
     notesL1->addWidget(mdPreview);
@@ -388,11 +409,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(completeTasks, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
 
-
     // sync scroll
-    connect(noteEdit->verticalScrollBar(), &QAbstractSlider::valueChanged, [=](int value) {mdPreview->verticalScrollBar()->setValue(value);});
-    connect(mdPreview->verticalScrollBar(), &QAbstractSlider::valueChanged, [=](int value) {noteEdit->verticalScrollBar()->setValue(value);});
-
+    // connect(noteEdit->verticalScrollBar(), &QAbstractSlider::valueChanged,
+    // [=](int value)
+    // {mdPreview->verticalScrollBar()->setSliderPosition(value);});
+    // connect(mdPreview->verticalScrollBar(), &QAbstractSlider::valueChanged,
+    // [=](int value)
+    // {noteEdit->verticalScrollBar()->setSliderPosition(value);});
 
     mainLayout->addWidget(tabs);
 
