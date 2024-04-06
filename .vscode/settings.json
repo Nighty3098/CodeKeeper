@@ -1,0 +1,65 @@
+{
+    "workbench.colorTheme": "August - Night Owl",
+    "workbench.iconTheme": "catppuccin-perfect-mocha",
+    "editor.fontFamily": "Maple Mono",
+    "editor.fontLigatures": true,
+    "workbench.productIconTheme": "fluent-icons",
+    "animations.Install-Method": "Apc Customize UI++",
+    "apc.imports": [
+        "file:///home/night/.vscode/extensions/brandonkirbyson.vscode-animations-2.0.1/dist/updateHandler.js"
+    ],
+
+
+    "editor.wrappingIndent": "same",
+    "editor.folding": false,
+    "editor.smoothScrolling": true,
+    "editor.minimap.enabled": false,
+    "editor.fontWeight": "normal",
+    "editor.linkedEditing": true,
+    "editor.fontSize": 14,
+    "editor.multiCursorModifier": "alt",
+    "editor.minimap.enabled": false,
+    "editor.glyphMargin": false,
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+
+    "window.menuBarVisibility": "compact",
+    "window.dialogStyle": "custom",
+    "window.titleBarStyle": "custom",
+    "window.density.editorTabHeight": "compact",
+    "window.commandCenter": false,
+    "workbench.layoutControl.enabled" : false,
+    "workbench.editor.enablePreview": false,
+    "workbench.statusBar.visible": false,
+
+
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.fontFamily": "FiraCode Nerd font Mono",
+    "terminal.external.linuxExec": "kitty",
+    "terminal.integrated.cursorStyle": "line",
+    "workbench.settings.applyToAllProfiles": [
+        "monospace"
+    ],
+
+    "html.autoClosingTags": true,
+    "javascript.autoClosingTags": true,
+    "typescript.autoClosingTags": true,
+
+    "accessibility.dimUnfocused.opacity": 0.1,
+    "cmake.configureOnOpen": true,
+    "animations.Enabled": true,
+    "editor.detectIndentation": false,
+
+    "editor.cursorBlinking": "expand",
+    "editor.cursorStyle": "line-thin",
+    "editor.cursorSmoothCaretAnimation": "explicit",
+
+    "explorer.confirmDragAndDrop": false,
+
+    "workbench.editor.tabSizing": "shrink",
+    "files.associations": {
+        "ios": "cpp",
+        "camera": "cpp",
+        "graphicscontext": "cpp",
+        "viewport": "cpp"
+    },
+}
