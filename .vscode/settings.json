@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "August - Night Owl",
+    "workbench.colorTheme": "Palenight Italic",
     "workbench.iconTheme": "catppuccin-perfect-mocha",
     "editor.fontFamily": "Maple Mono",
     "editor.fontLigatures": true,
@@ -23,8 +23,8 @@
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
 
     "window.menuBarVisibility": "compact",
-    "window.dialogStyle": "custom",
     "window.titleBarStyle": "custom",
+    "window.dialogStyle": "custom",
     "window.density.editorTabHeight": "compact",
     "window.commandCenter": false,
     "workbench.layoutControl.enabled" : false,
@@ -60,6 +60,17 @@
         "ios": "cpp",
         "camera": "cpp",
         "graphicscontext": "cpp",
-        "viewport": "cpp"
+        "viewport": "cpp",
+        "__locale": "cpp",
+        "math": "cpp",
+        "valuemap": "cpp",
+        "valueobject": "cpp",
+        "*.inc": "cpp",
+        "chrono": "cpp",
+        "optional": "cpp",
+        "format": "cpp",
+        "system_error": "cpp",
+        "__node_handle": "cpp",
+        "*.tcc": "cpp"
     },
 }
