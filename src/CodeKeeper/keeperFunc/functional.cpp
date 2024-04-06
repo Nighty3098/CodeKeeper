@@ -124,7 +124,7 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
     QListWidget *lists[] = {notStartedProjects, startedProjects,
                             finishlineProjects, finishedProjects,
                             incompleteTasks,    inprocessTasks,
-                            completeTasks, foldersList};
+                            completeTasks,      foldersList};
 
     for (QListWidget *list : lists) {
         QListWidgetItem *selectedItem = list->currentItem();
@@ -186,10 +186,12 @@ void MainWindow::setFontPr1() {
     openFolderBtn->setStyleSheet("font-size: " + font_size + "pt;");
 
     notesList->setFont(selectedFont);
-    notesList->setStyleSheet("font-size: " + font_size + "pt; background-color: #545c7e;");
+    notesList->setStyleSheet("font-size: " + font_size +
+                             "pt; background-color: rgb(84, 92, 126, 30);");
 
     foldersList->setFont(selectedFont);
-    foldersList->setStyleSheet("font-size: " + font_size + "pt; background-color: #545c7e;");
+    foldersList->setStyleSheet("font-size: " + font_size +
+                               "pt; background-color: rgb(84, 92, 126, 30);");
 
     menuButton->setFont(selectedFont);
     menuButton->setStyleSheet("font-size: " + font_size + "pt;");
@@ -211,13 +213,13 @@ void MainWindow::setFontPr1() {
                                  "pt; color: #8ebecf;");
 
     incompleteTasks->setStyleSheet(
-        "background-color: rgba(255, 117, 127, 180); color: #000000; "
+        "background-color: rgba(255, 117, 127, 160); color: #000000; "
         "border-width: 0px; border-color: rgb(255, 117, 127); "
         "font-size: " +
         font_size + "pt;");
 
     inprocessTasks->setStyleSheet(
-        "background-color: rgba(255, 199, 119, 180); "
+        "background-color: rgba(255, 199, 119, 160); "
         "color: #000000; text-decoration: underline; "
         "border-width: 0px; "
         "font-size: " +
@@ -226,7 +228,7 @@ void MainWindow::setFontPr1() {
         "border-color: rgb(255, 199, 119);");
 
     completeTasks->setStyleSheet(
-        "background-color: rgba(195, 232, 141, 180); "
+        "background-color: rgba(195, 232, 141, 160); "
         "color: #000000; text-decoration: "
         "line-through; border-width: 0px; "
         "font-size: " +
@@ -245,7 +247,7 @@ void MainWindow::setFontPr1() {
 
     notStartedProjects->setStyleSheet(
         "background-color: rgba(255, 117, 127, "
-        "180); color: #000000; border-width: 0px; "
+        "160); color: #000000; border-width: 0px; "
         "border-color: #ff757f; "
         "font-size: " +
         font_size + "pt;");
@@ -255,7 +257,7 @@ void MainWindow::setFontPr1() {
     sProjects->setFont(selectedFont);
 
     startedProjects->setStyleSheet(
-        "background-color: rgba(255, 199, 119, 180); color: #000000; "
+        "background-color: rgba(255, 199, 119, 160); color: #000000; "
         "border-width: 0px; border-color: #ffc777; "
         "font-size: " +
         font_size + "pt;");
@@ -264,7 +266,7 @@ void MainWindow::setFontPr1() {
 
     finishlineProjects->setStyleSheet(
         "background-color: rgba(130, 170, 255, "
-        "180); color: #000000; border-width: 0px; "
+        "160); color: #000000; border-width: 0px; "
         "border-color: #82aaff; "
         "font-size: " +
         font_size + "pt;");
@@ -272,7 +274,7 @@ void MainWindow::setFontPr1() {
     fProjects->setFont(selectedFont);
 
     finishedProjects->setStyleSheet(
-        "background-color: rgba(195, 232, 141, 180); color: #000000; "
+        "background-color: rgba(195, 232, 141, 160); color: #000000; "
         "border-width: 0px; border-color: #c3e88d; "
         "font-size: " +
         font_size + "pt;");
