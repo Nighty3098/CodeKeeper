@@ -3,15 +3,20 @@
 <h2 align="center">Tasks:</h2>
 
   - [X] - Basic UI
+  
   - [ ] - Saving data
     - [ ] - Saving notes to MD files
     - [ ] - Saving a list of tasks in the DB
     - [ ] - Saving a projects list  in the DB
+  
+  - [ ] - Functionality of moving notes
+  - [ ] - Task movement functionality
   - [X] - Project creation functionality
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
   - [ ] - Multilang
   - [ ] - Fix visual bugs
+  
   - [ ] - Crossplatform app
     - [ ] - Linux ( AppImage )
     - [ ] - Windows
