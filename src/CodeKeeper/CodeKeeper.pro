@@ -13,6 +13,7 @@ SOURCES += \
     mainwindow.cpp \
     settingswindow.cpp \
     settingsFunc/functional.cpp \
+    keeperFunc/project_edit.cpp \
     keeperFunc/functional.cpp
 
 HEADERS += \

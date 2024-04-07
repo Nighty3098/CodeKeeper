@@ -99,7 +99,7 @@ void MainWindow::openFolder() {
 
 void MainWindow::createProject() {
     QString newProjectTeamplate =
-        "New project\nGitHub\n" + getCurrentDateTimeString();
+        "New project\nGitHub\nDocumentation: \n" + getCurrentDateTimeString();
     notStartedProjects->addItem(newProjectTeamplate);
 }
 
@@ -166,6 +166,7 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetIte
         dialog.exec();
     }
 }
+
 
 void MainWindow::updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress) {
     if (tasksTab->currentIndex() == 2) {
