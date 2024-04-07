@@ -48,6 +48,10 @@ private slots:
     void createProject();
     void removeProject();
 
+    QString formatText(const QString &text);
+    QString unformatText(const QString &text);
+    void openProject(QListWidget *listWidget, QListWidgetItem *item);
+
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
     void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);

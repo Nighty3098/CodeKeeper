@@ -4,6 +4,7 @@
 
 #include "keeperFunc/functional.cpp"
 #include "qmarkdowntextedit/markdownhighlighter.h"
+#include "keeperFunc/project_edit.cpp"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
@@ -150,7 +151,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     menuButton->setMenu(menu);
 
-    notesGLayout->addWidget(menuButton, 0, 0);
+    notesGLayout->addWidget(menuButton, 0, 5);
     notesGLayout->addWidget(noteNameLabel, 0, 2);
     notesGLayout->addWidget(timeLabel, 0, 3);
     notesGLayout->addWidget(foldersList, 1, 0);
@@ -412,6 +413,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(inprocessTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
         renameItemOnDoubleClick(completeTasks, item);
     });
+
+
+    connect(notStartedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        openProject(notStartedProjects, item);
+    });
+    connect(startedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        openProject(startedProjects, item);
+    });
+    connect(finishlineProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        openProject(finishlineProjects, item);
+    });
+    connect(finishedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        openProject(finishedProjects, item);
+    });
+
 
 
     // sync scroll
