@@ -19,17 +19,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
-
     path = globalSettings->value("path").value<QString>();
 
     qDebug() << path;
 
     bool isVisibleNotesList =
         globalSettings->value("isVisibleNotesList", true).toBool();
-    bool isVisiblePreview =
-        globalSettings->value("isVisiblePreview", false).toBool();
     bool isVisibleFolders =
         globalSettings->value("isVisibleFolders", true).toBool();
+    bool isVisiblePreview =
+        globalSettings->value("isVisiblePreview", false).toBool();
 
     // ========================================================
 
@@ -58,11 +57,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // ========================================================
 
-    QVBoxLayout *notesL0 = new QVBoxLayout;
-    QHBoxLayout *notesL1 = new QHBoxLayout;
-    QVBoxLayout *notesL2 = new QVBoxLayout;
-    QHBoxLayout *notesL3 = new QHBoxLayout;
-    QHBoxLayout *notesL4 = new QHBoxLayout;
+    QGridLayout *notesGLayout = new QGridLayout;
 
     notesList = new QListWidget();
     notesList->setWordWrap(true);
@@ -78,16 +73,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     foldersList->setDragEnabled(true);
     foldersList->setMaximumWidth(200);
 
-    notesList->setVisible(isVisibleNotesList);
-    foldersList->setVisible(isVisibleFolders);
-
     // other
     noteName = new QLineEdit();
     noteName->setFixedHeight(30);
     noteName->setPlaceholderText(" Name ...");
 
     mdPreview = new QTextBrowser();
-    mdPreview->setVisible(false);
     mdPreview->setOpenLinks(true);
     mdPreview->setOpenExternalLinks(true);
 
@@ -103,8 +94,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteEdit->setLineWidth(font_size.toInt());
     noteEdit->setHighlightingEnabled(true);
 
+    // time label
     timeLabel = new QLabel(getCurrentDateTimeString());
     timeLabel->setAlignment(Qt::AlignCenter);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, [=]() {
+        timeLabel->setText(getCurrentDateTimeString());
+    });
+
+    timer->start(1000);
 
     noteNameLabel = new QLabel("Note");
     noteNameLabel->setAlignment(Qt::AlignCenter);
@@ -137,44 +136,59 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QAction *showFolders =
         menu->addAction("Show folders list", this, SLOT(showFolders()));
     showFolders->setCheckable(true);
-    showFolders->setChecked(notesList->isVisible());
+    showFolders->setChecked(isVisibleFolders);
 
     QAction *showList =
         menu->addAction("Show notes list", this, SLOT(hideNotesList()));
     showList->setCheckable(true);
-    showList->setChecked(notesList->isVisible());
+    showList->setChecked(isVisibleNotesList);
 
     QAction *showPreview =
         menu->addAction("Show md preview", this, SLOT(showPreview()));
     showPreview->setCheckable(true);
-    showPreview->setChecked(mdPreview->isVisible());
+    showPreview->setChecked(isVisiblePreview);
 
     menuButton->setMenu(menu);
 
-    notesL4->addWidget(menuButton);
-    notesL4->addWidget(noteNameLabel);
-    // notesL4->addWidget(timeLabel);
+    notesGLayout->addWidget(menuButton, 0, 0);
+    notesGLayout->addWidget(noteNameLabel, 0, 2);
+    notesGLayout->addWidget(timeLabel, 0, 3);
+    notesGLayout->addWidget(foldersList, 1, 0);
+    notesGLayout->addWidget(notesList, 1, 1);
+    notesGLayout->addWidget(noteEdit, 1, 2);
+    notesGLayout->addWidget(mdPreview, 1, 3);
 
-    notesL2->addWidget(noteEdit);
-
-    notesL1->addWidget(foldersList);
-    notesL1->addWidget(notesList);
-    notesL1->addLayout(notesL2);
-    notesL1->addWidget(mdPreview);
-
-    notesL0->addLayout(notesL4);
-    notesL0->addLayout(notesL1);
+    notesList->setVisible(isVisibleNotesList);
+    foldersList->setVisible(isVisibleFolders);
+    mdPreview->setVisible(isVisiblePreview);
 
     // ========================================================
+    QGridLayout *tasksGLayout = new QGridLayout;
 
-    QVBoxLayout *tasksL1 = new QVBoxLayout;
-    QHBoxLayout *tasksL2 = new QHBoxLayout;
-    QHBoxLayout *tasksL3 = new QHBoxLayout;
+    tasksMenuBtn = new QToolButton;
+    tasksMenuBtn->setText("...");
+    tasksMenuBtn->setFixedSize(30, 20);
+    tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
+    
+    QMenu *tasksMenu = new QMenu(tasksMenuBtn);
+    tasksMenu->setFont(selectedFont);
 
-    QVBoxLayout *incompleteLayout = new QVBoxLayout;
+    QAction *addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task", this,
+                                       SLOT(addNewTask()));
+    QAction *rmTask = tasksMenu->addAction(QPixmap(":/delete.png"), "Delete task", this,
+                                      SLOT(removeTask()));
+
+    tasksMenuBtn->setMenu(tasksMenu);
+
+    tasksProgress = new QProgressBar();
+    tasksProgress->setMaximum(100);
+    tasksProgress->setMaximumWidth(400);
+    tasksProgress->setFixedHeight(20);
+    tasksProgress->setAlignment(Qt::AlignCenter);
+
     label_1 = new QLabel("Incomplete");
-    label_1->setFixedHeight(20);
-    // label_1->setStyleSheet("color: #b9676b;");
+    label_1->setStyleSheet("font-size: 16px;");
+    label_1->setFixedHeight(25);
     label_1->setAlignment(Qt::AlignHCenter);
 
     incompleteTasks = new QListWidget();
@@ -184,10 +198,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     incompleteTasks->setWordWrap(true);
     incompleteTasks->setSpacing(5);
 
-    QVBoxLayout *inprocessLayout = new QVBoxLayout;
     label_2 = new QLabel("Inprocess");
-    // label_2->setStyleSheet("color: #e8cc91;");
-    label_2->setFixedHeight(20);
+    label_2->setStyleSheet("font-size: 16px;");
+    label_2->setFixedHeight(25);
     label_2->setAlignment(Qt::AlignHCenter);
 
     inprocessTasks = new QListWidget();
@@ -197,10 +210,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     inprocessTasks->setWordWrap(true);
     inprocessTasks->setSpacing(5);
 
-    QVBoxLayout *completeLayout = new QVBoxLayout;
     label_3 = new QLabel("Complete");
-    label_3->setFixedHeight(20);
-    // label_3->setStyleSheet("color: #9dda67;");
+    label_3->setStyleSheet("font-size: 16px;");
+    label_3->setFixedHeight(25);
     label_3->setAlignment(Qt::AlignHCenter);
 
     completeTasks = new QListWidget();
@@ -211,50 +223,32 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     completeTasks->setSpacing(5);
 
     taskText = new QLineEdit();
-    taskText->setPlaceholderText("Task...");
-    taskText->setMaximumHeight(30);
+    taskText->setPlaceholderText(" Task...");
+    taskText->setFixedHeight(30);
 
-    addTask = new QPushButton(" + ");
-    addTask->setFixedSize(40, 30);
+    tasksGLayout->addWidget(tasksMenuBtn, 0, 2);
+    tasksGLayout->addWidget(tasksProgress, 0, 1);
 
-    rmTask = new QPushButton(" - ");
-    rmTask->setFixedSize(40, 30);
+    tasksGLayout->addWidget(label_1, 1, 0);
+    tasksGLayout->addWidget(label_2, 1, 1);
+    tasksGLayout->addWidget(label_3, 1, 2);
 
-    incompleteLayout->addWidget(label_1);
-    incompleteLayout->addWidget(incompleteTasks);
+    tasksGLayout->addWidget(incompleteTasks, 2, 0);
+    tasksGLayout->addWidget(inprocessTasks, 2, 1);
+    tasksGLayout->addWidget(completeTasks, 2, 2);
 
-    inprocessLayout->addWidget(label_2);
-    inprocessLayout->addWidget(inprocessTasks);
-
-    completeLayout->addWidget(label_3);
-    completeLayout->addWidget(completeTasks);
-
-    tasksL3->addLayout(incompleteLayout);
-    tasksL3->addLayout(inprocessLayout);
-    tasksL3->addLayout(completeLayout);
-
-    tasksL2->addWidget(taskText);
-    tasksL2->addWidget(addTask);
-    tasksL2->addWidget(rmTask);
-
-    tasksL1->addLayout(tasksL3);
-    tasksL1->addLayout(tasksL2);
+    tasksGLayout->addWidget(taskText, 3, 1);
 
     // ========================================================
 
     // projects tab
-    QVBoxLayout *FinalProjectsL = new QVBoxLayout;
-
-    QVBoxLayout *projectsL1 = new QVBoxLayout;
-    QVBoxLayout *projectsL2 = new QVBoxLayout;
-
-    QHBoxLayout *projectsSubL1 = new QHBoxLayout;
-    QHBoxLayout *projectsSubL2 = new QHBoxLayout;
+    QGridLayout *projectsGLayout = new QGridLayout;
 
     projectsMainLabel = new QLabel("Projects");
     projectsMainLabel->setAlignment(Qt::AlignCenter);
 
     nsProjects = new QLabel("Not started");
+    nsProjects->setStyleSheet("font-size: 16px;");
     nsProjects->setAlignment(Qt::AlignHCenter);
     notStartedProjects = new QListWidget();
     notStartedProjects->setDragEnabled(true);
@@ -264,6 +258,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notStartedProjects->setSpacing(5);
 
     sProjects = new QLabel("Started");
+    sProjects->setStyleSheet("font-size: 16px;");
     sProjects->setAlignment(Qt::AlignHCenter);
     startedProjects = new QListWidget();
     startedProjects->setDragEnabled(true);
@@ -273,6 +268,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     startedProjects->setSpacing(5);
 
     flProjects = new QLabel("Finishline");
+    flProjects->setStyleSheet("font-size: 16px;");
     flProjects->setAlignment(Qt::AlignHCenter);
     finishlineProjects = new QListWidget();
     finishlineProjects->setDragEnabled(true);
@@ -282,6 +278,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     finishlineProjects->setSpacing(5);
 
     fProjects = new QLabel("Finished");
+    fProjects->setStyleSheet("font-size: 16px;");
     fProjects->setAlignment(Qt::AlignHCenter);
     finishedProjects = new QListWidget();
     finishedProjects->setDragEnabled(true);
@@ -307,36 +304,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     projectsMenuButton->setMenu(projectsMenu);
 
-    QHBoxLayout *headerProjectsL = new QHBoxLayout;
-    QVBoxLayout *notStartedL = new QVBoxLayout;
-    QVBoxLayout *StartedL = new QVBoxLayout;
-    QVBoxLayout *finishlineL = new QVBoxLayout;
-    QVBoxLayout *finishedL = new QVBoxLayout;
-
-    notStartedL->addWidget(nsProjects);
-    notStartedL->addWidget(notStartedProjects);
-
-    StartedL->addWidget(sProjects);
-    StartedL->addWidget(startedProjects);
-
-    finishlineL->addWidget(flProjects);
-    finishlineL->addWidget(finishlineProjects);
-
-    finishedL->addWidget(fProjects);
-    finishedL->addWidget(finishedProjects);
-
-    projectsSubL1->addLayout(notStartedL);
-    projectsSubL1->addLayout(StartedL);
-
-    projectsSubL2->addLayout(finishlineL);
-    projectsSubL2->addLayout(finishedL);
-
-    headerProjectsL->addWidget(projectsMainLabel);
-    headerProjectsL->addWidget(projectsMenuButton);
-
-    FinalProjectsL->addLayout(headerProjectsL);
-    FinalProjectsL->addLayout(projectsSubL1);
-    FinalProjectsL->addLayout(projectsSubL2);
+    projectsGLayout->addWidget(projectsMainLabel, 0, 0, 1, 0);
+    projectsGLayout->addWidget(projectsMenuButton, 0, 2);
+    projectsGLayout->addWidget(nsProjects, 1, 0);
+    projectsGLayout->addWidget(notStartedProjects, 2, 0);
+    projectsGLayout->addWidget(sProjects, 1, 1);
+    projectsGLayout->addWidget(startedProjects, 2, 1);
+    projectsGLayout->addWidget(flProjects, 3, 0);
+    projectsGLayout->addWidget(finishlineProjects, 4, 0);
+    projectsGLayout->addWidget(fProjects, 3, 1);
+    projectsGLayout->addWidget(finishedProjects, 4, 1);
 
     // ========================================================
     // tabs
@@ -360,7 +337,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *notesTab = new QWidget();
     QVBoxLayout *notesLayout = new QVBoxLayout(notesTab);
 
-    notesLayout->addLayout(notesL0);
+    notesLayout->addLayout(notesGLayout);
 
     tabs->addTab(notesTab, "Doc");
 
@@ -368,7 +345,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *tasksTab = new QWidget();
     QVBoxLayout *tasksLayout = new QVBoxLayout(tasksTab);
 
-    tasksLayout->addLayout(tasksL1);
+    tasksLayout->addLayout(tasksGLayout);
 
     tabs->addTab(tasksTab, "Tasks");
 
@@ -376,16 +353,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *projectsTab = new QWidget();
     QVBoxLayout *projectsLayout = new QVBoxLayout(projectsTab);
 
-    projectsLayout->addLayout(FinalProjectsL);
+    projectsLayout->addLayout(projectsGLayout);
 
     tabs->addTab(projectsTab, "Projects");
 
     // ========================================================
     // set font and font size
-
-    // tasks
-    connect(addTask, SIGNAL(clicked()), this, SLOT(addNewTask()));
-    connect(rmTask, SIGNAL(clicked()), this, SLOT(removeTask()));
 
     // main
     connect(openSettingsBtn, SIGNAL(clicked()), this,
@@ -408,6 +381,38 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             &MainWindow::on_listWidget_itemClicked);
     connect(completeTasks, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
+
+    connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
+            &MainWindow::updateMDPreview);
+
+    // task
+    connect(taskText, &QLineEdit::returnPressed, [=] {
+        QString text = taskText->text();
+
+        if (!text.isEmpty()) {
+            taskText->clear();
+            incompleteTasks->addItem(text);
+        } else {
+            qDebug() << "Task is empty";
+        }
+    });
+
+    connect(tabs, &QTabWidget::currentChanged, this, [=]() {
+        updateTasksProgress(tabs, incompleteTasks, inprocessTasks, completeTasks, tasksProgress);
+    });
+
+    connect(completeTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        renameItemOnDoubleClick(completeTasks, item);
+    });
+
+    connect(incompleteTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        renameItemOnDoubleClick(completeTasks, item);
+    });
+
+    connect(inprocessTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        renameItemOnDoubleClick(completeTasks, item);
+    });
+
 
     // sync scroll
     // connect(noteEdit->verticalScrollBar(), &QAbstractSlider::valueChanged,

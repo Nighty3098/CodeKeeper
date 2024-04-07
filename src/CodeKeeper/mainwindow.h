@@ -44,10 +44,13 @@ private slots:
     void removeFolder();
     void createFolder();
 
+    void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress);
     void createProject();
     void removeProject();
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
+
+    void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
 
     // load data from folder
     void loadNotes(const QDir &dir);
@@ -89,13 +92,15 @@ private:
     QListWidget *inprocessTasks;
     QListWidget *completeTasks;
 
+    QProgressBar *tasksProgress;
+    QToolButton *tasksMenuBtn;
+
     QLabel *label_1;
     QLabel *label_2;
     QLabel *label_3;
 
     QLineEdit *taskText;
-    QPushButton *addTask;
-    QPushButton *rmTask;
+
 
     // ========================================================
     // projects tab
