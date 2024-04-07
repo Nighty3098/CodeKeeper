@@ -237,7 +237,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tasksGLayout->addWidget(inprocessTasks, 2, 1);
     tasksGLayout->addWidget(completeTasks, 2, 2);
 
-    tasksGLayout->addWidget(taskText, 3, 0, 3, 3);
+    tasksGLayout->addWidget(taskText, 3, 1);
 
     // ========================================================
 
