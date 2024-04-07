@@ -221,7 +221,7 @@ QLineEdit {
 }
 
 QPlainTextEdit {
-        background-color: #2f334d;
+        background-color: #222436;
         selection-background-color: #999999;
         selection-color: #c8d3f5;
         color: #c8d3f5;
@@ -234,7 +234,7 @@ QPlainTextEdit {
 
 QTextBrowser {
         line-height: 10px;
-        background-color: #2f334d;
+        background-color: #222436;
         selection-background-color: #999999;
         selection-color: #c8d3f5;
         color: #c8d3f5;
@@ -258,7 +258,7 @@ QListWidget {
 }
 
 QListWidget::item:selected {
-    color: #c8d3f5;
+    color: #FFFFFF;
     background-color: #545c7e;
     border-radius: 5px;
 }
@@ -317,69 +317,69 @@ QProgressBar {
 
 
 QScrollBar:vertical {
-    background: #2f334d;
+    background: #222436;
     border-radius: 3px;
     width: 6px;
-    margin: 0px 0px 0px 0px;
+    margin: 3px 0px 3px 0px;
 }
 
 QScrollBar:horizontal {
-    background: #2f334d;
+    background: #222436;
     border-radius: 3px;
     height: 6px;
-    margin: 0px 0px 0px 0px;
+    margin: 0px 3px 3px 0px;
 }
 
 QScrollBar::handle:vertical {
     border-radius: 3px;
-    background: #545c7e;
-    min-height: 20px;
+    background: #666c72;
+    height: 6px;
 }
 
 QScrollBar::handle:horizontal {
     border-radius: 3px;
-    background: #545c7e;
+    background: #666c72;
     min-width: 20px;
 }
 
 QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
-    border-radius: 3px;
-    background: #82aaff;
+    border-radius: 2px;
+    background: #666c72;
 }
 
 QScrollBar::add-line, QScrollBar::sub-line {
-    border-radius: 3px;
-    background: #82aaff;
+    border-radius: 2px;
+    background: #222436;
 }
 
 QScrollBar::add-line:vertical {
-    border-radius: 3px;
+    border-radius: 2px;
     subcontrol-position: bottom;
     subcontrol-origin: margin;
     height: 0px;
 }
 
 QScrollBar::sub-line:vertical {
-    border-radius: 3px;
+    border-radius: 2px;
     subcontrol-position: top;
     subcontrol-origin: margin;
     height: 0px;
 }
 
 QScrollBar::add-line:horizontal {
-    border-radius: 3px;
+    border-radius: 2px;
     subcontrol-position: right;
     subcontrol-origin: margin;
     width: 0px;
 }
 
 QScrollBar::sub-line:horizontal {
-    border-radius: 3px;
+    border-radius: 2px;
     subcontrol-position: left;
     subcontrol-origin: margin;
     width: 0px;
 }
 
 QScrollBar::add-page, QScrollBar::sub-page {
-    background: #2f334d;
+    background: #222436;
 }

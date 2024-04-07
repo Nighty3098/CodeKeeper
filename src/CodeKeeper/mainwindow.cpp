@@ -244,13 +244,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // ========================================================
 
     // projects tab
-    QVBoxLayout *FinalProjectsL = new QVBoxLayout;
-
-    QVBoxLayout *projectsL1 = new QVBoxLayout;
-    QVBoxLayout *projectsL2 = new QVBoxLayout;
-
-    QHBoxLayout *projectsSubL1 = new QHBoxLayout;
-    QHBoxLayout *projectsSubL2 = new QHBoxLayout;
+    QGridLayout *projectsGLayout = new QGridLayout;
 
     projectsMainLabel = new QLabel("Projects");
     projectsMainLabel->setAlignment(Qt::AlignCenter);
@@ -312,36 +306,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     projectsMenuButton->setMenu(projectsMenu);
 
-    QHBoxLayout *headerProjectsL = new QHBoxLayout;
-    QVBoxLayout *notStartedL = new QVBoxLayout;
-    QVBoxLayout *StartedL = new QVBoxLayout;
-    QVBoxLayout *finishlineL = new QVBoxLayout;
-    QVBoxLayout *finishedL = new QVBoxLayout;
-
-    notStartedL->addWidget(nsProjects);
-    notStartedL->addWidget(notStartedProjects);
-
-    StartedL->addWidget(sProjects);
-    StartedL->addWidget(startedProjects);
-
-    finishlineL->addWidget(flProjects);
-    finishlineL->addWidget(finishlineProjects);
-
-    finishedL->addWidget(fProjects);
-    finishedL->addWidget(finishedProjects);
-
-    projectsSubL1->addLayout(notStartedL);
-    projectsSubL1->addLayout(StartedL);
-
-    projectsSubL2->addLayout(finishlineL);
-    projectsSubL2->addLayout(finishedL);
-
-    headerProjectsL->addWidget(projectsMainLabel);
-    headerProjectsL->addWidget(projectsMenuButton);
-
-    FinalProjectsL->addLayout(headerProjectsL);
-    FinalProjectsL->addLayout(projectsSubL1);
-    FinalProjectsL->addLayout(projectsSubL2);
+    projectsGLayout->addWidget(projectsMainLabel, 0, 0, 1, 0);
+    projectsGLayout->addWidget(projectsMenuButton, 0, 2);
+    projectsGLayout->addWidget(nsProjects, 1, 0);
+    projectsGLayout->addWidget(notStartedProjects, 2, 0);
+    projectsGLayout->addWidget(sProjects, 1, 1);
+    projectsGLayout->addWidget(startedProjects, 2, 1);
+    projectsGLayout->addWidget(flProjects, 3, 0);
+    projectsGLayout->addWidget(finishlineProjects, 4, 0);
+    projectsGLayout->addWidget(fProjects, 3, 1);
+    projectsGLayout->addWidget(finishedProjects, 4, 1);
 
     // ========================================================
     // tabs
@@ -381,7 +355,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *projectsTab = new QWidget();
     QVBoxLayout *projectsLayout = new QVBoxLayout(projectsTab);
 
-    projectsLayout->addLayout(FinalProjectsL);
+    projectsLayout->addLayout(projectsGLayout);
 
     tabs->addTab(projectsTab, "Projects");
 
