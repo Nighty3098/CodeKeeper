@@ -166,12 +166,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesL0->addLayout(notesL1);
 
     // ========================================================
+    QGridLayout *tasksGLayout = new QGridLayout;
 
-    QVBoxLayout *tasksL1 = new QVBoxLayout;
-    QHBoxLayout *tasksL2 = new QHBoxLayout;
-    QHBoxLayout *tasksL3 = new QHBoxLayout;
+    tasksMenuBtn = new QToolButton;
+    tasksMenuBtn->setText("...");
+    tasksMenuBtn->setFixedSize(30, 20);
+    tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
+    
+    QMenu *tasksMenu = new QMenu(tasksMenuBtn);
+    tasksMenu->setFont(selectedFont);
 
-    QVBoxLayout *incompleteLayout = new QVBoxLayout;
+    QAction *addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task", this,
+                                       SLOT(addNewTask()));
+    QAction *rmTask = tasksMenu->addAction(QPixmap(":/delete.png"), "Delete task", this,
+                                      SLOT(removeTask()));
+
+    tasksMenuBtn->setMenu(tasksMenu);
+
+    tasksProgress = new QProgressBar();
+    tasksProgress->setMaximum(100);
+    tasksProgress->setMaximumWidth(400);
+    tasksProgress->setFixedHeight(20);
+
     label_1 = new QLabel("Incomplete");
     label_1->setStyleSheet("font-size: 16px;");
     label_1->setFixedHeight(25);
@@ -184,7 +200,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     incompleteTasks->setWordWrap(true);
     incompleteTasks->setSpacing(5);
 
-    QVBoxLayout *inprocessLayout = new QVBoxLayout;
     label_2 = new QLabel("Inprocess");
     label_2->setStyleSheet("font-size: 16px;");
     label_2->setFixedHeight(25);
@@ -197,7 +212,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     inprocessTasks->setWordWrap(true);
     inprocessTasks->setSpacing(5);
 
-    QVBoxLayout *completeLayout = new QVBoxLayout;
     label_3 = new QLabel("Complete");
     label_3->setStyleSheet("font-size: 16px;");
     label_3->setFixedHeight(25);
@@ -211,34 +225,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     completeTasks->setSpacing(5);
 
     taskText = new QLineEdit();
-    taskText->setPlaceholderText("Task...");
-    taskText->setMaximumHeight(30);
+    taskText->setPlaceholderText(" Task...");
+    taskText->setFixedHeight(30);
 
-    addTask = new QPushButton(" + ");
-    addTask->setFixedSize(40, 30);
+    tasksGLayout->addWidget(tasksMenuBtn, 0, 2);
+    tasksGLayout->addWidget(tasksProgress, 0, 1);
 
-    rmTask = new QPushButton(" - ");
-    rmTask->setFixedSize(40, 30);
+    tasksGLayout->addWidget(label_1, 1, 0);
+    tasksGLayout->addWidget(label_2, 1, 1);
+    tasksGLayout->addWidget(label_3, 1, 2);
 
-    incompleteLayout->addWidget(label_1);
-    incompleteLayout->addWidget(incompleteTasks);
+    tasksGLayout->addWidget(incompleteTasks, 2, 0);
+    tasksGLayout->addWidget(inprocessTasks, 2, 1);
+    tasksGLayout->addWidget(completeTasks, 2, 2);
 
-    inprocessLayout->addWidget(label_2);
-    inprocessLayout->addWidget(inprocessTasks);
-
-    completeLayout->addWidget(label_3);
-    completeLayout->addWidget(completeTasks);
-
-    tasksL3->addLayout(incompleteLayout);
-    tasksL3->addLayout(inprocessLayout);
-    tasksL3->addLayout(completeLayout);
-
-    tasksL2->addWidget(taskText);
-    tasksL2->addWidget(addTask);
-    tasksL2->addWidget(rmTask);
-
-    tasksL1->addLayout(tasksL3);
-    tasksL1->addLayout(tasksL2);
+    tasksGLayout->addWidget(taskText, 3, 0, 3, 3);
 
     // ========================================================
 
@@ -372,7 +373,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *tasksTab = new QWidget();
     QVBoxLayout *tasksLayout = new QVBoxLayout(tasksTab);
 
-    tasksLayout->addLayout(tasksL1);
+    tasksLayout->addLayout(tasksGLayout);
 
     tabs->addTab(tasksTab, "Tasks");
 
@@ -386,10 +387,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // ========================================================
     // set font and font size
-
-    // tasks
-    connect(addTask, SIGNAL(clicked()), this, SLOT(addNewTask()));
-    connect(rmTask, SIGNAL(clicked()), this, SLOT(removeTask()));
 
     // main
     connect(openSettingsBtn, SIGNAL(clicked()), this,
@@ -412,6 +409,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             &MainWindow::on_listWidget_itemClicked);
     connect(completeTasks, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
+
+    // task
+    connect(taskText, &QLineEdit::returnPressed, [=] {
+        QString text = taskText->text();
+
+        if (!text.isEmpty()) {
+            taskText->clear();
+            incompleteTasks->addItem(text);
+        } else {
+            qDebug() << "Task is empty";
+        }
+    });
 
     // sync scroll
     // connect(noteEdit->verticalScrollBar(), &QAbstractSlider::valueChanged,

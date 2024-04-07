@@ -187,14 +187,17 @@ void MainWindow::setFontPr1() {
 
     notesList->setFont(selectedFont);
     notesList->setStyleSheet("font-size: " + font_size +
-                             "pt; background-color: rgb(84, 92, 126, 30);");
+                             "pt; background-color: rgba(47, 51, 77, 50);");
 
     foldersList->setFont(selectedFont);
     foldersList->setStyleSheet("font-size: " + font_size +
-                               "pt; background-color: rgb(84, 92, 126, 30);");
+                               "pt; background-color: rgba(47, 51, 77, 50);");
 
     menuButton->setFont(selectedFont);
     menuButton->setStyleSheet("font-size: " + font_size + "pt;");
+
+    tasksMenuBtn->setFont(selectedFont);
+    tasksMenuBtn->setStyleSheet("font-size: " + font_size + "pt;");
 
     noteName->setFont(selectedFont);
     noteName->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
@@ -215,18 +218,15 @@ void MainWindow::setFontPr1() {
     taskText->setFont(selectedFont);
     taskText->setStyleSheet("font-size: " + font_size + "pt;");
 
-    addTask->setFont(selectedFont);
-    addTask->setStyleSheet("font-size: " + font_size + "pt;");
-
-    rmTask->setFont(selectedFont);
-    rmTask->setStyleSheet("font-size: " + font_size + "pt;");
-
     incompleteTasks->setStyleSheet(
         "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
         "border-color: #838383;}"
+        "QListWidget::item:selected {"
+        "color: #FFFFFF;"
+        "}"
         "QListWidget::Item {"
         "background-color: rgba(255, 117, 127, 160); color: #000000; "
-        "border-width: 0px; border-color: rgb(255, 117, 127); "
+        "border-width: 0px; border-color: rgba(255, 117, 127); "
         "border-radius: 5px;"
         "font-size: " +
         font_size +
@@ -236,6 +236,9 @@ void MainWindow::setFontPr1() {
     inprocessTasks->setStyleSheet(
         "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
         "border-color: #838383;}"
+        "QListWidget::item:selected {"
+        "color: #FFFFFF;"
+        "}"
         "QListWidget::Item {"
         "background-color: rgba(255, 199, 119, 160); "
         "color: #000000; text-decoration: underline; "
@@ -249,6 +252,9 @@ void MainWindow::setFontPr1() {
     completeTasks->setStyleSheet(
         "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
         "border-color: #838383;}"
+        "QListWidget::item:selected {"
+        "color: #FFFFFF;"
+        "}"
         "QListWidget::Item {"
         "background-color: rgba(195, 232, 141, 160); "
         "color: #000000;"
@@ -262,6 +268,9 @@ void MainWindow::setFontPr1() {
     notStartedProjects->setStyleSheet(
         "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
         "border-color: #838383;}"
+        "QListWidget::item:selected {"
+        "color: #FFFFFF;"
+        "}"
         "QListWidget::Item {"
         "background-color: rgba(255, 117, 127, 160);"
         "color: #000000; border-width: 0px; "
@@ -275,6 +284,9 @@ void MainWindow::setFontPr1() {
     startedProjects->setStyleSheet(
         "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
         "border-color: #838383;}"
+        "QListWidget::item:selected {"
+        "color: #FFFFFF;"
+        "}"
         "QListWidget::Item {"
         "background-color: rgba(255, 199, 119, 160); color: #000000; "
         "border-radius: 5px;"
@@ -287,6 +299,9 @@ void MainWindow::setFontPr1() {
     finishlineProjects->setStyleSheet(
         "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
         "border-color: #838383;}"
+        "QListWidget::item:selected {"
+        "color: #FFFFFF;"
+        "}"
         "QListWidget::Item {"
         "background-color: rgba(130, 170, 255, "
         "160); color: #000000; border-width: 0px; "
@@ -300,6 +315,9 @@ void MainWindow::setFontPr1() {
     finishedProjects->setStyleSheet(
         "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
         "border-color: #838383;}"
+        "QListWidget::item:selected {"
+        "color: #FFFFFF;"
+        "}"
         "QListWidget::Item {"
         "background-color: rgba(195, 232, 141, 160); color: #000000; "
         "border-radius: 5px;"

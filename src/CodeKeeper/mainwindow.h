@@ -89,13 +89,15 @@ private:
     QListWidget *inprocessTasks;
     QListWidget *completeTasks;
 
+    QProgressBar *tasksProgress;
+    QToolButton *tasksMenuBtn;
+
     QLabel *label_1;
     QLabel *label_2;
     QLabel *label_3;
 
     QLineEdit *taskText;
-    QPushButton *addTask;
-    QPushButton *rmTask;
+
 
     // ========================================================
     // projects tab
