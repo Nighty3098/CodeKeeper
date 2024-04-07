@@ -151,7 +151,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     menuButton->setMenu(menu);
 
-    notesGLayout->addWidget(menuButton, 0, 0);
+    notesGLayout->addWidget(menuButton, 0, 5);
     notesGLayout->addWidget(noteNameLabel, 0, 2);
     notesGLayout->addWidget(timeLabel, 0, 3);
     notesGLayout->addWidget(foldersList, 1, 0);
