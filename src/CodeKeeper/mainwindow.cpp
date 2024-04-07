@@ -26,10 +26,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     bool isVisibleNotesList =
         globalSettings->value("isVisibleNotesList", true).toBool();
-    bool isVisiblePreview =
-        globalSettings->value("isVisiblePreview", false).toBool();
     bool isVisibleFolders =
         globalSettings->value("isVisibleFolders", true).toBool();
+    bool isVisiblePreview =
+        globalSettings->value("isVisiblePreview", false).toBool();
 
     // ========================================================
 
@@ -58,11 +58,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // ========================================================
 
-    QVBoxLayout *notesL0 = new QVBoxLayout;
-    QHBoxLayout *notesL1 = new QHBoxLayout;
-    QVBoxLayout *notesL2 = new QVBoxLayout;
-    QHBoxLayout *notesL3 = new QHBoxLayout;
-    QHBoxLayout *notesL4 = new QHBoxLayout;
+    QGridLayout *notesGLayout = new QGridLayout;
 
     notesList = new QListWidget();
     notesList->setWordWrap(true);
@@ -94,13 +90,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         new MarkdownHighlighter(mdPreview->document());
 
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
-    // noteEdit->setLineNumberEnabled(true);
-    // noteEdit->setLineNumbersCurrentLineColor("#fbcd76");
+    noteEdit->setLineNumberEnabled(true);
+    noteEdit->setLineNumbersCurrentLineColor("#fbcd76");
     noteEdit->setLineWidth(font_size.toInt());
     noteEdit->setHighlightingEnabled(true);
 
+    // time label
     timeLabel = new QLabel(getCurrentDateTimeString());
     timeLabel->setAlignment(Qt::AlignCenter);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, [=]() {
+        timeLabel->setText(getCurrentDateTimeString());
+    });
+
+    timer->start(1000);
 
     noteNameLabel = new QLabel("Note");
     noteNameLabel->setAlignment(Qt::AlignCenter);
@@ -108,10 +112,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // update title
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::setHeader);
-
-    notesList->setVisible(isVisibleNotesList);
-    foldersList->setVisible(isVisibleFolders);
-    mdPreview->setVisible(isVisiblePreview);
 
     // menu
     menuButton = new QToolButton;
@@ -151,19 +151,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     menuButton->setMenu(menu);
 
-    notesL4->addWidget(menuButton);
-    notesL4->addWidget(noteNameLabel);
-    // notesL4->addWidget(timeLabel);
+    notesGLayout->addWidget(menuButton, 0, 0);
+    notesGLayout->addWidget(noteNameLabel, 0, 2);
+    notesGLayout->addWidget(timeLabel, 0, 3);
+    notesGLayout->addWidget(foldersList, 1, 0);
+    notesGLayout->addWidget(notesList, 1, 1);
+    notesGLayout->addWidget(noteEdit, 1, 2);
+    notesGLayout->addWidget(mdPreview, 1, 3);
 
-    notesL2->addWidget(noteEdit);
-
-    notesL1->addWidget(foldersList);
-    notesL1->addWidget(notesList);
-    notesL1->addLayout(notesL2);
-    notesL1->addWidget(mdPreview);
-
-    notesL0->addLayout(notesL4);
-    notesL0->addLayout(notesL1);
+    notesList->setVisible(isVisibleNotesList);
+    foldersList->setVisible(isVisibleFolders);
+    mdPreview->setVisible(isVisiblePreview);
 
     // ========================================================
     QGridLayout *tasksGLayout = new QGridLayout;
@@ -339,7 +337,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *notesTab = new QWidget();
     QVBoxLayout *notesLayout = new QVBoxLayout(notesTab);
 
-    notesLayout->addLayout(notesL0);
+    notesLayout->addLayout(notesGLayout);
 
     tabs->addTab(notesTab, "Doc");
 
@@ -383,6 +381,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             &MainWindow::on_listWidget_itemClicked);
     connect(completeTasks, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
+
+    connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
+            &MainWindow::updateMDPreview);
 
     // task
     connect(taskText, &QLineEdit::returnPressed, [=] {

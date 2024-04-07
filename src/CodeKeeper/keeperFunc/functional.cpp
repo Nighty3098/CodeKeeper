@@ -59,9 +59,6 @@ void MainWindow::hideNotesList() {
 void MainWindow::showPreview() {
     mdPreview->setVisible(!mdPreview->isVisible());
     globalSettings->setValue("isVisiblePreview", mdPreview->isVisible());
-
-    connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
-            &MainWindow::updateMDPreview);
 }
 
 void MainWindow::showFolders() {
