@@ -78,16 +78,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     foldersList->setDragEnabled(true);
     foldersList->setMaximumWidth(200);
 
-    notesList->setVisible(isVisibleNotesList);
-    foldersList->setVisible(isVisibleFolders);
-
     // other
     noteName = new QLineEdit();
     noteName->setFixedHeight(30);
     noteName->setPlaceholderText(" Name ...");
 
     mdPreview = new QTextBrowser();
-    mdPreview->setVisible(false);
     mdPreview->setOpenLinks(true);
     mdPreview->setOpenExternalLinks(true);
 
@@ -98,8 +94,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         new MarkdownHighlighter(mdPreview->document());
 
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
-    noteEdit->setLineNumberEnabled(true);
-    noteEdit->setLineNumbersCurrentLineColor("#fbcd76");
+    // noteEdit->setLineNumberEnabled(true);
+    // noteEdit->setLineNumbersCurrentLineColor("#fbcd76");
     noteEdit->setLineWidth(font_size.toInt());
     noteEdit->setHighlightingEnabled(true);
 
@@ -112,6 +108,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // update title
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::setHeader);
+
+    notesList->setVisible(isVisibleNotesList);
+    foldersList->setVisible(isVisibleFolders);
+    mdPreview->setVisible(isVisiblePreview);
 
     // menu
     menuButton = new QToolButton;
@@ -137,17 +137,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QAction *showFolders =
         menu->addAction("Show folders list", this, SLOT(showFolders()));
     showFolders->setCheckable(true);
-    showFolders->setChecked(notesList->isVisible());
+    showFolders->setChecked(isVisibleFolders);
 
     QAction *showList =
         menu->addAction("Show notes list", this, SLOT(hideNotesList()));
     showList->setCheckable(true);
-    showList->setChecked(notesList->isVisible());
+    showList->setChecked(isVisibleNotesList);
 
     QAction *showPreview =
         menu->addAction("Show md preview", this, SLOT(showPreview()));
     showPreview->setCheckable(true);
-    showPreview->setChecked(mdPreview->isVisible());
+    showPreview->setChecked(isVisiblePreview);
 
     menuButton->setMenu(menu);
 
