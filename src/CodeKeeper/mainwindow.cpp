@@ -19,7 +19,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
-
     path = globalSettings->value("path").value<QString>();
 
     qDebug() << path;
@@ -185,6 +184,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tasksProgress->setMaximum(100);
     tasksProgress->setMaximumWidth(400);
     tasksProgress->setFixedHeight(20);
+    tasksProgress->setAlignment(Qt::AlignCenter);
 
     label_1 = new QLabel("Incomplete");
     label_1->setStyleSheet("font-size: 16px;");
@@ -396,6 +396,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             qDebug() << "Task is empty";
         }
     });
+
+    connect(tabs, &QTabWidget::currentChanged, this, [=]() {
+        updateTasksProgress(tabs, incompleteTasks, inprocessTasks, completeTasks, tasksProgress);
+    });
+
+    connect(completeTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        renameItemOnDoubleClick(completeTasks, item);
+    });
+
+    connect(incompleteTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        renameItemOnDoubleClick(completeTasks, item);
+    });
+
+    connect(inprocessTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        renameItemOnDoubleClick(completeTasks, item);
+    });
+
 
     // sync scroll
     // connect(noteEdit->verticalScrollBar(), &QAbstractSlider::valueChanged,

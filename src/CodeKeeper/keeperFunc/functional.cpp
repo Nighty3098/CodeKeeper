@@ -136,6 +136,59 @@ void MainWindow::loadNotes(const QDir &dir) {
     QString pattern = "*.md";
 }
 
+void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item) {
+    if (item) {
+        QDialog dialog(this);
+        dialog.setWindowTitle(tr("Rename item"));
+        dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+
+        QVBoxLayout layout(&dialog);
+        QLineEdit lineEdit(&dialog);
+        layout.addWidget(&lineEdit);
+
+        QPushButton okButton(tr("OK"), &dialog);
+        QPushButton cancelButton(tr("Cancel"), &dialog);
+        layout.addWidget(&okButton);
+        layout.addWidget(&cancelButton);
+
+        QObject::connect(&okButton, &QPushButton::clicked, [&]() {
+            QString newName = lineEdit.text();
+            if (!newName.isEmpty()) {
+                item->setText(newName);
+            }
+            dialog.close();
+        });
+
+        QObject::connect(&cancelButton, &QPushButton::clicked, [&]() {
+            dialog.close();
+        });
+
+        dialog.exec();
+    }
+}
+
+void MainWindow::updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress) {
+    if (tasksTab->currentIndex() == 2) {
+        qDebug() << tasksTab->currentIndex();
+        QTimer *timer2 = new QTimer(this);
+        connect(timer2, &QTimer::timeout, [=]() {
+            int totalTasks = incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
+            int completedTasks = completeTasks->count();
+
+            if (totalTasks == 0) {
+                tasksProgress->setValue(0);
+            } else {
+                double percentage = static_cast<double>(completedTasks) / static_cast<double>(totalTasks) * 100.0;
+                tasksProgress->setValue(percentage);
+            }
+        });
+        timer2->start(500);
+    }
+    else {
+        qDebug() << tasksTab->currentIndex();
+    }
+}
+
 void MainWindow::loadTasks() {}
 
 void MainWindow::loadProjects() {}
@@ -357,4 +410,7 @@ void MainWindow::setFontPr1() {
     label_2->setStyleSheet("font-size: 16px;");
     label_3->setFont(selectedFont);
     label_3->setStyleSheet("font-size: 16px;");
+
+    tasksProgress->setFont(selectedFont);
+    tasksProgress->setStyleSheet("background-color: rgb(255, 117, 127); selection-background-color: rgb(195, 232, 141); color: #222436; font-size: " + font_size + "pt;");
 }

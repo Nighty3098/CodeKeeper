@@ -315,6 +315,7 @@ QTreeWidget::item:hover {
 QProgressBar {
     color: #c8d3f5;
     background-color: #222436;
+    border-radius: 5px;
 }
 
 

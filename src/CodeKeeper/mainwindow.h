@@ -44,10 +44,13 @@ private slots:
     void removeFolder();
     void createFolder();
 
+    void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress);
     void createProject();
     void removeProject();
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
+
+    void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
 
     // load data from folder
     void loadNotes(const QDir &dir);
