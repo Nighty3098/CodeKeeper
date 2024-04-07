@@ -173,8 +173,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     QVBoxLayout *incompleteLayout = new QVBoxLayout;
     label_1 = new QLabel("Incomplete");
-    label_1->setFixedHeight(20);
-    // label_1->setStyleSheet("color: #b9676b;");
+    label_1->setStyleSheet("font-size: 16px;");
+    label_1->setFixedHeight(25);
     label_1->setAlignment(Qt::AlignHCenter);
 
     incompleteTasks = new QListWidget();
@@ -186,8 +186,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     QVBoxLayout *inprocessLayout = new QVBoxLayout;
     label_2 = new QLabel("Inprocess");
-    // label_2->setStyleSheet("color: #e8cc91;");
-    label_2->setFixedHeight(20);
+    label_2->setStyleSheet("font-size: 16px;");
+    label_2->setFixedHeight(25);
     label_2->setAlignment(Qt::AlignHCenter);
 
     inprocessTasks = new QListWidget();
@@ -199,8 +199,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     QVBoxLayout *completeLayout = new QVBoxLayout;
     label_3 = new QLabel("Complete");
-    label_3->setFixedHeight(20);
-    // label_3->setStyleSheet("color: #9dda67;");
+    label_3->setStyleSheet("font-size: 16px;");
+    label_3->setFixedHeight(25);
     label_3->setAlignment(Qt::AlignHCenter);
 
     completeTasks = new QListWidget();
@@ -255,6 +255,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     projectsMainLabel->setAlignment(Qt::AlignCenter);
 
     nsProjects = new QLabel("Not started");
+    nsProjects->setStyleSheet("font-size: 16px;");
     nsProjects->setAlignment(Qt::AlignHCenter);
     notStartedProjects = new QListWidget();
     notStartedProjects->setDragEnabled(true);
@@ -264,6 +265,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notStartedProjects->setSpacing(5);
 
     sProjects = new QLabel("Started");
+    sProjects->setStyleSheet("font-size: 16px;");
     sProjects->setAlignment(Qt::AlignHCenter);
     startedProjects = new QListWidget();
     startedProjects->setDragEnabled(true);
@@ -273,6 +275,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     startedProjects->setSpacing(5);
 
     flProjects = new QLabel("Finishline");
+    flProjects->setStyleSheet("font-size: 16px;");
     flProjects->setAlignment(Qt::AlignHCenter);
     finishlineProjects = new QListWidget();
     finishlineProjects->setDragEnabled(true);
@@ -282,6 +285,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     finishlineProjects->setSpacing(5);
 
     fProjects = new QLabel("Finished");
+    fProjects->setStyleSheet("font-size: 16px;");
     fProjects->setAlignment(Qt::AlignHCenter);
     finishedProjects = new QListWidget();
     finishedProjects->setDragEnabled(true);

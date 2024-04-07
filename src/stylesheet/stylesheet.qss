@@ -23,7 +23,7 @@ QMarkdownTextEdit {
 }
 
 QMarkdownTextEdit::lineNumber {
-    background-color: #2f334d;
+    background-color: #5260bb;
     border-radius: 10px;
 }
 

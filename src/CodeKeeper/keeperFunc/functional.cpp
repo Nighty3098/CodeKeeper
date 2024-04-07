@@ -212,30 +212,6 @@ void MainWindow::setFontPr1() {
     noteNameLabel->setStyleSheet("font-size: " + font_size +
                                  "pt; color: #8ebecf;");
 
-    incompleteTasks->setStyleSheet(
-        "background-color: rgba(255, 117, 127, 160); color: #000000; "
-        "border-width: 0px; border-color: rgb(255, 117, 127); "
-        "font-size: " +
-        font_size + "pt;");
-
-    inprocessTasks->setStyleSheet(
-        "background-color: rgba(255, 199, 119, 160); "
-        "color: #000000; text-decoration: underline; "
-        "border-width: 0px; "
-        "font-size: " +
-        font_size +
-        "pt;"
-        "border-color: rgb(255, 199, 119);");
-
-    completeTasks->setStyleSheet(
-        "background-color: rgba(195, 232, 141, 160); "
-        "color: #000000; text-decoration: "
-        "line-through; border-width: 0px; "
-        "font-size: " +
-        font_size +
-        "pt;"
-        "border-color: rgb(195, 232, 141);");
-
     taskText->setFont(selectedFont);
     taskText->setStyleSheet("font-size: " + font_size + "pt;");
 
@@ -245,39 +221,103 @@ void MainWindow::setFontPr1() {
     rmTask->setFont(selectedFont);
     rmTask->setStyleSheet("font-size: " + font_size + "pt;");
 
+    incompleteTasks->setStyleSheet(
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "border-color: #838383;}"
+        "QListWidget::Item {"
+        "background-color: rgba(255, 117, 127, 160); color: #000000; "
+        "border-width: 0px; border-color: rgb(255, 117, 127); "
+        "border-radius: 5px;"
+        "font-size: " +
+        font_size +
+        "pt;"
+        "}");
+
+    inprocessTasks->setStyleSheet(
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "border-color: #838383;}"
+        "QListWidget::Item {"
+        "background-color: rgba(255, 199, 119, 160); "
+        "color: #000000; text-decoration: underline; "
+        "border-width: 0px; "
+        "border-radius: 5px;"
+        "font-size: " +
+        font_size +
+        "pt;"
+        "}");
+
+    completeTasks->setStyleSheet(
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "border-color: #838383;}"
+        "QListWidget::Item {"
+        "background-color: rgba(195, 232, 141, 160); "
+        "color: #000000;"
+        "border-radius: 5px;"
+        "line-through; border-width: 0px; "
+        "font-size: " +
+        font_size +
+        "pt;"
+        "}");
+
     notStartedProjects->setStyleSheet(
-        "background-color: rgba(255, 117, 127, "
-        "160); color: #000000; border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "border-color: #838383;}"
+        "QListWidget::Item {"
+        "background-color: rgba(255, 117, 127, 160);"
+        "color: #000000; border-width: 0px; "
+        "border-radius: 5px;"
         "border-color: #ff757f; "
         "font-size: " +
-        font_size + "pt;");
-
-    nsProjects->setFont(selectedFont);
-
-    sProjects->setFont(selectedFont);
+        font_size +
+        "pt;"
+        "}");
 
     startedProjects->setStyleSheet(
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "border-color: #838383;}"
+        "QListWidget::Item {"
         "background-color: rgba(255, 199, 119, 160); color: #000000; "
+        "border-radius: 5px;"
         "border-width: 0px; border-color: #ffc777; "
         "font-size: " +
-        font_size + "pt;");
-
-    flProjects->setFont(selectedFont);
+        font_size +
+        "pt;"
+        "}");
 
     finishlineProjects->setStyleSheet(
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "border-color: #838383;}"
+        "QListWidget::Item {"
         "background-color: rgba(130, 170, 255, "
         "160); color: #000000; border-width: 0px; "
+        "border-radius: 5px;"
         "border-color: #82aaff; "
         "font-size: " +
-        font_size + "pt;");
-
-    fProjects->setFont(selectedFont);
+        font_size +
+        "pt;"
+        "}");
 
     finishedProjects->setStyleSheet(
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "border-color: #838383;}"
+        "QListWidget::Item {"
         "background-color: rgba(195, 232, 141, 160); color: #000000; "
+        "border-radius: 5px;"
         "border-width: 0px; border-color: #c3e88d; "
         "font-size: " +
-        font_size + "pt;");
+        font_size +
+        "pt;"
+        "}");
+
+    fProjects->setFont(selectedFont);
+    flProjects->setFont(selectedFont);
+    nsProjects->setFont(selectedFont);
+    sProjects->setFont(selectedFont);
+
+    nsProjects->setStyleSheet("font-size: 16px;");
+    sProjects->setStyleSheet("font-size: 16px;");
+    flProjects->setStyleSheet("font-size: 16px;");
+    fProjects->setStyleSheet("font-size: 16px;");
 
     projectsMainLabel->setFont(selectedFont);
     notStartedProjects->setFont(selectedFont);
@@ -297,6 +337,9 @@ void MainWindow::setFontPr1() {
     completeTasks->setFont(selectedFont);
 
     label_1->setFont(selectedFont);
+    label_1->setStyleSheet("font-size: 16px;");
     label_2->setFont(selectedFont);
+    label_2->setStyleSheet("font-size: 16px;");
     label_3->setFont(selectedFont);
+    label_3->setStyleSheet("font-size: 16px;");
 }
