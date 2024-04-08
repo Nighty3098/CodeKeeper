@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Palenight Italic",
+    "workbench.colorTheme": "August - City Lights",
     "workbench.iconTheme": "catppuccin-perfect-mocha",
     "editor.fontFamily": "Maple Mono",
     "editor.fontLigatures": true,
@@ -71,6 +71,9 @@
         "format": "cpp",
         "system_error": "cpp",
         "__node_handle": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "stateset": "cpp",
+        "fstream": "cpp",
+        "locale": "cpp"
     },
 }

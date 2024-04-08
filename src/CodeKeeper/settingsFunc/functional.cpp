@@ -41,6 +41,15 @@ void SettingsWindow::fopenFolder() {
         globalSettings->setValue("path", str);
         qDebug() << str;
         pathToFolder->setText(str);
+        
+        QMessageBox *messageBox = new QMessageBox();
+
+        messageBox->setIcon(QMessageBox::Information);
+        messageBox->setWindowTitle("CodeKeeper - Settings");
+        messageBox->setText("To apply the settings, restart the application.");
+    
+        messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+        messageBox->exec();
     }
 }
 

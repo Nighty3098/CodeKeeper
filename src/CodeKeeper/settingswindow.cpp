@@ -17,7 +17,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
-    path = globalSettings->value("path").value<QString>();
+    path = globalSettings->value("path").value<QDir>();
 
     this->setStyleSheet(file.readAll());
 
@@ -170,7 +170,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     pathToFolder->setText("Directory");
     pathToFolder->setPlaceholderText("Directory");
     pathToFolder->setMaximumHeight(30);
-    pathToFolder->setText(path);
+    pathToFolder->setText(path.absolutePath());
 
     openFolder = new QPushButton(QPixmap(":/open.png"), " Browse");
     openFolder->setMaximumHeight(30);

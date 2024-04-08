@@ -15,7 +15,7 @@ class SettingsWindow : public QMainWindow {
     QFont selectedFont;
     QString font_size;
     QString theme;
-    QString path;
+    QDir path;
 
    private slots:
     void closeEvent(QCloseEvent *event);
