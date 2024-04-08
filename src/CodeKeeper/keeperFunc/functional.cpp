@@ -99,7 +99,7 @@ void MainWindow::openFolder() {
 
 void MainWindow::createProject() {
     QString newProjectTeamplate =
-        "New project\nGitHub\nDocumentation: \n" + getCurrentDateTimeString();
+        "New project\nGitHub\n" + getCurrentDateTimeString();
     notStartedProjects->addItem(newProjectTeamplate);
 }
 
@@ -134,7 +134,7 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
 
 void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
     QTreeWidgetItem *rootItem = new QTreeWidgetItem(tree);
-    rootItem->setText(0, dir.absolutePath());
+    rootItem->setText(0, dir.path());
     rootItem->setIcon(0, QIcon(":/folder.png"));
     tree->addTopLevelItem(rootItem);
 
@@ -147,7 +147,7 @@ void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
             childItem = new QTreeWidgetItem(rootItem);
             childItem->setText(0, fileInfo.fileName());
             childItem->setIcon(0, QIcon(":/folder.png"));
-            displayDirectoryStructure(fileInfo.filePath(), tree);
+            displayDirectoryStructure(fileInfo.fileName(), tree);
         } else {
             childItem = new QTreeWidgetItem(rootItem);
             childItem->setText(0, fileInfo.fileName());
@@ -155,6 +155,16 @@ void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
         }
     }
 }
+
+
+
+
+void MainWindow::onNoteDoubleClicked(QTreeWidgetItem *item, QMarkdownTextEdit *edit, int column) {
+
+}
+
+
+
 
 
 void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item) {
@@ -257,58 +267,72 @@ void MainWindow::removeNote() {
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
     if (item) {
         QDialog dialog(this);
+        dialog.setFixedSize(300, 300);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
         QGridLayout layout(&dialog);
 
-        QMarkdownTextEdit markdownTextEdit(&dialog);
-        QTextBrowser mdPreview(&dialog);
+        QLineEdit projectName(&dialog);
+        projectName.setFixedSize(280, 30);
+        QLineEdit gitLink(&dialog);
+        gitLink.setFixedSize(280, 30);
+        QComboBox documentation(&dialog);
+        documentation.setFixedSize(280, 30);
+        QLabel lastMod(&dialog);
+        lastMod.setFixedSize(280, 30);
 
-        mdPreview.setOpenLinks(true);
-        mdPreview.setOpenExternalLinks(true);
+        projectName.setFont(selectedFont);
+        projectName.setStyleSheet("font-size: " + font_size + "pt;");
 
-        markdownTextEdit.setFont(selectedFont);
-        markdownTextEdit.setStyleSheet("font-size: " + font_size + "pt;");
+        gitLink.setFont(selectedFont);
+        gitLink.setStyleSheet("font-size: " + font_size + "pt;");
 
-        QComboBox selectDocumentation(&dialog);
-        selectDocumentation.setStyleSheet("font-size: " + font_size + "pt;");
+        documentation.setFont(selectedFont);
+        documentation.setStyleSheet("font-size: " + font_size + "pt;");
 
-        QPushButton openButton(tr("Open"), &dialog);
-        openButton.setFont(selectedFont);
-        openButton.setStyleSheet("font-size: " + font_size + "pt;");
+        lastMod.setFont(selectedFont);
+        lastMod.setStyleSheet("font-size: " + font_size + "pt;");
+        lastMod.setAlignment(Qt::AlignHCenter);
 
-        QPushButton saveButton(tr("Save"), &dialog);
-        QPushButton closeButton(tr("Cancel"), &dialog);
+        QString text1 = item->text().split('\n').at(0);
+        QString text2 = item->text().split('\n').at(1);
+        QString text3 = item->text().split('\n').at(2);
+
+        projectName.setText(text1);
+        gitLink.setText(text2);
+        lastMod.setText(text3);
+
+        loadDocumentations(path, documentation);
+
+        QPushButton saveButton(&dialog);
+        QPushButton closeButton(&dialog);
 
         saveButton.setFont(selectedFont);
         saveButton.setStyleSheet("font-size: " + font_size + "pt;");
-
         closeButton.setFont(selectedFont);
         closeButton.setStyleSheet("font-size: " + font_size + "pt;");
 
-        layout.addWidget(&markdownTextEdit, 0, 0);
-        layout.addWidget(&mdPreview, 0, 1);
-        layout.addWidget(&selectDocumentation, 1, 0);
-        layout.addWidget(&saveButton, 1, 1);
-        layout.addWidget(&openButton, 2, 0);
-        layout.addWidget(&closeButton, 2, 1);
+        saveButton.setFixedSize(280, 30);
+        saveButton.setText("Save");
+        closeButton.setFixedSize(280, 30);
+        closeButton.setText("Cancel");
 
-        markdownTextEdit.setPlainText(formatText(item->text()));
-
-        QString text = markdownTextEdit.toPlainText();
-        mdPreview.setMarkdown(text);
-
-        loadDocumentations(path, selectDocumentation);
-
-        QObject::connect(&markdownTextEdit, &QMarkdownTextEdit::textChanged, [&]() {
-            QString text = markdownTextEdit.toPlainText();
-            mdPreview.setMarkdown(text);
-        });
-
+        layout.addWidget(&projectName, 0, 0);
+        layout.addWidget(&gitLink, 1, 0);
+        layout.addWidget(&documentation, 2, 0);
+        layout.addWidget(&lastMod, 3, 0);
+        layout.addWidget(&saveButton, 4, 0);
+        layout.addWidget(&closeButton, 5, 0);
 
         QObject::connect(&saveButton, &QPushButton::clicked, [&]() {
-            item->setText(unformatText(markdownTextEdit.toPlainText()));
+            text1 = projectName.text();
+            text2 = gitLink.text();
+            text3 = getCurrentDateTimeString();
+
+            QString itemText = text1 + "\n" + text2 + "\n" + text3;
+            item->setText(itemText);
+            qDebug() << itemText;
             dialog.close();
         });
 
@@ -336,36 +360,6 @@ void MainWindow::loadDocumentations(QDir path, QComboBox &comboBox) {
             loadDocumentations(subdir, comboBox);
         }
     }
-}
-
-QString MainWindow::formatText(const QString &text) {
-    QStringList lines = text.split('\n');
-
-    if (lines.length() < 4) {
-        return text;
-    }
-
-    lines[0] = QString("# %1 \n\n").arg(lines[0]);
-    lines[1] = QString("[Source](%1) \n\n ").arg(lines[1]);
-    lines[2] = QString("%1 \n\n ").arg(lines[2]);
-    lines[3] = QString("Latest modification: %1 \n\n ").arg(lines[3]);
-
-    return lines.join("");
-}
-
-QString MainWindow::unformatText(const QString &text) {
-    QStringList lines = text.split('\n');
-    lines.replaceInStrings(QRegExp("^# "), "");
-    lines.replaceInStrings(QRegExp("!\\[Source\\]\\(\\n"), "");
-    lines.replaceInStrings(QRegExp("Latest modification: \\n"), "");
-    lines.replaceInStrings(QRegExp("\\n$"), "");
-
-    lines[0] = QString("%1").arg(lines[0]);
-    lines[1] = QString("%1").arg(lines[1]);
-    lines[2] = QString("%1").arg(lines[2]);
-    lines[3] = QString("%1").arg(lines[3]);
-
-    return lines.join("\n");
 }
 
 

@@ -89,6 +89,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteName->setFixedHeight(30);
     noteName->setPlaceholderText(" Name ...");
 
+    QFileSystemModel *model = new QFileSystemModel();
+    model->setRootPath(".");
+
+
     mdPreview = new QTextBrowser();
     mdPreview->setOpenLinks(true);
     mdPreview->setOpenExternalLinks(true);
@@ -438,6 +442,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     });
     connect(finishedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
         openProject(finishedProjects, item);
+    });
+
+
+    connect(notesList, &QTreeWidget::itemDoubleClicked, this, [=](QTreeWidgetItem *item) {
+        onNoteDoubleClicked(item, noteEdit, 1); 
     });
 
 

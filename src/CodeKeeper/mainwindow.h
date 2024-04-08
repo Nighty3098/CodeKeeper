@@ -50,13 +50,14 @@ private slots:
 
     void loadDocumentations(QDir path, QComboBox &comboBox);
 
-    QString formatText(const QString &text);
-    QString unformatText(const QString &text);
+    // void saveProject(QListWidgetItem *item);
+
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
     void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
+    void onNoteDoubleClicked(QTreeWidgetItem *item, QMarkdownTextEdit *edit, int column);
 
     // load data from folder
     void displayDirectoryStructure(const QDir &dir, QTreeWidget *tree);
