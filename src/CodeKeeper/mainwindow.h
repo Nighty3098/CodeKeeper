@@ -19,7 +19,7 @@ public:
     QFont selectedFont;
     QString font_size;
     QString theme;
-    QString path;
+    QDir path;
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -48,6 +48,8 @@ private slots:
     void createProject();
     void removeProject();
 
+    void loadDocumentations(QDir path, QComboBox &comboBox);
+
     QString formatText(const QString &text);
     QString unformatText(const QString &text);
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
@@ -57,7 +59,7 @@ private slots:
     void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
 
     // load data from folder
-    void loadNotes(const QDir &dir);
+    void displayDirectoryStructure(const QDir &dir, QTreeWidget *tree);
     void loadTasks();
     void loadProjects();
 
@@ -79,8 +81,9 @@ private:
     // ========================================================
     // notes tab
 
-    QListWidget *foldersList;
-    QListWidget *notesList;
+    QTreeWidget *notesList;
+    // QListWidget *foldersList;
+    // QListWidget *notesList;
     QMarkdownTextEdit *noteEdit;
     MarkdownHighlighter *highlighter;
     QTextBrowser *mdPreview;

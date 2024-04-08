@@ -1,11 +1,10 @@
-#include "mainwindow.h"
-
 #include <QPropertyAnimation>
 
+#include "mainwindow.h"
 #include "keeperFunc/functional.cpp"
 #include "qmarkdowntextedit/markdownhighlighter.h"
-#include "keeperFunc/project_edit.cpp"
 
+Q_DECLARE_METATYPE(QDir)
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
@@ -20,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
-    path = globalSettings->value("path").value<QString>();
+    path = globalSettings->value("path").value<QDir>();
 
     qDebug() << path;
 
@@ -60,6 +59,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     QGridLayout *notesGLayout = new QGridLayout;
 
+    notesList = new QTreeWidget();
+    notesList->setAnimated(true);
+    notesList->setHeaderHidden(true);
+    notesList->setWordWrap(true);
+    notesList->setDragDropMode(QAbstractItemView::DragDrop);
+    notesList->setDefaultDropAction(Qt::MoveAction);
+    notesList->setDragEnabled(true);
+    notesList->setMaximumWidth(300);
+
+/*
     notesList = new QListWidget();
     notesList->setWordWrap(true);
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
@@ -67,13 +76,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setDragEnabled(true);
     notesList->setMaximumWidth(200);
 
+
     foldersList = new QListWidget();
     foldersList->setWordWrap(true);
     foldersList->setDragDropMode(QAbstractItemView::DragDrop);
     foldersList->setDefaultDropAction(Qt::MoveAction);
     foldersList->setDragEnabled(true);
     foldersList->setMaximumWidth(200);
-
+*/
     // other
     noteName = new QLineEdit();
     noteName->setFixedHeight(30);
@@ -129,15 +139,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
                                       SLOT(removeNote()));
     QAction *newFolder = menu->addAction(
         QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
-    QAction *rmFolder = menu->addAction(QPixmap(":/delete.png"), "RM folder",
-                                        this, SLOT(removeFolder()));
+    // QAction *rmFolder = menu->addAction(QPixmap(":/delete.png"), "RM folder",
+    //                                    this, SLOT(removeFolder()));
 
     menu->addSeparator();
 
-    QAction *showFolders =
-        menu->addAction("Show folders list", this, SLOT(showFolders()));
-    showFolders->setCheckable(true);
-    showFolders->setChecked(isVisibleFolders);
+    //QAction *showFolders =
+    //    menu->addAction("Show folders list", this, SLOT(showFolders()));
+    //showFolders->setCheckable(true);
+    //showFolders->setChecked(isVisibleFolders);
 
     QAction *showList =
         menu->addAction("Show notes list", this, SLOT(hideNotesList()));
@@ -151,16 +161,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     menuButton->setMenu(menu);
 
+
     notesGLayout->addWidget(menuButton, 0, 5);
     notesGLayout->addWidget(noteNameLabel, 0, 2);
     notesGLayout->addWidget(timeLabel, 0, 3);
-    notesGLayout->addWidget(foldersList, 1, 0);
+    //notesGLayout->addWidget(foldersList, 1, 0);
     notesGLayout->addWidget(notesList, 1, 1);
     notesGLayout->addWidget(noteEdit, 1, 2);
     notesGLayout->addWidget(mdPreview, 1, 3);
 
     notesList->setVisible(isVisibleNotesList);
-    foldersList->setVisible(isVisibleFolders);
+    // foldersList->setVisible(isVisibleFolders);
     mdPreview->setVisible(isVisiblePreview);
 
     // ========================================================
@@ -170,14 +181,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tasksMenuBtn->setText("...");
     tasksMenuBtn->setFixedSize(30, 20);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
+    tasksMenuBtn->setStyleSheet("border-radius: 2px;");
     
     QMenu *tasksMenu = new QMenu(tasksMenuBtn);
     tasksMenu->setFont(selectedFont);
 
     QAction *addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task", this,
-                                       SLOT(addNewTask()));
+                                        SLOT(addNewTask()));
     QAction *rmTask = tasksMenu->addAction(QPixmap(":/delete.png"), "Delete task", this,
-                                      SLOT(removeTask()));
+                                        SLOT(removeTask()));
 
     tasksMenuBtn->setMenu(tasksMenu);
 
@@ -440,7 +452,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     mainLayout->addWidget(tabs);
 
-    loadNotes(QDir(path));
+    displayDirectoryStructure(path, notesList);
     loadTasks();
     loadProjects();
     setFontPr1();
