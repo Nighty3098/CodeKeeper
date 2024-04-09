@@ -31,34 +31,28 @@ private slots:
 
     void hideNotesList();
     void showPreview();
-    void showFolders();
-
     void updateMDPreview();
     void setHeader();
-
-    void addNewTask();
-    void removeTask();
-
     void createNote();
     void removeNote();
     void removeFolder();
     void createFolder();
 
-    void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress);
-    void createProject();
-    void removeProject();
-    void loadDocumentations(QDir path, QComboBox &comboBox);
-    void openProject(QListWidget *listWidget, QListWidgetItem *item);
-    
+    void loadTasks();
+    void addNewTask();
+    void removeTask();
+
     void on_listWidget_itemClicked(QListWidgetItem *item);
     void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
     void onNoteDoubleClicked(QTreeWidgetItem *item, QMarkdownTextEdit *edit, int column);
-
-    // load data from folder
+    void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress);
+    void loadDocumentations(QDir path, QComboBox &comboBox);
+    void openProject(QListWidget *listWidget, QListWidgetItem *item);
     void displayDirectoryStructure(const QDir &dir, QTreeWidget *tree);
-    void loadTasks();
+
+    void createProject();
+    void removeProject();
     void loadProjects();
-    void setFontPr1();
 
     void setH1();
     void setH2();
@@ -70,6 +64,7 @@ private slots:
     void setStrike();
     void setTask();
 
+    void setFontPr1();
 private:
     QWidget *centralWidget;
     QVBoxLayout *mainLayout;
@@ -77,24 +72,18 @@ private:
 
     // ========================================================
     // main tab
-
     QLabel *mainTitle;
-    QPushButton *openFolderBtn;
     QPushButton *syncDataBtn;
     QPushButton *openSettingsBtn;
 
     // ========================================================
     // notes tab
-
     QTreeWidget *notesList;
-    // QListWidget *foldersList;
-    // QListWidget *notesList;
     QMarkdownTextEdit *noteEdit;
     MarkdownHighlighter *highlighter;
     QTextBrowser *mdPreview;
     QLineEdit *noteName;
     QToolButton *menuButton;
-    QLabel *timeLabel;
     QLabel *noteNameLabel;
 
     QPushButton *setH1B;
@@ -109,7 +98,6 @@ private:
 
     // ========================================================
     // tasks tab
-
     QListWidget *incompleteTasks;
     QListWidget *inprocessTasks;
     QListWidget *completeTasks;
@@ -126,7 +114,6 @@ private:
 
     // ========================================================
     // projects tab
-
     QLabel *projectsMainLabel;
     QToolButton *projectsMenuButton;
     QMenu *projectsMenu;

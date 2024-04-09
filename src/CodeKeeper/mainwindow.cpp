@@ -6,6 +6,7 @@
 #include "qmarkdowntextedit/markdownhighlighter.h"
 
 Q_DECLARE_METATYPE(QDir)
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
@@ -51,14 +52,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     syncDataBtn->setFixedSize(200, 30);
     syncDataLayout->addWidget(syncDataBtn);
 
-    // folder btn
-    QHBoxLayout *openFolderlayout = new QHBoxLayout;
-    openFolderBtn = new QPushButton(QPixmap(":/open.png"), " Open folder");
-    openFolderBtn->setFixedSize(200, 30);
-    // openFolderlayout->addWidget(openFolderBtn);
-
     // ========================================================
-
     QGridLayout *notesGLayout = new QGridLayout;
     QHBoxLayout *syntaxMenu = new QHBoxLayout;
     syntaxMenu->setSpacing(1);
@@ -74,9 +68,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setDragEnabled(true);
     notesList->setMaximumWidth(250);
 
-    // other
     noteName = new QLineEdit();
-    noteName->setFixedHeight(30);
+    noteName->setFixedSize(200, 30);
     noteName->setPlaceholderText(" Name ...");
 
     QFileSystemModel *model = new QFileSystemModel();
@@ -90,23 +83,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteEdit->setPlaceholderText(" Just start typing");
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
     noteEdit->setLineNumberEnabled(true);
-    noteEdit->setLineNumbersCurrentLineColor("#fbcd76");
+    noteEdit->setLineNumbersCurrentLineColor("#51afef");
     noteEdit->setLineWidth(font_size.toInt());
     noteEdit->setHighlightingEnabled(true);
 
-    timeLabel = new QLabel(getCurrentDateTimeString());
-    timeLabel->setAlignment(Qt::AlignCenter);
-
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout,
-            [=]() { timeLabel->setText(getCurrentDateTimeString()); });
-
-    //    timer->start(1000);
-
+    // title
     noteNameLabel = new QLabel("Note");
     noteNameLabel->setAlignment(Qt::AlignCenter);
-
-    // update title
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::setHeader);
 
@@ -119,7 +102,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menu->setFont(selectedFont);
 
     // actions for menu
-
     QAction *newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this,
                                        SLOT(createNote()));
     QAction *rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note", this,
@@ -187,16 +169,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setStrikeB->setToolTip("<p style='color: #ffffff;'>Strikethrough text</p>");
     setTaskB->setToolTip("<p style='color: #ffffff;'>Task</p>");
 
-    connect(setH1B, &QPushButton::clicked, this, &MainWindow::setH1);
-    connect(setH2B, &QPushButton::clicked, this, &MainWindow::setH2);
-    connect(setH3B, &QPushButton::clicked, this, &MainWindow::setH3);
-    connect(setListB, &QPushButton::clicked, this, &MainWindow::setList);
-    connect(setLinkB, &QPushButton::clicked, this, &MainWindow::setLink);
-    connect(setBoldB, &QPushButton::clicked, this, &MainWindow::setBold);
-    connect(setItalicB, &QPushButton::clicked, this, &MainWindow::setItalic);
-    connect(setStrikeB, &QPushButton::clicked, this, &MainWindow::setStrike);
-    connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
-
     syntaxMenu->addWidget(setH1B);
     syntaxMenu->addWidget(setH2B);
     syntaxMenu->addWidget(setH3B);
@@ -211,15 +183,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     notesGLayout->addWidget(menuButton, 0, 5);
     notesGLayout->addLayout(syntaxMenu, 0, 2);
-    notesGLayout->addWidget(noteNameLabel, 0, 3);
-    // notesGLayout->addWidget(timeLabel, 0, 3);
-    // notesGLayout->addWidget(foldersList, 1, 0);
+    // notesGLayout->addWidget(noteNameLabel, 0, 3);
     notesGLayout->addWidget(notesList, 1, 1);
     notesGLayout->addWidget(noteEdit, 1, 2);
     notesGLayout->addWidget(mdPreview, 1, 3);
 
     notesList->setVisible(isVisibleNotesList);
-    // foldersList->setVisible(isVisibleFolders);
     mdPreview->setVisible(isVisiblePreview);
 
     // ========================================================
@@ -363,9 +332,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QAction *rmProject = projectsMenu->addAction(
         QPixmap(":/delete.png"), "Remove project", this, SLOT(removeProject()));
 
+
     projectsMenuButton->setMenu(projectsMenu);
 
-    projectsGLayout->addWidget(projectsMainLabel, 0, 0, 1, 0);
+    // projectsGLayout->addWidget(projectsMainLabel, 0, 0, 1, 0);
     projectsGLayout->addWidget(projectsMenuButton, 0, 2);
     projectsGLayout->addWidget(nsProjects, 1, 0);
     projectsGLayout->addWidget(notStartedProjects, 2, 0);
@@ -389,7 +359,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     firstLayout->addWidget(mainTitle);
     firstLayout->addLayout(syncDataLayout);
-    firstLayout->addLayout(openFolderlayout);
     firstLayout->addLayout(settingsBtnLayout);
 
     tabs->addTab(mainTab, "Homepage");
@@ -433,8 +402,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // main
     connect(openSettingsBtn, SIGNAL(clicked()), this,
             SLOT(openSettingsWindow()));
-
-    connect(openFolderBtn, SIGNAL(clicked()), this, SLOT(openFolder()));
 
     connect(notStartedProjects, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
@@ -490,6 +457,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(
         notesList, &QTreeWidget::itemDoubleClicked, this,
         [=](QTreeWidgetItem *item) { onNoteDoubleClicked(item, noteEdit, 0); });
+
+    connect(setH1B, &QPushButton::clicked, this, &MainWindow::setH1);
+    connect(setH2B, &QPushButton::clicked, this, &MainWindow::setH2);
+    connect(setH3B, &QPushButton::clicked, this, &MainWindow::setH3);
+    connect(setListB, &QPushButton::clicked, this, &MainWindow::setList);
+    connect(setLinkB, &QPushButton::clicked, this, &MainWindow::setLink);
+    connect(setBoldB, &QPushButton::clicked, this, &MainWindow::setBold);
+    connect(setItalicB, &QPushButton::clicked, this, &MainWindow::setItalic);
+    connect(setStrikeB, &QPushButton::clicked, this, &MainWindow::setStrike);
+    connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
+
 
     mainLayout->addWidget(tabs);
 

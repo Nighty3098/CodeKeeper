@@ -61,12 +61,6 @@ void MainWindow::showPreview() {
     globalSettings->setValue("isVisiblePreview", mdPreview->isVisible());
 }
 
-void MainWindow::showFolders() {
-    // foldersList->setVisible(!foldersList->isVisible());
-    // globalSettings->setValue("isVisibleFoldersList",
-    // foldersList->isVisible());
-}
-
 void MainWindow::updateMDPreview() {
     QString text = noteEdit->toPlainText();
 
@@ -229,12 +223,6 @@ void MainWindow::createFolder() {
     item->setText(0, "Folder");
     item->setIcon(0, QIcon(":/folder.png"));
     notesList->addTopLevelItem(item);
-    /*
-        QListWidgetItem *item = new QListWidgetItem();
-        item->setText("Folder");
-        item->setIcon(QIcon(":/folder.png"));
-        foldersList->addItem(item);
-    */
 }
 
 void MainWindow::createNote() {
@@ -242,13 +230,6 @@ void MainWindow::createNote() {
     item->setText(0, "New Note");
     item->setIcon(0, QIcon(":/note.png"));
     notesList->addTopLevelItem(item);
-
-    /*
-    QListWidgetItem *item = new QListWidgetItem();
-    item->setText("New Note");
-    item->setIcon(QIcon(":/note.png"));
-    notesList->addItem(item);
-    */
 }
 
 void MainWindow::removeFolder() {
@@ -485,18 +466,10 @@ void MainWindow::setFontPr1() {
 
     syncDataBtn->setFont(selectedFont);
     syncDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
-
-    openFolderBtn->setFont(selectedFont);
-    openFolderBtn->setStyleSheet("font-size: " + font_size + "pt;");
-
+    
     notesList->setFont(selectedFont);
     notesList->setStyleSheet("font-size: " + font_size +
                              "pt; background-color: rgba(47, 51, 77, 0);");
-
-    // foldersList->setFont(selectedFont);
-    // foldersList->setStyleSheet("font-size: " + font_size +
-    //                             "pt; background-color: rgba(47, 51, 77,
-    //                             50);");
 
     menuButton->setFont(selectedFont);
     menuButton->setStyleSheet("font-size: " + font_size + "pt;");
@@ -512,9 +485,6 @@ void MainWindow::setFontPr1() {
 
     noteEdit->setFont(selectedFont);
     noteEdit->setStyleSheet("font-size: " + font_size + "pt;");
-
-    timeLabel->setFont(selectedFont);
-    timeLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
     noteNameLabel->setFont(selectedFont);
     noteNameLabel->setStyleSheet("font-size: " + font_size +
