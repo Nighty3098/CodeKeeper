@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
     notesList->setDefaultDropAction(Qt::MoveAction);
     notesList->setDragEnabled(true);
-    notesList->setMaximumWidth(250);
+    notesList->setMaximumWidth(200);
 
     noteName = new QLineEdit();
     noteName->setFixedSize(200, 30);
