@@ -61,11 +61,6 @@ void MainWindow::showPreview() {
     globalSettings->setValue("isVisiblePreview", mdPreview->isVisible());
 }
 
-void MainWindow::showFolders() {
-    // foldersList->setVisible(!foldersList->isVisible());
-    // globalSettings->setValue("isVisibleFoldersList", foldersList->isVisible());
-}
-
 void MainWindow::updateMDPreview() {
     QString text = noteEdit->toPlainText();
 
@@ -99,7 +94,7 @@ void MainWindow::openFolder() {
 
 void MainWindow::createProject() {
     QString newProjectTeamplate =
-        "New project\nGitHub\nDocumentation: \n" + getCurrentDateTimeString();
+        "New project\nGitHub\n" + getCurrentDateTimeString();
     notStartedProjects->addItem(newProjectTeamplate);
 }
 
@@ -131,14 +126,14 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
     }
 }
 
-
 void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
     QTreeWidgetItem *rootItem = new QTreeWidgetItem(tree);
-    rootItem->setText(0, dir.absolutePath());
+    rootItem->setText(0, dir.path());
     rootItem->setIcon(0, QIcon(":/folder.png"));
     tree->addTopLevelItem(rootItem);
 
-    QFileInfoList fileInfoList = dir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+    QFileInfoList fileInfoList =
+        dir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     QFileInfo fileInfo;
     QTreeWidgetItem *childItem;
 
@@ -147,7 +142,7 @@ void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
             childItem = new QTreeWidgetItem(rootItem);
             childItem->setText(0, fileInfo.fileName());
             childItem->setIcon(0, QIcon(":/folder.png"));
-            displayDirectoryStructure(fileInfo.filePath(), tree);
+            displayDirectoryStructure(fileInfo.fileName(), tree);
         } else {
             childItem = new QTreeWidgetItem(rootItem);
             childItem->setText(0, fileInfo.fileName());
@@ -156,8 +151,13 @@ void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
     }
 }
 
+void MainWindow::onNoteDoubleClicked(QTreeWidgetItem *item,
+                                     QMarkdownTextEdit *edit, int column) {
+    qDebug() << item;
+}
 
-void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item) {
+void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget,
+                                         QListWidgetItem *item) {
     if (item) {
         QDialog dialog(this);
         dialog.setWindowTitle(tr("Rename item"));
@@ -180,33 +180,36 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetIte
             dialog.close();
         });
 
-        QObject::connect(&cancelButton, &QPushButton::clicked, [&]() {
-            dialog.close();
-        });
+        QObject::connect(&cancelButton, &QPushButton::clicked,
+                         [&]() { dialog.close(); });
 
         dialog.exec();
     }
 }
 
-
-void MainWindow::updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress) {
+void MainWindow::updateTasksProgress(QTabWidget *tasksTab,
+                                     QListWidget *incompleteTasks,
+                                     QListWidget *inprocessTasks,
+                                     QListWidget *completeTasks,
+                                     QProgressBar *tasksProgress) {
     if (tasksTab->currentIndex() == 2) {
         qDebug() << tasksTab->currentIndex();
         QTimer *timer2 = new QTimer(this);
         connect(timer2, &QTimer::timeout, [=]() {
-            int totalTasks = incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
+            int totalTasks = incompleteTasks->count() +
+                             inprocessTasks->count() + completeTasks->count();
             int completedTasks = completeTasks->count();
 
             if (totalTasks == 0) {
                 tasksProgress->setValue(0);
             } else {
-                double percentage = static_cast<double>(completedTasks) / static_cast<double>(totalTasks) * 100.0;
+                double percentage = static_cast<double>(completedTasks) /
+                                    static_cast<double>(totalTasks) * 100.0;
                 tasksProgress->setValue(percentage);
             }
         });
         timer2->start(500);
-    }
-    else {
+    } else {
         qDebug() << tasksTab->currentIndex();
     }
 }
@@ -220,12 +223,6 @@ void MainWindow::createFolder() {
     item->setText(0, "Folder");
     item->setIcon(0, QIcon(":/folder.png"));
     notesList->addTopLevelItem(item);
-/*
-    QListWidgetItem *item = new QListWidgetItem();
-    item->setText("Folder");
-    item->setIcon(QIcon(":/folder.png"));
-    foldersList->addItem(item);
-*/
 }
 
 void MainWindow::createNote() {
@@ -233,13 +230,6 @@ void MainWindow::createNote() {
     item->setText(0, "New Note");
     item->setIcon(0, QIcon(":/note.png"));
     notesList->addTopLevelItem(item);
-
-    /*
-    QListWidgetItem *item = new QListWidgetItem();
-    item->setText("New Note");
-    item->setIcon(QIcon(":/note.png"));
-    notesList->addItem(item);
-    */
 }
 
 void MainWindow::removeFolder() {
@@ -257,71 +247,85 @@ void MainWindow::removeNote() {
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
     if (item) {
         QDialog dialog(this);
+        dialog.setFixedSize(300, 300);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
         QGridLayout layout(&dialog);
 
-        QMarkdownTextEdit markdownTextEdit(&dialog);
-        QTextBrowser mdPreview(&dialog);
+        QLineEdit projectName(&dialog);
+        projectName.setFixedSize(280, 30);
+        QLineEdit gitLink(&dialog);
+        gitLink.setFixedSize(280, 30);
+        QComboBox documentation(&dialog);
+        documentation.setFixedSize(280, 30);
+        QLabel lastMod(&dialog);
+        lastMod.setFixedSize(280, 30);
 
-        mdPreview.setOpenLinks(true);
-        mdPreview.setOpenExternalLinks(true);
+        projectName.setFont(selectedFont);
+        projectName.setStyleSheet("font-size: " + font_size + "pt;");
 
-        markdownTextEdit.setFont(selectedFont);
-        markdownTextEdit.setStyleSheet("font-size: " + font_size + "pt;");
+        gitLink.setFont(selectedFont);
+        gitLink.setStyleSheet("font-size: " + font_size + "pt;");
 
-        QComboBox selectDocumentation(&dialog);
-        selectDocumentation.setStyleSheet("font-size: " + font_size + "pt;");
+        documentation.setFont(selectedFont);
+        documentation.setStyleSheet("font-size: " + font_size + "pt;");
 
-        QPushButton openButton(tr("Open"), &dialog);
-        openButton.setFont(selectedFont);
-        openButton.setStyleSheet("font-size: " + font_size + "pt;");
+        lastMod.setFont(selectedFont);
+        lastMod.setStyleSheet("font-size: " + font_size + "pt;");
+        lastMod.setAlignment(Qt::AlignHCenter);
 
-        QPushButton saveButton(tr("Save"), &dialog);
-        QPushButton closeButton(tr("Cancel"), &dialog);
+        QString text1 = item->text().split('\n').at(0);
+        QString text2 = item->text().split('\n').at(1);
+        QString text3 = item->text().split('\n').at(2);
+
+        projectName.setText(text1);
+        gitLink.setText(text2);
+        lastMod.setText(text3);
+
+        loadDocumentations(path, documentation);
+
+        QPushButton saveButton(&dialog);
+        QPushButton closeButton(&dialog);
 
         saveButton.setFont(selectedFont);
         saveButton.setStyleSheet("font-size: " + font_size + "pt;");
-
         closeButton.setFont(selectedFont);
         closeButton.setStyleSheet("font-size: " + font_size + "pt;");
 
-        layout.addWidget(&markdownTextEdit, 0, 0);
-        layout.addWidget(&mdPreview, 0, 1);
-        layout.addWidget(&selectDocumentation, 1, 0);
-        layout.addWidget(&saveButton, 1, 1);
-        layout.addWidget(&openButton, 2, 0);
-        layout.addWidget(&closeButton, 2, 1);
+        saveButton.setFixedSize(280, 30);
+        saveButton.setText("Save");
+        closeButton.setFixedSize(280, 30);
+        closeButton.setText("Cancel");
 
-        markdownTextEdit.setPlainText(formatText(item->text()));
-
-        QString text = markdownTextEdit.toPlainText();
-        mdPreview.setMarkdown(text);
-
-        loadDocumentations(path, selectDocumentation);
-
-        QObject::connect(&markdownTextEdit, &QMarkdownTextEdit::textChanged, [&]() {
-            QString text = markdownTextEdit.toPlainText();
-            mdPreview.setMarkdown(text);
-        });
-
+        layout.addWidget(&projectName, 0, 0);
+        layout.addWidget(&gitLink, 1, 0);
+        layout.addWidget(&documentation, 2, 0);
+        layout.addWidget(&lastMod, 3, 0);
+        layout.addWidget(&saveButton, 4, 0);
+        layout.addWidget(&closeButton, 5, 0);
 
         QObject::connect(&saveButton, &QPushButton::clicked, [&]() {
-            item->setText(unformatText(markdownTextEdit.toPlainText()));
+            text1 = projectName.text();
+            text2 = gitLink.text();
+            text3 = getCurrentDateTimeString();
+
+            QString itemText = text1 + "\n" + text2 + "\n" + text3;
+            item->setText(itemText);
+            qDebug() << itemText;
             dialog.close();
         });
 
-        QObject::connect(&closeButton, &QPushButton::clicked, [&]() {
-            dialog.close();
-        });
+        QObject::connect(&closeButton, &QPushButton::clicked,
+                         [&]() { dialog.close(); });
 
         dialog.exec();
     }
 }
 
 void MainWindow::loadDocumentations(QDir path, QComboBox &comboBox) {
-    QFileInfoList fileInfoList = path.entryInfoList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+    QFileInfoList fileInfoList = path.entryInfoList(
+        QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
     foreach (const QFileInfo &fileInfo, fileInfoList) {
         if (fileInfo.suffix() == "md") {
             comboBox.addItem(fileInfo.baseName());
@@ -329,7 +333,8 @@ void MainWindow::loadDocumentations(QDir path, QComboBox &comboBox) {
     }
 
     QDir subdir;
-    QFileInfoList subdirList = path.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+    QFileInfoList subdirList = path.entryInfoList(
+        QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
     foreach (const QFileInfo &subdirInfo, subdirList) {
         subdir.setPath(subdirInfo.filePath());
         if (subdir.exists()) {
@@ -338,38 +343,116 @@ void MainWindow::loadDocumentations(QDir path, QComboBox &comboBox) {
     }
 }
 
-QString MainWindow::formatText(const QString &text) {
-    QStringList lines = text.split('\n');
+void MainWindow::setH1() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
 
-    if (lines.length() < 4) {
-        return text;
-    }
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("# ");
 
-    lines[0] = QString("# %1 \n\n").arg(lines[0]);
-    lines[1] = QString("[Source](%1) \n\n ").arg(lines[1]);
-    lines[2] = QString("%1 \n\n ").arg(lines[2]);
-    lines[3] = QString("Latest modification: %1 \n\n ").arg(lines[3]);
+    noteEdit->setTextCursor(cursor);
+};
 
-    return lines.join("");
+void MainWindow::setH2() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("## ");
+
+    noteEdit->setTextCursor(cursor);
+};
+
+void MainWindow::setH3() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("### ");
+
+    noteEdit->setTextCursor(cursor);
+};
+
+void MainWindow::setList() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText(" - ");
+
+    noteEdit->setTextCursor(cursor);
+};
+
+void MainWindow::setLink() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("[Link](");
+
+    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.insertText(")");
+
+    noteEdit->setTextCursor(cursor);
+};
+
+void MainWindow::setBold() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("**");
+
+    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.insertText("**");
+
+    noteEdit->setTextCursor(cursor);
 }
 
-QString MainWindow::unformatText(const QString &text) {
-    QStringList lines = text.split('\n');
-    lines.replaceInStrings(QRegExp("^# "), "");
-    lines.replaceInStrings(QRegExp("!\\[Source\\]\\(\\n"), "");
-    lines.replaceInStrings(QRegExp("Latest modification: \\n"), "");
-    lines.replaceInStrings(QRegExp("\\n$"), "");
+void MainWindow::setItalic() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
 
-    lines[0] = QString("%1").arg(lines[0]);
-    lines[1] = QString("%1").arg(lines[1]);
-    lines[2] = QString("%1").arg(lines[2]);
-    lines[3] = QString("%1").arg(lines[3]);
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("*");
 
-    return lines.join("\n");
+    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.insertText("*");
+
+    noteEdit->setTextCursor(cursor);
 }
 
+void MainWindow::setStrike() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
 
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("~");
 
+    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.insertText("~");
+
+    noteEdit->setTextCursor(cursor);
+}
+
+void MainWindow::setTask() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText(" - [ ] - ");
+
+    noteEdit->setTextCursor(cursor);
+}
 
 void MainWindow::setFontPr1() {
     mainTitle->setFont(selectedFont);
@@ -383,17 +466,10 @@ void MainWindow::setFontPr1() {
 
     syncDataBtn->setFont(selectedFont);
     syncDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
-
-    openFolderBtn->setFont(selectedFont);
-    openFolderBtn->setStyleSheet("font-size: " + font_size + "pt;");
-
+    
     notesList->setFont(selectedFont);
     notesList->setStyleSheet("font-size: " + font_size +
                              "pt; background-color: rgba(47, 51, 77, 0);");
-
-    // foldersList->setFont(selectedFont);
-    // foldersList->setStyleSheet("font-size: " + font_size +
-    //                             "pt; background-color: rgba(47, 51, 77, 50);");
 
     menuButton->setFont(selectedFont);
     menuButton->setStyleSheet("font-size: " + font_size + "pt;");
@@ -410,9 +486,6 @@ void MainWindow::setFontPr1() {
     noteEdit->setFont(selectedFont);
     noteEdit->setStyleSheet("font-size: " + font_size + "pt;");
 
-    timeLabel->setFont(selectedFont);
-    timeLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
-
     noteNameLabel->setFont(selectedFont);
     noteNameLabel->setStyleSheet("font-size: " + font_size +
                                  "pt; color: #8ebecf;");
@@ -421,7 +494,8 @@ void MainWindow::setFontPr1() {
     taskText->setStyleSheet("font-size: " + font_size + "pt;");
 
     incompleteTasks->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -436,7 +510,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     inprocessTasks->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -452,7 +527,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     completeTasks->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -468,7 +544,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     notStartedProjects->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -484,7 +561,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     startedProjects->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -499,7 +577,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     finishlineProjects->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -515,7 +594,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     finishedProjects->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -566,5 +646,8 @@ void MainWindow::setFontPr1() {
     label_3->setStyleSheet("font-size: 16px;");
 
     tasksProgress->setFont(selectedFont);
-    tasksProgress->setStyleSheet("background-color: rgb(255, 117, 127); selection-background-color: rgb(195, 232, 141); color: #222436; font-size: " + font_size + "pt;");
+    tasksProgress->setStyleSheet(
+        "background-color: rgb(255, 117, 127); selection-background-color: "
+        "rgb(195, 232, 141); color: #222436; font-size: " +
+        font_size + "pt;");
 }
