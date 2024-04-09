@@ -23,5 +23,6 @@
         <file>link.png</file>
         <file>list.png</file>
         <file>strikethrough.png</file>
+        <file>view.png</file>
     </qresource>
 </RCC>

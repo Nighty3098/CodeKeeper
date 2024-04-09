@@ -36,6 +36,7 @@ private slots:
     void createNote();
     void removeNote();
     void removeFolder();
+    void toViewMode();
     void createFolder();
 
     void loadTasks();
@@ -127,6 +128,17 @@ private:
     QListWidget *startedProjects;
     QListWidget *finishedProjects;
     QListWidget *finishlineProjects;
+
+    QAction *newNote;
+    QAction *rmNote;
+    QAction *newFolder;
+    QAction *showList;
+    QAction *showRender;
+    QAction *addTask;
+    QAction *rmTask;
+    QAction *viewMode;
+    QAction *newProject;
+    QAction *rmProject;
 
     SettingsWindow *settingsWindow;
 };

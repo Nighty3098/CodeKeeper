@@ -2,6 +2,9 @@
 
 #include <QPropertyAnimation>
 
+#include "keeperFunc/notesFunc.cpp"
+#include "keeperFunc/tasksFunc.cpp"
+#include "keeperFunc/projectsFunc.cpp"
 #include "keeperFunc/functional.cpp"
 #include "qmarkdowntextedit/markdownhighlighter.h"
 
@@ -32,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         globalSettings->value("isVisibleFolders", true).toBool();
     bool isVisiblePreview =
         globalSettings->value("isVisiblePreview", false).toBool();
+    bool isViewMode =
+        globalSettings->value("isViewMode", false).toBool();
 
     // ========================================================
 
@@ -53,11 +58,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     syncDataLayout->addWidget(syncDataBtn);
 
     // ========================================================
-    QGridLayout *notesGLayout = new QGridLayout;
-    QHBoxLayout *syntaxMenu = new QHBoxLayout;
-    syntaxMenu->setSpacing(1);
-    syntaxMenu->setSizeConstraint(QLayout::SetFixedSize);
-    syntaxMenu->setAlignment(Qt::AlignLeft);
+    QHBoxLayout *menuLayout = new QHBoxLayout;
+    QHBoxLayout *contentLayout = new QHBoxLayout;
+    QVBoxLayout *notesCLayout = new QVBoxLayout;
+
+    contentLayout->setSpacing(0);
+    notesCLayout->setSpacing(0);
+
+    menuLayout->setSpacing(0);
+    menuLayout->setSizeConstraint(QLayout::SetFixedSize);
+    menuLayout->setAlignment(Qt::AlignHCenter);
 
     notesList = new QTreeWidget();
     notesList->setAnimated(true);
@@ -102,24 +112,27 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menu->setFont(selectedFont);
 
     // actions for menu
-    QAction *newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this,
-                                       SLOT(createNote()));
-    QAction *rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note", this,
-                                      SLOT(removeNote()));
-    QAction *newFolder = menu->addAction(
-        QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
+    newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()));
+    rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note", this, SLOT(removeNote()));
+    newFolder = menu->addAction(QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
 
     menu->addSeparator();
 
-    QAction *showList =
+    showList =
         menu->addAction("Show notes list", this, SLOT(hideNotesList()));
     showList->setCheckable(true);
     showList->setChecked(isVisibleNotesList);
 
-    QAction *showPreview =
+    showRender =
         menu->addAction("Show md preview", this, SLOT(showPreview()));
-    showPreview->setCheckable(true);
-    showPreview->setChecked(isVisiblePreview);
+    showRender->setCheckable(true);
+    showRender->setChecked(isVisiblePreview);
+
+    menu->addSeparator();
+
+    viewMode = menu->addAction(QPixmap(":/view.png"), "Reading mode", this, SLOT(toViewMode()));
+    viewMode->setCheckable(true);
+    viewMode->setChecked(isViewMode);
 
     menuButton->setMenu(menu);
 
@@ -169,30 +182,36 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setStrikeB->setToolTip("<p style='color: #ffffff;'>Strikethrough text</p>");
     setTaskB->setToolTip("<p style='color: #ffffff;'>Task</p>");
 
-    syntaxMenu->addWidget(setH1B);
-    syntaxMenu->addWidget(setH2B);
-    syntaxMenu->addWidget(setH3B);
 
-    syntaxMenu->addWidget(setBoldB);
-    syntaxMenu->addWidget(setItalicB);
-    syntaxMenu->addWidget(setStrikeB);
+    // menuLayout->addWidget(menuButton);
 
-    syntaxMenu->addWidget(setListB);
-    syntaxMenu->addWidget(setLinkB);
-    syntaxMenu->addWidget(setTaskB);
+    menuLayout->addWidget(setH1B);
+    menuLayout->addWidget(setH2B);
+    menuLayout->addWidget(setH3B);
 
-    notesGLayout->addWidget(menuButton, 0, 5);
-    notesGLayout->addLayout(syntaxMenu, 0, 2);
-    // notesGLayout->addWidget(noteNameLabel, 0, 3);
-    notesGLayout->addWidget(notesList, 1, 1);
-    notesGLayout->addWidget(noteEdit, 1, 2);
-    notesGLayout->addWidget(mdPreview, 1, 3);
+    menuLayout->addWidget(setBoldB);
+    menuLayout->addWidget(setItalicB);
+    menuLayout->addWidget(setStrikeB);
+
+    menuLayout->addWidget(setListB);
+    menuLayout->addWidget(setLinkB);
+    menuLayout->addWidget(setTaskB);
+
+    menuLayout->addWidget(menuButton);
+
+    contentLayout->addWidget(notesList);
+    contentLayout->addWidget(noteEdit);
+    contentLayout->addWidget(mdPreview);
+
+    notesCLayout->addLayout(menuLayout);
+    notesCLayout->addLayout(contentLayout);
 
     notesList->setVisible(isVisibleNotesList);
     mdPreview->setVisible(isVisiblePreview);
 
     // ========================================================
     QGridLayout *tasksGLayout = new QGridLayout;
+    tasksGLayout->setSpacing(0);
 
     tasksMenuBtn = new QToolButton;
     tasksMenuBtn->setText("...");
@@ -203,9 +222,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QMenu *tasksMenu = new QMenu(tasksMenuBtn);
     tasksMenu->setFont(selectedFont);
 
-    QAction *addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task",
+    addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task",
                                             this, SLOT(addNewTask()));
-    QAction *rmTask = tasksMenu->addAction(
+    rmTask = tasksMenu->addAction(
         QPixmap(":/delete.png"), "Delete task", this, SLOT(removeTask()));
 
     tasksMenuBtn->setMenu(tasksMenu);
@@ -273,6 +292,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // projects tab
     QGridLayout *projectsGLayout = new QGridLayout;
+    projectsGLayout->setSpacing(0);
 
     projectsMainLabel = new QLabel("Projects");
     projectsMainLabel->setAlignment(Qt::AlignCenter);
@@ -327,9 +347,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     projectsMenu = new QMenu(projectsMenuButton);
 
     // actions for menu
-    QAction *newProject = projectsMenu->addAction(
+    newProject = projectsMenu->addAction(
         QPixmap(":/new.png"), "New project", this, SLOT(createProject()));
-    QAction *rmProject = projectsMenu->addAction(
+    rmProject = projectsMenu->addAction(
         QPixmap(":/delete.png"), "Remove project", this, SLOT(removeProject()));
 
 
@@ -367,7 +387,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *notesTab = new QWidget();
     QVBoxLayout *notesLayout = new QVBoxLayout(notesTab);
 
-    notesLayout->addLayout(notesGLayout);
+    notesLayout->addLayout(notesCLayout);
 
     tabs->addTab(notesTab, "Doc");
 

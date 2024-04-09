@@ -32,11 +32,11 @@ int main(int argc, char* argv[]) {
 
     w.setWindowIcon(QIcon("://icon.png"));
 
-    QSplashScreen splash(QPixmap(":/icon.png"));
-    splash.show();
+    //QSplashScreen splash(QPixmap(":/icon.png"));
+    //splash.show();
 
-    loadModules(&splash);
-    splash.finish(&w);
+    //loadModules(&splash);
+    //splash.finish(&w);
 
     w.show();
     return a.exec();
