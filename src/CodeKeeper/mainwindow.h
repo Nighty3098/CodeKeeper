@@ -47,15 +47,10 @@ private slots:
     void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress);
     void createProject();
     void removeProject();
-
     void loadDocumentations(QDir path, QComboBox &comboBox);
-
-    // void saveProject(QListWidgetItem *item);
-
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
-
+    
     void on_listWidget_itemClicked(QListWidgetItem *item);
-
     void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
     void onNoteDoubleClicked(QTreeWidgetItem *item, QMarkdownTextEdit *edit, int column);
 
@@ -63,8 +58,17 @@ private slots:
     void displayDirectoryStructure(const QDir &dir, QTreeWidget *tree);
     void loadTasks();
     void loadProjects();
-
     void setFontPr1();
+
+    void setH1();
+    void setH2();
+    void setH3();
+    void setList();
+    void setLink();
+    void setBold();
+    void setItalic();
+    void setStrike();
+    void setTask();
 
 private:
     QWidget *centralWidget;
@@ -92,6 +96,16 @@ private:
     QToolButton *menuButton;
     QLabel *timeLabel;
     QLabel *noteNameLabel;
+
+    QPushButton *setH1B;
+    QPushButton *setH2B;
+    QPushButton *setH3B;
+    QPushButton *setListB;
+    QPushButton *setLinkB;
+    QPushButton *setBoldB;
+    QPushButton *setItalicB;
+    QPushButton *setStrikeB;
+    QPushButton *setTaskB;
 
     // ========================================================
     // tasks tab

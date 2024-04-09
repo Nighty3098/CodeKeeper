@@ -14,5 +14,14 @@
         <file>settings.png</file>
         <file>note.png</file>
         <file>folder.png</file>
+        <file>bold.png</file>
+        <file>checkbox.png</file>
+        <file>h1.png</file>
+        <file>h2.png</file>
+        <file>h3.png</file>
+        <file>italic.png</file>
+        <file>link.png</file>
+        <file>list.png</file>
+        <file>strikethrough.png</file>
     </qresource>
 </RCC>

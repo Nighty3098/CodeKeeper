@@ -160,10 +160,8 @@ void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
 
 
 void MainWindow::onNoteDoubleClicked(QTreeWidgetItem *item, QMarkdownTextEdit *edit, int column) {
-
+    qDebug() << item;
 }
-
-
 
 
 
@@ -362,6 +360,131 @@ void MainWindow::loadDocumentations(QDir path, QComboBox &comboBox) {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+void MainWindow::setH1() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("# ");
+
+    noteEdit->setTextCursor(cursor);
+};
+
+void MainWindow::setH2() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("## ");
+
+    noteEdit->setTextCursor(cursor);
+};
+
+void MainWindow::setH3() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("### ");
+
+    noteEdit->setTextCursor(cursor);
+};
+
+void MainWindow::setList() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText(" - ");
+
+    noteEdit->setTextCursor(cursor);
+};
+
+
+void MainWindow::setLink() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("[Link](");
+
+    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.insertText(")");
+
+    noteEdit->setTextCursor(cursor);
+};
+
+void MainWindow::setBold() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("**");
+
+    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.insertText("**");
+
+    noteEdit->setTextCursor(cursor);
+}
+
+
+void MainWindow::setItalic() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("*");
+
+    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.insertText("*");
+
+    noteEdit->setTextCursor(cursor);
+}
+
+
+void MainWindow::setStrike() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("~");
+
+    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.insertText("~");
+
+    noteEdit->setTextCursor(cursor);
+}
+
+void MainWindow::setTask() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText(" - [ ] - ");
+
+    noteEdit->setTextCursor(cursor);
+}
 
 
 

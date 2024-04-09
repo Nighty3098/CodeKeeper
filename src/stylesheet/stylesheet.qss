@@ -207,6 +207,10 @@ QPushButton {
         border-color: #2f334d;
 }
 
+QPushButton::ToolTip {
+    color: #FFFFFF;
+}
+
 QLabel {
     color: #c8d3f5;
 }

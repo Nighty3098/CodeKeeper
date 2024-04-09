@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
     path = globalSettings->value("path").value<QDir>();
+    QString dir = path.absolutePath();
 
     qDebug() << path;
 
@@ -53,11 +54,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QHBoxLayout *openFolderlayout = new QHBoxLayout;
     openFolderBtn = new QPushButton(QPixmap(":/open.png"), " Open folder");
     openFolderBtn->setFixedSize(200, 30);
-    openFolderlayout->addWidget(openFolderBtn);
+    // openFolderlayout->addWidget(openFolderBtn);
 
     // ========================================================
 
     QGridLayout *notesGLayout = new QGridLayout;
+    QHBoxLayout *syntaxMenu = new QHBoxLayout;
+    syntaxMenu->setSpacing(1);
+    syntaxMenu->setSizeConstraint(QLayout::SetFixedSize);
+    syntaxMenu->setAlignment(Qt::AlignLeft);
+
+    
 
     notesList = new QTreeWidget();
     notesList->setAnimated(true);
@@ -66,24 +73,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
     notesList->setDefaultDropAction(Qt::MoveAction);
     notesList->setDragEnabled(true);
-    notesList->setMaximumWidth(300);
+    notesList->setMaximumWidth(250);
 
-/*
-    notesList = new QListWidget();
-    notesList->setWordWrap(true);
-    notesList->setDragDropMode(QAbstractItemView::DragDrop);
-    notesList->setDefaultDropAction(Qt::MoveAction);
-    notesList->setDragEnabled(true);
-    notesList->setMaximumWidth(200);
-
-
-    foldersList = new QListWidget();
-    foldersList->setWordWrap(true);
-    foldersList->setDragDropMode(QAbstractItemView::DragDrop);
-    foldersList->setDefaultDropAction(Qt::MoveAction);
-    foldersList->setDragEnabled(true);
-    foldersList->setMaximumWidth(200);
-*/
     // other
     noteName = new QLineEdit();
     noteName->setFixedHeight(30);
@@ -99,17 +90,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     noteEdit = new QMarkdownTextEdit();
     noteEdit->setPlaceholderText(" Just start typing");
-
-    MarkdownHighlighter *highlighter =
-        new MarkdownHighlighter(mdPreview->document());
-
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
     noteEdit->setLineNumberEnabled(true);
     noteEdit->setLineNumbersCurrentLineColor("#fbcd76");
     noteEdit->setLineWidth(font_size.toInt());
     noteEdit->setHighlightingEnabled(true);
 
-    // time label
+
     timeLabel = new QLabel(getCurrentDateTimeString());
     timeLabel->setAlignment(Qt::AlignCenter);
 
@@ -118,7 +105,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         timeLabel->setText(getCurrentDateTimeString());
     });
 
-    timer->start(1000);
+//    timer->start(1000);
+
 
     noteNameLabel = new QLabel("Note");
     noteNameLabel->setAlignment(Qt::AlignCenter);
@@ -143,15 +131,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
                                       SLOT(removeNote()));
     QAction *newFolder = menu->addAction(
         QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
-    // QAction *rmFolder = menu->addAction(QPixmap(":/delete.png"), "RM folder",
-    //                                    this, SLOT(removeFolder()));
 
     menu->addSeparator();
 
-    //QAction *showFolders =
-    //    menu->addAction("Show folders list", this, SLOT(showFolders()));
-    //showFolders->setCheckable(true);
-    //showFolders->setChecked(isVisibleFolders);
 
     QAction *showList =
         menu->addAction("Show notes list", this, SLOT(hideNotesList()));
@@ -166,9 +148,72 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuButton->setMenu(menu);
 
 
+    setH1B = new QPushButton(QPixmap(":/h1.png"), "");
+    setH2B = new QPushButton(QPixmap(":/h2.png"), "");
+    setH3B = new QPushButton(QPixmap(":/h3.png"), "");
+    setListB = new QPushButton(QPixmap(":/list.png"), "");
+    setLinkB = new QPushButton(QPixmap(":/link.png"), "");
+    setBoldB = new QPushButton(QPixmap(":/bold.png"), "");
+    setItalicB = new QPushButton(QPixmap(":/italic.png"), "");
+    setStrikeB = new QPushButton(QPixmap(":/strikethrough.png"), "");
+    setTaskB = new QPushButton(QPixmap(":/checkbox.png"), "");
+
+    setH1B->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setH2B->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setH3B->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setListB->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setLinkB->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setBoldB->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setItalicB->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setStrikeB->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setTaskB->setStyleSheet("background-color: #222436; border-color: #222436;");
+
+    setH1B->setFixedSize(30, 30);
+    setH2B->setFixedSize(30, 30);
+    setH3B->setFixedSize(30, 30);
+    setListB->setFixedSize(30, 30);
+    setLinkB->setFixedSize(30, 30);
+    setBoldB->setFixedSize(30, 30);
+    setItalicB->setFixedSize(30, 30);
+    setStrikeB->setFixedSize(30, 30);
+    setTaskB->setFixedSize(30, 30);
+
+    setH1B->setToolTip("<p style='color: #ffffff;'>Heading 1</p>");
+    setH2B->setToolTip("<p style='color: #ffffff;'>Heading 2</p>");
+    setH3B->setToolTip("<p style='color: #ffffff;'>Heading 3</p>");
+    setListB->setToolTip("<p style='color: #ffffff;'>List</p>");
+    setLinkB->setToolTip("<p style='color: #ffffff;'>Link</p>");
+    setBoldB->setToolTip("<p style='color: #ffffff;'>Bold text</p>");
+    setItalicB->setToolTip("<p style='color: #ffffff;'>Italic text</p>");
+    setStrikeB->setToolTip("<p style='color: #ffffff;'>Strikethrough text</p>");
+    setTaskB->setToolTip("<p style='color: #ffffff;'>Task</p>");
+
+    connect(setH1B, &QPushButton::clicked, this, &MainWindow::setH1);
+    connect(setH2B, &QPushButton::clicked, this, &MainWindow::setH2);
+    connect(setH3B, &QPushButton::clicked, this, &MainWindow::setH3);
+    connect(setListB, &QPushButton::clicked, this, &MainWindow::setList);
+    connect(setLinkB, &QPushButton::clicked, this, &MainWindow::setLink);
+    connect(setBoldB, &QPushButton::clicked, this, &MainWindow::setBold);
+    connect(setItalicB, &QPushButton::clicked, this, &MainWindow::setItalic);
+    connect(setStrikeB, &QPushButton::clicked, this, &MainWindow::setStrike);
+    connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
+
+    syntaxMenu->addWidget(setH1B);
+    syntaxMenu->addWidget(setH2B);
+    syntaxMenu->addWidget(setH3B);
+
+    syntaxMenu->addWidget(setBoldB);
+    syntaxMenu->addWidget(setItalicB);
+    syntaxMenu->addWidget(setStrikeB);
+
+    syntaxMenu->addWidget(setListB);
+    syntaxMenu->addWidget(setLinkB);
+    syntaxMenu->addWidget(setTaskB);
+
     notesGLayout->addWidget(menuButton, 0, 5);
-    notesGLayout->addWidget(noteNameLabel, 0, 2);
-    notesGLayout->addWidget(timeLabel, 0, 3);
+    notesGLayout->addLayout(syntaxMenu, 0, 2);
+    notesGLayout->addWidget(noteNameLabel, 0, 3);
+    //notesGLayout->addWidget(timeLabel, 0, 3);
     //notesGLayout->addWidget(foldersList, 1, 0);
     notesGLayout->addWidget(notesList, 1, 1);
     notesGLayout->addWidget(noteEdit, 1, 2);
@@ -374,8 +419,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tabs->addTab(projectsTab, "Projects");
 
-    // ========================================================
-    // set font and font size
+
+
+    // task
+    connect(taskText, &QLineEdit::returnPressed, [=] {
+        QString text = taskText->text();
+
+        if (!text.isEmpty()) {
+            taskText->clear();
+            incompleteTasks->addItem(text);
+        } else {
+            qDebug() << "Task is empty";
+        }
+    });
 
     // main
     connect(openSettingsBtn, SIGNAL(clicked()), this,
@@ -402,17 +458,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::updateMDPreview);
 
-    // task
-    connect(taskText, &QLineEdit::returnPressed, [=] {
-        QString text = taskText->text();
-
-        if (!text.isEmpty()) {
-            taskText->clear();
-            incompleteTasks->addItem(text);
-        } else {
-            qDebug() << "Task is empty";
-        }
-    });
 
     connect(tabs, &QTabWidget::currentChanged, this, [=]() {
         updateTasksProgress(tabs, incompleteTasks, inprocessTasks, completeTasks, tasksProgress);
@@ -446,18 +491,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
 
     connect(notesList, &QTreeWidget::itemDoubleClicked, this, [=](QTreeWidgetItem *item) {
-        onNoteDoubleClicked(item, noteEdit, 1); 
+        onNoteDoubleClicked(item, noteEdit, 0); 
     });
 
-
-
-    // sync scroll
-    // connect(noteEdit->verticalScrollBar(), &QAbstractSlider::valueChanged,
-    // [=](int value)
-    // {mdPreview->verticalScrollBar()->setSliderPosition(value);});
-    // connect(mdPreview->verticalScrollBar(), &QAbstractSlider::valueChanged,
-    // [=](int value)
-    // {noteEdit->verticalScrollBar()->setSliderPosition(value);});
 
     mainLayout->addWidget(tabs);
 
