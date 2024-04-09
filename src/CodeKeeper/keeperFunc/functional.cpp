@@ -63,7 +63,8 @@ void MainWindow::showPreview() {
 
 void MainWindow::showFolders() {
     // foldersList->setVisible(!foldersList->isVisible());
-    // globalSettings->setValue("isVisibleFoldersList", foldersList->isVisible());
+    // globalSettings->setValue("isVisibleFoldersList",
+    // foldersList->isVisible());
 }
 
 void MainWindow::updateMDPreview() {
@@ -131,14 +132,14 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
     }
 }
 
-
 void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
     QTreeWidgetItem *rootItem = new QTreeWidgetItem(tree);
     rootItem->setText(0, dir.path());
     rootItem->setIcon(0, QIcon(":/folder.png"));
     tree->addTopLevelItem(rootItem);
 
-    QFileInfoList fileInfoList = dir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+    QFileInfoList fileInfoList =
+        dir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     QFileInfo fileInfo;
     QTreeWidgetItem *childItem;
 
@@ -156,16 +157,13 @@ void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
     }
 }
 
-
-
-
-void MainWindow::onNoteDoubleClicked(QTreeWidgetItem *item, QMarkdownTextEdit *edit, int column) {
+void MainWindow::onNoteDoubleClicked(QTreeWidgetItem *item,
+                                     QMarkdownTextEdit *edit, int column) {
     qDebug() << item;
 }
 
-
-
-void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item) {
+void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget,
+                                         QListWidgetItem *item) {
     if (item) {
         QDialog dialog(this);
         dialog.setWindowTitle(tr("Rename item"));
@@ -188,33 +186,36 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetIte
             dialog.close();
         });
 
-        QObject::connect(&cancelButton, &QPushButton::clicked, [&]() {
-            dialog.close();
-        });
+        QObject::connect(&cancelButton, &QPushButton::clicked,
+                         [&]() { dialog.close(); });
 
         dialog.exec();
     }
 }
 
-
-void MainWindow::updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress) {
+void MainWindow::updateTasksProgress(QTabWidget *tasksTab,
+                                     QListWidget *incompleteTasks,
+                                     QListWidget *inprocessTasks,
+                                     QListWidget *completeTasks,
+                                     QProgressBar *tasksProgress) {
     if (tasksTab->currentIndex() == 2) {
         qDebug() << tasksTab->currentIndex();
         QTimer *timer2 = new QTimer(this);
         connect(timer2, &QTimer::timeout, [=]() {
-            int totalTasks = incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
+            int totalTasks = incompleteTasks->count() +
+                             inprocessTasks->count() + completeTasks->count();
             int completedTasks = completeTasks->count();
 
             if (totalTasks == 0) {
                 tasksProgress->setValue(0);
             } else {
-                double percentage = static_cast<double>(completedTasks) / static_cast<double>(totalTasks) * 100.0;
+                double percentage = static_cast<double>(completedTasks) /
+                                    static_cast<double>(totalTasks) * 100.0;
                 tasksProgress->setValue(percentage);
             }
         });
         timer2->start(500);
-    }
-    else {
+    } else {
         qDebug() << tasksTab->currentIndex();
     }
 }
@@ -228,12 +229,12 @@ void MainWindow::createFolder() {
     item->setText(0, "Folder");
     item->setIcon(0, QIcon(":/folder.png"));
     notesList->addTopLevelItem(item);
-/*
-    QListWidgetItem *item = new QListWidgetItem();
-    item->setText("Folder");
-    item->setIcon(QIcon(":/folder.png"));
-    foldersList->addItem(item);
-*/
+    /*
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setText("Folder");
+        item->setIcon(QIcon(":/folder.png"));
+        foldersList->addItem(item);
+    */
 }
 
 void MainWindow::createNote() {
@@ -334,16 +335,16 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
             dialog.close();
         });
 
-        QObject::connect(&closeButton, &QPushButton::clicked, [&]() {
-            dialog.close();
-        });
+        QObject::connect(&closeButton, &QPushButton::clicked,
+                         [&]() { dialog.close(); });
 
         dialog.exec();
     }
 }
 
 void MainWindow::loadDocumentations(QDir path, QComboBox &comboBox) {
-    QFileInfoList fileInfoList = path.entryInfoList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+    QFileInfoList fileInfoList = path.entryInfoList(
+        QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
     foreach (const QFileInfo &fileInfo, fileInfoList) {
         if (fileInfo.suffix() == "md") {
             comboBox.addItem(fileInfo.baseName());
@@ -351,7 +352,8 @@ void MainWindow::loadDocumentations(QDir path, QComboBox &comboBox) {
     }
 
     QDir subdir;
-    QFileInfoList subdirList = path.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+    QFileInfoList subdirList = path.entryInfoList(
+        QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
     foreach (const QFileInfo &subdirInfo, subdirList) {
         subdir.setPath(subdirInfo.filePath());
         if (subdir.exists()) {
@@ -359,18 +361,6 @@ void MainWindow::loadDocumentations(QDir path, QComboBox &comboBox) {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 void MainWindow::setH1() {
     QTextCursor cursor = noteEdit->textCursor();
@@ -416,7 +406,6 @@ void MainWindow::setList() {
     noteEdit->setTextCursor(cursor);
 };
 
-
 void MainWindow::setLink() {
     QTextCursor cursor = noteEdit->textCursor();
     int lineNumber = cursor.blockNumber();
@@ -445,7 +434,6 @@ void MainWindow::setBold() {
     noteEdit->setTextCursor(cursor);
 }
 
-
 void MainWindow::setItalic() {
     QTextCursor cursor = noteEdit->textCursor();
     int lineNumber = cursor.blockNumber();
@@ -459,7 +447,6 @@ void MainWindow::setItalic() {
 
     noteEdit->setTextCursor(cursor);
 }
-
 
 void MainWindow::setStrike() {
     QTextCursor cursor = noteEdit->textCursor();
@@ -486,8 +473,6 @@ void MainWindow::setTask() {
     noteEdit->setTextCursor(cursor);
 }
 
-
-
 void MainWindow::setFontPr1() {
     mainTitle->setFont(selectedFont);
 
@@ -510,7 +495,8 @@ void MainWindow::setFontPr1() {
 
     // foldersList->setFont(selectedFont);
     // foldersList->setStyleSheet("font-size: " + font_size +
-    //                             "pt; background-color: rgba(47, 51, 77, 50);");
+    //                             "pt; background-color: rgba(47, 51, 77,
+    //                             50);");
 
     menuButton->setFont(selectedFont);
     menuButton->setStyleSheet("font-size: " + font_size + "pt;");
@@ -538,7 +524,8 @@ void MainWindow::setFontPr1() {
     taskText->setStyleSheet("font-size: " + font_size + "pt;");
 
     incompleteTasks->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -553,7 +540,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     inprocessTasks->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -569,7 +557,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     completeTasks->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -585,7 +574,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     notStartedProjects->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -601,7 +591,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     startedProjects->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -616,7 +607,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     finishlineProjects->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -632,7 +624,8 @@ void MainWindow::setFontPr1() {
         "}");
 
     finishedProjects->setStyleSheet(
-        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: 0px; "
+        "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+        "0px; "
         "border-color: #838383;}"
         "QListWidget::item:selected {"
         "color: #FFFFFF;"
@@ -683,5 +676,8 @@ void MainWindow::setFontPr1() {
     label_3->setStyleSheet("font-size: 16px;");
 
     tasksProgress->setFont(selectedFont);
-    tasksProgress->setStyleSheet("background-color: rgb(255, 117, 127); selection-background-color: rgb(195, 232, 141); color: #222436; font-size: " + font_size + "pt;");
+    tasksProgress->setStyleSheet(
+        "background-color: rgb(255, 117, 127); selection-background-color: "
+        "rgb(195, 232, 141); color: #222436; font-size: " +
+        font_size + "pt;");
 }

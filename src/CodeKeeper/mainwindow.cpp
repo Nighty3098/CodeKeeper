@@ -1,6 +1,7 @@
+#include "mainwindow.h"
+
 #include <QPropertyAnimation>
 
-#include "mainwindow.h"
 #include "keeperFunc/functional.cpp"
 #include "qmarkdowntextedit/markdownhighlighter.h"
 
@@ -64,8 +65,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     syntaxMenu->setSizeConstraint(QLayout::SetFixedSize);
     syntaxMenu->setAlignment(Qt::AlignLeft);
 
-    
-
     notesList = new QTreeWidget();
     notesList->setAnimated(true);
     notesList->setHeaderHidden(true);
@@ -83,7 +82,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QFileSystemModel *model = new QFileSystemModel();
     model->setRootPath(".");
 
-
     mdPreview = new QTextBrowser();
     mdPreview->setOpenLinks(true);
     mdPreview->setOpenExternalLinks(true);
@@ -96,17 +94,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteEdit->setLineWidth(font_size.toInt());
     noteEdit->setHighlightingEnabled(true);
 
-
     timeLabel = new QLabel(getCurrentDateTimeString());
     timeLabel->setAlignment(Qt::AlignCenter);
 
     QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, [=]() {
-        timeLabel->setText(getCurrentDateTimeString());
-    });
+    connect(timer, &QTimer::timeout,
+            [=]() { timeLabel->setText(getCurrentDateTimeString()); });
 
-//    timer->start(1000);
-
+    //    timer->start(1000);
 
     noteNameLabel = new QLabel("Note");
     noteNameLabel->setAlignment(Qt::AlignCenter);
@@ -134,7 +129,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     menu->addSeparator();
 
-
     QAction *showList =
         menu->addAction("Show notes list", this, SLOT(hideNotesList()));
     showList->setCheckable(true);
@@ -146,7 +140,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     showPreview->setChecked(isVisiblePreview);
 
     menuButton->setMenu(menu);
-
 
     setH1B = new QPushButton(QPixmap(":/h1.png"), "");
     setH2B = new QPushButton(QPixmap(":/h2.png"), "");
@@ -161,12 +154,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setH1B->setStyleSheet("background-color: #222436; border-color: #222436;");
     setH2B->setStyleSheet("background-color: #222436; border-color: #222436;");
     setH3B->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setListB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setLinkB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setBoldB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setItalicB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setStrikeB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setTaskB->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setListB->setStyleSheet(
+        "background-color: #222436; border-color: #222436;");
+    setLinkB->setStyleSheet(
+        "background-color: #222436; border-color: #222436;");
+    setBoldB->setStyleSheet(
+        "background-color: #222436; border-color: #222436;");
+    setItalicB->setStyleSheet(
+        "background-color: #222436; border-color: #222436;");
+    setStrikeB->setStyleSheet(
+        "background-color: #222436; border-color: #222436;");
+    setTaskB->setStyleSheet(
+        "background-color: #222436; border-color: #222436;");
 
     setH1B->setFixedSize(30, 30);
     setH2B->setFixedSize(30, 30);
@@ -213,8 +212,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesGLayout->addWidget(menuButton, 0, 5);
     notesGLayout->addLayout(syntaxMenu, 0, 2);
     notesGLayout->addWidget(noteNameLabel, 0, 3);
-    //notesGLayout->addWidget(timeLabel, 0, 3);
-    //notesGLayout->addWidget(foldersList, 1, 0);
+    // notesGLayout->addWidget(timeLabel, 0, 3);
+    // notesGLayout->addWidget(foldersList, 1, 0);
     notesGLayout->addWidget(notesList, 1, 1);
     notesGLayout->addWidget(noteEdit, 1, 2);
     notesGLayout->addWidget(mdPreview, 1, 3);
@@ -231,14 +230,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tasksMenuBtn->setFixedSize(30, 20);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
     tasksMenuBtn->setStyleSheet("border-radius: 2px;");
-    
+
     QMenu *tasksMenu = new QMenu(tasksMenuBtn);
     tasksMenu->setFont(selectedFont);
 
-    QAction *addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task", this,
-                                        SLOT(addNewTask()));
-    QAction *rmTask = tasksMenu->addAction(QPixmap(":/delete.png"), "Delete task", this,
-                                        SLOT(removeTask()));
+    QAction *addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task",
+                                            this, SLOT(addNewTask()));
+    QAction *rmTask = tasksMenu->addAction(
+        QPixmap(":/delete.png"), "Delete task", this, SLOT(removeTask()));
 
     tasksMenuBtn->setMenu(tasksMenu);
 
@@ -419,8 +418,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tabs->addTab(projectsTab, "Projects");
 
-
-
     // task
     connect(taskText, &QLineEdit::returnPressed, [=] {
         QString text = taskText->text();
@@ -458,42 +455,41 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::updateMDPreview);
 
-
     connect(tabs, &QTabWidget::currentChanged, this, [=]() {
-        updateTasksProgress(tabs, incompleteTasks, inprocessTasks, completeTasks, tasksProgress);
+        updateTasksProgress(tabs, incompleteTasks, inprocessTasks,
+                            completeTasks, tasksProgress);
     });
 
-    connect(completeTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
-        renameItemOnDoubleClick(completeTasks, item);
-    });
+    connect(completeTasks, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) {
+                renameItemOnDoubleClick(completeTasks, item);
+            });
 
-    connect(incompleteTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
-        renameItemOnDoubleClick(completeTasks, item);
-    });
+    connect(incompleteTasks, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) {
+                renameItemOnDoubleClick(completeTasks, item);
+            });
 
-    connect(inprocessTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
-        renameItemOnDoubleClick(completeTasks, item);
-    });
+    connect(inprocessTasks, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) {
+                renameItemOnDoubleClick(completeTasks, item);
+            });
 
+    connect(
+        notStartedProjects, &QListWidget::itemDoubleClicked, this,
+        [=](QListWidgetItem *item) { openProject(notStartedProjects, item); });
+    connect(startedProjects, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) { openProject(startedProjects, item); });
+    connect(
+        finishlineProjects, &QListWidget::itemDoubleClicked, this,
+        [=](QListWidgetItem *item) { openProject(finishlineProjects, item); });
+    connect(
+        finishedProjects, &QListWidget::itemDoubleClicked, this,
+        [=](QListWidgetItem *item) { openProject(finishedProjects, item); });
 
-    connect(notStartedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
-        openProject(notStartedProjects, item);
-    });
-    connect(startedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
-        openProject(startedProjects, item);
-    });
-    connect(finishlineProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
-        openProject(finishlineProjects, item);
-    });
-    connect(finishedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
-        openProject(finishedProjects, item);
-    });
-
-
-    connect(notesList, &QTreeWidget::itemDoubleClicked, this, [=](QTreeWidgetItem *item) {
-        onNoteDoubleClicked(item, noteEdit, 0); 
-    });
-
+    connect(
+        notesList, &QTreeWidget::itemDoubleClicked, this,
+        [=](QTreeWidgetItem *item) { onNoteDoubleClicked(item, noteEdit, 0); });
 
     mainLayout->addWidget(tabs);
 

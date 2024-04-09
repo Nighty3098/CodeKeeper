@@ -1,25 +1,26 @@
-#include "mainwindow.h"
-#include <QFile>
 #include <QApplication>
+#include <QFile>
 #include <QSplashScreen>
+
+#include "mainwindow.h"
 
 void loadModules(QSplashScreen* psplash) {
     QTime time;
     time.start();
 
-    for (int i=0; i<20; ) {
+    for (int i = 0; i < 20;) {
         if (time.elapsed() > 1) {
             time.start();
             ++i;
         }
-        psplash->showMessage("Loading modules: " + QString::number(i) + "%", Qt::AlignCenter | Qt::AlignBottom, Qt::white);
+        psplash->showMessage("Loading modules: " + QString::number(i) + "%",
+                             Qt::AlignCenter | Qt::AlignBottom, Qt::white);
 
         qApp->processEvents();
     }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     QFile file(":/stylesheet/stylesheet.qss");
     file.open(QFile::ReadOnly);
 

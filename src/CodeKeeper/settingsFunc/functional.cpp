@@ -28,34 +28,33 @@ void SettingsWindow::saveData() {
     messageBox->setIcon(QMessageBox::Information);
     messageBox->setWindowTitle("CodeKeeper - Settings");
     messageBox->setText("To apply the settings, restart the application.");
-    
+
     messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     messageBox->exec();
-    
+
     setFontPr2();
 }
 
 void SettingsWindow::fopenFolder() {
     QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
-    if(!str.isEmpty()) {
+    if (!str.isEmpty()) {
         globalSettings->setValue("path", str);
         qDebug() << str;
         pathToFolder->setText(str);
-        
+
         QMessageBox *messageBox = new QMessageBox();
 
         messageBox->setIcon(QMessageBox::Information);
         messageBox->setWindowTitle("CodeKeeper - Settings");
         messageBox->setText("To apply the settings, restart the application.");
-    
+
         messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
         messageBox->exec();
     }
 }
 
 void SettingsWindow::setFontPr2() {
-
-    // set font 
+    // set font
     tabs->setFont(selectedFont);
     tabs->setStyleSheet("font-size: " + font_size + "pt;");
 
@@ -133,6 +132,4 @@ void SettingsWindow::setFontPr2() {
     fontSelector->setCurrentFont(selectedFont);
     fontSize->setValue(font_size.toInt());
     themeSelector->setCurrentText(theme);
-
-    
 }

@@ -126,7 +126,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     mainSyncLayout->addWidget(isHost, 7, 2);
 
     // appereance
-    QGridLayout* layout1 = new QGridLayout();
+    QGridLayout *layout1 = new QGridLayout();
 
     mainTitle = new QLabel("App settings");
     mainTitle->setAlignment(Qt::AlignCenter);
@@ -146,7 +146,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     themeSelector->addItem("Dark");
     themeSelector->addItem("Light");
 
-
     layout1->addWidget(mainTitle, 0, 2, 0, 4);
     layout1->addWidget(fontLabel, 1, 3);
     layout1->addWidget(fontSelector, 1, 4);
@@ -155,10 +154,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     layout1->addWidget(themeLabel, 3, 3);
     layout1->addWidget(themeSelector, 3, 4);
 
-
-
     // storage tab
-    QGridLayout* storageL = new QGridLayout;
+    QGridLayout *storageL = new QGridLayout;
     storageL->setSpacing(30);
 
     storageLabel = new QLabel();
@@ -214,7 +211,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
 
     mainLayout->addWidget(tabs);
     mainLayout->addLayout(BtnsL);
-
 
     // connects
     connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveData()));
