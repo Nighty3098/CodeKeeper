@@ -29,7 +29,6 @@ void MainWindow::updateTasksProgress(QTabWidget *tasksTab,
                                      QListWidget *completeTasks,
                                      QProgressBar *tasksProgress) {
     if (tasksTab->currentIndex() == 2) {
-        qDebug() << tasksTab->currentIndex();
         QTimer *timer2 = new QTimer(this);
         connect(timer2, &QTimer::timeout, [=]() {
             int totalTasks = incompleteTasks->count() +
@@ -45,9 +44,5 @@ void MainWindow::updateTasksProgress(QTabWidget *tasksTab,
             }
         });
         timer2->start(500);
-    } else {
-        qDebug() << tasksTab->currentIndex();
     }
 }
-
-void MainWindow::loadTasks() {}

@@ -5,7 +5,7 @@
   - [X] - Basic UI
   
   - [ ] - Saving data
-    - [ ] - Saving notes to MD files
+    - [ ] - Saving notes to DB
     - [ ] - Saving a list of tasks in the DB
     - [ ] - Saving a projects list  in the DB
   

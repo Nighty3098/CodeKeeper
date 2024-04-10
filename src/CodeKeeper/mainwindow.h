@@ -45,11 +45,11 @@ private slots:
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
     void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
-    void onNoteDoubleClicked(QTreeWidgetItem *item, QMarkdownTextEdit *edit, int column);
+    void onNoteDoubleClicked(QTreeWidgetItem *item);
     void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress);
     void loadDocumentations(QDir path, QComboBox &comboBox);
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
-    void displayDirectoryStructure(const QDir &dir, QTreeWidget *tree);
+    void addDirectory(const QDir &dir, QTreeWidget *tree);
 
     void createProject();
     void removeProject();
@@ -66,6 +66,10 @@ private slots:
     void setTask();
 
     void setFontPr1();
+
+    void create_tasks_connection();
+    void create_projects_connection();
+    
 private:
     QWidget *centralWidget;
     QVBoxLayout *mainLayout;

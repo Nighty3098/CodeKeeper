@@ -25,8 +25,6 @@ void MainWindow::removeProject() {
     }
 }
 
-void MainWindow::loadProjects() {}
-
 
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
     if (item) {

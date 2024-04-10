@@ -1,3 +1,5 @@
+QModelIndex indexFromItem(QTreeWidgetItem *item, int column) {
+}
 
 void MainWindow::updateMDPreview() {
     QString text = noteEdit->toPlainText();
@@ -5,9 +7,7 @@ void MainWindow::updateMDPreview() {
     mdPreview->setMarkdown(text);
 }
 
-void MainWindow::onNoteDoubleClicked(QTreeWidgetItem *item,
-                                     QMarkdownTextEdit *edit, int column) {
-    qDebug() << item;
+void MainWindow::onNoteDoubleClicked(QTreeWidgetItem *item) {
 }
 
 void MainWindow::hideNotesList() {
@@ -53,7 +53,7 @@ void MainWindow::toViewMode() {
     mdPreview->setVisible(isView);
 }
 
-void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
+void MainWindow::addDirectory(const QDir &dir, QTreeWidget *tree) {
     QTreeWidgetItem *rootItem = new QTreeWidgetItem(tree);
     rootItem->setText(0, dir.path());
     rootItem->setIcon(0, QIcon(":/folder.png"));
@@ -69,7 +69,7 @@ void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
             childItem = new QTreeWidgetItem(rootItem);
             childItem->setText(0, fileInfo.fileName());
             childItem->setIcon(0, QIcon(":/folder.png"));
-            displayDirectoryStructure(fileInfo.fileName(), tree);
+            addDirectory(fileInfo.fileName(), tree);
         } else {
             childItem = new QTreeWidgetItem(rootItem);
             childItem->setText(0, fileInfo.fileName());
@@ -77,6 +77,7 @@ void MainWindow::displayDirectoryStructure(const QDir &dir, QTreeWidget *tree) {
         }
     }
 }
+
 
 void MainWindow::setH1() {
     QTextCursor cursor = noteEdit->textCursor();

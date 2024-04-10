@@ -13,10 +13,7 @@ SOURCES += \
     mainwindow.cpp \
     settingswindow.cpp \
     settingsFunc/functional.cpp \
-    keeperFunc/functional.cpp \
-    keeperFunc/notesFunc.cpp \
-    keeperFunc/projectsFunc.cpp \
-    keeperFunc/tasksFunc.cpp
+    keeperFunc/functional.cpp
 
 HEADERS += \
     mainwindow.h \

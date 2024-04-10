@@ -99,7 +99,7 @@ void MainWindow::setFontPr1() {
                              "pt; background-color: rgba(47, 51, 77, 0);");
 
     menuButton->setFont(selectedFont);
-    menuButton->setStyleSheet("font-size: " + font_size + "pt;");
+    menuButton->setStyleSheet("font-size: " + font_size + "pt; background-color: #222436;");
 
     tasksMenuBtn->setFont(selectedFont);
     tasksMenuBtn->setStyleSheet("font-size: " + font_size + "pt;");

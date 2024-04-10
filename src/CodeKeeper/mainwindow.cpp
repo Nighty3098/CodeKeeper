@@ -2,6 +2,10 @@
 
 #include <QPropertyAnimation>
 
+
+#include "sql_db/projectsDB.cpp"
+#include "sql_db/tasksDB.cpp"
+#include "sql_db/notesDB.cpp"
 #include "keeperFunc/notesFunc.cpp"
 #include "keeperFunc/tasksFunc.cpp"
 #include "keeperFunc/projectsFunc.cpp"
@@ -11,6 +15,10 @@
 Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+    // for startup time
+    QTime startup;
+    startup.start();
+
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
@@ -24,10 +32,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
-    path = globalSettings->value("path").value<QDir>();
-    QString dir = path.absolutePath();
-
-    qDebug() << path;
+    // path = globalSettings->value("path").value<QDir>();
+    // QString dir = path.absolutePath();
+    QDir path = QDir("..");
+    QString dir = "..";
 
     bool isVisibleNotesList =
         globalSettings->value("isVisibleNotesList", true).toBool();
@@ -82,9 +90,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteName->setFixedSize(200, 30);
     noteName->setPlaceholderText(" Name ...");
 
-    QFileSystemModel *model = new QFileSystemModel();
-    model->setRootPath(".");
-
     mdPreview = new QTextBrowser();
     mdPreview->setOpenLinks(true);
     mdPreview->setOpenExternalLinks(true);
@@ -107,6 +112,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuButton = new QToolButton;
     menuButton->setText("...");
     menuButton->setPopupMode(QToolButton::InstantPopup);
+    menuButton->setStyleSheet("background-color: #222436; border-color: #222436;");
 
     QMenu *menu = new QMenu(menuButton);
     menu->setFont(selectedFont);
@@ -183,8 +189,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setTaskB->setToolTip("<p style='color: #ffffff;'>Task</p>");
 
 
-    // menuLayout->addWidget(menuButton);
-
+    menuLayout->addWidget(menuButton);
     menuLayout->addWidget(setH1B);
     menuLayout->addWidget(setH2B);
     menuLayout->addWidget(setH3B);
@@ -196,8 +201,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuLayout->addWidget(setListB);
     menuLayout->addWidget(setLinkB);
     menuLayout->addWidget(setTaskB);
-
-    menuLayout->addWidget(menuButton);
 
     contentLayout->addWidget(notesList);
     contentLayout->addWidget(noteEdit);
@@ -356,7 +359,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     projectsMenuButton->setMenu(projectsMenu);
 
     // projectsGLayout->addWidget(projectsMainLabel, 0, 0, 1, 0);
-    projectsGLayout->addWidget(projectsMenuButton, 0, 2);
+    projectsGLayout->addWidget(projectsMenuButton, 0, 0);
     projectsGLayout->addWidget(nsProjects, 1, 0);
     projectsGLayout->addWidget(notStartedProjects, 2, 0);
     projectsGLayout->addWidget(sProjects, 1, 1);
@@ -474,10 +477,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         finishedProjects, &QListWidget::itemDoubleClicked, this,
         [=](QListWidgetItem *item) { openProject(finishedProjects, item); });
 
-    connect(
-        notesList, &QTreeWidget::itemDoubleClicked, this,
-        [=](QTreeWidgetItem *item) { onNoteDoubleClicked(item, noteEdit, 0); });
-
     connect(setH1B, &QPushButton::clicked, this, &MainWindow::setH1);
     connect(setH2B, &QPushButton::clicked, this, &MainWindow::setH2);
     connect(setH3B, &QPushButton::clicked, this, &MainWindow::setH3);
@@ -488,13 +487,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(setStrikeB, &QPushButton::clicked, this, &MainWindow::setStrike);
     connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
 
+    connect(notesList, &QTreeWidget::itemDoubleClicked, [=](QTreeWidgetItem *item) {
+        onNoteDoubleClicked(item);
+    });
 
     mainLayout->addWidget(tabs);
 
-    displayDirectoryStructure(path, notesList);
+    create_tasks_connection();
+    create_projects_connection();
+
     loadTasks();
     loadProjects();
     setFontPr1();
+    addDirectory(path, notesList);
+
+    int loadTime = startup.elapsed();
+    qDebug() << "Load time:" << loadTime << "ms";
+    qDebug() << path;
 }
 
 MainWindow::~MainWindow() {
