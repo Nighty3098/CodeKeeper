@@ -32,11 +32,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
-    // path = globalSettings->value("path").value<QDir>();
-    // QString dir = path.absolutePath();
-    QDir path = QDir("..");
-    QString dir = "..";
-
+    path = globalSettings->value("path").value<QDir>();
+    QString dir = path.absolutePath();
+    
+    
     bool isVisibleNotesList =
         globalSettings->value("isVisibleNotesList", true).toBool();
     bool isVisibleFolders =

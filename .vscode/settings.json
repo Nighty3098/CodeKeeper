@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "August - City Lights",
+    "workbench.colorTheme": "August - Material Ocean",
     "workbench.iconTheme": "catppuccin-perfect-mocha",
     "editor.fontFamily": "Maple Mono",
     "editor.fontLigatures": true,
@@ -84,6 +84,10 @@
         "string": "cpp",
         "unordered_map": "cpp",
         "vector": "cpp",
-        "mixinvector": "cpp"
+        "mixinvector": "cpp",
+        "valarray": "cpp",
+        "variant": "cpp",
+        "primitiveset": "cpp",
+        "sstream": "cpp"
     },
 }
