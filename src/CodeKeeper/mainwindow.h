@@ -40,7 +40,6 @@ private slots:
     void setHeader();
     void createNote();
     void removeNote();
-    void removeFolder();
     void toViewMode();
     void createFolder();
 

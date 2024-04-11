@@ -14,6 +14,9 @@ SOURCES += \
     settingswindow.cpp \
     settingsFunc/functional.cpp \
     keeperFunc/functional.cpp \
+    keeperFunc/notesFunc.cpp \
+    keeperFunc/projectsFunc.cpp \
+    keeperFunc/tasksFunc.cpp \
     sql_db/connectionDB.cpp \
     sql_db/projectsDB.cpp \
     sql_db/tasksDB.cpp

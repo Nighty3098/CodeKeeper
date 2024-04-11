@@ -54,21 +54,38 @@ void MainWindow::toViewMode() {
 }
 
 void MainWindow::createFolder() {
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-    item->setText(0, "Folder");
-    item->setIcon(0, QIcon(":/folder.png"));
+    QModelIndex index = notesList->currentIndex();
+
+    if(index.isValid()) {
+        QString name = QInputDialog::getText(this, "Name", "Folder name");
+        if(!name.isEmpty()) {
+            notesDirModel->mkdir(index, name);
+        }
+    }
 }
 
 void MainWindow::createNote() {
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-    item->setText(0, "New Note");
-    item->setIcon(0, QIcon(":/note.png"));
-}
+    QModelIndex index = notesList->currentIndex();
 
-void MainWindow::removeFolder() {
+    if(index.isValid()) {
+        QString name = QInputDialog::getText(this, "Name", "Note name");
+        if(!name.isEmpty()) {
+            QString fileName = name + ".md";
+            notesDirModel->mkdir(index, fileName);
+        }
+    }
 }
 
 void MainWindow::removeNote() {
+    QModelIndex index = notesList->currentIndex();
+    if(index.isValid()) {
+        if(notesDirModel->fileInfo(index).isDir()) {
+            notesDirModel->rmdir(index);
+        }
+        else {
+            notesDirModel->remove(index);
+        }
+    }
 }
 
 

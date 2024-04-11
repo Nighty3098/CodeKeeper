@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 
 #include <QPropertyAnimation>
-
+#include <QInputDialog>
 
 #include "sql_db/projectsDB.cpp"
 #include "sql_db/tasksDB.cpp"
@@ -78,8 +78,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuLayout->setAlignment(Qt::AlignHCenter);
 
     notesDirModel = new QFileSystemModel();
-    notesDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
-    notesDirModel->setRootPath(QDir::currentPath());
+    // notesDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+    notesDirModel->setRootPath(dir);
+
 
     notesList = new QTreeView();
     notesList->setAnimated(true);
@@ -87,8 +88,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
     notesList->setDefaultDropAction(Qt::MoveAction);
     notesList->setDragEnabled(true);
-    notesList->setMaximumWidth(200);
+    notesList->setMaximumWidth(300);
+    notesList->setHeaderHidden(true);
+    notesList->setColumnHidden(1, true);
+    notesList->setSortingEnabled(true);
 
+    notesList->hideColumn(0);
+    notesList->hideColumn(2);
+    notesList->hideColumn(3);
+    notesList->hideColumn(4);
     notesList->setModel(notesDirModel);
 
     noteName = new QLineEdit();
@@ -124,7 +132,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // actions for menu
     newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()));
-    rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note", this, SLOT(removeNote()));
+    rmNote = menu->addAction(QPixmap(":/delete.png"), "Remove", this, SLOT(removeNote()));
     newFolder = menu->addAction(QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
 
     menu->addSeparator();
