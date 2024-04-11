@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QTextBrowser>
 #include <QtWidgets>
+#include <QFileSystemModel>
 
 #include "qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"
@@ -20,6 +21,10 @@ public:
     QString font_size;
     QString theme;
     QDir path;
+
+    QFileSystemModel *notesDirModel;
+    QFileSystemModel *noteFileModel;
+
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -49,7 +54,6 @@ private slots:
     void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress);
     void loadDocumentations(QDir path, QComboBox &comboBox);
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
-    void addDirectory(const QDir &dir, QTreeWidget *tree);
 
     void createProject();
     void removeProject();
@@ -66,6 +70,8 @@ private slots:
     void setTask();
 
     void setFontPr1();
+    
+    QString getCurrentDateTimeString();
 
     void create_tasks_connection();
     void create_projects_connection();
@@ -83,7 +89,7 @@ private:
 
     // ========================================================
     // notes tab
-    QTreeWidget *notesList;
+    QTreeView *notesList;
     QMarkdownTextEdit *noteEdit;
     MarkdownHighlighter *highlighter;
     QTextBrowser *mdPreview;

@@ -1,6 +1,12 @@
 #include <QDateTime>
 #include <QSyntaxHighlighter>
 
+QString MainWindow::getCurrentDateTimeString() {
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    QString dateTimeString = currentDateTime.toString("dd-MM-yyyy hh:mm:ss");
+    return dateTimeString;
+}
+
 void MainWindow::openSettingsWindow() {
     QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect(this);
     blurEffect->setBlurRadius(10);
@@ -46,37 +52,6 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
         if (selectedItem && selectedItem != item) {
             list->setCurrentItem(nullptr);
         }
-    }
-}
-
-void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget,
-                                         QListWidgetItem *item) {
-    if (item) {
-        QDialog dialog(this);
-        dialog.setWindowTitle(tr("Rename item"));
-        dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-
-        QVBoxLayout layout(&dialog);
-        QLineEdit lineEdit(&dialog);
-        layout.addWidget(&lineEdit);
-
-        QPushButton okButton(tr("OK"), &dialog);
-        QPushButton cancelButton(tr("Cancel"), &dialog);
-        layout.addWidget(&okButton);
-        layout.addWidget(&cancelButton);
-
-        QObject::connect(&okButton, &QPushButton::clicked, [&]() {
-            QString newName = lineEdit.text();
-            if (!newName.isEmpty()) {
-                item->setText(newName);
-            }
-            dialog.close();
-        });
-
-        QObject::connect(&cancelButton, &QPushButton::clicked,
-                         [&]() { dialog.close(); });
-
-        dialog.exec();
     }
 }
 

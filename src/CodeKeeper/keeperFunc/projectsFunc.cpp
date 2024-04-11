@@ -1,10 +1,3 @@
-
-QString getCurrentDateTimeString() {
-    QDateTime currentDateTime = QDateTime::currentDateTime();
-    QString dateTimeString = currentDateTime.toString("dd-MM-yyyy hh:mm:ss");
-    return dateTimeString;
-}
-
 void MainWindow::createProject() {
     QString newProjectTeamplate =
         "New project\nGitHub\n" + getCurrentDateTimeString();

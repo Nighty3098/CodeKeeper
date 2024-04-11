@@ -53,29 +53,22 @@ void MainWindow::toViewMode() {
     mdPreview->setVisible(isView);
 }
 
-void MainWindow::addDirectory(const QDir &dir, QTreeWidget *tree) {
-    QTreeWidgetItem *rootItem = new QTreeWidgetItem(tree);
-    rootItem->setText(0, dir.path());
-    rootItem->setIcon(0, QIcon(":/folder.png"));
-    tree->addTopLevelItem(rootItem);
+void MainWindow::createFolder() {
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    item->setText(0, "Folder");
+    item->setIcon(0, QIcon(":/folder.png"));
+}
 
-    QFileInfoList fileInfoList =
-        dir.entryInfoList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
-    QFileInfo fileInfo;
-    QTreeWidgetItem *childItem;
+void MainWindow::createNote() {
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    item->setText(0, "New Note");
+    item->setIcon(0, QIcon(":/note.png"));
+}
 
-    foreach (fileInfo, fileInfoList) {
-        if (fileInfo.isDir()) {
-            childItem = new QTreeWidgetItem(rootItem);
-            childItem->setText(0, fileInfo.fileName());
-            childItem->setIcon(0, QIcon(":/folder.png"));
-            addDirectory(fileInfo.fileName(), tree);
-        } else {
-            childItem = new QTreeWidgetItem(rootItem);
-            childItem->setText(0, fileInfo.fileName());
-            childItem->setIcon(0, QIcon(":/note.png"));
-        }
-    }
+void MainWindow::removeFolder() {
+}
+
+void MainWindow::removeNote() {
 }
 
 
@@ -89,32 +82,6 @@ void MainWindow::setH1() {
 
     noteEdit->setTextCursor(cursor);
 };
-
-void MainWindow::createFolder() {
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-    item->setText(0, "Folder");
-    item->setIcon(0, QIcon(":/folder.png"));
-    notesList->addTopLevelItem(item);
-}
-
-void MainWindow::createNote() {
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-    item->setText(0, "New Note");
-    item->setIcon(0, QIcon(":/note.png"));
-    notesList->addTopLevelItem(item);
-}
-
-void MainWindow::removeFolder() {
-    QTreeWidgetItem *currentItem = notesList->currentItem();
-
-    delete currentItem;
-}
-
-void MainWindow::removeNote() {
-    QTreeWidgetItem *currentItem = notesList->currentItem();
-
-    delete currentItem;
-}
 
 void MainWindow::setH2() {
     QTextCursor cursor = noteEdit->textCursor();

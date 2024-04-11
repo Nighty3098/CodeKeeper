@@ -3,7 +3,9 @@ void MainWindow::addNewTask() {
     QString text = taskText->text();
     if (!text.isEmpty()) {
         taskText->clear();
-        incompleteTasks->addItem(text);
+        QString task = text + "\n" + getCurrentDateTimeString();
+        qDebug() << getCurrentDateTimeString();
+        incompleteTasks->addItem(task);
     } else {
         qDebug() << "Task is empty";
     }
@@ -46,3 +48,37 @@ void MainWindow::updateTasksProgress(QTabWidget *tasksTab,
         timer2->start(500);
     }
 }
+
+
+void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget,
+                                         QListWidgetItem *item) {
+    if (item) {
+        QDialog dialog(this);
+        dialog.setWindowTitle(tr("Edit task"));
+        dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+
+        QVBoxLayout layout(&dialog);
+        QLineEdit lineEdit(&dialog);
+        layout.addWidget(&lineEdit);
+
+        QPushButton okButton(tr("OK"), &dialog);
+        QPushButton cancelButton(tr("Cancel"), &dialog);
+        layout.addWidget(&okButton);
+        layout.addWidget(&cancelButton);
+
+        QObject::connect(&okButton, &QPushButton::clicked, [&]() {
+            QString newText = lineEdit.text();
+            if (!newText.isEmpty()) {
+                QString newTask = newText + "\n" + getCurrentDateTimeString();
+                item->setText(newTask);
+            }
+            dialog.close();
+        });
+
+        QObject::connect(&cancelButton, &QPushButton::clicked,
+                         [&]() { dialog.close(); });
+
+        dialog.exec();
+    }
+}
+

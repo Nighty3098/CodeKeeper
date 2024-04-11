@@ -13,7 +13,10 @@ SOURCES += \
     mainwindow.cpp \
     settingswindow.cpp \
     settingsFunc/functional.cpp \
-    keeperFunc/functional.cpp
+    keeperFunc/functional.cpp \
+    sql_db/connectionDB.cpp \
+    sql_db/projectsDB.cpp \
+    sql_db/tasksDB.cpp
 
 HEADERS += \
     mainwindow.h \

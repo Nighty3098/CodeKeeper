@@ -5,7 +5,6 @@
 
 #include "sql_db/projectsDB.cpp"
 #include "sql_db/tasksDB.cpp"
-#include "sql_db/notesDB.cpp"
 #include "keeperFunc/notesFunc.cpp"
 #include "keeperFunc/tasksFunc.cpp"
 #include "keeperFunc/projectsFunc.cpp"
@@ -18,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // for startup time
     QTime startup;
     startup.start();
+    qDebug() << "Timer start";
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
@@ -33,9 +33,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
     path = globalSettings->value("path").value<QDir>();
-    QString dir = path.absolutePath();
-    
-    
+
+    QString dir = path.absolutePath(); 
+    qDebug() << dir;
+
     bool isVisibleNotesList =
         globalSettings->value("isVisibleNotesList", true).toBool();
     bool isVisibleFolders =
@@ -76,14 +77,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuLayout->setSizeConstraint(QLayout::SetFixedSize);
     menuLayout->setAlignment(Qt::AlignHCenter);
 
-    notesList = new QTreeWidget();
+    notesDirModel = new QFileSystemModel();
+    notesDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+    notesDirModel->setRootPath(QDir::currentPath());
+
+    notesList = new QTreeView();
     notesList->setAnimated(true);
-    notesList->setHeaderHidden(true);
     notesList->setWordWrap(true);
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
     notesList->setDefaultDropAction(Qt::MoveAction);
     notesList->setDragEnabled(true);
     notesList->setMaximumWidth(200);
+
+    notesList->setModel(notesDirModel);
 
     noteName = new QLineEdit();
     noteName->setFixedSize(200, 30);
@@ -486,9 +492,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(setStrikeB, &QPushButton::clicked, this, &MainWindow::setStrike);
     connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
 
-    connect(notesList, &QTreeWidget::itemDoubleClicked, [=](QTreeWidgetItem *item) {
-        onNoteDoubleClicked(item);
-    });
+
 
     mainLayout->addWidget(tabs);
 
@@ -498,7 +502,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     loadTasks();
     loadProjects();
     setFontPr1();
-    addDirectory(path, notesList);
 
     int loadTime = startup.elapsed();
     qDebug() << "Load time:" << loadTime << "ms";

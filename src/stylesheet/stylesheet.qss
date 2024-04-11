@@ -276,7 +276,7 @@ QGroupBox {
     border-radius: 10px;
 }
 
-QTreeWidget {
+QTreeView {
         background-color: #2f334d;
         selection-background-color: #545c7e;
         selection-color: #c8d3f5;
@@ -289,30 +289,30 @@ QTreeWidget {
 }
 
 
-QTreeWidget::item:alternate {
+QTreeView::item:alternate {
     background-color: #2f334d;
     border-radius: 0px;
 }
 
-QTreeWidget::item:selected {
+QTreeView::item:selected {
     background-color: #545c7e;
     border: 0px solid #2f334d;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
-QTreeWidget::item:selected:!active {
+QTreeView::item:selected:!active {
     background-color: #545c7e;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
-QTreeWidget::item:selected:active {
+QTreeView::item:selected:active {
     background-color: #545c7e;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
-QTreeWidget::item:hover {
+QTreeView::item:hover {
     background-color: #2f334d;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
 
