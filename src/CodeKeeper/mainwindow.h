@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QTextBrowser>
 #include <QtWidgets>
+#include <QFileSystemModel>
 
 #include "qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"
@@ -21,6 +22,10 @@ public:
     QString theme;
     QDir path;
 
+    QFileSystemModel *notesDirModel;
+    QFileSystemModel *noteFileModel;
+
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -35,7 +40,7 @@ private slots:
     void setHeader();
     void createNote();
     void removeNote();
-    void removeFolder();
+    void toViewMode();
     void createFolder();
 
     void loadTasks();
@@ -44,11 +49,10 @@ private slots:
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
     void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
-    void onNoteDoubleClicked(QTreeWidgetItem *item, QMarkdownTextEdit *edit, int column);
+    void onNoteDoubleClicked(QTreeWidgetItem *item);
     void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress);
     void loadDocumentations(QDir path, QComboBox &comboBox);
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
-    void displayDirectoryStructure(const QDir &dir, QTreeWidget *tree);
 
     void createProject();
     void removeProject();
@@ -65,6 +69,12 @@ private slots:
     void setTask();
 
     void setFontPr1();
+    
+    QString getCurrentDateTimeString();
+
+    void create_tasks_connection();
+    void create_projects_connection();
+    
 private:
     QWidget *centralWidget;
     QVBoxLayout *mainLayout;
@@ -78,7 +88,7 @@ private:
 
     // ========================================================
     // notes tab
-    QTreeWidget *notesList;
+    QTreeView *notesList;
     QMarkdownTextEdit *noteEdit;
     MarkdownHighlighter *highlighter;
     QTextBrowser *mdPreview;
@@ -127,6 +137,17 @@ private:
     QListWidget *startedProjects;
     QListWidget *finishedProjects;
     QListWidget *finishlineProjects;
+
+    QAction *newNote;
+    QAction *rmNote;
+    QAction *newFolder;
+    QAction *showList;
+    QAction *showRender;
+    QAction *addTask;
+    QAction *rmTask;
+    QAction *viewMode;
+    QAction *newProject;
+    QAction *rmProject;
 
     SettingsWindow *settingsWindow;
 };

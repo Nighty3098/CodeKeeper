@@ -123,21 +123,21 @@ QTabWidget::pane {
 } 
 
 QMenu {
-    background-color: #2f334d;
+    background-color: #222436;
     color: #fff;
-    border: 6px solid #2f334d;
+    border: 6px solid #222436;
     border-radius: 10px;
 }
 
 QMenu::separator {
     background-color: #545c7e;
-    border: 1pxl solid #545c7e;
+    border: 0pxl solid #545c7e;
     border-radius: 1px;
 }
 
 QMenu::item {
     border-radius: 10px;
-    background-color: #2f334d;
+    background-color: #222436;
     color: #fff;
     padding: 5px 10px;
 }
@@ -276,7 +276,7 @@ QGroupBox {
     border-radius: 10px;
 }
 
-QTreeWidget {
+QTreeView {
         background-color: #2f334d;
         selection-background-color: #545c7e;
         selection-color: #c8d3f5;
@@ -289,30 +289,30 @@ QTreeWidget {
 }
 
 
-QTreeWidget::item:alternate {
+QTreeView::item:alternate {
     background-color: #2f334d;
     border-radius: 0px;
 }
 
-QTreeWidget::item:selected {
+QTreeView::item:selected {
     background-color: #545c7e;
     border: 0px solid #2f334d;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
-QTreeWidget::item:selected:!active {
+QTreeView::item:selected:!active {
     background-color: #545c7e;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
-QTreeWidget::item:selected:active {
+QTreeView::item:selected:active {
     background-color: #545c7e;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
-QTreeWidget::item:hover {
+QTreeView::item:hover {
     background-color: #2f334d;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
 

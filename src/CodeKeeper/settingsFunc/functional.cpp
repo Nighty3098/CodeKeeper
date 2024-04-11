@@ -38,8 +38,9 @@ void SettingsWindow::saveData() {
 void SettingsWindow::fopenFolder() {
     QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
     if (!str.isEmpty()) {
-        globalSettings->setValue("path", str);
-        qDebug() << str;
+        QDir path = str;
+        globalSettings->setValue("path", QVariant(str));
+        qDebug() << path;
         pathToFolder->setText(str);
 
         QMessageBox *messageBox = new QMessageBox();

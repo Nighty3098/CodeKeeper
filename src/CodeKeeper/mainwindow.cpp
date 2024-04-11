@@ -1,13 +1,24 @@
 #include "mainwindow.h"
 
 #include <QPropertyAnimation>
+#include <QInputDialog>
 
+#include "sql_db/projectsDB.cpp"
+#include "sql_db/tasksDB.cpp"
+#include "keeperFunc/notesFunc.cpp"
+#include "keeperFunc/tasksFunc.cpp"
+#include "keeperFunc/projectsFunc.cpp"
 #include "keeperFunc/functional.cpp"
 #include "qmarkdowntextedit/markdownhighlighter.h"
 
 Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+    // for startup time
+    QTime startup;
+    startup.start();
+    qDebug() << "Timer start";
+
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
@@ -22,9 +33,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
     path = globalSettings->value("path").value<QDir>();
-    QString dir = path.absolutePath();
 
-    qDebug() << path;
+    QString dir = path.absolutePath(); 
+    qDebug() << dir;
 
     bool isVisibleNotesList =
         globalSettings->value("isVisibleNotesList", true).toBool();
@@ -32,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         globalSettings->value("isVisibleFolders", true).toBool();
     bool isVisiblePreview =
         globalSettings->value("isVisiblePreview", false).toBool();
+    bool isViewMode =
+        globalSettings->value("isViewMode", false).toBool();
 
     // ========================================================
 
@@ -53,27 +66,42 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     syncDataLayout->addWidget(syncDataBtn);
 
     // ========================================================
-    QGridLayout *notesGLayout = new QGridLayout;
-    QHBoxLayout *syntaxMenu = new QHBoxLayout;
-    syntaxMenu->setSpacing(1);
-    syntaxMenu->setSizeConstraint(QLayout::SetFixedSize);
-    syntaxMenu->setAlignment(Qt::AlignLeft);
+    QHBoxLayout *menuLayout = new QHBoxLayout;
+    QHBoxLayout *contentLayout = new QHBoxLayout;
+    QVBoxLayout *notesCLayout = new QVBoxLayout;
 
-    notesList = new QTreeWidget();
+    contentLayout->setSpacing(0);
+    notesCLayout->setSpacing(0);
+
+    menuLayout->setSpacing(0);
+    menuLayout->setSizeConstraint(QLayout::SetFixedSize);
+    menuLayout->setAlignment(Qt::AlignHCenter);
+
+    notesDirModel = new QFileSystemModel();
+    // notesDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+    notesDirModel->setRootPath(dir);
+
+
+    notesList = new QTreeView();
     notesList->setAnimated(true);
-    notesList->setHeaderHidden(true);
     notesList->setWordWrap(true);
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
     notesList->setDefaultDropAction(Qt::MoveAction);
     notesList->setDragEnabled(true);
-    notesList->setMaximumWidth(250);
+    notesList->setMaximumWidth(300);
+    notesList->setHeaderHidden(true);
+    notesList->setColumnHidden(1, true);
+    notesList->setSortingEnabled(true);
+
+    notesList->hideColumn(0);
+    notesList->hideColumn(2);
+    notesList->hideColumn(3);
+    notesList->hideColumn(4);
+    notesList->setModel(notesDirModel);
 
     noteName = new QLineEdit();
     noteName->setFixedSize(200, 30);
     noteName->setPlaceholderText(" Name ...");
-
-    QFileSystemModel *model = new QFileSystemModel();
-    model->setRootPath(".");
 
     mdPreview = new QTextBrowser();
     mdPreview->setOpenLinks(true);
@@ -97,29 +125,33 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuButton = new QToolButton;
     menuButton->setText("...");
     menuButton->setPopupMode(QToolButton::InstantPopup);
+    menuButton->setStyleSheet("background-color: #222436; border-color: #222436;");
 
     QMenu *menu = new QMenu(menuButton);
     menu->setFont(selectedFont);
 
     // actions for menu
-    QAction *newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this,
-                                       SLOT(createNote()));
-    QAction *rmNote = menu->addAction(QPixmap(":/delete.png"), "RM note", this,
-                                      SLOT(removeNote()));
-    QAction *newFolder = menu->addAction(
-        QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
+    newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()));
+    rmNote = menu->addAction(QPixmap(":/delete.png"), "Remove", this, SLOT(removeNote()));
+    newFolder = menu->addAction(QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
 
     menu->addSeparator();
 
-    QAction *showList =
+    showList =
         menu->addAction("Show notes list", this, SLOT(hideNotesList()));
     showList->setCheckable(true);
     showList->setChecked(isVisibleNotesList);
 
-    QAction *showPreview =
+    showRender =
         menu->addAction("Show md preview", this, SLOT(showPreview()));
-    showPreview->setCheckable(true);
-    showPreview->setChecked(isVisiblePreview);
+    showRender->setCheckable(true);
+    showRender->setChecked(isVisiblePreview);
+
+    menu->addSeparator();
+
+    viewMode = menu->addAction(QPixmap(":/view.png"), "Reading mode", this, SLOT(toViewMode()));
+    viewMode->setCheckable(true);
+    viewMode->setChecked(isViewMode);
 
     menuButton->setMenu(menu);
 
@@ -169,30 +201,33 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setStrikeB->setToolTip("<p style='color: #ffffff;'>Strikethrough text</p>");
     setTaskB->setToolTip("<p style='color: #ffffff;'>Task</p>");
 
-    syntaxMenu->addWidget(setH1B);
-    syntaxMenu->addWidget(setH2B);
-    syntaxMenu->addWidget(setH3B);
 
-    syntaxMenu->addWidget(setBoldB);
-    syntaxMenu->addWidget(setItalicB);
-    syntaxMenu->addWidget(setStrikeB);
+    menuLayout->addWidget(menuButton);
+    menuLayout->addWidget(setH1B);
+    menuLayout->addWidget(setH2B);
+    menuLayout->addWidget(setH3B);
 
-    syntaxMenu->addWidget(setListB);
-    syntaxMenu->addWidget(setLinkB);
-    syntaxMenu->addWidget(setTaskB);
+    menuLayout->addWidget(setBoldB);
+    menuLayout->addWidget(setItalicB);
+    menuLayout->addWidget(setStrikeB);
 
-    notesGLayout->addWidget(menuButton, 0, 5);
-    notesGLayout->addLayout(syntaxMenu, 0, 2);
-    // notesGLayout->addWidget(noteNameLabel, 0, 3);
-    notesGLayout->addWidget(notesList, 1, 1);
-    notesGLayout->addWidget(noteEdit, 1, 2);
-    notesGLayout->addWidget(mdPreview, 1, 3);
+    menuLayout->addWidget(setListB);
+    menuLayout->addWidget(setLinkB);
+    menuLayout->addWidget(setTaskB);
+
+    contentLayout->addWidget(notesList);
+    contentLayout->addWidget(noteEdit);
+    contentLayout->addWidget(mdPreview);
+
+    notesCLayout->addLayout(menuLayout);
+    notesCLayout->addLayout(contentLayout);
 
     notesList->setVisible(isVisibleNotesList);
     mdPreview->setVisible(isVisiblePreview);
 
     // ========================================================
     QGridLayout *tasksGLayout = new QGridLayout;
+    tasksGLayout->setSpacing(0);
 
     tasksMenuBtn = new QToolButton;
     tasksMenuBtn->setText("...");
@@ -203,9 +238,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QMenu *tasksMenu = new QMenu(tasksMenuBtn);
     tasksMenu->setFont(selectedFont);
 
-    QAction *addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task",
+    addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task",
                                             this, SLOT(addNewTask()));
-    QAction *rmTask = tasksMenu->addAction(
+    rmTask = tasksMenu->addAction(
         QPixmap(":/delete.png"), "Delete task", this, SLOT(removeTask()));
 
     tasksMenuBtn->setMenu(tasksMenu);
@@ -273,6 +308,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // projects tab
     QGridLayout *projectsGLayout = new QGridLayout;
+    projectsGLayout->setSpacing(0);
 
     projectsMainLabel = new QLabel("Projects");
     projectsMainLabel->setAlignment(Qt::AlignCenter);
@@ -327,16 +363,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     projectsMenu = new QMenu(projectsMenuButton);
 
     // actions for menu
-    QAction *newProject = projectsMenu->addAction(
+    newProject = projectsMenu->addAction(
         QPixmap(":/new.png"), "New project", this, SLOT(createProject()));
-    QAction *rmProject = projectsMenu->addAction(
+    rmProject = projectsMenu->addAction(
         QPixmap(":/delete.png"), "Remove project", this, SLOT(removeProject()));
 
 
     projectsMenuButton->setMenu(projectsMenu);
 
     // projectsGLayout->addWidget(projectsMainLabel, 0, 0, 1, 0);
-    projectsGLayout->addWidget(projectsMenuButton, 0, 2);
+    projectsGLayout->addWidget(projectsMenuButton, 0, 0);
     projectsGLayout->addWidget(nsProjects, 1, 0);
     projectsGLayout->addWidget(notStartedProjects, 2, 0);
     projectsGLayout->addWidget(sProjects, 1, 1);
@@ -367,7 +403,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QWidget *notesTab = new QWidget();
     QVBoxLayout *notesLayout = new QVBoxLayout(notesTab);
 
-    notesLayout->addLayout(notesGLayout);
+    notesLayout->addLayout(notesCLayout);
 
     tabs->addTab(notesTab, "Doc");
 
@@ -454,10 +490,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         finishedProjects, &QListWidget::itemDoubleClicked, this,
         [=](QListWidgetItem *item) { openProject(finishedProjects, item); });
 
-    connect(
-        notesList, &QTreeWidget::itemDoubleClicked, this,
-        [=](QTreeWidgetItem *item) { onNoteDoubleClicked(item, noteEdit, 0); });
-
     connect(setH1B, &QPushButton::clicked, this, &MainWindow::setH1);
     connect(setH2B, &QPushButton::clicked, this, &MainWindow::setH2);
     connect(setH3B, &QPushButton::clicked, this, &MainWindow::setH3);
@@ -469,12 +501,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
 
 
+
     mainLayout->addWidget(tabs);
 
-    displayDirectoryStructure(path, notesList);
+    create_tasks_connection();
+    create_projects_connection();
+
     loadTasks();
     loadProjects();
     setFontPr1();
+
+    int loadTime = startup.elapsed();
+    qDebug() << "Load time:" << loadTime << "ms";
+    qDebug() << path;
 }
 
 MainWindow::~MainWindow() {

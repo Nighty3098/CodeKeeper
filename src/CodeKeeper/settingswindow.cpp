@@ -22,7 +22,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     this->setStyleSheet(file.readAll());
 
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    // setStyleSheet("background-color: #444c5d; color: #ffffff;");
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
@@ -33,7 +32,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     // tabs
     tabs = new QTabWidget();
     tabs->setMovable(true);
-    // tabs->setTabPosition(QTabWidget::South);
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
@@ -58,7 +56,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     appName->setStyleSheet("font-size: 32px;");
 
     urlToRepo = new QLabel();
-    // urlToRepo->setPixmap(QPixmap(":/github.png"));
     urlToRepo->setText(
         "<a style='color: #84a0bf' "
         "href=\"https://github.com/Nighty3098/CodeKeeper\">Nighty3098/"
@@ -69,7 +66,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     versionInfo = new QLabel();
-    versionInfo->setText("Version: 0.0.3");
+    versionInfo->setText("Version: 0.0.8");
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn =
