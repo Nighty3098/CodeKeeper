@@ -8,9 +8,6 @@ QMainWindow {
 }
 
 
-QMainWindow {
-    background-color: #222436;
-}
 
 QWidget {
     background-color: #222436;
@@ -295,26 +292,57 @@ QTreeView::item:alternate {
 }
 
 QTreeView::item:selected {
-    background-color: #545c7e;
-    border: 0px solid #2f334d;
+    background-color: #222436;
+    border: 1px solid #545c7e;
     border-radius: 0px;
 }
 
 QTreeView::item:selected:!active {
-    background-color: #545c7e;
+    background-color: #222436;
+    color: #545c7e;
     border-radius: 0px;
 }
 
 QTreeView::item:selected:active {
-    background-color: #545c7e;
+    background-color: #222436;
+    color: #545c7e;
     border-radius: 0px;
 }
 
 QTreeView::item:hover {
-    background-color: #2f334d;
+    background-color: #222436;
     border-radius: 0px;
 }
 
+QHeaderView {
+    border: 1px solid #2f334d;
+    background-color: #2f334d;
+    color: #ffffff;
+}
+
+QHeaderView::section {
+    border: 1px solid #2f334d;
+    background-color: #2f334d;
+    color: #ffffff;
+}
+
+QHeaderView::section:checked {
+    border: 1px solid #2f334d;
+    background-color: #2f334d;
+    color: #ffffff;
+}
+
+QHeaderView::section:checked:horizontal {
+    border: 1px solid #2f334d;
+    background-color: #2f334d;
+    color: #ffffff;
+}
+
+QHeaderView::section:checked:vertical {
+    border: 1px solid #2f334d;
+    background-color: #2f334d;
+    color: #ffffff;
+}
 
 QProgressBar {
     color: #c8d3f5;

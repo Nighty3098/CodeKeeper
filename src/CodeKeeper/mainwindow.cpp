@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // for startup time
     QTime startup;
     startup.start();
-    qDebug() << "Timer start";
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
@@ -89,14 +88,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setDefaultDropAction(Qt::MoveAction);
     notesList->setDragEnabled(true);
     notesList->setMaximumWidth(300);
-    notesList->setHeaderHidden(true);
+    notesList->setHeaderHidden(false);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
 
-    notesList->hideColumn(0);
-    notesList->hideColumn(2);
-    notesList->hideColumn(3);
-    notesList->hideColumn(4);
     notesList->setModel(notesDirModel);
 
     noteName = new QLineEdit();
@@ -123,7 +118,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // menu
     menuButton = new QToolButton;
-    menuButton->setText("...");
+    menuButton->setText(".");
     menuButton->setPopupMode(QToolButton::InstantPopup);
     menuButton->setStyleSheet("background-color: #222436; border-color: #222436;");
 
