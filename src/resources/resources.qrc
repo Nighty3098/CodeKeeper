@@ -24,5 +24,9 @@
         <file>list.png</file>
         <file>strikethrough.png</file>
         <file>view.png</file>
+        <file>document.png</file>
+        <file>folder-open.png</file>
+        <file>home_dir.png</file>
+        <file>trash.png</file>
     </qresource>
 </RCC>

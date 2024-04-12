@@ -41,6 +41,10 @@ void MainWindow::openFolder() {
     }
 }
 
+void MainWindow::updateWindowTitle() {
+
+}
+
 void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
     QListWidget *lists[] = {notStartedProjects, startedProjects,
                             finishlineProjects, finishedProjects,

@@ -11,13 +11,13 @@
 #include "keeperFunc/functional.cpp"
 #include "qmarkdowntextedit/markdownhighlighter.h"
 
+
 Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // for startup time
     QTime startup;
     startup.start();
-    qDebug() << "Timer start";
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     theme = globalSettings->value("theme").value<QString>();
     path = globalSettings->value("path").value<QDir>();
 
-    QString dir = path.absolutePath(); 
+    QString dir = path.absolutePath();
     qDebug() << dir;
 
     bool isVisibleNotesList =
@@ -77,10 +77,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuLayout->setSizeConstraint(QLayout::SetFixedSize);
     menuLayout->setAlignment(Qt::AlignHCenter);
 
+    // icons
+    iconProvider = new CustomIconProvider();
+
     notesDirModel = new QFileSystemModel();
     // notesDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
-    notesDirModel->setRootPath(dir);
-
+    notesDirModel->setRootPath("/home/night/Dev/Git/CodeKeeper/src/Notes");
+    notesDirModel->setIconProvider(iconProvider);
 
     notesList = new QTreeView();
     notesList->setAnimated(true);
@@ -92,12 +95,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setHeaderHidden(true);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
+    notesList->setRootIndex(notesDirModel->index("/home/night/Dev/Git/CodeKeeper/src/Notes"));
 
-    notesList->hideColumn(0);
-    notesList->hideColumn(2);
-    notesList->hideColumn(3);
-    notesList->hideColumn(4);
+
     notesList->setModel(notesDirModel);
+    notesList->setColumnWidth(0, 297);
+    notesList->setColumnHidden(1, true);
+    notesList->setColumnHidden(2, true);
+    notesList->setColumnHidden(3, true);
+    notesList->setColumnHidden(4, true);
 
     noteName = new QLineEdit();
     noteName->setFixedSize(200, 30);
@@ -106,6 +112,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mdPreview = new QTextBrowser();
     mdPreview->setOpenLinks(true);
     mdPreview->setOpenExternalLinks(true);
+    mdPreview->setAlignment(Qt::AlignHCenter);
 
     noteEdit = new QMarkdownTextEdit();
     noteEdit->setPlaceholderText(" Just start typing");
@@ -121,14 +128,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::setHeader);
 
-    // menu
+
     menuButton = new QToolButton;
-    menuButton->setText("...");
+    menuButton->setText(".");
     menuButton->setPopupMode(QToolButton::InstantPopup);
     menuButton->setStyleSheet("background-color: #222436; border-color: #222436;");
 
     QMenu *menu = new QMenu(menuButton);
     menu->setFont(selectedFont);
+
+    QMenu *viewMenu = new QMenu("View", menu);
 
     // actions for menu
     newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()));
@@ -138,21 +147,41 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menu->addSeparator();
 
     showList =
-        menu->addAction("Show notes list", this, SLOT(hideNotesList()));
+        viewMenu->addAction("Show notes list", this, SLOT(hideNotesList()));
     showList->setCheckable(true);
     showList->setChecked(isVisibleNotesList);
 
     showRender =
-        menu->addAction("Show md preview", this, SLOT(showPreview()));
+        viewMenu->addAction("Show md preview", this, SLOT(showPreview()));
     showRender->setCheckable(true);
     showRender->setChecked(isVisiblePreview);
 
-    menu->addSeparator();
+    viewMenu->addSeparator();
 
-    viewMode = menu->addAction(QPixmap(":/view.png"), "Reading mode", this, SLOT(toViewMode()));
+    viewMode = viewMenu->addAction(QPixmap(":/view.png"), "Reading mode", this, SLOT(toViewMode()));
     viewMode->setCheckable(true);
     viewMode->setChecked(isViewMode);
 
+    QMenu *editMenu = new QMenu("Edit", menu);
+    
+    setH1A = editMenu->addAction(QPixmap(":/h1.png"), "Set H1", this, SLOT(setH1()));
+    setH2A = editMenu->addAction(QPixmap(":/h2.png"), "Set H2", this, SLOT(setH2()));
+    setH3A = editMenu->addAction(QPixmap(":/h3.png"), "Set H3", this, SLOT(setH3()));
+
+    editMenu->addSeparator();
+
+    setListA = editMenu->addAction(QPixmap(":/list.png"), "Add list ite,", this, SLOT(setList()));
+    setLinkA = editMenu->addAction(QPixmap(":/link.png"), "Add link", this, SLOT(setLink()));
+    setTaskA = editMenu->addAction(QPixmap(":/checkbox.png"), "Add task", this, SLOT(setTask()));
+
+    editMenu->addSeparator();
+
+    setBoldA = editMenu->addAction(QPixmap(":/bold.png"), "Set bold", this, SLOT(setBold()));
+    setItalicA = editMenu->addAction(QPixmap(":/italic.png"), "Set italic", this, SLOT(setItalic()));
+    setStrikeA = editMenu->addAction(QPixmap(":/strikethrough.png"), "Set strikethrough", this, SLOT(setStrike()));
+
+    menu->addMenu(editMenu);
+    menu->addMenu(viewMenu);
     menuButton->setMenu(menu);
 
     setH1B = new QPushButton(QPixmap(":/h1.png"), "");
@@ -500,6 +529,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(setStrikeB, &QPushButton::clicked, this, &MainWindow::setStrike);
     connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
 
+    connect(notesList, &QTreeView::clicked, this, &MainWindow::onNoteDoubleClicked);
+
+    connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::saveNote);
+
+    connect(notesList, &QTreeView::entered, this, [=](const QModelIndex& index) {
+        if (index.isValid()) {
+            QDateTime lastModified = notesDirModel->data(index, Qt::UserRole + 1).toDateTime();
+            if (lastModified.isValid()) {
+                QString toolTip = "Last modified: " + lastModified.toString();
+                notesList->setToolTip(toolTip);
+                qDebug() << toolTip;
+            }
+        }
+    });
 
 
     mainLayout->addWidget(tabs);
@@ -511,8 +554,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     loadProjects();
     setFontPr1();
 
-    int loadTime = startup.elapsed();
-    qDebug() << "Load time:" << loadTime << "ms";
+    qDebug() << "Load time:" << startup.elapsed() << "ms";
     qDebug() << path;
 }
 

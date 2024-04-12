@@ -5,10 +5,31 @@
 #include <QSettings>
 #include <QTextBrowser>
 #include <QtWidgets>
+#include <QFileIconProvider>
 #include <QFileSystemModel>
 
 #include "qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"
+
+class CustomIconProvider : public QFileIconProvider {
+public:
+    QIcon icon(IconType type) const override
+    {
+        switch (type) {
+        case QFileIconProvider::IconType::Computer:
+            return QIcon(":/home_dir.png");
+        case QFileIconProvider::IconType::Trashcan:
+            return QIcon(":/trash.png");
+        case QFileIconProvider::IconType::File:
+            return QIcon(":/document.png");
+        case QFileIconProvider::IconType::Folder:
+            return QIcon(":/folder.png");
+        default:
+            return QFileIconProvider::icon(type);
+        }
+    }
+};
+
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -40,6 +61,7 @@ private slots:
     void setHeader();
     void createNote();
     void removeNote();
+    void saveNote();
     void toViewMode();
     void createFolder();
 
@@ -49,7 +71,7 @@ private slots:
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
     void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
-    void onNoteDoubleClicked(QTreeWidgetItem *item);
+    void onNoteDoubleClicked();
     void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress);
     void loadDocumentations(QDir path, QComboBox &comboBox);
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
@@ -67,6 +89,8 @@ private slots:
     void setItalic();
     void setStrike();
     void setTask();
+
+    void updateWindowTitle();
 
     void setFontPr1();
     
@@ -89,6 +113,7 @@ private:
     // ========================================================
     // notes tab
     QTreeView *notesList;
+    CustomIconProvider *iconProvider;
     QMarkdownTextEdit *noteEdit;
     MarkdownHighlighter *highlighter;
     QTextBrowser *mdPreview;
@@ -148,6 +173,15 @@ private:
     QAction *viewMode;
     QAction *newProject;
     QAction *rmProject;
+    QAction *setH1A;
+    QAction *setH2A;
+    QAction *setH3A;
+    QAction *setListA;
+    QAction *setLinkA;
+    QAction *setTaskA;
+    QAction *setBoldA;
+    QAction *setItalicA;
+    QAction *setStrikeA;
 
     SettingsWindow *settingsWindow;
 };

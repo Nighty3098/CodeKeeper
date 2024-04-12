@@ -171,7 +171,7 @@ void MarkdownHighlighter::initHighlightingRules() {
     {
         HighlightingRule rule(HighlighterState::Table);
         rule.shouldContain = QStringLiteral("|");
-        rule.pattern = QRegularExpression(QStringLiteral("^\\|.+?\\|$"));
+        rule.pattern = QRegularExpression(QStringLiteral("^\\ | .+?\\ | $"));
         _highlightingRules.append(rule);
     }
 }
