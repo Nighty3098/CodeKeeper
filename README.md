@@ -5,7 +5,7 @@
   - [X] - Basic UI
   
   - [ ] - Saving data
-    - [ ] - Saving notes to DB
+    - [X] - Saving notes to MD files
     - [ ] - Saving a list of tasks in the DB
     - [ ] - Saving a projects list  in the DB
   
@@ -18,7 +18,7 @@
   - [ ] - Fix visual bugs
   
   - [ ] - Crossplatform app
-    - [ ] - Linux ( AppImage )
+    - [X] - Linux
     - [ ] - Windows
     - [ ] - Mac
   
