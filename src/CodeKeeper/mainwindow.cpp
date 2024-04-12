@@ -11,6 +11,7 @@
 #include "keeperFunc/functional.cpp"
 #include "qmarkdowntextedit/markdownhighlighter.h"
 
+
 Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
@@ -76,10 +77,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuLayout->setSizeConstraint(QLayout::SetFixedSize);
     menuLayout->setAlignment(Qt::AlignHCenter);
 
+    // icons
+    iconProvider = new CustomIconProvider();
+
     notesDirModel = new QFileSystemModel();
     // notesDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
     notesDirModel->setRootPath(dir);
-
+    notesDirModel->setIconProvider(iconProvider);
 
     notesList = new QTreeView();
     notesList->setAnimated(true);
@@ -116,7 +120,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::setHeader);
 
-    // menu
+
     menuButton = new QToolButton;
     menuButton->setText(".");
     menuButton->setPopupMode(QToolButton::InstantPopup);
@@ -124,6 +128,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     QMenu *menu = new QMenu(menuButton);
     menu->setFont(selectedFont);
+
+    QMenu *viewMenu = new QMenu("View", menu);
 
     // actions for menu
     newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()));
@@ -133,21 +139,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menu->addSeparator();
 
     showList =
-        menu->addAction("Show notes list", this, SLOT(hideNotesList()));
+        viewMenu->addAction("Show notes list", this, SLOT(hideNotesList()));
     showList->setCheckable(true);
     showList->setChecked(isVisibleNotesList);
 
     showRender =
-        menu->addAction("Show md preview", this, SLOT(showPreview()));
+        viewMenu->addAction("Show md preview", this, SLOT(showPreview()));
     showRender->setCheckable(true);
     showRender->setChecked(isVisiblePreview);
 
-    menu->addSeparator();
+    viewMenu->addSeparator();
 
-    viewMode = menu->addAction(QPixmap(":/view.png"), "Reading mode", this, SLOT(toViewMode()));
+    viewMode = viewMenu->addAction(QPixmap(":/view.png"), "Reading mode", this, SLOT(toViewMode()));
     viewMode->setCheckable(true);
     viewMode->setChecked(isViewMode);
 
+    menu->addMenu(viewMenu);
     menuButton->setMenu(menu);
 
     setH1B = new QPushButton(QPixmap(":/h1.png"), "");
@@ -495,6 +502,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(setStrikeB, &QPushButton::clicked, this, &MainWindow::setStrike);
     connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
 
+    connect(notesList, &QTreeView::doubleClicked, this, &MainWindow::onNoteDoubleClicked);
+
+    connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::saveNote);
 
 
     mainLayout->addWidget(tabs);
@@ -506,8 +516,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     loadProjects();
     setFontPr1();
 
-    int loadTime = startup.elapsed();
-    qDebug() << "Load time:" << loadTime << "ms";
+    qDebug() << "Load time:" << startup.elapsed() << "ms";
     qDebug() << path;
 }
 
