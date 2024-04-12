@@ -90,6 +90,8 @@ private slots:
     void setStrike();
     void setTask();
 
+    void updateWindowTitle();
+
     void setFontPr1();
     
     QString getCurrentDateTimeString();
@@ -171,6 +173,15 @@ private:
     QAction *viewMode;
     QAction *newProject;
     QAction *rmProject;
+    QAction *setH1A;
+    QAction *setH2A;
+    QAction *setH3A;
+    QAction *setListA;
+    QAction *setLinkA;
+    QAction *setTaskA;
+    QAction *setBoldA;
+    QAction *setItalicA;
+    QAction *setStrikeA;
 
     SettingsWindow *settingsWindow;
 };

@@ -57,6 +57,9 @@ void MainWindow::onNoteDoubleClicked() {
                 file.close();
             }
         }
+        else {
+            noteEdit->setPlainText("### File format not supported.");
+        }
     }
 }
 
@@ -191,7 +194,7 @@ void MainWindow::setLink() {
     cursor.movePosition(QTextCursor::StartOfLine);
     cursor.insertText("[Link](");
 
-    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.movePosition(QTextCursor::EndOfLine);
     cursor.insertText(")");
 
     noteEdit->setTextCursor(cursor);
@@ -205,7 +208,7 @@ void MainWindow::setBold() {
     cursor.movePosition(QTextCursor::StartOfLine);
     cursor.insertText("**");
 
-    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.movePosition(QTextCursor::EndOfLine);
     cursor.insertText("**");
 
     noteEdit->setTextCursor(cursor);
@@ -219,7 +222,7 @@ void MainWindow::setItalic() {
     cursor.movePosition(QTextCursor::StartOfLine);
     cursor.insertText("*");
 
-    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.movePosition(QTextCursor::EndOfLine);
     cursor.insertText("*");
 
     noteEdit->setTextCursor(cursor);
@@ -233,7 +236,7 @@ void MainWindow::setStrike() {
     cursor.movePosition(QTextCursor::StartOfLine);
     cursor.insertText("~");
 
-    cursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+    cursor.movePosition(QTextCursor::EndOfLine);
     cursor.insertText("~");
 
     noteEdit->setTextCursor(cursor);

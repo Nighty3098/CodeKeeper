@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     theme = globalSettings->value("theme").value<QString>();
     path = globalSettings->value("path").value<QDir>();
 
-    QString dir = path.absolutePath(); 
+    QString dir = path.absolutePath();
     qDebug() << dir;
 
     bool isVisibleNotesList =
@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     notesDirModel = new QFileSystemModel();
     // notesDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
-    notesDirModel->setRootPath(dir);
+    notesDirModel->setRootPath("/home/night/Dev/Git/CodeKeeper/src/Notes");
     notesDirModel->setIconProvider(iconProvider);
 
     notesList = new QTreeView();
@@ -92,11 +92,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setDefaultDropAction(Qt::MoveAction);
     notesList->setDragEnabled(true);
     notesList->setMaximumWidth(300);
-    notesList->setHeaderHidden(false);
+    notesList->setHeaderHidden(true);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
+    notesList->setRootIndex(notesDirModel->index("/home/night/Dev/Git/CodeKeeper/src/Notes"));
+
 
     notesList->setModel(notesDirModel);
+    notesList->setColumnWidth(0, 297);
+    notesList->setColumnHidden(1, true);
+    notesList->setColumnHidden(2, true);
+    notesList->setColumnHidden(3, true);
+    notesList->setColumnHidden(4, true);
 
     noteName = new QLineEdit();
     noteName->setFixedSize(200, 30);
@@ -105,6 +112,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mdPreview = new QTextBrowser();
     mdPreview->setOpenLinks(true);
     mdPreview->setOpenExternalLinks(true);
+    mdPreview->setAlignment(Qt::AlignHCenter);
 
     noteEdit = new QMarkdownTextEdit();
     noteEdit->setPlaceholderText(" Just start typing");
@@ -154,6 +162,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     viewMode->setCheckable(true);
     viewMode->setChecked(isViewMode);
 
+    QMenu *editMenu = new QMenu("Edit", menu);
+    
+    setH1A = editMenu->addAction(QPixmap(":/h1.png"), "Set H1", this, SLOT(setH1()));
+    setH2A = editMenu->addAction(QPixmap(":/h2.png"), "Set H2", this, SLOT(setH2()));
+    setH3A = editMenu->addAction(QPixmap(":/h3.png"), "Set H3", this, SLOT(setH3()));
+
+    editMenu->addSeparator();
+
+    setListA = editMenu->addAction(QPixmap(":/list.png"), "Add list ite,", this, SLOT(setList()));
+    setLinkA = editMenu->addAction(QPixmap(":/link.png"), "Add link", this, SLOT(setLink()));
+    setTaskA = editMenu->addAction(QPixmap(":/checkbox.png"), "Add task", this, SLOT(setTask()));
+
+    editMenu->addSeparator();
+
+    setBoldA = editMenu->addAction(QPixmap(":/bold.png"), "Set bold", this, SLOT(setBold()));
+    setItalicA = editMenu->addAction(QPixmap(":/italic.png"), "Set italic", this, SLOT(setItalic()));
+    setStrikeA = editMenu->addAction(QPixmap(":/strikethrough.png"), "Set strikethrough", this, SLOT(setStrike()));
+
+    menu->addMenu(editMenu);
     menu->addMenu(viewMenu);
     menuButton->setMenu(menu);
 
@@ -502,9 +529,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(setStrikeB, &QPushButton::clicked, this, &MainWindow::setStrike);
     connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
 
-    connect(notesList, &QTreeView::doubleClicked, this, &MainWindow::onNoteDoubleClicked);
+    connect(notesList, &QTreeView::clicked, this, &MainWindow::onNoteDoubleClicked);
 
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::saveNote);
+
+    connect(notesList, &QTreeView::entered, this, [=](const QModelIndex& index) {
+        if (index.isValid()) {
+            QDateTime lastModified = notesDirModel->data(index, Qt::UserRole + 1).toDateTime();
+            if (lastModified.isValid()) {
+                QString toolTip = "Last modified: " + lastModified.toString();
+                notesList->setToolTip(toolTip);
+                qDebug() << toolTip;
+            }
+        }
+    });
 
 
     mainLayout->addWidget(tabs);

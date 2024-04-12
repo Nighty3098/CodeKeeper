@@ -283,7 +283,7 @@ QTreeView {
         border-radius: 10px;
         border-color: #545c7e;
         alternate-background-color: #545c7e;
-}
+} 
 
 
 QTreeView::item:alternate {
