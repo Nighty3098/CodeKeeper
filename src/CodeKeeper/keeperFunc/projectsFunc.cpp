@@ -20,6 +20,24 @@ void MainWindow::removeProject() {
     }
 }
 
+void MainWindow::getTotalProjects(QTabWidget *projectsTab,
+                                  QListWidget *notStartedProjects,
+                                  QListWidget *startedProjects,
+                                  QListWidget *finishedProjects,
+                                  QListWidget *finishlineProjects) {
+    if (projectsTab->currentIndex() == 3) {
+        QTimer *timer3 = new QTimer(this);
+        connect(timer3, &QTimer::timeout, [=]() {
+            int totalProjects =
+                notStartedProjects->count() + finishlineProjects->count() +
+                startedProjects->count() + finishedProjects->count();
+
+            totalProjectsL->setText(
+                "Total projects: " + QString::number(totalProjects) + " ");
+        });
+        timer3->start(500);
+    }
+}
 
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
     if (item) {

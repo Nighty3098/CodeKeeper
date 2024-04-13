@@ -12,6 +12,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     settingswindow.cpp \
+    syncwindow.cpp \
     settingsFunc/functional.cpp \
     keeperFunc/functional.cpp \
     sql_db/connectionDB.cpp \
@@ -20,7 +21,8 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
-    settingswindow.h
+    settingswindow.h \
+    syncwindow.h
 
 RESOURCES += \
     ../resources/resources.qrc \

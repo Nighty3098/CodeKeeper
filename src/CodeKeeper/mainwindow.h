@@ -1,40 +1,39 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QFileIconProvider>
+#include <QFileSystemModel>
 #include <QMainWindow>
 #include <QSettings>
 #include <QTextBrowser>
 #include <QtWidgets>
-#include <QFileIconProvider>
-#include <QFileSystemModel>
 
 #include "qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"
+#include "syncwindow.h"
 
 class CustomIconProvider : public QFileIconProvider {
-public:
-    QIcon icon(IconType type) const override
-    {
+   public:
+    QIcon icon(IconType type) const override {
         switch (type) {
-        case QFileIconProvider::IconType::Computer:
-            return QIcon(":/home_dir.png");
-        case QFileIconProvider::IconType::Trashcan:
-            return QIcon(":/trash.png");
-        case QFileIconProvider::IconType::File:
-            return QIcon(":/document.png");
-        case QFileIconProvider::IconType::Folder:
-            return QIcon(":/folder.png");
-        default:
-            return QFileIconProvider::icon(type);
+            case QFileIconProvider::IconType::Computer:
+                return QIcon(":/home_dir.png");
+            case QFileIconProvider::IconType::Trashcan:
+                return QIcon(":/trash.png");
+            case QFileIconProvider::IconType::File:
+                return QIcon(":/document.png");
+            case QFileIconProvider::IconType::Folder:
+                return QIcon(":/folder.png");
+            default:
+                return QFileIconProvider::icon(type);
         }
     }
 };
 
-
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
+   public:
     QSettings *globalSettings;
     bool isVisibleNotesList;
 
@@ -46,12 +45,10 @@ public:
     QFileSystemModel *notesDirModel;
     QFileSystemModel *noteFileModel;
 
-
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-
-private slots:
+   private slots:
     void openSettingsWindow();
     void openFolder();
 
@@ -70,9 +67,24 @@ private slots:
     void removeTask();
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
-    void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
+    void renameItemOnDoubleClick(QListWidget *listWidget,
+                                 QListWidgetItem *item);
     void onNoteDoubleClicked();
-    void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks, QProgressBar *tasksProgress);
+    void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks,
+                             QListWidget *inprocessTasks,
+                             QListWidget *completeTasks,
+                             QProgressBar *tasksProgress);
+
+    void getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks,
+                             QListWidget *inprocessTasks,
+                             QListWidget *completeTasks);
+
+    void getTotalProjects(QTabWidget *tasksTab,
+                                  QListWidget *notStartedProjects,
+                                  QListWidget *startedProjects,
+                                  QListWidget *finishedProjects,
+                                  QListWidget *finishlineProjects);
+
     void loadDocumentations(QDir path, QComboBox &comboBox);
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
 
@@ -90,20 +102,34 @@ private slots:
     void setItalic();
     void setStrike();
     void setTask();
+    void setTable();
 
     void updateWindowTitle();
 
     void setFontPr1();
-    
+
     QString getCurrentDateTimeString();
 
     void create_tasks_connection();
     void create_projects_connection();
-    
-private:
+
+    void onMovingFrom(QListWidgetItem *item, QListWidget *list);
+    void onMovingTo(QListWidgetItem *item, QListWidget *list);
+
+
+   protected:
+
+
+   private:
+
+
     QWidget *centralWidget;
     QVBoxLayout *mainLayout;
     QTabWidget *tabs;
+
+    QPushButton *maximizeBtn;
+    QPushButton *closeBtn;
+    QPushButton *minimizeBtn;
 
     // ========================================================
     // main tab
@@ -132,6 +158,7 @@ private:
     QPushButton *setStrikeB;
     QPushButton *setTaskB;
     QPushButton *setNumListB;
+    QPushButton *setTableB;
 
     // ========================================================
     // tasks tab
@@ -142,12 +169,12 @@ private:
     QProgressBar *tasksProgress;
     QToolButton *tasksMenuBtn;
 
+    QLabel *totalTasksL;
     QLabel *label_1;
     QLabel *label_2;
     QLabel *label_3;
 
     QLineEdit *taskText;
-
 
     // ========================================================
     // projects tab
@@ -155,6 +182,7 @@ private:
     QToolButton *projectsMenuButton;
     QMenu *projectsMenu;
 
+    QLabel *totalProjectsL;
     QLabel *fProjects;
     QLabel *flProjects;
     QLabel *sProjects;
@@ -185,7 +213,9 @@ private:
     QAction *setItalicA;
     QAction *setStrikeA;
     QAction *setNumListA;
+    QAction *setTableA;
 
     SettingsWindow *settingsWindow;
 };
+
 #endif  // MAINWINDOW_H

@@ -1,6 +1,14 @@
 #include <QDateTime>
 #include <QSyntaxHighlighter>
 
+void MainWindow::onMovingFrom(QListWidgetItem *item, QListWidget *list) {
+    qDebug() << "Moving item: " << item->text() << " from: " << list->objectName();
+}
+
+void MainWindow::onMovingTo(QListWidgetItem *item, QListWidget *list) {
+    qDebug() << "Moved item: " << item->text() << " to: " << list->objectName();
+}
+
 QString MainWindow::getCurrentDateTimeString() {
     QDateTime currentDateTime = QDateTime::currentDateTime();
     QString dateTimeString = currentDateTime.toString("dd-MM-yyyy hh:mm:ss");
@@ -78,16 +86,12 @@ void MainWindow::setFontPr1() {
                              "pt; background-color: rgba(47, 51, 77, 0);");
 
     menuButton->setFont(selectedFont);
-    menuButton->setStyleSheet("font-size: " + font_size + "pt; background-color: #222436;");
 
     tasksMenuBtn->setFont(selectedFont);
-    tasksMenuBtn->setStyleSheet("font-size: " + font_size + "pt;");
-
-    noteName->setFont(selectedFont);
+    
     noteName->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
     mdPreview->setFont(selectedFont);
-    mdPreview->setStyleSheet("font-size: " + font_size + "pt;");
 
     noteEdit->setFont(selectedFont);
     noteEdit->setStyleSheet("font-size: " + font_size + "pt;");
@@ -231,18 +235,23 @@ void MainWindow::setFontPr1() {
     finishlineProjects->setFont(selectedFont);
     finishedProjects->setFont(selectedFont);
 
-    projectsMenuButton->setFont(selectedFont);
+    // projectsMenuButton->setFont(selectedFont);
 
     projectsMenu->setFont(selectedFont);
 
     tabs->setFont(selectedFont);
     tabs->setStyleSheet("font-size: " + font_size + "pt;");
 
+    totalProjectsL->setFont(selectedFont);
+    totalProjectsL->setStyleSheet("font-size: " + font_size + "pt;");
+
+    totalTasksL->setFont(selectedFont);
+    totalTasksL->setStyleSheet("font-size: " + font_size + "pt;");
+
     incompleteTasks->setFont(selectedFont);
     inprocessTasks->setFont(selectedFont);
     completeTasks->setFont(selectedFont);
 
-    tasksMenuBtn->setStyleSheet("border-radius: 5px;");
 
     label_1->setFont(selectedFont);
     label_1->setStyleSheet("font-size: 16px;");

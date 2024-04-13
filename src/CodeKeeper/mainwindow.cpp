@@ -1,16 +1,15 @@
 #include "mainwindow.h"
 
-#include <QPropertyAnimation>
 #include <QInputDialog>
+#include <QPropertyAnimation>
 
+#include "keeperFunc/functional.cpp"
+#include "keeperFunc/notesFunc.cpp"
+#include "keeperFunc/projectsFunc.cpp"
+#include "keeperFunc/tasksFunc.cpp"
+#include "qmarkdowntextedit/markdownhighlighter.h"
 #include "sql_db/projectsDB.cpp"
 #include "sql_db/tasksDB.cpp"
-#include "keeperFunc/notesFunc.cpp"
-#include "keeperFunc/tasksFunc.cpp"
-#include "keeperFunc/projectsFunc.cpp"
-#include "keeperFunc/functional.cpp"
-#include "qmarkdowntextedit/markdownhighlighter.h"
-
 
 Q_DECLARE_METATYPE(QDir)
 
@@ -22,9 +21,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
+    // this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    this->setMinimumSize(560, 400);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+
     mainLayout = new QVBoxLayout(centralWidget);
-    setMinimumSize(560, 400);
-    setAttribute(Qt::WA_TranslucentBackground);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     restoreGeometry(globalSettings->value("geometry").toByteArray());
@@ -43,8 +44,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         globalSettings->value("isVisibleFolders", true).toBool();
     bool isVisiblePreview =
         globalSettings->value("isVisiblePreview", false).toBool();
-    bool isViewMode =
-        globalSettings->value("isViewMode", false).toBool();
+    bool isViewMode = globalSettings->value("isViewMode", false).toBool();
 
     // ========================================================
 
@@ -56,13 +56,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
     openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), " Settings");
-    openSettingsBtn->setFixedSize(200, 30);
+    openSettingsBtn->setFixedSize(200, 25);
     settingsBtnLayout->addWidget(openSettingsBtn);
 
     // sync btn
     QHBoxLayout *syncDataLayout = new QHBoxLayout;
     syncDataBtn = new QPushButton(QPixmap(":/retry.png"), " Sync data");
-    syncDataBtn->setFixedSize(200, 30);
+    syncDataBtn->setFixedSize(200, 25);
     syncDataLayout->addWidget(syncDataBtn);
 
     // ========================================================
@@ -96,7 +96,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setSortingEnabled(true);
     notesList->setRootIndex(notesDirModel->index("../"));
 
-
     notesList->setModel(notesDirModel);
     notesList->setColumnWidth(0, 297);
     notesList->setColumnHidden(1, true);
@@ -127,11 +126,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
             &MainWindow::setHeader);
 
-
     menuButton = new QToolButton;
-    menuButton->setText(".");
+    menuButton->setIcon(QPixmap(":/main.png"));
+    menuButton->setIconSize(QSize(10, 10));
     menuButton->setPopupMode(QToolButton::InstantPopup);
-    menuButton->setStyleSheet("background-color: #222436; border-color: #222436;");
+    menuButton->setStyleSheet(
+        "background-color: #222436; border-color: #222436; border-width: 4px;");
 
     QMenu *menu = new QMenu(menuButton);
     menu->setFont(selectedFont);
@@ -139,46 +139,69 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QMenu *viewMenu = new QMenu("View", menu);
 
     // actions for menu
-    newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()), Qt::CTRL + Qt::Key_N);
-    rmNote = menu->addAction(QPixmap(":/delete.png"), "Remove", this, SLOT(removeNote()), Qt::CTRL + Qt::Key_Delete);
-    newFolder = menu->addAction(QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()), Qt::CTRL + Qt::SHIFT + Qt::Key_N);
+    newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this,
+                              SLOT(createNote()), Qt::CTRL + Qt::Key_N);
+    rmNote = menu->addAction(QPixmap(":/delete.png"), "Remove", this,
+                             SLOT(removeNote()), Qt::CTRL + Qt::Key_Delete);
+    newFolder =
+        menu->addAction(QPixmap(":/new_folder.png"), "New folder", this,
+                        SLOT(createFolder()), Qt::CTRL + Qt::SHIFT + Qt::Key_N);
 
     menu->addSeparator();
 
     showList =
-        viewMenu->addAction("Show notes list", this, SLOT(hideNotesList()), Qt::CTRL + Qt::SHIFT + Qt::Key_L);
+        viewMenu->addAction("Show notes list", this, SLOT(hideNotesList()),
+                            Qt::CTRL + Qt::SHIFT + Qt::Key_L);
     showList->setCheckable(true);
     showList->setChecked(isVisibleNotesList);
 
     showRender =
-        viewMenu->addAction("Show md preview", this, SLOT(showPreview()), Qt::CTRL + Qt::SHIFT + Qt::Key_P);
+        viewMenu->addAction("Show md preview", this, SLOT(showPreview()),
+                            Qt::CTRL + Qt::SHIFT + Qt::Key_P);
     showRender->setCheckable(true);
     showRender->setChecked(isVisiblePreview);
 
     viewMenu->addSeparator();
 
-    viewMode = viewMenu->addAction(QPixmap(":/view.png"), "Reading mode", this, SLOT(toViewMode()), Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+    viewMode = viewMenu->addAction(QPixmap(":/view.png"), "Reading mode", this,
+                                   SLOT(toViewMode()),
+                                   Qt::CTRL + Qt::SHIFT + Qt::Key_V);
     viewMode->setCheckable(true);
     viewMode->setChecked(isViewMode);
 
     QMenu *editMenu = new QMenu("Edit", menu);
-    
-    setH1A = editMenu->addAction(QPixmap(":/h1.png"), "Set H1", this, SLOT(setH1()));
-    setH2A = editMenu->addAction(QPixmap(":/h2.png"), "Set H2", this, SLOT(setH2()));
-    setH3A = editMenu->addAction(QPixmap(":/h3.png"), "Set H3", this, SLOT(setH3()));
+
+    setH1A =
+        editMenu->addAction(QPixmap(":/h1.png"), "Set H1", this, SLOT(setH1()));
+    setH2A =
+        editMenu->addAction(QPixmap(":/h2.png"), "Set H2", this, SLOT(setH2()));
+    setH3A =
+        editMenu->addAction(QPixmap(":/h3.png"), "Set H3", this, SLOT(setH3()));
 
     editMenu->addSeparator();
 
-    setListA = editMenu->addAction(QPixmap(":/list.png"), "Add list item", this, SLOT(setList()));
-    setNumListA = editMenu->addAction(QPixmap(":/numList.png"), "Add numbered list", this, SLOT(setNumList()));
-    setLinkA = editMenu->addAction(QPixmap(":/link.png"), "Add link", this, SLOT(setLink()));
-    setTaskA = editMenu->addAction(QPixmap(":/checkbox.png"), "Add task", this, SLOT(setTask()));
+    setListA = editMenu->addAction(QPixmap(":/list.png"), "Add list item", this,
+                                   SLOT(setList()));
+    setNumListA =
+        editMenu->addAction(QPixmap(":/numList.png"), "Add numbered list", this,
+                            SLOT(setNumList()));
+    setLinkA = editMenu->addAction(QPixmap(":/link.png"), "Add link", this,
+                                   SLOT(setLink()));
+    setTaskA = editMenu->addAction(QPixmap(":/checkbox.png"), "Add task", this,
+                                   SLOT(setTask()));
 
     editMenu->addSeparator();
 
-    setBoldA = editMenu->addAction(QPixmap(":/bold.png"), "Set bold", this, SLOT(setBold()));
-    setItalicA = editMenu->addAction(QPixmap(":/italic.png"), "Set italic", this, SLOT(setItalic()));
-    setStrikeA = editMenu->addAction(QPixmap(":/strikethrough.png"), "Set strikethrough", this, SLOT(setStrike()));
+    setBoldA = editMenu->addAction(QPixmap(":/bold.png"), "Set bold", this,
+                                   SLOT(setBold()));
+    setItalicA = editMenu->addAction(QPixmap(":/italic.png"), "Set italic",
+                                     this, SLOT(setItalic()));
+    setStrikeA =
+        editMenu->addAction(QPixmap(":/strikethrough.png"), "Set strikethrough",
+                            this, SLOT(setStrike()));
+
+    setTableA = editMenu->addAction(QPixmap(":/table.png"), "Add table", this,
+                                    SLOT(setTable()));
 
     menu->addMenu(editMenu);
     menu->addMenu(viewMenu);
@@ -194,7 +217,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setStrikeB = new QPushButton(QPixmap(":/strikethrough.png"), "");
     setTaskB = new QPushButton(QPixmap(":/checkbox.png"), "");
     setNumListB = new QPushButton(QPixmap(":/numList.png"), "");
-
+    setTableB = new QPushButton(QPixmap(":/table.png"), "");
 
     setH1B->setStyleSheet("background-color: #222436; border-color: #222436;");
     setH2B->setStyleSheet("background-color: #222436; border-color: #222436;");
@@ -213,7 +236,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         "background-color: #222436; border-color: #222436;");
     setNumListB->setStyleSheet(
         "background-color: #222436; border-color: #222436;");
-
+    setTableB->setStyleSheet(
+        "background-color: #222436; border-color: #222436;");
 
     setH1B->setFixedSize(30, 30);
     setH2B->setFixedSize(30, 30);
@@ -225,6 +249,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setStrikeB->setFixedSize(30, 30);
     setTaskB->setFixedSize(30, 30);
     setNumListB->setFixedSize(30, 30);
+    setTableB->setFixedSize(30, 30);
 
     setH1B->setToolTip("<p style='color: #ffffff;'>Heading 1</p>");
     setH2B->setToolTip("<p style='color: #ffffff;'>Heading 2</p>");
@@ -236,7 +261,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setStrikeB->setToolTip("<p style='color: #ffffff;'>Strikethrough text</p>");
     setTaskB->setToolTip("<p style='color: #ffffff;'>Task</p>");
     setNumListB->setToolTip("<p style='color: #ffffff;'>Numbered list</p>");
-
+    setTableB->setToolTip("<p style='color: #ffffff;'>Insert table</p>");
 
     menuLayout->addWidget(menuButton);
     menuLayout->addWidget(setH1B);
@@ -251,6 +276,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuLayout->addWidget(setNumListB);
     menuLayout->addWidget(setLinkB);
     menuLayout->addWidget(setTaskB);
+    menuLayout->addWidget(setTableB);
 
     contentLayout->addWidget(notesList);
     contentLayout->addWidget(noteEdit);
@@ -266,27 +292,40 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QGridLayout *tasksGLayout = new QGridLayout;
     tasksGLayout->setSpacing(0);
 
+    QHBoxLayout *tasksStatsL = new QHBoxLayout;
+    tasksStatsL->setSpacing(10);
+
     tasksMenuBtn = new QToolButton;
-    tasksMenuBtn->setText("...");
-    tasksMenuBtn->setFixedSize(30, 20);
+    tasksMenuBtn->setIcon(QPixmap(":/main.png"));
+    tasksMenuBtn->setIconSize(QSize(40, 40));
+    tasksMenuBtn->setFixedSize(30, 30);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
-    tasksMenuBtn->setStyleSheet("border-radius: 2px;");
+    tasksMenuBtn->setStyleSheet(
+        "background-color: #222436; border-color: #222436; border-width: 0px;");
 
     QMenu *tasksMenu = new QMenu(tasksMenuBtn);
     tasksMenu->setFont(selectedFont);
 
-    addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task",
-                                            this, SLOT(addNewTask()), Qt::Key_Return);
-    rmTask = tasksMenu->addAction(
-        QPixmap(":/delete.png"), "Delete task", this, SLOT(removeTask()), Qt::Key_Delete);
+    addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task", this,
+                                   SLOT(addNewTask()), Qt::Key_Return);
+    rmTask = tasksMenu->addAction(QPixmap(":/delete.png"), "Delete task", this,
+                                  SLOT(removeTask()), Qt::Key_Delete);
 
     tasksMenuBtn->setMenu(tasksMenu);
 
     tasksProgress = new QProgressBar();
     tasksProgress->setMaximum(100);
-    tasksProgress->setMaximumWidth(400);
+    tasksProgress->setMaximumWidth(300);
     tasksProgress->setFixedHeight(20);
     tasksProgress->setAlignment(Qt::AlignCenter);
+
+    totalTasksL = new QLabel();
+    totalTasksL->setFixedHeight(40);
+    totalTasksL->setAlignment(Qt::AlignCenter);
+
+    tasksStatsL->addWidget(tasksMenuBtn);
+    tasksStatsL->addWidget(totalTasksL);
+    tasksStatsL->addWidget(tasksProgress);
 
     label_1 = new QLabel("Incomplete");
     label_1->setStyleSheet("font-size: 16px;");
@@ -299,6 +338,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     incompleteTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     incompleteTasks->setWordWrap(true);
     incompleteTasks->setSpacing(5);
+    incompleteTasks->setObjectName("IncompleteTasks");
 
     label_2 = new QLabel("Inprocess");
     label_2->setStyleSheet("font-size: 16px;");
@@ -311,6 +351,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     inprocessTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     inprocessTasks->setWordWrap(true);
     inprocessTasks->setSpacing(5);
+    inprocessTasks->setObjectName("InprocessTasks");
 
     label_3 = new QLabel("Complete");
     label_3->setStyleSheet("font-size: 16px;");
@@ -323,13 +364,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     completeTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     completeTasks->setWordWrap(true);
     completeTasks->setSpacing(5);
+    completeTasks->setObjectName("CompleteTasks");
 
     taskText = new QLineEdit();
     taskText->setPlaceholderText(" Task...");
     taskText->setFixedHeight(30);
 
-    tasksGLayout->addWidget(tasksMenuBtn, 0, 2);
-    tasksGLayout->addWidget(tasksProgress, 0, 1);
+    tasksGLayout->addLayout(tasksStatsL, 0, 1);
 
     tasksGLayout->addWidget(label_1, 1, 0);
     tasksGLayout->addWidget(label_2, 1, 1);
@@ -347,8 +388,34 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QGridLayout *projectsGLayout = new QGridLayout;
     projectsGLayout->setSpacing(0);
 
+    // menu
+    projectsMenuButton = new QToolButton();
+    projectsMenuButton->setIcon(QPixmap(":/main.png"));
+    projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
+    projectsMenuButton->setFixedSize(30, 30);
+    projectsMenuButton->setIconSize(QSize(40, 40));
+    projectsMenuButton->setStyleSheet(
+        "background-color: #222436; border-color: #222436; border-width: 0px;");
+
+    projectsMenu = new QMenu(projectsMenuButton);
+
+    // actions for menu
+    newProject =
+        projectsMenu->addAction(QPixmap(":/new.png"), "New", this,
+                                SLOT(createProject()), Qt::CTRL + Qt::Key_N);
+    rmProject =
+        projectsMenu->addAction(QPixmap(":/delete.png"), "Remove", this,
+                                SLOT(removeProject()), Qt::Key_Delete);
+
+    projectsMenuButton->setMenu(projectsMenu);
+
+
     projectsMainLabel = new QLabel("Projects");
     projectsMainLabel->setAlignment(Qt::AlignCenter);
+
+    totalProjectsL = new QLabel();
+    totalProjectsL->setFixedHeight(30);
+    totalProjectsL->setAlignment(Qt::AlignCenter);
 
     nsProjects = new QLabel("Not started");
     nsProjects->setStyleSheet("font-size: 16px;");
@@ -359,6 +426,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notStartedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
     notStartedProjects->setWordWrap(true);
     notStartedProjects->setSpacing(5);
+    notStartedProjects->setObjectName("NotStartedProjects");
 
     sProjects = new QLabel("Started");
     sProjects->setStyleSheet("font-size: 16px;");
@@ -369,6 +437,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     startedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
     startedProjects->setWordWrap(true);
     startedProjects->setSpacing(5);
+    startedProjects->setObjectName("StartedProjects");
 
     flProjects = new QLabel("For review");
     flProjects->setStyleSheet("font-size: 16px;");
@@ -379,6 +448,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     finishlineProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
     finishlineProjects->setWordWrap(true);
     finishlineProjects->setSpacing(5);
+    finishlineProjects->setObjectName("FinishlineProjects");
 
     fProjects = new QLabel("Finished");
     fProjects->setStyleSheet("font-size: 16px;");
@@ -389,26 +459,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     finishedProjects->setDefaultDropAction(Qt::DropAction::MoveAction);
     finishedProjects->setWordWrap(true);
     finishedProjects->setSpacing(5);
+    finishedProjects->setObjectName("FinishedProjects");
 
-    // actions
-    // menu
-    projectsMenuButton = new QToolButton;
-    projectsMenuButton->setText("...");
-    projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
-    projectsMenuButton->setFixedSize(40, 30);
-
-    projectsMenu = new QMenu(projectsMenuButton);
-
-    // actions for menu
-    newProject = projectsMenu->addAction(
-        QPixmap(":/new.png"), "New project", this, SLOT(createProject()), Qt::CTRL + Qt::Key_N);
-    rmProject = projectsMenu->addAction(
-        QPixmap(":/delete.png"), "Remove project", this, SLOT(removeProject()), Qt::Key_Delete);
-
-
-    projectsMenuButton->setMenu(projectsMenu);
 
     projectsGLayout->addWidget(projectsMenuButton, 0, 0);
+    // projectsGLayout->addWidget(totalProjectsL, 0, 1);
     projectsGLayout->addWidget(nsProjects, 1, 0);
     projectsGLayout->addWidget(notStartedProjects, 2, 0);
     projectsGLayout->addWidget(sProjects, 1, 1);
@@ -423,7 +478,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tabs = new QTabWidget();
     tabs->setMovable(true);
-    tabs->setTabPosition(QTabWidget::South);
+    // tabs->setTabPosition(QTabWidget::South);
 
     // main tab
     QWidget *mainTab = new QWidget();
@@ -459,8 +514,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tabs->addTab(projectsTab, "Projects");
 
-    // task
+    QIcon mainIco(":/main.png");
+    QIcon projectsIco(":/project.png");
+    QIcon noteIco(":/edit.png");
+    QIcon tasksIco(":/task.png");
 
+    tabs->setTabIcon(tabs->indexOf(mainTab), mainIco);
+    tabs->setTabIcon(tabs->indexOf(notesTab), noteIco);
+    tabs->setTabIcon(tabs->indexOf(tasksTab), tasksIco);
+    tabs->setTabIcon(tabs->indexOf(projectsTab), projectsIco);
+
+    // task
 
     // main
     connect(openSettingsBtn, SIGNAL(clicked()), this,
@@ -488,6 +552,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(tabs, &QTabWidget::currentChanged, this, [=]() {
         updateTasksProgress(tabs, incompleteTasks, inprocessTasks,
                             completeTasks, tasksProgress);
+    });
+
+    connect(tabs, &QTabWidget::currentChanged, this, [=]() {
+        getTotalTasks(tabs, incompleteTasks, inprocessTasks, completeTasks);
+    });
+
+    connect(tabs, &QTabWidget::currentChanged, this, [=]() {
+        getTotalProjects(tabs, notStartedProjects, startedProjects,
+                         finishedProjects, finishlineProjects);
     });
 
     connect(completeTasks, &QListWidget::itemDoubleClicked, this,
@@ -527,22 +600,66 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(setStrikeB, &QPushButton::clicked, this, &MainWindow::setStrike);
     connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
     connect(setNumListB, &QPushButton::clicked, this, &MainWindow::setNumList);
+    connect(setTableB, &QPushButton::clicked, this, &MainWindow::setTable);
 
-    connect(notesList, &QTreeView::clicked, this, &MainWindow::onNoteDoubleClicked);
+    connect(notesList, &QTreeView::clicked, this,
+            &MainWindow::onNoteDoubleClicked);
 
-    connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::saveNote);
+    connect(noteEdit, &QMarkdownTextEdit::textChanged, this,
+            &MainWindow::saveNote);
 
-    connect(notesList, &QTreeView::entered, this, [=](const QModelIndex& index) {
-        if (index.isValid()) {
-            QDateTime lastModified = notesDirModel->data(index, Qt::UserRole + 1).toDateTime();
-            if (lastModified.isValid()) {
-                QString toolTip = "Last modified: " + lastModified.toString();
-                notesList->setToolTip(toolTip);
-                qDebug() << toolTip;
+    connect(
+        notesList, &QTreeView::entered, this, [=](const QModelIndex &index) {
+            if (index.isValid()) {
+                QDateTime lastModified =
+                    notesDirModel->data(index, Qt::UserRole + 1).toDateTime();
+                if (lastModified.isValid()) {
+                    QString toolTip =
+                        "Last modified: " + lastModified.toString();
+                    notesList->setToolTip(toolTip);
+                    qDebug() << toolTip;
+                }
             }
-        }
-    });
+        });
 
+    connect(incompleteTasks, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingTo(item, incompleteTasks); });
+    connect(inprocessTasks, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingTo(item, inprocessTasks); });
+    connect(completeTasks, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingTo(item, completeTasks); });
+
+    connect(
+        incompleteTasks, &QListWidget::itemEntered, this,
+        [=](QListWidgetItem *item) { onMovingFrom(item, incompleteTasks); });
+    connect(inprocessTasks, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) { onMovingFrom(item, inprocessTasks); });
+    connect(completeTasks, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) { onMovingFrom(item, completeTasks); });
+
+    connect(
+        notStartedProjects, &QListWidget::itemChanged, this,
+        [=](QListWidgetItem *item) { onMovingTo(item, notStartedProjects); });
+    connect(startedProjects, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingTo(item, startedProjects); });
+    connect(
+        finishlineProjects, &QListWidget::itemChanged, this,
+        [=](QListWidgetItem *item) { onMovingTo(item, finishlineProjects); });
+    connect(finishedProjects, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingTo(item, finishedProjects); });
+
+    connect(
+        notStartedProjects, &QListWidget::itemEntered, this,
+        [=](QListWidgetItem *item) { onMovingFrom(item, notStartedProjects); });
+    connect(
+        startedProjects, &QListWidget::itemEntered, this,
+        [=](QListWidgetItem *item) { onMovingFrom(item, startedProjects); });
+    connect(
+        finishlineProjects, &QListWidget::itemEntered, this,
+        [=](QListWidgetItem *item) { onMovingFrom(item, finishlineProjects); });
+    connect(
+        finishedProjects, &QListWidget::itemEntered, this,
+        [=](QListWidgetItem *item) { onMovingFrom(item, finishedProjects); });
 
     mainLayout->addWidget(tabs);
 
