@@ -17,7 +17,6 @@ bool createFile(const QString &path) {
 
 void MainWindow::updateMDPreview() {
     QString text = noteEdit->toPlainText();
-
     mdPreview->setMarkdown(text);
 }
 
@@ -102,6 +101,7 @@ void MainWindow::toViewMode() {
     noteEdit->setVisible(!isView);
 
     showList->setChecked(!isView);
+    tabs->setTabBarAutoHide(!isView);
 
     showRender->setChecked(isView);
     mdPreview->setVisible(isView);
@@ -266,6 +266,19 @@ void MainWindow::setTask() {
 
     cursor.movePosition(QTextCursor::StartOfLine);
     cursor.insertText(" - [ ] - ");
+
+    noteEdit->setTextCursor(cursor);
+}
+
+void MainWindow::setTable() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText("|    title    |    title    |    title    | \n"
+                      "| ---------- |:-----:| -----:| \n"
+                      "|              |                |              |");
 
     noteEdit->setTextCursor(cursor);
 }

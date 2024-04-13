@@ -29,5 +29,17 @@
         <file>home_dir.png</file>
         <file>trash.png</file>
         <file>numList.png</file>
+        <file>closeBtn.png</file>
+        <file>maximizeBtn.png</file>
+        <file>minimizeBtn.png</file>
+        <file>table.png</file>
+        <file>edit.png</file>
+        <file>main.png</file>
+        <file>project.png</file>
+        <file>task.png</file>
+        <file>about.png</file>
+        <file>refresh.png</file>
+        <file>storage.png</file>
+        <file>palette.png</file>
     </qresource>
 </RCC>

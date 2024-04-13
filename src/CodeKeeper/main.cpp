@@ -38,8 +38,15 @@ int main(int argc, char* argv[]) {
 
     a.setStyleSheet(file.readAll());
 
-    w.setWindowIcon(QIcon(":/resources/icon.png"));
+    w.setWindowIcon(QIcon(":/icon.png"));
+    w.setStyleSheet("QMainWindow { border-radius: 10px; }");
 
+    QPainter pain;
+    w.setAttribute(Qt::WA_TranslucentBackground);
+    pain.setRenderHint(QPainter::Antialiasing);
+    pain.setPen(Qt::NoPen);
+    pain.drawRoundedRect(QRect(), 8, 8, Qt::AbsoluteSize);
+    
     // QSplashScreen splash(QPixmap(":/icon.png"));
     // splash.show();
     // loadModules(&splash);

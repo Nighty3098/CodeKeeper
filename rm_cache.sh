@@ -29,6 +29,8 @@ rm src/CodeKeeper/qplaintexteditsearchwidget.o
 rm src/CodeKeeper/qrc_media.cpp
 rm src/CodeKeeper/qrc_media.o
 rm src/CodeKeeper/ui_qplaintexteditsearchwidget.h
-
+rm src/CodeKeeper/syncwindow.o
+rm src/CodeKeeper/connectionDB.o
+rm src/CodeKeeper/CodeKeeper.pro.user
 
 echo "DONE"

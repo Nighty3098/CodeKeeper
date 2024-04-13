@@ -66,7 +66,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     versionInfo = new QLabel();
-    versionInfo->setText("Version: 0.0.8");
+    versionInfo->setText("Version: 0.1.0");
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn =
@@ -205,6 +205,16 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     appereanceTabLayout->addLayout(layout1);
 
     tabs->addTab(appereanceTab, "Appereance");
+
+    QIcon aboutIco(":/about.png");
+    QIcon syncIco(":/refresh.png");
+    QIcon storageIco(":/storage.png");
+    QIcon paletteIco(":/palette.png");
+
+    tabs->setTabIcon(tabs->indexOf(aboutTab), aboutIco);
+    tabs->setTabIcon(tabs->indexOf(syncTab), syncIco);
+    tabs->setTabIcon(tabs->indexOf(storageTab), storageIco);
+    tabs->setTabIcon(tabs->indexOf(appereanceTab), paletteIco);
 
     mainLayout->addWidget(tabs);
     mainLayout->addLayout(BtnsL);

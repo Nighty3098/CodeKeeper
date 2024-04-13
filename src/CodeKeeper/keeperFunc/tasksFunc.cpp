@@ -26,6 +26,19 @@ void MainWindow::removeTask() {
     }
 }
 
+void MainWindow::getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks, QListWidget *completeTasks) {
+    if (tasksTab->currentIndex() == 2) {
+        QTimer *timer3 = new QTimer(this);
+        connect(timer3, &QTimer::timeout, [=]() {
+            int totalTasks = incompleteTasks->count() +
+                             inprocessTasks->count() + completeTasks->count();
+
+            totalTasksL->setText("Total tasks: " + QString::number(totalTasks) + " ");
+        });
+        timer3->start(500);
+    }
+}
+
 void MainWindow::updateTasksProgress(QTabWidget *tasksTab,
                                      QListWidget *incompleteTasks,
                                      QListWidget *inprocessTasks,
