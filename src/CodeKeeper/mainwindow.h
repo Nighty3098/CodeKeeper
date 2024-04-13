@@ -85,6 +85,7 @@ private slots:
     void setH3();
     void setList();
     void setLink();
+    void setNumList();
     void setBold();
     void setItalic();
     void setStrike();
@@ -130,6 +131,7 @@ private:
     QPushButton *setItalicB;
     QPushButton *setStrikeB;
     QPushButton *setTaskB;
+    QPushButton *setNumListB;
 
     // ========================================================
     // tasks tab
@@ -182,6 +184,7 @@ private:
     QAction *setBoldA;
     QAction *setItalicA;
     QAction *setStrikeA;
+    QAction *setNumListA;
 
     SettingsWindow *settingsWindow;
 };

@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // title
     mainTitle = new QLabel("CodeKeeper");
     mainTitle->setAlignment(Qt::AlignCenter);
-    mainTitle->setStyleSheet("font-size: 42px;");
+    mainTitle->setStyleSheet("font-size: 46px;");
 
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
@@ -81,8 +81,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     iconProvider = new CustomIconProvider();
 
     notesDirModel = new QFileSystemModel();
-    // notesDirModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
-    notesDirModel->setRootPath("/home/night/Dev/Git/CodeKeeper/src/Notes");
+    notesDirModel->setRootPath("../");
     notesDirModel->setIconProvider(iconProvider);
 
     notesList = new QTreeView();
@@ -95,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setHeaderHidden(true);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
-    notesList->setRootIndex(notesDirModel->index("/home/night/Dev/Git/CodeKeeper/src/Notes"));
+    notesList->setRootIndex(notesDirModel->index("../"));
 
 
     notesList->setModel(notesDirModel);
@@ -140,25 +139,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QMenu *viewMenu = new QMenu("View", menu);
 
     // actions for menu
-    newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()));
-    rmNote = menu->addAction(QPixmap(":/delete.png"), "Remove", this, SLOT(removeNote()));
-    newFolder = menu->addAction(QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()));
+    newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()), Qt::CTRL + Qt::Key_N);
+    rmNote = menu->addAction(QPixmap(":/delete.png"), "Remove", this, SLOT(removeNote()), Qt::CTRL + Qt::Key_Delete);
+    newFolder = menu->addAction(QPixmap(":/new_folder.png"), "New folder", this, SLOT(createFolder()), Qt::CTRL + Qt::SHIFT + Qt::Key_N);
 
     menu->addSeparator();
 
     showList =
-        viewMenu->addAction("Show notes list", this, SLOT(hideNotesList()));
+        viewMenu->addAction("Show notes list", this, SLOT(hideNotesList()), Qt::CTRL + Qt::SHIFT + Qt::Key_L);
     showList->setCheckable(true);
     showList->setChecked(isVisibleNotesList);
 
     showRender =
-        viewMenu->addAction("Show md preview", this, SLOT(showPreview()));
+        viewMenu->addAction("Show md preview", this, SLOT(showPreview()), Qt::CTRL + Qt::SHIFT + Qt::Key_P);
     showRender->setCheckable(true);
     showRender->setChecked(isVisiblePreview);
 
     viewMenu->addSeparator();
 
-    viewMode = viewMenu->addAction(QPixmap(":/view.png"), "Reading mode", this, SLOT(toViewMode()));
+    viewMode = viewMenu->addAction(QPixmap(":/view.png"), "Reading mode", this, SLOT(toViewMode()), Qt::CTRL + Qt::SHIFT + Qt::Key_V);
     viewMode->setCheckable(true);
     viewMode->setChecked(isViewMode);
 
@@ -170,7 +169,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     editMenu->addSeparator();
 
-    setListA = editMenu->addAction(QPixmap(":/list.png"), "Add list ite,", this, SLOT(setList()));
+    setListA = editMenu->addAction(QPixmap(":/list.png"), "Add list item", this, SLOT(setList()));
+    setNumListA = editMenu->addAction(QPixmap(":/numList.png"), "Add numbered list", this, SLOT(setNumList()));
     setLinkA = editMenu->addAction(QPixmap(":/link.png"), "Add link", this, SLOT(setLink()));
     setTaskA = editMenu->addAction(QPixmap(":/checkbox.png"), "Add task", this, SLOT(setTask()));
 
@@ -193,6 +193,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setItalicB = new QPushButton(QPixmap(":/italic.png"), "");
     setStrikeB = new QPushButton(QPixmap(":/strikethrough.png"), "");
     setTaskB = new QPushButton(QPixmap(":/checkbox.png"), "");
+    setNumListB = new QPushButton(QPixmap(":/numList.png"), "");
+
 
     setH1B->setStyleSheet("background-color: #222436; border-color: #222436;");
     setH2B->setStyleSheet("background-color: #222436; border-color: #222436;");
@@ -209,6 +211,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         "background-color: #222436; border-color: #222436;");
     setTaskB->setStyleSheet(
         "background-color: #222436; border-color: #222436;");
+    setNumListB->setStyleSheet(
+        "background-color: #222436; border-color: #222436;");
+
 
     setH1B->setFixedSize(30, 30);
     setH2B->setFixedSize(30, 30);
@@ -219,6 +224,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setItalicB->setFixedSize(30, 30);
     setStrikeB->setFixedSize(30, 30);
     setTaskB->setFixedSize(30, 30);
+    setNumListB->setFixedSize(30, 30);
 
     setH1B->setToolTip("<p style='color: #ffffff;'>Heading 1</p>");
     setH2B->setToolTip("<p style='color: #ffffff;'>Heading 2</p>");
@@ -229,6 +235,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setItalicB->setToolTip("<p style='color: #ffffff;'>Italic text</p>");
     setStrikeB->setToolTip("<p style='color: #ffffff;'>Strikethrough text</p>");
     setTaskB->setToolTip("<p style='color: #ffffff;'>Task</p>");
+    setNumListB->setToolTip("<p style='color: #ffffff;'>Numbered list</p>");
 
 
     menuLayout->addWidget(menuButton);
@@ -241,6 +248,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuLayout->addWidget(setStrikeB);
 
     menuLayout->addWidget(setListB);
+    menuLayout->addWidget(setNumListB);
     menuLayout->addWidget(setLinkB);
     menuLayout->addWidget(setTaskB);
 
@@ -268,9 +276,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tasksMenu->setFont(selectedFont);
 
     addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task",
-                                            this, SLOT(addNewTask()));
+                                            this, SLOT(addNewTask()), Qt::Key_Return);
     rmTask = tasksMenu->addAction(
-        QPixmap(":/delete.png"), "Delete task", this, SLOT(removeTask()));
+        QPixmap(":/delete.png"), "Delete task", this, SLOT(removeTask()), Qt::Key_Delete);
 
     tasksMenuBtn->setMenu(tasksMenu);
 
@@ -362,7 +370,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     startedProjects->setWordWrap(true);
     startedProjects->setSpacing(5);
 
-    flProjects = new QLabel("Finishline");
+    flProjects = new QLabel("For review");
     flProjects->setStyleSheet("font-size: 16px;");
     flProjects->setAlignment(Qt::AlignHCenter);
     finishlineProjects = new QListWidget();
@@ -393,14 +401,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // actions for menu
     newProject = projectsMenu->addAction(
-        QPixmap(":/new.png"), "New project", this, SLOT(createProject()));
+        QPixmap(":/new.png"), "New project", this, SLOT(createProject()), Qt::CTRL + Qt::Key_N);
     rmProject = projectsMenu->addAction(
-        QPixmap(":/delete.png"), "Remove project", this, SLOT(removeProject()));
+        QPixmap(":/delete.png"), "Remove project", this, SLOT(removeProject()), Qt::Key_Delete);
 
 
     projectsMenuButton->setMenu(projectsMenu);
 
-    // projectsGLayout->addWidget(projectsMainLabel, 0, 0, 1, 0);
     projectsGLayout->addWidget(projectsMenuButton, 0, 0);
     projectsGLayout->addWidget(nsProjects, 1, 0);
     projectsGLayout->addWidget(notStartedProjects, 2, 0);
@@ -453,16 +460,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tabs->addTab(projectsTab, "Projects");
 
     // task
-    connect(taskText, &QLineEdit::returnPressed, [=] {
-        QString text = taskText->text();
 
-        if (!text.isEmpty()) {
-            taskText->clear();
-            incompleteTasks->addItem(text);
-        } else {
-            qDebug() << "Task is empty";
-        }
-    });
 
     // main
     connect(openSettingsBtn, SIGNAL(clicked()), this,
@@ -528,6 +526,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(setItalicB, &QPushButton::clicked, this, &MainWindow::setItalic);
     connect(setStrikeB, &QPushButton::clicked, this, &MainWindow::setStrike);
     connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
+    connect(setNumListB, &QPushButton::clicked, this, &MainWindow::setNumList);
 
     connect(notesList, &QTreeView::clicked, this, &MainWindow::onNoteDoubleClicked);
 

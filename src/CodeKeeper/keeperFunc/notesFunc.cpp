@@ -96,6 +96,7 @@ void MainWindow::toViewMode() {
     setItalicB->setVisible(!isView);
     setStrikeB->setVisible(!isView);
     setTaskB->setVisible(!isView);
+    setNumListB->setVisible(!isView);
 
     notesList->setVisible(!isView);
     noteEdit->setVisible(!isView);
@@ -112,6 +113,7 @@ void MainWindow::createFolder() {
     if (index.isValid()) {
         QString name = QInputDialog::getText(this, "Name", "Folder name");
         if (!name.isEmpty()) {
+            qDebug() << "Folder name:" << name;
             notesDirModel->mkdir(index, name);
         }
     }
@@ -125,7 +127,7 @@ void MainWindow::createNote() {
         if (!name.isEmpty()) {
             name = name + ".md";
             QString path_to_note = notesDirModel->filePath(index) + "/" + name;
-
+            qDebug() << "Note name:" << name;
             createFile(path_to_note);
         }
     }
@@ -135,8 +137,10 @@ void MainWindow::removeNote() {
     QModelIndex index = notesList->currentIndex();
     if (index.isValid()) {
         if (notesDirModel->fileInfo(index).isDir()) {
+            qDebug() << "Folder deleted successfully";
             notesDirModel->rmdir(index);
         } else {
+            qDebug() << "Note deleted successfully";
             notesDirModel->remove(index);
         }
     }
@@ -186,6 +190,18 @@ void MainWindow::setList() {
     noteEdit->setTextCursor(cursor);
 };
 
+void MainWindow::setNumList() {
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText(" 1) ");
+
+    noteEdit->setTextCursor(cursor);
+};
+
+
 void MainWindow::setLink() {
     QTextCursor cursor = noteEdit->textCursor();
     int lineNumber = cursor.blockNumber();
@@ -199,6 +215,7 @@ void MainWindow::setLink() {
 
     noteEdit->setTextCursor(cursor);
 };
+
 
 void MainWindow::setBold() {
     QTextCursor cursor = noteEdit->textCursor();

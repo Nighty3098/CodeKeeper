@@ -1,6 +1,7 @@
 void MainWindow::createProject() {
     QString newProjectTeamplate =
         "New project\nGitHub\n" + getCurrentDateTimeString();
+    qDebug() << "New project: " << newProjectTeamplate;
     notStartedProjects->addItem(newProjectTeamplate);
 }
 
@@ -12,6 +13,7 @@ void MainWindow::removeProject() {
         QListWidgetItem *item = listWidget->currentItem();
         if (item) {
             listWidget->takeItem(listWidget->row(item));
+            qDebug() << "Removed project: " << item->text();
             delete item;
             break;
         }
@@ -22,7 +24,7 @@ void MainWindow::removeProject() {
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(300, 300);
+        dialog.setFixedSize(300, 220);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
@@ -56,7 +58,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
 
         projectName.setText(text1);
         gitLink.setText(text2);
-        lastMod.setText(text3);
+        lastMod.setText("Last Mod: " + text3);
 
         loadDocumentations(path, documentation);
 
@@ -68,9 +70,9 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
         closeButton.setFont(selectedFont);
         closeButton.setStyleSheet("font-size: " + font_size + "pt;");
 
-        saveButton.setFixedSize(280, 30);
+        saveButton.setFixedSize(120, 20);
         saveButton.setText("Save");
-        closeButton.setFixedSize(280, 30);
+        closeButton.setFixedSize(120, 20);
         closeButton.setText("Cancel");
 
         layout.addWidget(&projectName, 0, 0);
@@ -78,7 +80,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
         layout.addWidget(&documentation, 2, 0);
         layout.addWidget(&lastMod, 3, 0);
         layout.addWidget(&saveButton, 4, 0);
-        layout.addWidget(&closeButton, 5, 0);
+        layout.addWidget(&closeButton, 4, 1);
 
         QObject::connect(&saveButton, &QPushButton::clicked, [&]() {
             text1 = projectName.text();
