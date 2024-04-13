@@ -28,5 +28,6 @@
         <file>folder-open.png</file>
         <file>home_dir.png</file>
         <file>trash.png</file>
+        <file>numList.png</file>
     </qresource>
 </RCC>

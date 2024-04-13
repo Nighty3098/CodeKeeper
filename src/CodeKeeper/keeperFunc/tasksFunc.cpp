@@ -4,7 +4,7 @@ void MainWindow::addNewTask() {
     if (!text.isEmpty()) {
         taskText->clear();
         QString task = text + "\n" + getCurrentDateTimeString();
-        qDebug() << getCurrentDateTimeString();
+        qDebug() << "Added new task: " << task;
         incompleteTasks->addItem(task);
     } else {
         qDebug() << "Task is empty";
@@ -19,6 +19,7 @@ void MainWindow::removeTask() {
         QListWidgetItem *item = listWidget->currentItem();
         if (item) {
             listWidget->takeItem(listWidget->row(item));
+            qDebug() << "Removed task: " << item->text();
             delete item;
             break;
         }
