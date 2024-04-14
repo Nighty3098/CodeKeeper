@@ -63,6 +63,8 @@ class MainWindow : public QMainWindow {
     void createFolder();
 
     void loadTasks();
+    void removeTaskFromDB(QString *task, QString *status);
+    void saveTaskToDB(QString *task, QString *status);
     void addNewTask();
     void removeTask();
 
@@ -89,6 +91,7 @@ class MainWindow : public QMainWindow {
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
 
     void createProject();
+    void saveProjectToDB();
     void removeProject();
     void loadProjects();
 
@@ -113,8 +116,13 @@ class MainWindow : public QMainWindow {
     void create_tasks_connection();
     void create_projects_connection();
 
-    void onMovingFrom(QListWidgetItem *item, QListWidget *list);
-    void onMovingTo(QListWidgetItem *item, QListWidget *list);
+    void updateTaskStatus(QString *task, QString *status, QString *cT);
+    void updateTaskData(QString *task, QString *status, QString *cT);
+    void onMovingTaskFrom(QListWidgetItem *item, QListWidget *list);
+    void onMovingTaskTo(QListWidgetItem *item, QListWidget *list);
+
+    void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
+    void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
 
    protected:
