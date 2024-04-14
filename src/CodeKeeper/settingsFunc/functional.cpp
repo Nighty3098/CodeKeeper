@@ -25,6 +25,28 @@ void SettingsWindow::saveData() {
     QString theme = themeSelector->currentText();
     globalSettings->setValue("theme", theme);
 
+    QString path = pathToFolder->text();
+    globalSettings->setValue("path", QVariant(path));
+
+    QString git_tokenS = gitToken->text();
+    globalSettings->setValue("git_token", git_tokenS);
+
+    QString git_userS = gitUser->text();
+    globalSettings->setValue("git_user", git_userS);
+
+    QString git_repoS = gitRepo->text();
+    globalSettings->setValue("git_repo", git_repoS);
+
+    isDateB = isDate->isChecked();
+    globalSettings->setValue("isDate", isDateB);
+
+    isHostB = isHost->isChecked();
+    globalSettings->setValue("isHost", isHostB);
+
+    isTimeB = isTime->isChecked();
+    globalSettings->setValue("isTime", isTimeB);
+
+
     messageBox->setIcon(QMessageBox::Information);
     messageBox->setWindowTitle("CodeKeeper - Settings");
     messageBox->setText("To apply the settings, restart the application.");

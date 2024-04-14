@@ -16,6 +16,13 @@ class SettingsWindow : public QMainWindow {
     QString font_size;
     QString theme;
     QDir path;
+    QString git_repo;
+    QString git_user;
+    QString git_token;
+
+    bool isTimeB;
+    bool isDateB;
+    bool isHostB;
 
    private slots:
     void closeEvent(QCloseEvent *event);

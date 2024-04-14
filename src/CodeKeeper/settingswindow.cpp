@@ -19,6 +19,14 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     theme = globalSettings->value("theme").value<QString>();
     path = globalSettings->value("path").value<QDir>();
 
+    git_repo = globalSettings->value("git_repo").value<QString>();
+    git_user = globalSettings->value("git_user").value<QString>();
+    git_token = globalSettings->value("git_token").value<QString>();
+
+    isTimeB = globalSettings->value("isTime").value<bool>();
+    isDateB = globalSettings->value("isDate").value<bool>();
+    isHostB = globalSettings->value("isHost").value<bool>();
+
     this->setStyleSheet(file.readAll());
 
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
@@ -96,22 +104,28 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent} {
     gitToken->setPlaceholderText("GitHub token");
     gitToken->setAlignment(Qt::AlignCenter);
     gitToken->setFixedSize(200, 30);
+    gitToken->setText(git_token);
 
     gitUser = new QLineEdit();
     gitUser->setPlaceholderText("GitHub user");
     gitUser->setAlignment(Qt::AlignCenter);
     gitUser->setFixedSize(200, 30);
+    gitUser->setText(git_user);
 
     gitRepo = new QLineEdit();
     gitRepo->setPlaceholderText("GitHub repo");
     gitRepo->setAlignment(Qt::AlignCenter);
     gitRepo->setFixedSize(200, 30);
+    gitRepo->setText(git_repo);
 
     autoSyncAfterStart = new QCheckBox("Auto sync after start");
 
     isDate = new QCheckBox("Date");
+    isDate->setChecked(isDateB);
     isTime = new QCheckBox("Time");
+    isTime->setChecked(isTimeB);
     isHost = new QCheckBox("Host");
+    isHost->setChecked(isHostB);
 
     mainSyncLayout->addWidget(gitLabel, 0, 2);
     mainSyncLayout->addWidget(gitToken, 1, 2);
