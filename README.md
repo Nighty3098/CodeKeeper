@@ -2,6 +2,20 @@
 
 ![header](imgs/header.png)
 
+<div align="center">
+<img src="https://img.shields.io/github/last-commit/Nighty3098/CodeKeeper?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=0d1117"/>
+<img src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=0d1117"/>
+<br>
+<img src="https://img.shields.io/badge/c  ++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white"/>
+<img src="https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white"/>
+<img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white"/>
+<img src="https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white"/>
+<br>
+<a href="https://discord.gg/#9707" target="blank"><img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white"/></a>
+<a href="https://t.me/Night3098" target="blank"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/></a>
+<a href="mailto:night3098game@gmail.com" target="blank"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"/></a>
+</div>
+
 ## Tasks:
 
   - [ ] - UI
@@ -13,16 +27,6 @@
     - [ ] - Custom window decorations
     - [ ] - Update project editor window
 ******
-  - [X] - Task movement functionality
-  - [X] - Project creation functionality
-  - [X] - Note-taking functionality
-  - [X] - Task creation functionality
-  - [ ] - Update markdown render ( migrate to QWebEngineView )
-  - [ ] - Functionality of moving notes
-  - [ ] - Multilang
-  - [ ] - Fix visual bugs
-  - [ ] - Fix notes path bug
-******
   - [ ] - Saving data:
     - [X] - Saving notes to MD files
     - [X] - Saving a list of tasks in the DB
@@ -32,7 +36,16 @@
     - [X] - Linux
     - [ ] - Windows
     - [ ] - Mac
-  
+ ******
+  - [X] - Task movement functionality
+  - [X] - Project creation functionality
+  - [X] - Note-taking functionality
+  - [X] - Task creation functionality
+  - [ ] - Update markdown render ( migrate to QWebEngineView )
+  - [ ] - Functionality of moving notes
+  - [ ] - Multilang
+  - [ ] - Fix visual bugs
+  - [ ] - Fix notes path bug 
  
 ## Installing:
 
