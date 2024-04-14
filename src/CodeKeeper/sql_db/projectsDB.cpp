@@ -22,4 +22,10 @@ void MainWindow::create_projects_connection () {
     }
 }
 
-void MainWindow::loadProjects() {}
+void MainWindow::saveProjectToDB() {
+
+}
+
+void MainWindow::loadProjects() {
+
+}

@@ -1,14 +1,6 @@
 #include <QDateTime>
 #include <QSyntaxHighlighter>
 
-void MainWindow::onMovingFrom(QListWidgetItem *item, QListWidget *list) {
-    qDebug() << "Moving item: " << item->text() << " from: " << list->objectName();
-}
-
-void MainWindow::onMovingTo(QListWidgetItem *item, QListWidget *list) {
-    qDebug() << "Moved item: " << item->text() << " to: " << list->objectName();
-}
-
 QString MainWindow::getCurrentDateTimeString() {
     QDateTime currentDateTime = QDateTime::currentDateTime();
     QString dateTimeString = currentDateTime.toString("dd-MM-yyyy hh:mm:ss");

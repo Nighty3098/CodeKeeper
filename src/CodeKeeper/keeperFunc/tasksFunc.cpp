@@ -1,3 +1,23 @@
+void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list) {
+    qDebug() << "Moving task: " << item->text() << " from: " << list->objectName();
+
+    QString task = item->text();
+    QString status = list->objectName();
+
+}
+
+void MainWindow::onMovingTaskTo(QListWidgetItem *item, QListWidget *list) {
+    qDebug() << "Moved task: " << item->text() << " to: " << list->objectName();
+
+    QString task = item->text();
+    QString status = list->objectName();
+    QStringList data = task.split("\n");
+    QString cT = data[1];
+
+    updateTaskStatus(&task, &status, &cT);
+}
+
+
 
 void MainWindow::addNewTask() {
     QString text = taskText->text();
@@ -6,6 +26,8 @@ void MainWindow::addNewTask() {
         QString task = text + "\n" + getCurrentDateTimeString();
         qDebug() << "Added new task: " << task;
         incompleteTasks->addItem(task);
+        QString status = incompleteTasks->objectName();
+        saveTaskToDB(&task, &status);
     } else {
         qDebug() << "Task is empty";
     }
@@ -20,6 +42,12 @@ void MainWindow::removeTask() {
         if (item) {
             listWidget->takeItem(listWidget->row(item));
             qDebug() << "Removed task: " << item->text();
+            
+            QString task = item->text();
+            QString status = listWidget->objectName();
+
+            removeTaskFromDB(&task, &status);
+
             delete item;
             break;
         }
@@ -67,6 +95,9 @@ void MainWindow::updateTasksProgress(QTabWidget *tasksTab,
 void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget,
                                          QListWidgetItem *item) {
     if (item) {
+        QString oldText = item->text();
+        QStringList oldData = oldText.split("\n");
+
         QDialog dialog(this);
         dialog.setWindowTitle(tr("Edit task"));
         dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
@@ -74,6 +105,8 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget,
         QVBoxLayout layout(&dialog);
         QLineEdit lineEdit(&dialog);
         layout.addWidget(&lineEdit);
+
+        lineEdit.setText(oldData[0]);
 
         QPushButton okButton(tr("OK"), &dialog);
         QPushButton cancelButton(tr("Cancel"), &dialog);
@@ -84,7 +117,12 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget,
             QString newText = lineEdit.text();
             if (!newText.isEmpty()) {
                 QString newTask = newText + "\n" + getCurrentDateTimeString();
+                QString status = listWidget->objectName();
+                QString cT = oldData[1];
+
                 item->setText(newTask);
+
+                updateTaskData(&newTask, &status, &cT);
             }
             dialog.close();
         });

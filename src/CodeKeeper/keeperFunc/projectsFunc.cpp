@@ -1,3 +1,14 @@
+
+void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list) {
+    qDebug() << "Moving project: " << item->text() << " from: " << list->objectName();
+}
+
+void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list) {
+    qDebug() << "Moved project: " << item->text() << " to: " << list->objectName();
+}
+
+
+
 void MainWindow::createProject() {
     QString newProjectTeamplate =
         "New project\nGitHub\n" + getCurrentDateTimeString();

@@ -295,6 +295,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QHBoxLayout *tasksStatsL = new QHBoxLayout;
     tasksStatsL->setSpacing(10);
 
+    QSpacerItem *spacer1 =
+        new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QSpacerItem *spacer2 =
+        new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
     tasksMenuBtn = new QToolButton;
     tasksMenuBtn->setIcon(QPixmap(":/main.png"));
     tasksMenuBtn->setIconSize(QSize(40, 40));
@@ -323,9 +328,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     totalTasksL->setFixedHeight(40);
     totalTasksL->setAlignment(Qt::AlignCenter);
 
+    tasksStatsL->addItem(spacer1);
     tasksStatsL->addWidget(tasksMenuBtn);
     tasksStatsL->addWidget(totalTasksL);
     tasksStatsL->addWidget(tasksProgress);
+    tasksStatsL->addItem(spacer2);
 
     label_1 = new QLabel("Incomplete");
     label_1->setStyleSheet("font-size: 16px;");
@@ -370,7 +377,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     taskText->setPlaceholderText(" Task...");
     taskText->setFixedHeight(30);
 
-    tasksGLayout->addLayout(tasksStatsL, 0, 1);
+    tasksGLayout->addLayout(tasksStatsL, 0, 0, 1, 3);
 
     tasksGLayout->addWidget(label_1, 1, 0);
     tasksGLayout->addWidget(label_2, 1, 1);
@@ -388,6 +395,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QGridLayout *projectsGLayout = new QGridLayout;
     projectsGLayout->setSpacing(0);
 
+    QHBoxLayout *projectsStatsL = new QHBoxLayout();
+    projectsStatsL->setSpacing(0);
+
+    QSpacerItem *spacer3 =
+        new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QSpacerItem *spacer4 =
+        new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
     // menu
     projectsMenuButton = new QToolButton();
     projectsMenuButton->setIcon(QPixmap(":/main.png"));
@@ -403,12 +418,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     newProject =
         projectsMenu->addAction(QPixmap(":/new.png"), "New", this,
                                 SLOT(createProject()), Qt::CTRL + Qt::Key_N);
-    rmProject =
-        projectsMenu->addAction(QPixmap(":/delete.png"), "Remove", this,
-                                SLOT(removeProject()), Qt::Key_Delete);
+    rmProject = projectsMenu->addAction(QPixmap(":/delete.png"), "Remove", this,
+                                        SLOT(removeProject()), Qt::Key_Delete);
 
     projectsMenuButton->setMenu(projectsMenu);
-
 
     projectsMainLabel = new QLabel("Projects");
     projectsMainLabel->setAlignment(Qt::AlignCenter);
@@ -461,9 +474,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     finishedProjects->setSpacing(5);
     finishedProjects->setObjectName("FinishedProjects");
 
+    projectsStatsL->addItem(spacer3);
+    projectsStatsL->addWidget(projectsMenuButton);
+    projectsStatsL->addWidget(totalProjectsL);
+    projectsStatsL->addItem(spacer4);
 
-    projectsGLayout->addWidget(projectsMenuButton, 0, 0);
-    // projectsGLayout->addWidget(totalProjectsL, 0, 1);
+    projectsGLayout->addLayout(projectsStatsL, 0, 0, 1, 2);
     projectsGLayout->addWidget(nsProjects, 1, 0);
     projectsGLayout->addWidget(notStartedProjects, 2, 0);
     projectsGLayout->addWidget(sProjects, 1, 1);
@@ -524,9 +540,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tabs->setTabIcon(tabs->indexOf(tasksTab), tasksIco);
     tabs->setTabIcon(tabs->indexOf(projectsTab), projectsIco);
 
-    // task
+    tabs->setTabBarAutoHide(true);
 
-    // main
+    mainLayout->addWidget(tabs);
+
+    // connects
     connect(openSettingsBtn, SIGNAL(clicked()), this,
             SLOT(openSettingsWindow()));
 
@@ -622,46 +640,79 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             }
         });
 
-    connect(incompleteTasks, &QListWidget::itemChanged, this,
-            [=](QListWidgetItem *item) { onMovingTo(item, incompleteTasks); });
-    connect(inprocessTasks, &QListWidget::itemChanged, this,
-            [=](QListWidgetItem *item) { onMovingTo(item, inprocessTasks); });
-    connect(completeTasks, &QListWidget::itemChanged, this,
-            [=](QListWidgetItem *item) { onMovingTo(item, completeTasks); });
+    QShortcut *toFirstTab =
+        new QShortcut(QKeySequence(Qt::ALT + Qt::Key_1), this);
+    QShortcut *toSecondTab =
+        new QShortcut(QKeySequence(Qt::ALT + Qt::Key_2), this);
+    QShortcut *toThirdTab =
+        new QShortcut(QKeySequence(Qt::ALT + Qt::Key_3), this);
+    QShortcut *toFourthTab =
+        new QShortcut(QKeySequence(Qt::ALT + Qt::Key_4), this);
+
+    // Connect QShortcuts to QTabWidget's setCurrentIndex function
+    connect(toFirstTab, &QShortcut::activated, tabs,
+            [this]() { tabs->setCurrentIndex(0); });
+    connect(toSecondTab, &QShortcut::activated, tabs,
+            [this]() { tabs->setCurrentIndex(1); });
+    connect(toThirdTab, &QShortcut::activated, tabs,
+            [this]() { tabs->setCurrentIndex(2); });
+    connect(toFourthTab, &QShortcut::activated, tabs,
+            [this]() { tabs->setCurrentIndex(3); });
 
     connect(
-        incompleteTasks, &QListWidget::itemEntered, this,
-        [=](QListWidgetItem *item) { onMovingFrom(item, incompleteTasks); });
-    connect(inprocessTasks, &QListWidget::itemEntered, this,
-            [=](QListWidgetItem *item) { onMovingFrom(item, inprocessTasks); });
-    connect(completeTasks, &QListWidget::itemEntered, this,
-            [=](QListWidgetItem *item) { onMovingFrom(item, completeTasks); });
-
+        incompleteTasks, &QListWidget::itemChanged, this,
+        [=](QListWidgetItem *item) { onMovingTaskTo(item, incompleteTasks); });
     connect(
-        notStartedProjects, &QListWidget::itemChanged, this,
-        [=](QListWidgetItem *item) { onMovingTo(item, notStartedProjects); });
+        inprocessTasks, &QListWidget::itemChanged, this,
+        [=](QListWidgetItem *item) { onMovingTaskTo(item, inprocessTasks); });
+    connect(
+        completeTasks, &QListWidget::itemChanged, this,
+        [=](QListWidgetItem *item) { onMovingTaskTo(item, completeTasks); });
+
+    connect(incompleteTasks, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) {
+                onMovingTaskFrom(item, incompleteTasks);
+            });
+    connect(
+        inprocessTasks, &QListWidget::itemEntered, this,
+        [=](QListWidgetItem *item) { onMovingTaskFrom(item, inprocessTasks); });
+    connect(
+        completeTasks, &QListWidget::itemEntered, this,
+        [=](QListWidgetItem *item) { onMovingTaskFrom(item, completeTasks); });
+
+    connect(notStartedProjects, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) {
+                onMovingProjectTo(item, notStartedProjects);
+            });
     connect(startedProjects, &QListWidget::itemChanged, this,
-            [=](QListWidgetItem *item) { onMovingTo(item, startedProjects); });
-    connect(
-        finishlineProjects, &QListWidget::itemChanged, this,
-        [=](QListWidgetItem *item) { onMovingTo(item, finishlineProjects); });
+            [=](QListWidgetItem *item) {
+                onMovingProjectTo(item, startedProjects);
+            });
+    connect(finishlineProjects, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) {
+                onMovingProjectTo(item, finishlineProjects);
+            });
     connect(finishedProjects, &QListWidget::itemChanged, this,
-            [=](QListWidgetItem *item) { onMovingTo(item, finishedProjects); });
+            [=](QListWidgetItem *item) {
+                onMovingProjectTo(item, finishedProjects);
+            });
 
-    connect(
-        notStartedProjects, &QListWidget::itemEntered, this,
-        [=](QListWidgetItem *item) { onMovingFrom(item, notStartedProjects); });
-    connect(
-        startedProjects, &QListWidget::itemEntered, this,
-        [=](QListWidgetItem *item) { onMovingFrom(item, startedProjects); });
-    connect(
-        finishlineProjects, &QListWidget::itemEntered, this,
-        [=](QListWidgetItem *item) { onMovingFrom(item, finishlineProjects); });
-    connect(
-        finishedProjects, &QListWidget::itemEntered, this,
-        [=](QListWidgetItem *item) { onMovingFrom(item, finishedProjects); });
-
-    mainLayout->addWidget(tabs);
+    connect(notStartedProjects, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) {
+                onMovingProjectFrom(item, notStartedProjects);
+            });
+    connect(startedProjects, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) {
+                onMovingProjectFrom(item, startedProjects);
+            });
+    connect(finishlineProjects, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) {
+                onMovingProjectFrom(item, finishlineProjects);
+            });
+    connect(finishedProjects, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) {
+                onMovingProjectFrom(item, finishedProjects);
+            });
 
     create_tasks_connection();
     create_projects_connection();
@@ -670,8 +721,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     loadProjects();
     setFontPr1();
 
-    qDebug() << "Load time:" << startup.elapsed() << "ms";
     qDebug() << path;
+    qDebug() << "Load time:" << startup.elapsed() << "ms";
 }
 
 MainWindow::~MainWindow() {
