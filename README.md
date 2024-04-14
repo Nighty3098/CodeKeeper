@@ -31,7 +31,6 @@
     - [X] - Saving notes to MD files
     - [X] - Saving a list of tasks in the DB
     - [ ] - Saving a projects list  in the DB
-    - [ ] - Migrate from QSettings to JSON
   ******
   - [ ] - Crossplatform app:
     - [X] - Linux
