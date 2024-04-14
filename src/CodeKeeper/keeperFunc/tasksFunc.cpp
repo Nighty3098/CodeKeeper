@@ -61,7 +61,7 @@ void MainWindow::getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTask
             int totalTasks = incompleteTasks->count() +
                              inprocessTasks->count() + completeTasks->count();
 
-            totalTasksL->setText("Total tasks: " + QString::number(totalTasks) + " ");
+            tasksProgress->setFormat("Total tasks: " + QString::number(totalTasks) + " ");
         });
         timer3->start(500);
     }

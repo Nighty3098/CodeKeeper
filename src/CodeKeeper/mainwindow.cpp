@@ -302,7 +302,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tasksMenuBtn = new QToolButton;
     tasksMenuBtn->setIcon(QPixmap(":/main.png"));
-    tasksMenuBtn->setIconSize(QSize(40, 40));
+    tasksMenuBtn->setIconSize(QSize(50, 50));
     tasksMenuBtn->setFixedSize(30, 30);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
     tasksMenuBtn->setStyleSheet(
@@ -321,23 +321,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tasksProgress = new QProgressBar();
     tasksProgress->setMaximum(100);
     tasksProgress->setMaximumWidth(300);
-    tasksProgress->setFixedHeight(20);
+    tasksProgress->setFixedHeight(25);
     tasksProgress->setAlignment(Qt::AlignCenter);
-
-    totalTasksL = new QLabel();
-    totalTasksL->setFixedHeight(40);
-    totalTasksL->setAlignment(Qt::AlignCenter);
 
     tasksStatsL->addItem(spacer1);
     tasksStatsL->addWidget(tasksMenuBtn);
-    tasksStatsL->addWidget(totalTasksL);
     tasksStatsL->addWidget(tasksProgress);
     tasksStatsL->addItem(spacer2);
 
     label_1 = new QLabel("Incomplete");
     label_1->setStyleSheet("font-size: 16px;");
-    label_1->setFixedHeight(25);
-    label_1->setAlignment(Qt::AlignHCenter);
+    label_1->setFixedHeight(30);
+    label_1->setAlignment(Qt::AlignCenter);
 
     incompleteTasks = new QListWidget();
     incompleteTasks->setDragEnabled(true);
@@ -349,8 +344,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     label_2 = new QLabel("Inprocess");
     label_2->setStyleSheet("font-size: 16px;");
-    label_2->setFixedHeight(25);
-    label_2->setAlignment(Qt::AlignHCenter);
+    label_2->setFixedHeight(30);
+    label_2->setAlignment(Qt::AlignCenter);
 
     inprocessTasks = new QListWidget();
     inprocessTasks->setDragEnabled(true);
@@ -362,8 +357,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     label_3 = new QLabel("Complete");
     label_3->setStyleSheet("font-size: 16px;");
-    label_3->setFixedHeight(25);
-    label_3->setAlignment(Qt::AlignHCenter);
+    label_3->setFixedHeight(30);
+    label_3->setAlignment(Qt::AlignCenter);
 
     completeTasks = new QListWidget();
     completeTasks->setDragEnabled(true);

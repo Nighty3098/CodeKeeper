@@ -237,9 +237,6 @@ void MainWindow::setFontPr1() {
     totalProjectsL->setFont(selectedFont);
     totalProjectsL->setStyleSheet("font-size: " + font_size + "pt;");
 
-    totalTasksL->setFont(selectedFont);
-    totalTasksL->setStyleSheet("font-size: " + font_size + "pt;");
-
     incompleteTasks->setFont(selectedFont);
     inprocessTasks->setFont(selectedFont);
     completeTasks->setFont(selectedFont);

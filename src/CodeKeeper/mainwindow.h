@@ -177,7 +177,6 @@ class MainWindow : public QMainWindow {
     QProgressBar *tasksProgress;
     QToolButton *tasksMenuBtn;
 
-    QLabel *totalTasksL;
     QLabel *label_1;
     QLabel *label_2;
     QLabel *label_3;
