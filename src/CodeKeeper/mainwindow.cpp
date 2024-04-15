@@ -21,11 +21,43 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
-    // this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     this->setMinimumSize(560, 400);
     this->setAttribute(Qt::WA_TranslucentBackground);
 
-    mainLayout = new QVBoxLayout(centralWidget);
+    winControlL = new QHBoxLayout;
+    winControlL->setSpacing(7);
+    
+    isFullScreen = false;
+
+    QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    closeBtn = new QPushButton();
+    minimizeBtn = new QPushButton();
+    maximizeBtn = new QPushButton();
+
+    closeBtn->setIcon(QPixmap(":/redHovered.png"));
+    minimizeBtn->setIcon(QPixmap(":/yellowHovered.png"));
+    maximizeBtn->setIcon(QPixmap(":/greenHovered.png"));
+
+    closeBtn->setFixedSize(13, 13);
+    minimizeBtn->setFixedSize(13, 13);
+    maximizeBtn->setFixedSize(13, 13);
+
+    closeBtn->setIconSize(QSize(13, 13));
+    minimizeBtn->setIconSize(QSize(13, 13));
+    maximizeBtn->setIconSize(QSize(13, 13));
+
+    closeBtn->setStyleSheet("background-color: #222436;");
+    minimizeBtn->setStyleSheet("background-color: #222436;");
+    maximizeBtn->setStyleSheet("background-color: #222436;");
+
+    winControlL->addWidget(closeBtn);
+    winControlL->addWidget(minimizeBtn);
+    winControlL->addWidget(maximizeBtn);
+    winControlL->addItem(headerSp);
+
+    mainLayout = new QGridLayout(centralWidget);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     restoreGeometry(globalSettings->value("geometry").toByteArray());
@@ -70,6 +102,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QHBoxLayout *contentLayout = new QHBoxLayout;
     QVBoxLayout *notesCLayout = new QVBoxLayout;
 
+    QSplitter *noteSplitter = new QSplitter(Qt::Horizontal);
+
     contentLayout->setSpacing(0);
     notesCLayout->setSpacing(0);
 
@@ -90,7 +124,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
     notesList->setDefaultDropAction(Qt::MoveAction);
     notesList->setDragEnabled(true);
-    notesList->setMaximumWidth(300);
+    notesList->setMinimumWidth(100);
     notesList->setHeaderHidden(true);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
@@ -119,6 +153,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     noteEdit->setLineNumbersCurrentLineColor("#51afef");
     noteEdit->setLineWidth(font_size.toInt());
     noteEdit->setHighlightingEnabled(true);
+
+    noteSplitter->addWidget(notesList);
+    noteSplitter->addWidget(noteEdit);
+    noteSplitter->addWidget(mdPreview);
+
+    noteSplitter->setStretchFactor(0, 1);
+    noteSplitter->setStretchFactor(1, 1);
+    noteSplitter->setStretchFactor(2, 1);
+
 
     // title
     noteNameLabel = new QLabel("Note");
@@ -278,12 +321,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     menuLayout->addWidget(setTaskB);
     menuLayout->addWidget(setTableB);
 
-    contentLayout->addWidget(notesList);
-    contentLayout->addWidget(noteEdit);
-    contentLayout->addWidget(mdPreview);
+    // contentLayout->addWidget(notesList);
+    // contentLayout->addWidget(noteEdit);
+    // contentLayout->addWidget(mdPreview);
 
     notesCLayout->addLayout(menuLayout);
-    notesCLayout->addLayout(contentLayout);
+    notesCLayout->addWidget(noteSplitter);
+    // notesCLayout->addLayout(contentLayout);
 
     notesList->setVisible(isVisibleNotesList);
     mdPreview->setVisible(isVisiblePreview);
@@ -302,7 +346,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tasksMenuBtn = new QToolButton;
     tasksMenuBtn->setIcon(QPixmap(":/main.png"));
-    tasksMenuBtn->setIconSize(QSize(40, 40));
+    tasksMenuBtn->setIconSize(QSize(50, 50));
     tasksMenuBtn->setFixedSize(30, 30);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
     tasksMenuBtn->setStyleSheet(
@@ -321,26 +365,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tasksProgress = new QProgressBar();
     tasksProgress->setMaximum(100);
     tasksProgress->setMaximumWidth(300);
-    tasksProgress->setFixedHeight(20);
+    tasksProgress->setFixedHeight(25);
     tasksProgress->setAlignment(Qt::AlignCenter);
-
-    totalTasksL = new QLabel();
-    totalTasksL->setFixedHeight(40);
-    totalTasksL->setAlignment(Qt::AlignCenter);
 
     tasksStatsL->addItem(spacer1);
     tasksStatsL->addWidget(tasksMenuBtn);
-    tasksStatsL->addWidget(totalTasksL);
     tasksStatsL->addWidget(tasksProgress);
     tasksStatsL->addItem(spacer2);
 
     label_1 = new QLabel("Incomplete");
     label_1->setStyleSheet("font-size: 16px;");
-    label_1->setFixedHeight(25);
-    label_1->setAlignment(Qt::AlignHCenter);
+    label_1->setFixedHeight(30);
+    label_1->setAlignment(Qt::AlignCenter);
 
     incompleteTasks = new QListWidget();
-    incompleteTasks->setDragEnabled(true);
+    //incompleteTasks->setDragEnabled(true);
     incompleteTasks->setDragDropMode(QListWidget::DragDrop);
     incompleteTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     incompleteTasks->setWordWrap(true);
@@ -349,11 +388,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     label_2 = new QLabel("Inprocess");
     label_2->setStyleSheet("font-size: 16px;");
-    label_2->setFixedHeight(25);
-    label_2->setAlignment(Qt::AlignHCenter);
+    label_2->setFixedHeight(30);
+    label_2->setAlignment(Qt::AlignCenter);
 
     inprocessTasks = new QListWidget();
-    inprocessTasks->setDragEnabled(true);
+    //inprocessTasks->setDragEnabled(true);
     inprocessTasks->setDragDropMode(QListWidget::DragDrop);
     inprocessTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     inprocessTasks->setWordWrap(true);
@@ -362,11 +401,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     label_3 = new QLabel("Complete");
     label_3->setStyleSheet("font-size: 16px;");
-    label_3->setFixedHeight(25);
-    label_3->setAlignment(Qt::AlignHCenter);
+    label_3->setFixedHeight(30);
+    label_3->setAlignment(Qt::AlignCenter);
 
     completeTasks = new QListWidget();
-    completeTasks->setDragEnabled(true);
+    //completeTasks->setDragEnabled(true);
     completeTasks->setDragDropMode(QListWidget::DragDrop);
     completeTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     completeTasks->setWordWrap(true);
@@ -494,7 +533,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tabs = new QTabWidget();
     tabs->setMovable(true);
-    // tabs->setTabPosition(QTabWidget::South);
 
     // main tab
     QWidget *mainTab = new QWidget();
@@ -542,7 +580,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tabs->setTabBarAutoHide(true);
 
-    mainLayout->addWidget(tabs);
+    mainLayout->addLayout(winControlL, 0, 0);
+    mainLayout->addWidget(tabs, 1, 0);
+
 
     // connects
     connect(openSettingsBtn, SIGNAL(clicked()), this,
@@ -713,6 +753,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             [=](QListWidgetItem *item) {
                 onMovingProjectFrom(item, finishedProjects);
             });
+
+    connect(closeBtn, &QPushButton::clicked, this, [this](){close();});
+    connect(minimizeBtn, &QPushButton::clicked, this, [this](){showMinimized();});
+    connect(maximizeBtn, &QPushButton::clicked, this, [this](){
+        this->setWindowState(this->windowState() ^ Qt::WindowFullScreen);
+        isFullScreen = this->windowState() & Qt::WindowFullScreen;
+    });
 
     create_tasks_connection();
     create_projects_connection();

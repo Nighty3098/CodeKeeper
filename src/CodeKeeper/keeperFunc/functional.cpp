@@ -59,7 +59,6 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
     }
 }
 
-
 void MainWindow::setFontPr1() {
     mainTitle->setFont(selectedFont);
 
@@ -236,9 +235,6 @@ void MainWindow::setFontPr1() {
 
     totalProjectsL->setFont(selectedFont);
     totalProjectsL->setStyleSheet("font-size: " + font_size + "pt;");
-
-    totalTasksL->setFont(selectedFont);
-    totalTasksL->setStyleSheet("font-size: " + font_size + "pt;");
 
     incompleteTasks->setFont(selectedFont);
     inprocessTasks->setFont(selectedFont);

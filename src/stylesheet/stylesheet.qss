@@ -160,6 +160,7 @@ QToolButton:pressed {
 QTabWidget::tab-bar { alignment: center; }
 
 QTabBar::tab {
+    height: 15px;
     width: 100px;
     font-size: 10px;
     background: #2f334d; 
@@ -171,7 +172,8 @@ QTabBar::tab {
     margin-bottom: 5px; 
 } 
 
-QTabBar::tab:selected { 
+QTabBar::tab:selected {
+    height: 15px;
     width: 100px;
     font-size: 10px;
     color: #d9dee8;

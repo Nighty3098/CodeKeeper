@@ -126,18 +126,45 @@ class MainWindow : public QMainWindow {
 
 
    protected:
+    void mousePressEvent(QMouseEvent *event) override
+    {
+        if (event->button() == Qt::LeftButton)
+        {
+            m_dragPosition = event->globalPos() - frameGeometry().topLeft();
+            event->accept();
+        }
+        else
+        {
+            QMainWindow::mousePressEvent(event);
+        }
+    }
 
+    void mouseMoveEvent(QMouseEvent *event) override
+    {
+        if (event->buttons() & Qt::LeftButton)
+        {
+            move(event->globalPos() - m_dragPosition);
+            event->accept();
+        }
+        else
+        {
+            QMainWindow::mouseMoveEvent(event);
+        }
+    }
 
    private:
-
-
     QWidget *centralWidget;
-    QVBoxLayout *mainLayout;
+    QGridLayout *mainLayout;
     QTabWidget *tabs;
+    QHBoxLayout *winControlL;
 
     QPushButton *maximizeBtn;
     QPushButton *closeBtn;
     QPushButton *minimizeBtn;
+
+    bool isFullScreen;
+    QPoint m_dragPosition;
+
 
     // ========================================================
     // main tab
@@ -177,7 +204,6 @@ class MainWindow : public QMainWindow {
     QProgressBar *tasksProgress;
     QToolButton *tasksMenuBtn;
 
-    QLabel *totalTasksL;
     QLabel *label_1;
     QLabel *label_2;
     QLabel *label_3;
