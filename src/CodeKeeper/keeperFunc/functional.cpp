@@ -59,7 +59,6 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item) {
     }
 }
 
-
 void MainWindow::setFontPr1() {
     mainTitle->setFont(selectedFont);
 
