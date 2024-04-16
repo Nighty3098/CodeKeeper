@@ -15,6 +15,9 @@ SOURCES += \
     syncwindow.cpp \
     settingsFunc/functional.cpp \
     keeperFunc/functional.cpp \
+    keeperFunc/tasksFunc.cpp \
+    keeperFunc/projectsFunc.cpp \
+    keeperFunc/notesFunc.cpp \
     sql_db/connectionDB.cpp \
     sql_db/projectsDB.cpp \
     sql_db/tasksDB.cpp

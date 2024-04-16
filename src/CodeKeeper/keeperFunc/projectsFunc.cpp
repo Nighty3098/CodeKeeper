@@ -1,4 +1,3 @@
-
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list) {
     qDebug() << "Moving project: " << item->text() << " from: " << list->objectName();
 }
@@ -6,8 +5,6 @@ void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list) {
 void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list) {
     qDebug() << "Moved project: " << item->text() << " to: " << list->objectName();
 }
-
-
 
 void MainWindow::createProject() {
     QString newProjectTeamplate =
@@ -53,68 +50,80 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab,
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(300, 220);
+        dialog.setFixedSize(400, 460);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
-        QGridLayout layout(&dialog);
+        QString data = item->text();
+        QStringList splitData = data.split("\n");
 
-        QLineEdit projectName(&dialog);
-        projectName.setFixedSize(280, 30);
-        QLineEdit gitLink(&dialog);
-        gitLink.setFixedSize(280, 30);
-        QComboBox documentation(&dialog);
-        documentation.setFixedSize(280, 30);
-        QLabel lastMod(&dialog);
-        lastMod.setFixedSize(280, 30);
+        QGridLayout mainLayout(&dialog);
 
-        projectName.setFont(selectedFont);
-        projectName.setStyleSheet("font-size: " + font_size + "pt;");
+        QLineEdit *title = new QLineEdit();
+        title->setPlaceholderText(" Project name: ");
+        title->setStyleSheet("font-size: " + font_size + ";");
+        title->setFixedSize(380, 25);
+        title->setText(splitData[0]);
+        title->setFont(selectedFont);
 
-        gitLink.setFont(selectedFont);
-        gitLink.setStyleSheet("font-size: " + font_size + "pt;");
+        QLineEdit *linkToGit = new QLineEdit();
+        linkToGit->setPlaceholderText(" Link to GIT");
+        linkToGit->setStyleSheet("font-size: " + font_size + ";");
+        linkToGit->setFixedSize(380, 25);
+        linkToGit->setText(splitData[1]);
+        linkToGit->setFont(selectedFont);
 
-        documentation.setFont(selectedFont);
-        documentation.setStyleSheet("font-size: " + font_size + "pt;");
+        QComboBox *documentation = new  QComboBox();
+        documentation->setFixedSize(380, 25);
+        documentation->setFont(selectedFont);
 
-        lastMod.setFont(selectedFont);
-        lastMod.setStyleSheet("font-size: " + font_size + "pt;");
-        lastMod.setAlignment(Qt::AlignHCenter);
+        QMarkdownTextEdit *note = new QMarkdownTextEdit();
+        note->setPlaceholderText(" Just start typing");
+        note->setStyleSheet("font-size: " + font_size + ";");
+        note->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+        note->setLineNumberEnabled(true);
+        note->setLineNumbersCurrentLineColor("#51afef");
+        note->setLineWidth(font_size.toInt());
+        note->setHighlightingEnabled(true);
+        note->setFont(selectedFont);
 
-        QString text1 = item->text().split('\n').at(0);
-        QString text2 = item->text().split('\n').at(1);
-        QString text3 = item->text().split('\n').at(2);
+        QLabel *lastMod = new QLabel();
+        lastMod->setText("Last mod: ");
+        lastMod->setStyleSheet("font-size: " + font_size + ";");
+        lastMod->setFixedSize(380, 25);
+        lastMod->setAlignment(Qt::AlignCenter);
+        lastMod->setText(splitData[2]);
+        lastMod->setFont(selectedFont);
 
-        projectName.setText(text1);
-        gitLink.setText(text2);
-        lastMod.setText("Last Mod: " + text3);
+        QPushButton *saveDataBtn = new QPushButton();
+        saveDataBtn->setText("Save");
+        saveDataBtn->setStyleSheet("font-size: " + font_size + ";");
+        saveDataBtn->setFixedSize(180, 25);
+        saveDataBtn->setIcon(QPixmap(":/save.png"));
+        saveDataBtn->setIconSize(QSize(10, 10));
+        saveDataBtn->setFont(selectedFont);
 
-        loadDocumentations(path, documentation);
+        QPushButton *cancelBtn = new QPushButton();
+        cancelBtn->setText("Cancel");
+        cancelBtn->setStyleSheet("font-size: " + font_size + ";");
+        cancelBtn->setFixedSize(180, 25);
+        cancelBtn->setIcon(QPixmap(":/quit.png"));
+        cancelBtn->setIconSize(QSize(10, 10));
+        cancelBtn->setFont(selectedFont);
 
-        QPushButton saveButton(&dialog);
-        QPushButton closeButton(&dialog);
+        mainLayout.addWidget(title, 0, 0, 1, 2);
+        mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
+        mainLayout.addWidget(documentation, 2, 0, 1, 2);
+        mainLayout.addWidget(lastMod, 3, 0, 1, 2);
+        mainLayout.addWidget(note, 4, 0, 1, 2);
+        mainLayout.addWidget(saveDataBtn, 5, 0);
+        mainLayout.addWidget(cancelBtn, 5, 1);
 
-        saveButton.setFont(selectedFont);
-        saveButton.setStyleSheet("font-size: " + font_size + "pt;");
-        closeButton.setFont(selectedFont);
-        closeButton.setStyleSheet("font-size: " + font_size + "pt;");
 
-        saveButton.setFixedSize(120, 20);
-        saveButton.setText("Save");
-        closeButton.setFixedSize(120, 20);
-        closeButton.setText("Cancel");
-
-        layout.addWidget(&projectName, 0, 0);
-        layout.addWidget(&gitLink, 1, 0);
-        layout.addWidget(&documentation, 2, 0);
-        layout.addWidget(&lastMod, 3, 0);
-        layout.addWidget(&saveButton, 4, 0);
-        layout.addWidget(&closeButton, 4, 1);
-
-        QObject::connect(&saveButton, &QPushButton::clicked, [&]() {
-            text1 = projectName.text();
-            text2 = gitLink.text();
-            text3 = getCurrentDateTimeString();
+        QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
+            QString text1 = title->text();
+            QString text2 = linkToGit->text();
+            QString text3 = getCurrentDateTimeString();
 
             QString itemText = text1 + "\n" + text2 + "\n" + text3;
             item->setText(itemText);
@@ -122,7 +131,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item) {
             dialog.close();
         });
 
-        QObject::connect(&closeButton, &QPushButton::clicked,
+        QObject::connect(cancelBtn, &QPushButton::clicked,
                          [&]() { dialog.close(); });
 
         dialog.exec();
