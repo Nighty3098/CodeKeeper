@@ -157,6 +157,13 @@ class MainWindow : public QMainWindow {
     QGridLayout *mainLayout;
     QTabWidget *tabs;
     QHBoxLayout *winControlL;
+    QStatusBar *statusBar;
+
+    QSizeGrip* sizeGrip;
+    QSizeGrip* sizeGrip2;
+    QSizeGrip* sizeGrip3;
+    QSizeGrip* sizeGrip4;
+
 
     QPushButton *maximizeBtn;
     QPushButton *closeBtn;

@@ -2,7 +2,8 @@
 
 #include <QInputDialog>
 #include <QPropertyAnimation>
-
+#include <QtWidgets>
+#include <QSizeGrip>
 #include "keeperFunc/functional.cpp"
 #include "keeperFunc/notesFunc.cpp"
 #include "keeperFunc/projectsFunc.cpp"
@@ -22,12 +23,35 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setCentralWidget(centralWidget);
 
     this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+    this->setMouseTracking(true);
     this->setMinimumSize(560, 400);
     this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setWindowIcon(QIcon(":/icon.png"));
+
+    sizeGrip = new QSizeGrip(this);
+    sizeGrip->setFixedSize(12, 12);
+    sizeGrip->setVisible(true);
+    sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+
+    sizeGrip2 = new QSizeGrip(this);
+    sizeGrip2->setFixedSize(12, 12);
+    sizeGrip2->setVisible(true);
+    sizeGrip2->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+
+    sizeGrip3 = new QSizeGrip(this);
+    sizeGrip3->setFixedSize(12, 12);
+    sizeGrip3->setVisible(true);
+    sizeGrip3->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+
+    sizeGrip4 = new QSizeGrip(this);
+    sizeGrip4->setFixedSize(12, 12);
+    sizeGrip4->setVisible(true);
+    sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     winControlL = new QHBoxLayout;
     winControlL->setSpacing(7);
-    
+
     isFullScreen = false;
 
     QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -36,9 +60,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     minimizeBtn = new QPushButton();
     maximizeBtn = new QPushButton();
 
-    closeBtn->setIcon(QPixmap(":/redHovered.png"));
-    minimizeBtn->setIcon(QPixmap(":/yellowHovered.png"));
-    maximizeBtn->setIcon(QPixmap(":/greenHovered.png"));
+    closeBtn->setIcon(QPixmap(":/red.png"));
+    minimizeBtn->setIcon(QPixmap(":/yellow.png"));
+    maximizeBtn->setIcon(QPixmap(":/green.png"));
 
     closeBtn->setFixedSize(13, 13);
     minimizeBtn->setFixedSize(13, 13);
@@ -48,14 +72,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     minimizeBtn->setIconSize(QSize(13, 13));
     maximizeBtn->setIconSize(QSize(13, 13));
 
-    closeBtn->setStyleSheet("background-color: #222436;");
-    minimizeBtn->setStyleSheet("background-color: #222436;");
-    maximizeBtn->setStyleSheet("background-color: #222436;");
+    closeBtn->setStyleSheet("background-color: #222436; border-color: #222436;");
+    minimizeBtn->setStyleSheet("background-color: #222436; border-color: #222436;");
+    maximizeBtn->setStyleSheet("background-color: #222436; border-color: #222436;");
 
     winControlL->addWidget(closeBtn);
     winControlL->addWidget(minimizeBtn);
     winControlL->addWidget(maximizeBtn);
     winControlL->addItem(headerSp);
+    winControlL->addWidget(sizeGrip2);
+
 
     mainLayout = new QGridLayout(centralWidget);
 
@@ -84,6 +110,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mainTitle = new QLabel("CodeKeeper");
     mainTitle->setAlignment(Qt::AlignCenter);
     mainTitle->setStyleSheet("font-size: 46px;");
+
+    QPropertyAnimation* animation = new QPropertyAnimation(mainTitle, "background-color: ");
+    animation->setDuration(2000); // Set the duration of the animation to 2 seconds
+
+    QColor startColor("#aaff6a"); // Set the start color to red
+    QColor endColor("#ffea6a"); // Set the end color to green
+
+    animation->setStartValue(startColor);
+    animation->setEndValue(endColor);
+
 
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
@@ -114,9 +150,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // icons
     iconProvider = new CustomIconProvider();
 
+    QStringList filters;
+    filters << "" << "*.md" << "*.txt" << "*.html";
+
     notesDirModel = new QFileSystemModel();
-    notesDirModel->setRootPath("../");
     notesDirModel->setIconProvider(iconProvider);
+    notesDirModel->setRootPath("../");
+    notesDirModel->setNameFilters(filters);
+    notesDirModel->setNameFilterDisables(false);
 
     notesList = new QTreeView();
     notesList->setAnimated(true);
@@ -580,9 +621,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tabs->setTabBarAutoHide(true);
 
-    mainLayout->addLayout(winControlL, 0, 0);
+    mainLayout->addLayout(winControlL, 0, 0, 1, 2);
     mainLayout->addWidget(tabs, 1, 0);
-
+    mainLayout->addWidget(sizeGrip3, 2, 0);
+    mainLayout->addWidget(sizeGrip4, 2, 1);
 
     // connects
     connect(openSettingsBtn, SIGNAL(clicked()), this,
@@ -767,6 +809,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     loadTasks();
     loadProjects();
     setFontPr1();
+
+    animation->start();
 
     qDebug() << path;
     qDebug() << "Load time:" << startup.elapsed() << "ms";

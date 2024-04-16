@@ -99,17 +99,29 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget,
         QStringList oldData = oldText.split("\n");
 
         QDialog dialog(this);
+        dialog.setFixedSize(220, 100);
         dialog.setWindowTitle(tr("Edit task"));
         dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+        dialog.setStyleSheet("border-radius: 10px;");
 
         QVBoxLayout layout(&dialog);
         QLineEdit lineEdit(&dialog);
+        lineEdit.setFont(selectedFont);
+        lineEdit.setFixedSize(200, 25);
+        lineEdit.setStyleSheet("font-size: " + font_size + ";");
+
         layout.addWidget(&lineEdit);
 
         lineEdit.setText(oldData[0]);
 
         QPushButton okButton(tr("OK"), &dialog);
+        okButton.setFont(selectedFont);
+        okButton.setFixedSize(200, 20);
+        okButton.setStyleSheet("font-size: " + font_size + ";");
         QPushButton cancelButton(tr("Cancel"), &dialog);
+        cancelButton.setFont(selectedFont);
+        cancelButton.setFixedSize(200, 20);
+        cancelButton.setStyleSheet("font-size: " + font_size + ";");
         layout.addWidget(&okButton);
         layout.addWidget(&cancelButton);
 
