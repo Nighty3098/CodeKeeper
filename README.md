@@ -24,7 +24,7 @@
     - [ ] - Context menu for projects
     - [ ] - Light theme
     - [ ] - Theme swither
-    - [ ] - Custom window decorations
+    - [X] - Custom window decorations
     - [ ] - Update project editor window
 ******
   - [ ] - Saving data:
