@@ -831,6 +831,37 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(maximizeBtn, &QPushButton::clicked, this, [this](){
         this->setWindowState(this->windowState() ^ Qt::WindowFullScreen);
         isFullScreen = this->windowState() & Qt::WindowFullScreen;
+        if(isFullScreen) {
+            maximizeBtn->setStyleSheet("QPushButton {"
+                                       "    border-color: rgba(0, 0, 0, 0);"
+                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-image: url(':/green.png');"
+                                       "    background-repeat: no-repeat;"
+                                       "}"
+
+                                       "QPushButton:hover {"
+                                       "    border-color: rgba(0, 0, 0, 0);"
+                                       "    background-image: url(':/greenInHovered.png');"
+                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-repeat: no-repeat;"
+                                       "}");
+
+        }
+        else {
+            maximizeBtn->setStyleSheet("QPushButton {"
+                                       "    border-color: rgba(0, 0, 0, 0);"
+                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-image: url(':/green.png');"
+                                       "    background-repeat: no-repeat;"
+                                       "}"
+
+                                       "QPushButton:hover {"
+                                       "    border-color: rgba(0, 0, 0, 0);"
+                                       "    background-image: url(':/greenHovered.png');"
+                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-repeat: no-repeat;"
+                                       "}");
+        }
     });
 
     create_tasks_connection();
