@@ -9,7 +9,8 @@ void MainWindow::create_projects_connection () {
     QString str =
         "CREATE TABLE projects ( "
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "project TEXT,"
+        "title TEXT,"
+        "git_url TEXT,"
         "projectDoc TEXT,"
         "status VARCHAR(50),"
         "createdTime VARCHAR(50)"

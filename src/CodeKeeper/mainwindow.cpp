@@ -60,21 +60,51 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     minimizeBtn = new QPushButton();
     maximizeBtn = new QPushButton();
 
-    closeBtn->setIcon(QPixmap(":/red.png"));
-    minimizeBtn->setIcon(QPixmap(":/yellow.png"));
-    maximizeBtn->setIcon(QPixmap(":/green.png"));
+    closeBtn->setFixedSize(15, 15);
+    minimizeBtn->setFixedSize(15, 15);
+    maximizeBtn->setFixedSize(15, 15);
 
-    closeBtn->setFixedSize(13, 13);
-    minimizeBtn->setFixedSize(13, 13);
-    maximizeBtn->setFixedSize(13, 13);
+    closeBtn->setStyleSheet("QPushButton {"
+                            "    border-color: rgba(0, 0, 0, 0);"
+                            "    background-color: rgba(0, 0, 0, 0);"
+                            "    background-image: url(':/red.png');"
+                            "    background-repeat: no-repeat;"
+                            "}"
 
-    closeBtn->setIconSize(QSize(13, 13));
-    minimizeBtn->setIconSize(QSize(13, 13));
-    maximizeBtn->setIconSize(QSize(13, 13));
+                            "QPushButton:hover {"
+                            "    border-color: rgba(0, 0, 0, 0);"
+                            "    background-image: url(':/redHovered.png');"
+                            "    background-repeat: no-repeat;"
+                            "    background-color: rgba(0, 0, 0, 0);"
+                            "}");
+    minimizeBtn->setStyleSheet("QPushButton {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/yellow.png');"
+                               "    background-repeat: no-repeat;"
+                               "}"
 
-    closeBtn->setStyleSheet("background-color: #222436; border-color: #222436;");
-    minimizeBtn->setStyleSheet("background-color: #222436; border-color: #222436;");
-    maximizeBtn->setStyleSheet("background-color: #222436; border-color: #222436;");
+                               "QPushButton:hover {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/yellowHovered.png');"
+                               "    background-repeat: no-repeat;"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "}");
+
+    maximizeBtn->setStyleSheet("QPushButton {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/green.png');"
+                               "    background-repeat: no-repeat;"
+                               "}"
+
+                               "QPushButton:hover {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/greenHovered.png');"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-repeat: no-repeat;"
+                               "}");
+
 
     winControlL->addWidget(closeBtn);
     winControlL->addWidget(minimizeBtn);
@@ -801,6 +831,37 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(maximizeBtn, &QPushButton::clicked, this, [this](){
         this->setWindowState(this->windowState() ^ Qt::WindowFullScreen);
         isFullScreen = this->windowState() & Qt::WindowFullScreen;
+        if(isFullScreen) {
+            maximizeBtn->setStyleSheet("QPushButton {"
+                                       "    border-color: rgba(0, 0, 0, 0);"
+                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-image: url(':/green.png');"
+                                       "    background-repeat: no-repeat;"
+                                       "}"
+
+                                       "QPushButton:hover {"
+                                       "    border-color: rgba(0, 0, 0, 0);"
+                                       "    background-image: url(':/greenInHovered.png');"
+                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-repeat: no-repeat;"
+                                       "}");
+
+        }
+        else {
+            maximizeBtn->setStyleSheet("QPushButton {"
+                                       "    border-color: rgba(0, 0, 0, 0);"
+                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-image: url(':/green.png');"
+                                       "    background-repeat: no-repeat;"
+                                       "}"
+
+                                       "QPushButton:hover {"
+                                       "    border-color: rgba(0, 0, 0, 0);"
+                                       "    background-image: url(':/greenHovered.png');"
+                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-repeat: no-repeat;"
+                                       "}");
+        }
     });
 
     create_tasks_connection();
