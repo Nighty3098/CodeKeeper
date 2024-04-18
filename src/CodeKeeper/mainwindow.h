@@ -91,7 +91,6 @@ class MainWindow : public QMainWindow {
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
 
     void createProject();
-    void saveProjectToDB();
     void removeProject();
     void loadProjects();
 
@@ -121,6 +120,11 @@ class MainWindow : public QMainWindow {
     void onMovingTaskFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingTaskTo(QListWidgetItem *item, QListWidget *list);
 
+    QStringList GetProjectData(QString *git_url, QString *createdTime);
+    void updateProjectStatus(QString *status, QString *createdTime, QString *oldTime);
+    void removeProjectFromDB(QString *git_url, QString *status, QString *createdTime);
+    void saveProjectToDB(QString *title, QString *git_url, QString *status, QString *createdTime);
+    void updateProjectData(QString *title, QString *git_url, QString *doc, QString *note, QString *createdTime, QString *oldTime);
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
@@ -157,7 +161,6 @@ class MainWindow : public QMainWindow {
     QGridLayout *mainLayout;
     QTabWidget *tabs;
     QHBoxLayout *winControlL;
-    QStatusBar *statusBar;
 
     QSizeGrip* sizeGrip;
     QSizeGrip* sizeGrip2;
