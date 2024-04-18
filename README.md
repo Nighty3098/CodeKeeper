@@ -3,6 +3,8 @@
 ![header](imgs/header.png)
 
 <div align="center">
+<a href="./LICENSE.md"><img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=85e185&logoColor=85e185&labelColor=0d1117" /></a>
+<br>
 <img src="https://img.shields.io/github/last-commit/Nighty3098/CodeKeeper?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=0d1117"/>
 <img src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=0d1117"/>
 <br>
@@ -10,6 +12,7 @@
 <img src="https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white"/>
 <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white"/>
 <img src="https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white"/>
+<img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" />
 <br>
 <a href="https://discord.gg/#9707" target="blank"><img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white"/></a>
 <a href="https://t.me/Night3098" target="blank"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/></a>
@@ -31,7 +34,7 @@
     - [X] - Saving notes to MD files
     - [X] - Saving a list of tasks in the DB
     - [ ] - Saving a projects list  in the DB
-  ******
+******
   - [ ] - Crossplatform app:
     - [X] - Linux
     - [ ] - Windows
