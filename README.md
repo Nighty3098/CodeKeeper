@@ -50,7 +50,7 @@
 ## Installing:
 
 ```bash
-git clone https://github.com/Nighty3098/CodeKeeper
+git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
 cd CodeKeeper/src/CodeKeeper
 qmake CodeKeeper.pro
 make
