@@ -4,8 +4,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 
-INCLUDEPATH += "qmarkdowntextedit"
-LIBS += -Lqmarkdowntextedit -L$$OUT_PWD
+INCLUDEPATH += "3rdParty/qmarkdowntextedit"
+LIBS += -L3rdParty/qmarkdowntextedit -L$$OUT_PWD
 win32: LIBS +=  -L$$OUT_PWD/release -L$$OUT_PWD/debug
 
 SOURCES += \
@@ -32,7 +32,7 @@ RESOURCES += \
     ../stylesheet/stylesheet.qss \
     ../stylesheet/stylesheet_setting_window.qss
 
-include(qmarkdowntextedit/qmarkdowntextedit.pri)
+include(3rdParty/qmarkdowntextedit/qmarkdowntextedit.pri)
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

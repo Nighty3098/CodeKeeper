@@ -1,0 +1,3 @@
+[submodule "src/CodeKeeper/3rdParty/qmarkdowntextedit"]
+	path = src/CodeKeeper/3rdParty/qmarkdowntextedit
+	url = https://github.com/pbek/qmarkdowntextedit
