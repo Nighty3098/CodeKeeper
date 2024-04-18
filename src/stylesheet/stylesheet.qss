@@ -371,8 +371,14 @@ QHeaderView::section:checked:vertical {
 }
 
 QProgressBar {
-    color: #c8d3f5;
-    background-color: #222436;
+    color: #222436;
+    background-color: #ff757f;
+    border-radius: 5px;
+}
+
+QProgressBar::chunk {
+    color: #222436;
+    background-color: #c3e88d;
     border-radius: 5px;
 }
 
