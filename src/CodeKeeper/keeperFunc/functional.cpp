@@ -185,7 +185,7 @@ void MainWindow::setFontPr1()
             "color: #FFFFFF;"
             "}"
             "QListWidget::Item {"
-            "background-color: rgb(130, 170, 255, "
+            "background-color: rgb(130, 170, 255 "
             "); color: #000000; border-width: 0px; "
             "border-radius: 5px;"
             "border-color: #82aaff; "

@@ -155,8 +155,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     themeLabel->setAlignment(Qt::AlignCenter);
 
     fontSize = new QSpinBox();
+    fontSize->setFixedHeight(25);
     fontSelector = new QFontComboBox();
+    fontSelector->setFixedHeight(25);
     themeSelector = new QComboBox();
+    themeSelector->setFixedHeight(25);
 
     themeSelector->addItem("Dark");
     themeSelector->addItem("Light");

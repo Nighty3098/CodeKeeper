@@ -7,6 +7,7 @@
 <br>
 <img src="https://img.shields.io/github/last-commit/Nighty3098/CodeKeeper?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=0d1117"/>
 <img src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=0d1117"/>
+<!--<img src="https://img.shields.io/endpoint?url=https://waka.mehalter.com/api/compat/shields/v1/mehalter/interval:any/label:Nighty3098&style=for-the-badge&label=wakatime&logo=wakatime&color=a6da95&logoColor=D9E0EE&labelColor=0d1117"/>-->
 <br>
 <img src="https://img.shields.io/badge/c  ++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white"/>
 <img src="https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white"/>
@@ -28,12 +29,12 @@
     - [ ] - Light theme
     - [ ] - Theme swither
     - [X] - Custom window decorations
-    - [ ] - Update project editor window
+    - [X] - Update project editor window
 ******
   - [ ] - Saving data:
     - [X] - Saving notes to MD files
     - [X] - Saving a list of tasks in the DB
-    - [ ] - Saving a projects list  in the DB
+    - [X] - Saving a projects list  in the DB
 ******
   - [ ] - Crossplatform app:
     - [X] - Linux
@@ -48,7 +49,8 @@
   - [ ] - Functionality of moving notes
   - [ ] - Multilang
   - [ ] - Fix visual bugs
-  - [ ] - Fix notes path bug 
+  - [ ] - Fix notes path bug
+  - [ ] - Migrate to CMake
  
 ## Installing:
 
