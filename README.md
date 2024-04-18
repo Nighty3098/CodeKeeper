@@ -29,12 +29,12 @@
     - [ ] - Light theme
     - [ ] - Theme swither
     - [X] - Custom window decorations
-    - [ ] - Update project editor window
+    - [X] - Update project editor window
 ******
   - [ ] - Saving data:
     - [X] - Saving notes to MD files
     - [X] - Saving a list of tasks in the DB
-    - [ ] - Saving a projects list  in the DB
+    - [X] - Saving a projects list  in the DB
 ******
   - [ ] - Crossplatform app:
     - [X] - Linux
@@ -49,7 +49,8 @@
   - [ ] - Functionality of moving notes
   - [ ] - Multilang
   - [ ] - Fix visual bugs
-  - [ ] - Fix notes path bug 
+  - [ ] - Fix notes path bug
+  - [ ] - Migrate to CMake
  
 ## Installing:
 
