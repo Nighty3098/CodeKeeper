@@ -4,7 +4,7 @@
 #include "keeperFunc/notesFunc.cpp"
 #include "keeperFunc/projectsFunc.cpp"
 #include "keeperFunc/tasksFunc.cpp"
-#include "qmarkdowntextedit/markdownhighlighter.h"
+#include "3rdParty/qmarkdowntextedit/markdownhighlighter.h"
 #include "sql_db/projectsDB.cpp"
 #include "sql_db/tasksDB.cpp"
 #include <QInputDialog>

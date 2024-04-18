@@ -8,7 +8,7 @@
 #include <QTextBrowser>
 #include <QtWidgets>
 
-#include "qmarkdowntextedit/qmarkdowntextedit.h"
+#include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"
 #include "syncwindow.h"
 
