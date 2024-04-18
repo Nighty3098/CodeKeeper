@@ -23,6 +23,7 @@ class SettingsWindow : public QMainWindow {
     bool isTimeB;
     bool isDateB;
     bool isHostB;
+    bool isAutoSyncB;
 
    private slots:
     void closeEvent(QCloseEvent *event);
@@ -69,6 +70,7 @@ class SettingsWindow : public QMainWindow {
     QCheckBox *isDate;
     QCheckBox *isTime;
     QCheckBox *isHost;
+    QCheckBox *isSync;
 
     // appereance
     QLabel *mainTitle;

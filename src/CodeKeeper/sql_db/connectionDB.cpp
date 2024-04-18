@@ -1,18 +1,19 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
-static bool createConnection() {
-  QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-  db.setDatabaseName("data.db");
+static bool createConnection()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("data.db");
 
-  db.setUserName("admin");
-  db.setHostName("localhost");
-  db.setPassword("password");
+    db.setUserName("admin");
+    db.setHostName("localhost");
+    db.setPassword("password");
 
-  if (!db.open()) {
-    qDebug() << db.lastError();
-    return false;
-  }
+    if (!db.open()) {
+        qDebug() << db.lastError();
+        return false;
+    }
 
-  return true;
+    return true;
 }

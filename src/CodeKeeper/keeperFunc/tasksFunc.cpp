@@ -1,147 +1,146 @@
-void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list) {
-  qDebug() << "Moving task: " << item->text()
-           << " from: " << list->objectName();
+void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list)
+{
+    qDebug() << "Moving task: " << item->text() << " from: " << list->objectName();
 
-  QString task = item->text();
-  QString status = list->objectName();
+    QString task = item->text();
+    QString status = list->objectName();
 }
 
-void MainWindow::onMovingTaskTo(QListWidgetItem *item, QListWidget *list) {
-  qDebug() << "Moved task: " << item->text() << " to: " << list->objectName();
+void MainWindow::onMovingTaskTo(QListWidgetItem *item, QListWidget *list)
+{
+    qDebug() << "Moved task: " << item->text() << " to: " << list->objectName();
 
-  QString task = item->text();
-  QString status = list->objectName();
-  QStringList data = task.split("\n");
-  QString cT = data[1];
+    QString task = item->text();
+    QString status = list->objectName();
+    QStringList data = task.split("\n");
+    QString cT = data[1];
 
-  updateTaskStatus(&task, &status, &cT);
+    updateTaskStatus(&task, &status, &cT);
 }
 
-void MainWindow::addNewTask() {
-  QString text = taskText->text();
-  if (!text.isEmpty()) {
-    taskText->clear();
-    QString task = text + "\n" + getCurrentDateTimeString();
-    qDebug() << "Added new task: " << task;
-    incompleteTasks->addItem(task);
-    QString status = incompleteTasks->objectName();
-    saveTaskToDB(&task, &status);
-  } else {
-    qDebug() << "Task is empty";
-  }
-}
-
-void MainWindow::removeTask() {
-  QListWidget *listWidgets[] = {incompleteTasks, inprocessTasks, completeTasks};
-
-  for (QListWidget *listWidget : listWidgets) {
-    QListWidgetItem *item = listWidget->currentItem();
-    if (item) {
-      listWidget->takeItem(listWidget->row(item));
-      qDebug() << "Removed task: " << item->text();
-
-      QString task = item->text();
-      QString status = listWidget->objectName();
-
-      removeTaskFromDB(&task, &status);
-
-      delete item;
-      break;
+void MainWindow::addNewTask()
+{
+    QString text = taskText->text();
+    if (!text.isEmpty()) {
+        taskText->clear();
+        QString task = text + "\n" + getCurrentDateTimeString();
+        qDebug() << "Added new task: " << task;
+        incompleteTasks->addItem(task);
+        QString status = incompleteTasks->objectName();
+        saveTaskToDB(&task, &status);
+    } else {
+        qDebug() << "Task is empty";
     }
-  }
 }
 
-void MainWindow::getTotalTasks(QTabWidget *tasksTab,
-                               QListWidget *incompleteTasks,
-                               QListWidget *inprocessTasks,
-                               QListWidget *completeTasks) {
-  if (tasksTab->currentIndex() == 2) {
-    QTimer *timer3 = new QTimer(this);
-    connect(timer3, &QTimer::timeout, [=]() {
-      int totalTasks = incompleteTasks->count() + inprocessTasks->count() +
-                       completeTasks->count();
+void MainWindow::removeTask()
+{
+    QListWidget *listWidgets[] = { incompleteTasks, inprocessTasks, completeTasks };
 
-      tasksProgress->setFormat("Total tasks: " + QString::number(totalTasks) +
-                               " ");
-    });
-    timer3->start(500);
-  }
+    for (QListWidget *listWidget : listWidgets) {
+        QListWidgetItem *item = listWidget->currentItem();
+        if (item) {
+            listWidget->takeItem(listWidget->row(item));
+            qDebug() << "Removed task: " << item->text();
+
+            QString task = item->text();
+            QString status = listWidget->objectName();
+
+            removeTaskFromDB(&task, &status);
+
+            delete item;
+            break;
+        }
+    }
 }
 
-void MainWindow::updateTasksProgress(QTabWidget *tasksTab,
-                                     QListWidget *incompleteTasks,
-                                     QListWidget *inprocessTasks,
-                                     QListWidget *completeTasks,
-                                     QProgressBar *tasksProgress) {
-  if (tasksTab->currentIndex() == 2) {
-    QTimer *timer2 = new QTimer(this);
-    connect(timer2, &QTimer::timeout, [=]() {
-      int totalTasks = incompleteTasks->count() + inprocessTasks->count() +
-                       completeTasks->count();
-      int completedTasks = completeTasks->count();
+void MainWindow::getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks,
+                               QListWidget *inprocessTasks, QListWidget *completeTasks)
+{
+    if (tasksTab->currentIndex() == 2) {
+        QTimer *timer3 = new QTimer(this);
+        connect(timer3, &QTimer::timeout, [=]() {
+            int totalTasks =
+                    incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
 
-      if (totalTasks == 0) {
-        tasksProgress->setValue(0);
-      } else {
-        double percentage = static_cast<double>(completedTasks) /
-                            static_cast<double>(totalTasks) * 100.0;
-        tasksProgress->setValue(percentage);
-      }
-    });
-    timer2->start(500);
-  }
+            tasksProgress->setFormat("Total tasks: " + QString::number(totalTasks) + " ");
+        });
+        timer3->start(500);
+    }
 }
 
-void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget,
-                                         QListWidgetItem *item) {
-  if (item) {
-    QString oldText = item->text();
-    QStringList oldData = oldText.split("\n");
+void MainWindow::updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks,
+                                     QListWidget *inprocessTasks, QListWidget *completeTasks,
+                                     QProgressBar *tasksProgress)
+{
+    if (tasksTab->currentIndex() == 2) {
+        QTimer *timer2 = new QTimer(this);
+        connect(timer2, &QTimer::timeout, [=]() {
+            int totalTasks =
+                    incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
+            int completedTasks = completeTasks->count();
 
-    QDialog dialog(this);
-    dialog.setFixedSize(220, 100);
-    dialog.setWindowTitle(tr("Edit task"));
-    dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-    dialog.setStyleSheet("border-radius: 10px;");
+            if (totalTasks == 0) {
+                tasksProgress->setValue(0);
+            } else {
+                double percentage = static_cast<double>(completedTasks)
+                        / static_cast<double>(totalTasks) * 100.0;
+                tasksProgress->setValue(percentage);
+            }
+        });
+        timer2->start(500);
+    }
+}
 
-    QVBoxLayout layout(&dialog);
-    QLineEdit lineEdit(&dialog);
-    lineEdit.setFont(selectedFont);
-    lineEdit.setFixedSize(200, 25);
-    lineEdit.setStyleSheet("font-size: " + font_size + ";");
+void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item)
+{
+    if (item) {
+        QString oldText = item->text();
+        QStringList oldData = oldText.split("\n");
 
-    layout.addWidget(&lineEdit);
+        QDialog dialog(this);
+        dialog.setFixedSize(220, 100);
+        dialog.setWindowTitle(tr("Edit task"));
+        dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+        dialog.setStyleSheet("border-radius: 10px;");
 
-    lineEdit.setText(oldData[0]);
+        QVBoxLayout layout(&dialog);
+        QLineEdit lineEdit(&dialog);
+        lineEdit.setFont(selectedFont);
+        lineEdit.setFixedSize(200, 25);
+        lineEdit.setStyleSheet("font-size: " + font_size + ";");
 
-    QPushButton okButton(tr("OK"), &dialog);
-    okButton.setFont(selectedFont);
-    okButton.setFixedSize(200, 20);
-    okButton.setStyleSheet("font-size: " + font_size + ";");
-    QPushButton cancelButton(tr("Cancel"), &dialog);
-    cancelButton.setFont(selectedFont);
-    cancelButton.setFixedSize(200, 20);
-    cancelButton.setStyleSheet("font-size: " + font_size + ";");
-    layout.addWidget(&okButton);
-    layout.addWidget(&cancelButton);
+        layout.addWidget(&lineEdit);
 
-    QObject::connect(&okButton, &QPushButton::clicked, [&]() {
-      QString newText = lineEdit.text();
-      if (!newText.isEmpty()) {
-        QString newTask = newText + "\n" + getCurrentDateTimeString();
-        QString status = listWidget->objectName();
-        QString cT = oldData[1];
+        lineEdit.setText(oldData[0]);
 
-        item->setText(newTask);
+        QPushButton okButton(tr("OK"), &dialog);
+        okButton.setFont(selectedFont);
+        okButton.setFixedSize(200, 20);
+        okButton.setStyleSheet("font-size: " + font_size + ";");
+        QPushButton cancelButton(tr("Cancel"), &dialog);
+        cancelButton.setFont(selectedFont);
+        cancelButton.setFixedSize(200, 20);
+        cancelButton.setStyleSheet("font-size: " + font_size + ";");
+        layout.addWidget(&okButton);
+        layout.addWidget(&cancelButton);
 
-        updateTaskData(&newTask, &status, &cT);
-      }
-      dialog.close();
-    });
+        QObject::connect(&okButton, &QPushButton::clicked, [&]() {
+            QString newText = lineEdit.text();
+            if (!newText.isEmpty()) {
+                QString newTask = newText + "\n" + getCurrentDateTimeString();
+                QString status = listWidget->objectName();
+                QString cT = oldData[1];
 
-    QObject::connect(&cancelButton, &QPushButton::clicked,
-                     [&]() { dialog.close(); });
+                item->setText(newTask);
 
-    dialog.exec();
-  }
+                updateTaskData(&newTask, &status, &cT);
+            }
+            dialog.close();
+        });
+
+        QObject::connect(&cancelButton, &QPushButton::clicked, [&]() { dialog.close(); });
+
+        dialog.exec();
+    }
 }
