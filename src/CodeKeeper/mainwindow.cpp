@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     sizeGrip4->setVisible(true);
     sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
+
     winControlL = new QHBoxLayout;
     winControlL->setSpacing(7);
 
@@ -604,6 +605,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     tabs = new QTabWidget();
     tabs->setMovable(true);
+    // tabs->setTabPosition(QTabWidget::West);
 
     // main tab
     QWidget *mainTab = new QWidget();
