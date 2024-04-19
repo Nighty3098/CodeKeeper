@@ -60,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                             "    background-repeat: no-repeat;"
                             "    background-color: rgba(0, 0, 0, 0);"
                             "}");
+                            
     minimizeBtn->setStyleSheet("QPushButton {"
                                "    border-color: rgba(0, 0, 0, 0);"
                                "    background-color: rgba(0, 0, 0, 0);"

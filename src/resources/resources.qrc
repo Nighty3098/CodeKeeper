@@ -50,5 +50,7 @@
         <file>yellow.png</file>
         <file>yellowHovered.png</file>
         <file>yellowPressed.png</file>
+        <file>up-arrow.png</file>
+        <file>down-arrow.png</file>
     </qresource>
 </RCC>
