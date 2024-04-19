@@ -1,4 +1,4 @@
-name: Run clang-format Linter
+name: Build project
 on: [push, pull_request, fork]
 
 jobs:
