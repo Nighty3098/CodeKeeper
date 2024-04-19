@@ -167,7 +167,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     customTitleBar->setText("Use custom titlebar");
     customTitleBar->setChecked(isCustomTitlebar);
 
-
     themeSelector->addItem("Dark");
     themeSelector->addItem("Light");
 

@@ -30,7 +30,6 @@ void SettingsWindow::saveData()
     QString theme = themeSelector->currentText();
     globalSettings->setValue("theme", theme);
 
-
     QString path = pathToFolder->text();
     globalSettings->setValue("path", QVariant(path));
 

@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
-
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     restoreGeometry(globalSettings->value("geometry").toByteArray());
 
@@ -32,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     theme = globalSettings->value("theme").value<QString>();
     path = globalSettings->value("path").value<QDir>();
     isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
-
 
     closeBtn = new QPushButton();
     minimizeBtn = new QPushButton();
@@ -620,11 +618,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tabs->setTabBarAutoHide(true);
 
-    if(isCustomTitlebar) {
+    if (isCustomTitlebar) {
         mainLayout->addLayout(winControlL, 0, 0, 1, 2);
-    }
-    else {
-
+    } else {
     }
     mainLayout->addWidget(tabs, 1, 0);
     mainLayout->addWidget(sizeGrip3, 2, 0);
