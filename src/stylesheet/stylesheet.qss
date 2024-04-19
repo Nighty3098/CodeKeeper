@@ -1,3 +1,25 @@
+QDialog {
+    background-color: #2f334d;
+    border-width: 2px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+QWidget {
+    background-color: #222436;
+    border-width: 2px;
+    border-color: #ffffff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+QMainWindow {
+    background-color: #222436;
+    color: #c8d3f5;
+}
+
 QStatusBar {
     background-color: #222436;
     border-top-left-radius: 10px;
@@ -10,33 +32,9 @@ QStatusBar::QSizeGrip {
     background-color: transparent;
 }
 
-QMainWindow {
-    background-color: #222436;
-    color: #c8d3f5;
-}
-
-QDialog {
-    background-color: #2f334d;
-    border-width: 2px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
-
 QSizeGrip {
     background-color: transparent;
     border-radius: 10px;
-}
-
-QWidget {
-    background-color: #222436;
-    border-width: 2px;
-    border-color: #ffffff;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
 }
 
 QMarkdownTextEdit {
@@ -60,10 +58,6 @@ QMarkdownTextEdit::lineNumber::selected:active {
     color: #05ff00;
     background-color: #2f334d;
     border-radius: 10px;
-}
-
-QFrame {
-
 }
 
 QFileDialog {
