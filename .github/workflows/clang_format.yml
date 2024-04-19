@@ -1,0 +1,31 @@
+name: Clang Format
+
+on:
+  push:
+    branches:
+      - main
+      - InDev
+  pull_request:
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Fetch the entire repository history
+
+    - name: Setup Clang-Format
+      uses: tamasfe/setup-clang-format@v1
+
+    - name: Format C++ files
+      run: |
+        find . -type f -name '*.cpp' -o -name '*.hpp' -exec clang-format -i -style=file {} +
+
+    - name: Upload formatted files
+      uses: actions/upload-artifact@v2
+      with:
+        name: formatted-files
+        path: .
