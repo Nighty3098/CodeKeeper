@@ -5,23 +5,6 @@
 #include "mainwindow.h"
 #include "sql_db/connectionDB.cpp"
 
-void loadModules(QSplashScreen *psplash)
-{
-    QTime time;
-    time.start();
-
-    for (int i = 0; i < 100;) {
-        if (time.elapsed() > 1) {
-            time.start();
-            ++i;
-        }
-        psplash->showMessage("Loading data: " + QString::number(i) + "%",
-                             Qt::AlignCenter | Qt::AlignBottom, Qt::white);
-
-        qApp->processEvents();
-    }
-}
-
 int main(int argc, char *argv[])
 {
     QFile file(":/stylesheet/stylesheet.qss");
@@ -46,12 +29,7 @@ int main(int argc, char *argv[])
     w.setAttribute(Qt::WA_TranslucentBackground);
     pain.setRenderHint(QPainter::Antialiasing);
     pain.setPen(Qt::NoPen);
-    pain.drawRoundedRect(QRect(), 8, 8, Qt::AbsoluteSize);
-
-    // QSplashScreen splash(QPixmap(":/icon.png"));
-    // splash.show();
-    // loadModules(&splash);
-    // splash.finish(&w);
+    pain.drawRoundedRect(QRect(), 10, 10, Qt::AbsoluteSize);
 
     w.show();
     return a.exec();
