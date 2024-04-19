@@ -1,14 +1,23 @@
-name: clang-format Check
+name: Run clang-format Linter
 on: [push, pull_request]
+
 jobs:
-  formatting-check:
-    name: Formatting Check
+  build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-    - name: Run clang-format style check for C/C++/Protobuf programs.
-      uses: jidicula/clang-format-action@v4.11.0
+    - uses: actions/checkout@v2
+    - uses: DoozyX/clang-format-lint-action@v0.16.2
       with:
-        clang-format-version: '13'
-        check-path: 'src'
-        fallback-style: 'Mozilla'
+        source: '.'
+        exclude: './src/CodeKeeper/3rdParty'
+        extensions: 'h,cpp,c'
+        clangFormatVersion: 16
+        inplace: True
+    - uses: EndBug/add-and-commit@v9
+      with:
+        author_name: Nighty3098
+        author_email: night3098game@gmail.com
+        message: 'Committing clang-format changes'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
