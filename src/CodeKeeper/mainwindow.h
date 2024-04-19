@@ -12,28 +12,31 @@
 #include "settingswindow.h"
 #include "syncwindow.h"
 
-class CustomIconProvider : public QFileIconProvider {
-   public:
-    QIcon icon(IconType type) const override {
+class CustomIconProvider : public QFileIconProvider
+{
+public:
+    QIcon icon(IconType type) const override
+    {
         switch (type) {
-            case QFileIconProvider::IconType::Computer:
-                return QIcon(":/home_dir.png");
-            case QFileIconProvider::IconType::Trashcan:
-                return QIcon(":/trash.png");
-            case QFileIconProvider::IconType::File:
-                return QIcon(":/document.png");
-            case QFileIconProvider::IconType::Folder:
-                return QIcon(":/folder.png");
-            default:
-                return QFileIconProvider::icon(type);
+        case QFileIconProvider::IconType::Computer:
+            return QIcon(":/home_dir.png");
+        case QFileIconProvider::IconType::Trashcan:
+            return QIcon(":/trash.png");
+        case QFileIconProvider::IconType::File:
+            return QIcon(":/document.png");
+        case QFileIconProvider::IconType::Folder:
+            return QIcon(":/folder.png");
+        default:
+            return QFileIconProvider::icon(type);
         }
     }
 };
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
 
-   public:
+public:
     QSettings *globalSettings;
     bool isVisibleNotesList;
 
@@ -48,7 +51,7 @@ class MainWindow : public QMainWindow {
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-   private slots:
+private slots:
     void openSettingsWindow();
     void openFolder();
 
@@ -69,23 +72,18 @@ class MainWindow : public QMainWindow {
     void removeTask();
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
-    void renameItemOnDoubleClick(QListWidget *listWidget,
-                                 QListWidgetItem *item);
+    void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
     void onNoteDoubleClicked();
     void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks,
-                             QListWidget *inprocessTasks,
-                             QListWidget *completeTasks,
+                             QListWidget *inprocessTasks, QListWidget *completeTasks,
                              QProgressBar *tasksProgress);
 
     void getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks,
-                             QListWidget *inprocessTasks,
-                             QListWidget *completeTasks);
+                       QListWidget *inprocessTasks, QListWidget *completeTasks);
 
-    void getTotalProjects(QTabWidget *tasksTab,
-                                  QListWidget *notStartedProjects,
-                                  QListWidget *startedProjects,
-                                  QListWidget *finishedProjects,
-                                  QListWidget *finishlineProjects);
+    void getTotalProjects(QTabWidget *tasksTab, QListWidget *notStartedProjects,
+                          QListWidget *startedProjects, QListWidget *finishedProjects,
+                          QListWidget *finishlineProjects);
 
     void loadDocumentations(QDir path, QComboBox &comboBox);
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
@@ -124,49 +122,42 @@ class MainWindow : public QMainWindow {
     void updateProjectStatus(QString *status, QString *createdTime, QString *oldTime);
     void removeProjectFromDB(QString *git_url, QString *status, QString *createdTime);
     void saveProjectToDB(QString *title, QString *git_url, QString *status, QString *createdTime);
-    void updateProjectData(QString *title, QString *git_url, QString *doc, QString *note, QString *createdTime, QString *oldTime, QString *oldGit);
+    void updateProjectData(QString *title, QString *git_url, QString *doc, QString *note,
+                           QString *createdTime, QString *oldTime, QString *oldGit);
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
-
-   protected:
+protected:
     void mousePressEvent(QMouseEvent *event) override
     {
-        if (event->button() == Qt::LeftButton)
-        {
+        if (event->button() == Qt::LeftButton) {
             m_dragPosition = event->globalPos() - frameGeometry().topLeft();
             event->accept();
-        }
-        else
-        {
+        } else {
             QMainWindow::mousePressEvent(event);
         }
     }
 
     void mouseMoveEvent(QMouseEvent *event) override
     {
-        if (event->buttons() & Qt::LeftButton)
-        {
+        if (event->buttons() & Qt::LeftButton) {
             move(event->globalPos() - m_dragPosition);
             event->accept();
-        }
-        else
-        {
+        } else {
             QMainWindow::mouseMoveEvent(event);
         }
     }
 
-   private:
+private:
     QWidget *centralWidget;
     QGridLayout *mainLayout;
     QTabWidget *tabs;
     QHBoxLayout *winControlL;
 
-    QSizeGrip* sizeGrip;
-    QSizeGrip* sizeGrip2;
-    QSizeGrip* sizeGrip3;
-    QSizeGrip* sizeGrip4;
-
+    QSizeGrip *sizeGrip;
+    QSizeGrip *sizeGrip2;
+    QSizeGrip *sizeGrip3;
+    QSizeGrip *sizeGrip4;
 
     QPushButton *maximizeBtn;
     QPushButton *closeBtn;
@@ -174,7 +165,6 @@ class MainWindow : public QMainWindow {
 
     bool isFullScreen;
     QPoint m_dragPosition;
-
 
     // ========================================================
     // main tab
@@ -262,4 +252,4 @@ class MainWindow : public QMainWindow {
     SettingsWindow *settingsWindow;
 };
 
-#endif  // MAINWINDOW_H
+#endif // MAINWINDOW_H

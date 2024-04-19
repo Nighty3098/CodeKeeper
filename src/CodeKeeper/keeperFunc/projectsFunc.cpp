@@ -83,7 +83,9 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QString PStatus = listWidget->objectName();
 
         QStringList projectData = GetProjectData(&PTitle, &PStatus, &PGit);
-        qDebug() << "Open project: " << projectData[0] << " " << projectData[1] << " " << projectData[2] << " " << projectData[3] << " " << projectData[4] << " " << projectData[5];
+        qDebug() << "Open project: " << projectData[0] << " " << projectData[1] << " "
+                 << projectData[2] << " " << projectData[3] << " " << projectData[4] << " "
+                 << projectData[5];
 
         QGridLayout mainLayout(&dialog);
 
@@ -160,7 +162,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             item->setText(itemText);
             qDebug() << itemText;
 
-            updateProjectData(&projectTitle, &projectLink, &projectDocumentation, &noteT, &projectCreatedTime, &PCreatedTime, &PGit);
+            updateProjectData(&projectTitle, &projectLink, &projectDocumentation, &noteT,
+                              &projectCreatedTime, &PCreatedTime, &PGit);
 
             dialog.close();
         });
@@ -168,8 +171,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
 
         dialog.exec();
-    }
-    else {
+    } else {
         qDebug() << "Error";
     }
 }
