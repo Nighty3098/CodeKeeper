@@ -72,7 +72,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QDialog dialog(this);
         dialog.setFixedSize(400, 460);
         dialog.setWindowTitle(tr("Edit project"));
-        dialog->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+        dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
         QString data = item->text();
         QStringList splitData = data.split("\n");
