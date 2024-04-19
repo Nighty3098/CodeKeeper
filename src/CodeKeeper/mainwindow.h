@@ -120,11 +120,11 @@ class MainWindow : public QMainWindow {
     void onMovingTaskFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingTaskTo(QListWidgetItem *item, QListWidget *list);
 
-    QStringList GetProjectData(QString *git_url, QString *createdTime);
+    QStringList GetProjectData(QString *title, QString *status, QString *git_url);
     void updateProjectStatus(QString *status, QString *createdTime, QString *oldTime);
     void removeProjectFromDB(QString *git_url, QString *status, QString *createdTime);
     void saveProjectToDB(QString *title, QString *git_url, QString *status, QString *createdTime);
-    void updateProjectData(QString *title, QString *git_url, QString *doc, QString *note, QString *createdTime, QString *oldTime);
+    void updateProjectData(QString *title, QString *git_url, QString *doc, QString *note, QString *createdTime, QString *oldTime, QString *oldGit);
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 

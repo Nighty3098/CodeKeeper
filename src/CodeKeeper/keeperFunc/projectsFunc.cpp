@@ -19,8 +19,10 @@ void MainWindow::createProject()
     QString status = "NotStartedProjects";
     QString title = "Teamplate";
     QString git = "https://github.com/";
-    QString newProjectTeamplate = "New project\nGitHub\n" + date;
+    QString newProjectTeamplate = title + "\n" + git + "\n" + date;
+
     qDebug() << "New project: " << newProjectTeamplate;
+
     notStartedProjects->addItem(newProjectTeamplate);
 
     saveProjectToDB(&title, &git, &status, &date);
@@ -75,7 +77,13 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QString data = item->text();
         QStringList splitData = data.split("\n");
 
-        QStringList projectData = GetProjectData(&splitData[1], &splitData[2]);
+        QString PTitle = splitData[0];
+        QString PGit = splitData[1];
+        QString PCreatedTime = splitData[2];
+        QString PStatus = listWidget->objectName();
+
+        QStringList projectData = GetProjectData(&PTitle, &PStatus, &PGit);
+        qDebug() << "Open project: " << projectData[0] << " " << projectData[1] << " " << projectData[2] << " " << projectData[3] << " " << projectData[4] << " " << projectData[5];
 
         QGridLayout mainLayout(&dialog);
 
@@ -83,14 +91,12 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         title->setPlaceholderText(" Project name: ");
         title->setStyleSheet("font-size: " + font_size + ";");
         title->setFixedSize(380, 25);
-        title->setText(projectData[0]);
         title->setFont(selectedFont);
 
         QLineEdit *linkToGit = new QLineEdit();
         linkToGit->setPlaceholderText(" Link to GIT");
         linkToGit->setStyleSheet("font-size: " + font_size + ";");
         linkToGit->setFixedSize(380, 25);
-        linkToGit->setText(projectData[2]);
         linkToGit->setFont(selectedFont);
 
         QComboBox *documentation = new QComboBox();
@@ -106,14 +112,12 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         note->setLineWidth(font_size.toInt());
         note->setHighlightingEnabled(true);
         note->setFont(selectedFont);
-        note->setPlainText(projectData[4]);
 
         QLabel *lastMod = new QLabel();
         lastMod->setText("Last mod: ");
         lastMod->setStyleSheet("font-size: " + font_size + ";");
         lastMod->setFixedSize(380, 25);
         lastMod->setAlignment(Qt::AlignCenter);
-        lastMod->setText("Last mod: " + projectData[6]);
         lastMod->setFont(selectedFont);
 
         QPushButton *saveDataBtn = new QPushButton();
@@ -132,6 +136,11 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         cancelBtn->setIconSize(QSize(10, 10));
         cancelBtn->setFont(selectedFont);
 
+        title->setText(projectData[0]);
+        linkToGit->setText(projectData[1]);
+        note->setPlainText(projectData[3]);
+        lastMod->setText("Last mod: " + projectData[5]);
+
         mainLayout.addWidget(title, 0, 0, 1, 2);
         mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
         mainLayout.addWidget(documentation, 2, 0, 1, 2);
@@ -141,17 +150,17 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(cancelBtn, 5, 1);
 
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
-            QString text1 = title->text();
-            QString text2 = linkToGit->text();
-            QString text3 = getCurrentDateTimeString();
-            QString doc = documentation->currentText();
+            QString projectTitle = title->text();
+            QString projectLink = linkToGit->text();
+            QString projectCreatedTime = getCurrentDateTimeString();
+            QString projectDocumentation = documentation->currentText();
             QString noteT = note->toPlainText();
 
-            QString itemText = text1 + "\n" + text2 + "\n" + text3;
+            QString itemText = projectTitle + "\n" + projectLink + "\n" + projectCreatedTime;
             item->setText(itemText);
             qDebug() << itemText;
 
-            updateProjectData(&text1, &text2, &doc, &noteT, &text3, &splitData[2]);
+            updateProjectData(&projectTitle, &projectLink, &projectDocumentation, &noteT, &projectCreatedTime, &PCreatedTime, &PGit);
 
             dialog.close();
         });
@@ -159,6 +168,9 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
 
         dialog.exec();
+    }
+    else {
+        qDebug() << "Error";
     }
 }
 
