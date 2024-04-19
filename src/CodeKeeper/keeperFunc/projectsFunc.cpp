@@ -76,7 +76,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QStringList splitData = data.split("\n");
 
         QStringList projectData = GetProjectData(&splitData[1], &splitData[2]);
-        qDebug() << projectData;
 
         QGridLayout mainLayout(&dialog);
 
@@ -91,7 +90,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         linkToGit->setPlaceholderText(" Link to GIT");
         linkToGit->setStyleSheet("font-size: " + font_size + ";");
         linkToGit->setFixedSize(380, 25);
-        linkToGit->setText(projectData[1]);
+        linkToGit->setText(projectData[2]);
         linkToGit->setFont(selectedFont);
 
         QComboBox *documentation = new QComboBox();
@@ -107,14 +106,14 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         note->setLineWidth(font_size.toInt());
         note->setHighlightingEnabled(true);
         note->setFont(selectedFont);
-        note->setPlainText(projectData[3]);
+        note->setPlainText(projectData[4]);
 
         QLabel *lastMod = new QLabel();
         lastMod->setText("Last mod: ");
         lastMod->setStyleSheet("font-size: " + font_size + ";");
         lastMod->setFixedSize(380, 25);
         lastMod->setAlignment(Qt::AlignCenter);
-        lastMod->setText("Last mod: " + projectData[5]);
+        lastMod->setText("Last mod: " + projectData[6]);
         lastMod->setFont(selectedFont);
 
         QPushButton *saveDataBtn = new QPushButton();

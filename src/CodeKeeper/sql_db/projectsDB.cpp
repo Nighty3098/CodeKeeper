@@ -26,23 +26,25 @@ void MainWindow::create_projects_connection()
 
 QStringList MainWindow::GetProjectData(QString *git_url, QString *createdTime)
 {
-    QSqlQuery query;
     QStringList projectData;
+    QSqlQuery query;
 
-    if (query.exec("SELECT * FROM projects WHERE git_url = '" + git_url->arg("'") + "'")) {
-        while (query.next()) {
-            projectData << query.value("title").toString();
-            projectData << query.value("git_url").toString();
-            projectData << query.value("projectDoc").toString();
-            projectData << query.value("note").toString();
-            projectData << query.value("status").toString();
-            projectData << query.value("createdTime").toString();
-        }
-
+    if (!query.exec("SELECT * FROM projects WHERE git_url = '" + git_url->arg("'") + "'")) {
+        qDebug() << "Error querying projects database:" << query.lastError();
         return projectData;
-    } else {
-        qDebug() << query.lastError();
     }
+
+    if (query.next()) {
+        qDebug() << query.value("id").toString();
+        qDebug() << query.value("title").toString();
+        qDebug() << query.value("git_url").toString();
+        qDebug() << query.value("project_doc").toString();
+        qDebug() << query.value("note").toString();
+        qDebug() << query.value("status").toString();
+        qDebug() << query.value("createdTime").toString();
+    }
+
+    return projectData;
 }
 
 void MainWindow::updateProjectData(QString *title, QString *git_url, QString *doc, QString *note,
@@ -72,7 +74,6 @@ void MainWindow::saveProjectToDB(QString *title, QString *git_url, QString *stat
                     + status->arg("'") + "', '" + createdTime->arg("'") + "')")) {
         qDebug() << query.lastError();
     } else {
-        qDebug() << query.lastError();
         qDebug() << "Sucsessfull saved";
     }
 }
