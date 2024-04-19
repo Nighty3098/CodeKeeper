@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setCentralWidget(centralWidget);
 
     this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    this->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
     this->setMouseTracking(true);
     this->setMinimumSize(560, 400);
     this->setAttribute(Qt::WA_TranslucentBackground);
