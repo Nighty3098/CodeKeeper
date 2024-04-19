@@ -24,16 +24,13 @@ void MainWindow::create_projects_connection()
     }
 }
 
-QStringList MainWindow::GetProjectData(QString *git_url, QString *createdTime)
+QStringList MainWindow::GetProjectData(QString *title, QString *status, QString *git_url)
 {
     QStringList projectData;
     QSqlQuery query;
 
-    if (!query.exec("SELECT * FROM projects WHERE git_url = '" + *git_url + "' AND createdTime = '"
-                    + *createdTime + "'")) {
-        qDebug() << "Error querying projects database:" << query.lastError();
-        return projectData;
-    } else {
+    if (query.exec("SELECT * FROM projects WHERE status = '" + *status + "' AND title = '" + *title
+                   + "' AND git_url = '" + *git_url + "'")) {
         if (query.next()) {
             projectData << query.value("title").toString();
             projectData << query.value("git_url").toString();
@@ -43,18 +40,21 @@ QStringList MainWindow::GetProjectData(QString *git_url, QString *createdTime)
             projectData << query.value("createdTime").toString();
             qDebug() << "Load project: " << projectData;
         }
+    } else {
+        qDebug() << "Error querying projects database:" << query.lastError();
     }
     return projectData;
 }
 
 void MainWindow::updateProjectData(QString *title, QString *git_url, QString *doc, QString *note,
-                                   QString *createdTime, QString *oldTime)
+                                   QString *createdTime, QString *oldTime, QString *oldGit)
 {
     QSqlQuery query;
 
     if (!query.exec("UPDATE projects SET title = '" + *title + "', git_url = '" + *git_url
                     + "', projectDoc = '" + *doc + "', note = '" + *note + "', createdTime = '"
-                    + *createdTime + "' WHERE createdTime = '" + *oldTime + "'")) {
+                    + *createdTime + "' WHERE createdTime = '" + *oldTime + "' AND git_url = '"
+                    + oldGit + "'")) {
         qDebug() << query.lastError();
     } else {
         qDebug() << "Sucsessfull updated";

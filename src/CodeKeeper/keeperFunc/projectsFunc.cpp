@@ -19,7 +19,7 @@ void MainWindow::createProject()
     QString status = "NotStartedProjects";
     QString title = "Teamplate";
     QString git = "https://github.com/";
-    QString newProjectTeamplate = "New project\nGitHub\n" + date;
+    QString newProjectTeamplate = title + "\n" + git + "\n" + date;
 
     qDebug() << "New project: " << newProjectTeamplate;
 
@@ -80,10 +80,12 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QString PTitle = splitData[0];
         QString PGit = splitData[1];
         QString PCreatedTime = splitData[2];
+        QString PStatus = listWidget->objectName();
 
-        QStringList projectData = GetProjectData(&PGit, &PCreatedTime);
-        qDebug() << projectData;
-        qDebug() << "Open project: " << PTitle << " " << PGit << " " << PCreatedTime;
+        QStringList projectData = GetProjectData(&PTitle, &PStatus, &PGit);
+        qDebug() << "Open project: " << projectData[0] << " " << projectData[1] << " "
+                 << projectData[2] << " " << projectData[3] << " " << projectData[4] << " "
+                 << projectData[5];
 
         QGridLayout mainLayout(&dialog);
 
@@ -136,10 +138,10 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         cancelBtn->setIconSize(QSize(10, 10));
         cancelBtn->setFont(selectedFont);
 
-        linkToGit->setText(projectData[2]);
         title->setText(projectData[0]);
-        note->setPlainText(projectData[4]);
-        lastMod->setText("Last mod: " + projectData[6]);
+        linkToGit->setText(projectData[1]);
+        note->setPlainText(projectData[3]);
+        lastMod->setText("Last mod: " + projectData[5]);
 
         mainLayout.addWidget(title, 0, 0, 1, 2);
         mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
@@ -150,17 +152,18 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(cancelBtn, 5, 1);
 
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
-            QString text1 = title->text();
-            QString text2 = linkToGit->text();
-            QString text3 = getCurrentDateTimeString();
-            QString doc = documentation->currentText();
+            QString projectTitle = title->text();
+            QString projectLink = linkToGit->text();
+            QString projectCreatedTime = getCurrentDateTimeString();
+            QString projectDocumentation = documentation->currentText();
             QString noteT = note->toPlainText();
 
-            QString itemText = text1 + "\n" + text2 + "\n" + text3;
+            QString itemText = projectTitle + "\n" + projectLink + "\n" + projectCreatedTime;
             item->setText(itemText);
             qDebug() << itemText;
 
-            updateProjectData(&text1, &text2, &doc, &noteT, &text3, &splitData[2]);
+            updateProjectData(&projectTitle, &projectLink, &projectDocumentation, &noteT,
+                              &projectCreatedTime, &PCreatedTime, &PGit);
 
             dialog.close();
         });
@@ -168,6 +171,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
 
         dialog.exec();
+    } else {
+        qDebug() << "Error";
     }
 }
 

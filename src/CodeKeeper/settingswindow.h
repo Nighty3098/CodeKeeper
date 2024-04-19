@@ -5,9 +5,10 @@
 #include <QtWidgets>
 #include <QSettings>
 
-class SettingsWindow : public QMainWindow {
+class SettingsWindow : public QMainWindow
+{
     Q_OBJECT
-   public:
+public:
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
     QSettings *globalSettings;
@@ -25,7 +26,7 @@ class SettingsWindow : public QMainWindow {
     bool isHostB;
     bool isAutoSyncB;
 
-   private slots:
+private slots:
     void closeEvent(QCloseEvent *event);
     void QuitW();
     void checkUpdates();
@@ -34,8 +35,7 @@ class SettingsWindow : public QMainWindow {
 
     void setFontPr2();
 
-
-   private:
+private:
     QWidget *centralWidget;
     QVBoxLayout *mainLayout;
     QTabWidget *tabs;
@@ -85,4 +85,4 @@ class SettingsWindow : public QMainWindow {
     QPushButton *openFolder;
 };
 
-#endif  // SETTINGSWINDOW_H
+#endif // SETTINGSWINDOW_H
