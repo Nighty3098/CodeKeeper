@@ -136,15 +136,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     mainTitle->setAlignment(Qt::AlignCenter);
     mainTitle->setStyleSheet("font-size: 46px;");
 
-    QPropertyAnimation *animation = new QPropertyAnimation(mainTitle, "background-color: ");
-    animation->setDuration(2000); // Set the duration of the animation to 2 seconds
-
-    QColor startColor("#aaff6a"); // Set the start color to red
-    QColor endColor("#ffea6a"); // Set the end color to green
-
-    animation->setStartValue(startColor);
-    animation->setEndValue(endColor);
-
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
     openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), " Settings");
@@ -788,8 +779,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     loadTasks();
     loadProjects();
     setFontPr1();
-
-    animation->start();
 
     qDebug() << path;
     qDebug() << "Load time:" << startup.elapsed() << "ms";
