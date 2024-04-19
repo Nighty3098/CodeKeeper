@@ -1,0 +1,10 @@
+name: Run clang-format Linter
+on: [push, pull_request, fork]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: building
+        run: bash build.sh
