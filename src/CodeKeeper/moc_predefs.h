@@ -10,7 +10,7 @@
 #define __UINT_LEAST8_TYPE__ unsigned char
 #define __SIZEOF_FLOAT80__ 16
 #define __BFLT16_DENORM_MIN__ 9.18354961579912115600575419704879436e-41BF16
-#define __INTMAX_C(c) c ## L
+#define __INTMAX_C(c) c##L
 #define __CHAR_BIT__ 8
 #define __UINT8_MAX__ 0xff
 #define __SCHAR_WIDTH__ 8
@@ -81,7 +81,7 @@
 #define __SCHAR_MAX__ 0x7f
 #define __FLT128_MANT_DIG__ 113
 #define __WCHAR_MIN__ (-__WCHAR_MAX__ - 1)
-#define __INT64_C(c) c ## L
+#define __INT64_C(c) c##L
 #define __SSP_STRONG__ 3
 #define __GCC_ATOMIC_POINTER_LOCK_FREE 2
 #define __ATOMIC_SEQ_CST 5
@@ -202,7 +202,7 @@
 #define __FLT16_MIN_10_EXP__ (-4)
 #define __FLT64X_DECIMAL_DIG__ 21
 #define __DEC128_MIN__ 1E-6143DL
-#define __REGISTER_PREFIX__ 
+#define __REGISTER_PREFIX__
 #define __UINT16_MAX__ 0xffff
 #define __FLT128_HAS_INFINITY__ 1
 #define __FLT32_MIN__ 1.17549435082228750796873653722224568e-38F32
@@ -212,7 +212,7 @@
 #define __FLT_MANT_DIG__ 24
 #define __LDBL_DECIMAL_DIG__ 21
 #define __VERSION__ "13.2.1 20230801"
-#define __UINT64_C(c) c ## UL
+#define __UINT64_C(c) c##UL
 #define __cpp_unicode_characters 201411L
 #define _STDC_PREDEF_H 1
 #define __INT_LEAST32_MAX__ 0x7fffffff
@@ -251,14 +251,14 @@
 #define __FLT_RADIX__ 2
 #define __INT_LEAST16_TYPE__ short int
 #define __LDBL_EPSILON__ 1.08420217248550443400745280086994171e-19L
-#define __UINTMAX_C(c) c ## UL
+#define __UINTMAX_C(c) c##UL
 #define __FLT16_DIG__ 3
 #define __k8 1
 #define __FLT32X_MIN__ 2.22507385850720138309023271733240406e-308F32x
 #define __SIG_ATOMIC_MAX__ 0x7fffffff
 #define __cpp_constexpr 201603L
 #define __GCC_ATOMIC_WCHAR_T_LOCK_FREE 2
-#define __USER_LABEL_PREFIX__ 
+#define __USER_LABEL_PREFIX__
 #define __STDC_IEC_60559_BFP__ 201404L
 #define __SIZEOF_PTRDIFF_T__ 8
 #define __FLT64X_HAS_INFINITY__ 1
@@ -400,7 +400,7 @@
 #define __cpp_runtime_arrays 198712L
 #define __FLT32_DIG__ 6
 #define __UINT64_TYPE__ long unsigned int
-#define __UINT32_C(c) c ## U
+#define __UINT32_C(c) c##U
 #define __cpp_alias_templates 200704L
 #define __FLT_DENORM_MIN__ 1.40129846432481707092372958328991613e-45F
 #define __FLT128_IS_IEC_60559__ 1

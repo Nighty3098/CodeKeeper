@@ -3,18 +3,18 @@
 
 #include <QtWidgets>
 
-class SyncWindow : public QMainWindow {
+class SyncWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
     SyncWindow(QWidget *parent = nullptr);
     ~SyncWindow();
 
-    private slots:
+private slots:
 
-    protected:
-
-    private:
+protected:
+private:
 };
 
 #endif // MAINWINDOW_H
