@@ -58,7 +58,6 @@ void MainWindow::updateProjectData(QString *title, QString *git_url, QString *do
         qDebug() << query.lastError();
     } else {
         qDebug() << "Sucsessfull updated";
-        loadProjects();
     }
 }
 

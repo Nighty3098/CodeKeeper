@@ -1,5 +1,6 @@
 #include <QDateTime>
 #include <QSyntaxHighlighter>
+#include <QGraphicsOpacityEffect>
 
 QString MainWindow::getCurrentDateTimeString()
 {
@@ -10,9 +11,9 @@ QString MainWindow::getCurrentDateTimeString()
 
 void MainWindow::openSettingsWindow()
 {
-    QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect(this);
-    blurEffect->setBlurRadius(10);
-    this->setGraphicsEffect(blurEffect);
+    QGraphicsOpacityEffect *opEffect = new QGraphicsOpacityEffect(this);
+    opEffect->setOpacity(30);
+    this->setGraphicsEffect(opEffect);
 
     QRect geo = this->geometry();
     int x = geo.x();
@@ -60,38 +61,40 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
     }
 }
 
-void MainWindow::setFontPr1()
+void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 {
-    mainTitle->setFont(selectedFont);
+    QString font_size = QString::number(*font_size_int);
 
-    projectsMainLabel->setFont(selectedFont);
+    mainTitle->setFont(*selectedFont);
+
+    projectsMainLabel->setFont(*selectedFont);
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
-    openSettingsBtn->setFont(selectedFont);
+    openSettingsBtn->setFont(*selectedFont);
     openSettingsBtn->setStyleSheet("font-size: " + font_size + "pt;");
 
-    syncDataBtn->setFont(selectedFont);
+    syncDataBtn->setFont(*selectedFont);
     syncDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
 
-    notesList->setFont(selectedFont);
+    notesList->setFont(*selectedFont);
     notesList->setStyleSheet("font-size: " + font_size
                              + "pt; background-color: rgba(47, 51, 77, 0);");
 
-    menuButton->setFont(selectedFont);
+    menuButton->setFont(*selectedFont);
 
-    tasksMenuBtn->setFont(selectedFont);
+    tasksMenuBtn->setFont(*selectedFont);
 
     noteName->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
-    mdPreview->setFont(selectedFont);
+    mdPreview->setFont(*selectedFont);
 
-    noteEdit->setFont(selectedFont);
+    noteEdit->setFont(*selectedFont);
     noteEdit->setStyleSheet("font-size: " + font_size + "pt;");
 
-    noteNameLabel->setFont(selectedFont);
+    noteNameLabel->setFont(*selectedFont);
     noteNameLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
-    taskText->setFont(selectedFont);
+    taskText->setFont(*selectedFont);
     taskText->setStyleSheet("font-size: " + font_size + "pt;");
 
     incompleteTasks->setStyleSheet(
@@ -210,44 +213,44 @@ void MainWindow::setFontPr1()
             + "pt;"
               "}");
 
-    fProjects->setFont(selectedFont);
-    flProjects->setFont(selectedFont);
-    nsProjects->setFont(selectedFont);
-    sProjects->setFont(selectedFont);
+    fProjects->setFont(*selectedFont);
+    flProjects->setFont(*selectedFont);
+    nsProjects->setFont(*selectedFont);
+    sProjects->setFont(*selectedFont);
 
     nsProjects->setStyleSheet("font-size: 16px;");
     sProjects->setStyleSheet("font-size: 16px;");
     flProjects->setStyleSheet("font-size: 16px;");
     fProjects->setStyleSheet("font-size: 16px;");
 
-    projectsMainLabel->setFont(selectedFont);
-    notStartedProjects->setFont(selectedFont);
-    startedProjects->setFont(selectedFont);
-    finishlineProjects->setFont(selectedFont);
-    finishedProjects->setFont(selectedFont);
+    projectsMainLabel->setFont(*selectedFont);
+    notStartedProjects->setFont(*selectedFont);
+    startedProjects->setFont(*selectedFont);
+    finishlineProjects->setFont(*selectedFont);
+    finishedProjects->setFont(*selectedFont);
 
-    // projectsMenuButton->setFont(selectedFont);
+    // projectsMenuButton->setFont(*selectedFont);
 
-    projectsMenu->setFont(selectedFont);
+    projectsMenu->setFont(*selectedFont);
 
-    tabs->setFont(selectedFont);
+    tabs->setFont(*selectedFont);
     tabs->setStyleSheet("font-size: " + font_size + "pt;");
 
-    totalProjectsL->setFont(selectedFont);
+    totalProjectsL->setFont(*selectedFont);
     totalProjectsL->setStyleSheet("font-size: " + font_size + "pt;");
 
-    incompleteTasks->setFont(selectedFont);
-    inprocessTasks->setFont(selectedFont);
-    completeTasks->setFont(selectedFont);
+    incompleteTasks->setFont(*selectedFont);
+    inprocessTasks->setFont(*selectedFont);
+    completeTasks->setFont(*selectedFont);
 
-    label_1->setFont(selectedFont);
+    label_1->setFont(*selectedFont);
     label_1->setStyleSheet("font-size: 16px;");
-    label_2->setFont(selectedFont);
+    label_2->setFont(*selectedFont);
     label_2->setStyleSheet("font-size: 16px;");
-    label_3->setFont(selectedFont);
+    label_3->setFont(*selectedFont);
     label_3->setStyleSheet("font-size: 16px;");
 
-    tasksProgress->setFont(selectedFont);
+    tasksProgress->setFont(*selectedFont);
     tasksProgress->setStyleSheet(
             "background-color: rgb(255, 117, 127); selection-background-color: "
             "rgb(195, 232, 141); color: #222436; font-size: "

@@ -23,31 +23,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
-    this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    this->setMouseTracking(true);
-    this->setMinimumSize(560, 400);
-    this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setWindowIcon(QIcon(":/icon.png"));
 
-    sizeGrip = new QSizeGrip(this);
-    sizeGrip->setFixedSize(12, 12);
-    sizeGrip->setVisible(true);
-    sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+    globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
+    restoreGeometry(globalSettings->value("geometry").toByteArray());
 
-    sizeGrip2 = new QSizeGrip(this);
-    sizeGrip2->setFixedSize(12, 12);
-    sizeGrip2->setVisible(true);
-    sizeGrip2->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+    selectedFont = globalSettings->value("font").value<QFont>();
+    font_size = globalSettings->value("fontSize").value<QString>();
+    theme = globalSettings->value("theme").value<QString>();
+    path = globalSettings->value("path").value<QDir>();
+    isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
 
-    sizeGrip3 = new QSizeGrip(this);
-    sizeGrip3->setFixedSize(12, 12);
-    sizeGrip3->setVisible(true);
-    sizeGrip3->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
-    sizeGrip4 = new QSizeGrip(this);
-    sizeGrip4->setFixedSize(12, 12);
-    sizeGrip4->setVisible(true);
-    sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+    closeBtn = new QPushButton();
+    minimizeBtn = new QPushButton();
+    maximizeBtn = new QPushButton();
 
     winControlL = new QHBoxLayout;
     winControlL->setSpacing(7);
@@ -55,10 +44,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     isFullScreen = false;
 
     QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-    closeBtn = new QPushButton();
-    minimizeBtn = new QPushButton();
-    maximizeBtn = new QPushButton();
 
     closeBtn->setFixedSize(15, 15);
     minimizeBtn->setFixedSize(15, 15);
@@ -105,21 +90,45 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                                "    background-repeat: no-repeat;"
                                "}");
 
-    winControlL->addWidget(closeBtn);
-    winControlL->addWidget(minimizeBtn);
-    winControlL->addWidget(maximizeBtn);
-    winControlL->addItem(headerSp);
-    winControlL->addWidget(sizeGrip2);
+    sizeGrip = new QSizeGrip(this);
+    sizeGrip->setFixedSize(12, 12);
+    sizeGrip->setVisible(true);
+    sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+
+    sizeGrip2 = new QSizeGrip(this);
+    sizeGrip2->setFixedSize(12, 12);
+    sizeGrip2->setVisible(true);
+    sizeGrip2->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+
+    sizeGrip3 = new QSizeGrip(this);
+    sizeGrip3->setFixedSize(12, 12);
+    sizeGrip3->setVisible(true);
+    sizeGrip3->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+
+    sizeGrip4 = new QSizeGrip(this);
+    sizeGrip4->setFixedSize(12, 12);
+    sizeGrip4->setVisible(true);
+    sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+
+    if (isCustomTitlebar) {
+        this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+
+        winControlL->addWidget(closeBtn);
+        winControlL->addWidget(minimizeBtn);
+        winControlL->addWidget(maximizeBtn);
+        winControlL->addItem(headerSp);
+        winControlL->addWidget(sizeGrip2);
+    }
+
+    else {
+    }
+
+    this->setMouseTracking(true);
+    this->setMinimumSize(560, 400);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setWindowIcon(QIcon(":/icon.png"));
 
     mainLayout = new QGridLayout(centralWidget);
-
-    globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
-    restoreGeometry(globalSettings->value("geometry").toByteArray());
-
-    selectedFont = globalSettings->value("font").value<QFont>();
-    font_size = globalSettings->value("fontSize").value<QString>();
-    theme = globalSettings->value("theme").value<QString>();
-    path = globalSettings->value("path").value<QDir>();
 
     QString dir = path.absolutePath();
     qDebug() << dir;
@@ -611,7 +620,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tabs->setTabBarAutoHide(true);
 
-    mainLayout->addLayout(winControlL, 0, 0, 1, 2);
+    if(isCustomTitlebar) {
+        mainLayout->addLayout(winControlL, 0, 0, 1, 2);
+    }
+    else {
+
+    }
     mainLayout->addWidget(tabs, 1, 0);
     mainLayout->addWidget(sizeGrip3, 2, 0);
     mainLayout->addWidget(sizeGrip4, 2, 1);
@@ -778,7 +792,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     loadTasks();
     loadProjects();
-    setFontPr1();
+
+    int font_size_int = font_size.toInt();
+    setFontPr1(&selectedFont, &font_size_int);
 
     qDebug() << path;
     qDebug() << "Load time:" << startup.elapsed() << "ms";

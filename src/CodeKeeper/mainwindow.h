@@ -44,9 +44,12 @@ public:
     QString font_size;
     QString theme;
     QDir path;
+    bool isCustomTitlebar;
 
     QFileSystemModel *notesDirModel;
     QFileSystemModel *noteFileModel;
+
+    void setFontPr1(QFont *selectedFont, int *font_size_int);
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -105,8 +108,6 @@ private slots:
     void setTable();
 
     void updateWindowTitle();
-
-    void setFontPr1();
 
     QString getCurrentDateTimeString();
 
