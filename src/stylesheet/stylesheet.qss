@@ -305,31 +305,35 @@ QTreeView {
         alternate-background-color: #545c7e;
 } 
 
-
 QTreeView::item:alternate {
+    height: 14px;
     background-color: #2f334d;
     border-radius: 0px;
 }
 
 QTreeView::item:selected {
+    height: 14px;
     background-color: #222436;
     border: 1px solid #545c7e;
     border-radius: 0px;
 }
 
 QTreeView::item:selected:!active {
+    height: 14px;
     background-color: #222436;
     color: #545c7e;
     border-radius: 0px;
 }
 
 QTreeView::item:selected:active {
+    height: 14px;
     background-color: #222436;
     color: #545c7e;
     border-radius: 0px;
 }
 
 QTreeView::item:hover {
+    height: 14px;
     background-color: #222436;
     border-radius: 0px;
 }
