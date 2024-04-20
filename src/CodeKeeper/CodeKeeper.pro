@@ -1,4 +1,4 @@
-QT += core gui widgets sql
+QT += core gui widgets sql webenginewidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -9,6 +9,7 @@ LIBS += -L3rdParty/qmarkdowntextedit -L$$OUT_PWD
 win32: LIBS +=  -L$$OUT_PWD/release -L$$OUT_PWD/debug
 
 SOURCES += \
+    keeperFunc/md2html.cpp \
     main.cpp \
     mainwindow.cpp \
     settingswindow.cpp \
