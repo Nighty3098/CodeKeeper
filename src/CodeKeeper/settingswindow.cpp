@@ -18,7 +18,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
-    path = globalSettings->value("path").value<QDir>();
+    path = globalSettings->value("path").value<QString>();
 
     git_repo = globalSettings->value("git_repo").value<QString>();
     git_user = globalSettings->value("git_user").value<QString>();
@@ -192,7 +192,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     pathToFolder->setText("Directory");
     pathToFolder->setPlaceholderText("Directory");
     pathToFolder->setMaximumHeight(30);
-    pathToFolder->setText(path.absolutePath());
+    pathToFolder->setText(path);
 
     openFolder = new QPushButton(QPixmap(":/open.png"), " Browse");
     openFolder->setMaximumHeight(30);

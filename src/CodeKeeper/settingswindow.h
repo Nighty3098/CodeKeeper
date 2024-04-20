@@ -16,10 +16,10 @@ public:
     QFont selectedFont;
     QString font_size;
     QString theme;
-    QDir path;
     QString git_repo;
     QString git_user;
     QString git_token;
+    QString path;
 
     bool isTimeB;
     bool isDateB;

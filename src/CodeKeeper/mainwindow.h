@@ -7,10 +7,12 @@
 #include <QSettings>
 #include <QTextBrowser>
 #include <QtWidgets>
+#include <QtConcurrent/QtConcurrent>
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"
 #include "syncwindow.h"
+
 
 class CustomIconProvider : public QFileIconProvider
 {
@@ -39,12 +41,12 @@ class MainWindow : public QMainWindow
 public:
     QSettings *globalSettings;
     bool isVisibleNotesList;
-
+    QString dir;
     QFont selectedFont;
     QString font_size;
     QString theme;
-    QDir path;
     bool isCustomTitlebar;
+    int sortNotesRole;
 
     QFileSystemModel *notesDirModel;
     QFileSystemModel *noteFileModel;
@@ -67,6 +69,7 @@ private slots:
     void saveNote();
     void toViewMode();
     void createFolder();
+    void renameItem();
 
     void loadTasks();
     void removeTaskFromDB(QString *task, QString *status);
@@ -128,6 +131,7 @@ private slots:
                            QString *createdTime, QString *oldTime, QString *oldGit);
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
+
 
 protected:
     void mousePressEvent(QMouseEvent *event) override
@@ -232,6 +236,7 @@ private:
 
     QAction *newNote;
     QAction *rmNote;
+    QAction *renameItemA;
     QAction *newFolder;
     QAction *showList;
     QAction *showRender;
@@ -252,6 +257,11 @@ private:
     QAction *setNumListA;
     QAction *setTableA;
     QAction *setQuoteA;
+
+    QAction *nameAction;
+    QAction *typeAction;
+    QAction *dateAction;
+
 
     SettingsWindow *settingsWindow;
 };
