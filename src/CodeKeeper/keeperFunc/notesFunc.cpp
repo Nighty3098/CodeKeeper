@@ -155,6 +155,40 @@ void MainWindow::removeNote()
     }
 }
 
+void MainWindow::renameItem()
+{
+    QItemSelectionModel *selectionModel = notesList->selectionModel();
+    QModelIndexList indexes = selectionModel->selectedIndexes();
+
+    if (indexes.isEmpty()) {
+        // No items are selected
+        return;
+    }
+
+    QModelIndex index = indexes.first();
+    QFileInfo fileInfo = notesDirModel->fileInfo(index);
+
+    // Prompt the user to enter a new name
+    bool ok;
+    QString newName =
+            QInputDialog::getText(notesList, tr("Rename File or Folder"), tr("Enter the new name:"),
+                                  QLineEdit::Normal, fileInfo.baseName(), &ok);
+
+    if (ok && !newName.isEmpty()) {
+        // Get the new file path
+        QString newFilePath = fileInfo.absoluteDir().absoluteFilePath(newName);
+
+        // Rename the file or folder
+        if (fileInfo.isFile()) {
+            QFile file(fileInfo.absoluteFilePath());
+            if (file.rename(newFilePath)) { }
+        } else if (fileInfo.isDir()) {
+            QDir dir(fileInfo.absoluteFilePath());
+            if (dir.rename(fileInfo.absoluteFilePath(), newFilePath)) { }
+        }
+    }
+}
+
 void MainWindow::setH1()
 {
     QTextCursor cursor = noteEdit->textCursor();
