@@ -106,6 +106,7 @@ private slots:
     void setStrike();
     void setTask();
     void setTable();
+    void setQuote();
 
     void updateWindowTitle();
 
@@ -195,6 +196,7 @@ private:
     QPushButton *setTaskB;
     QPushButton *setNumListB;
     QPushButton *setTableB;
+    QPushButton *setQuoteB;
 
     // ========================================================
     // tasks tab
@@ -249,6 +251,7 @@ private:
     QAction *setStrikeA;
     QAction *setNumListA;
     QAction *setTableA;
+    QAction *setQuoteA;
 
     SettingsWindow *settingsWindow;
 };

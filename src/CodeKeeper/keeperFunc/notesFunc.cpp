@@ -287,6 +287,18 @@ void MainWindow::setTask()
     noteEdit->setTextCursor(cursor);
 }
 
+void MainWindow::setQuote()
+{
+    QTextCursor cursor = noteEdit->textCursor();
+    int lineNumber = cursor.blockNumber();
+    QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
+
+    cursor.movePosition(QTextCursor::StartOfLine);
+    cursor.insertText(" > ");
+
+    noteEdit->setTextCursor(cursor);
+}
+
 void MainWindow::setTable()
 {
     QTextCursor cursor = noteEdit->textCursor();

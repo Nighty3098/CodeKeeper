@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                             "    background-repeat: no-repeat;"
                             "    background-color: rgba(0, 0, 0, 0);"
                             "}");
-                            
+
     minimizeBtn->setStyleSheet("QPushButton {"
                                "    border-color: rgba(0, 0, 0, 0);"
                                "    background-color: rgba(0, 0, 0, 0);"
@@ -281,6 +281,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     editMenu->addSeparator();
 
+    setQuoteA = editMenu->addAction(QPixmap(":/quote.png"), "Add quote", this, SLOT(setQuote()));
     setListA = editMenu->addAction(QPixmap(":/list.png"), "Add list item", this, SLOT(setList()));
     setNumListA = editMenu->addAction(QPixmap(":/numList.png"), "Add numbered list", this,
                                       SLOT(setNumList()));
@@ -312,6 +313,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTaskB = new QPushButton(QPixmap(":/checkbox.png"), "");
     setNumListB = new QPushButton(QPixmap(":/numList.png"), "");
     setTableB = new QPushButton(QPixmap(":/table.png"), "");
+    setQuoteB = new QPushButton(QPixmap(":/quote.png"), "");
 
     setH1B->setStyleSheet("background-color: #222436; border-color: #222436;");
     setH2B->setStyleSheet("background-color: #222436; border-color: #222436;");
@@ -324,6 +326,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTaskB->setStyleSheet("background-color: #222436; border-color: #222436;");
     setNumListB->setStyleSheet("background-color: #222436; border-color: #222436;");
     setTableB->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setQuoteB->setStyleSheet("background-color: #222436; border-color: #222436;");
 
     setH1B->setFixedSize(30, 30);
     setH2B->setFixedSize(30, 30);
@@ -336,6 +339,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTaskB->setFixedSize(30, 30);
     setNumListB->setFixedSize(30, 30);
     setTableB->setFixedSize(30, 30);
+    setQuoteB->setFixedSize(30, 30);
 
     setH1B->setToolTip("<p style='color: #ffffff;'>Heading 1</p>");
     setH2B->setToolTip("<p style='color: #ffffff;'>Heading 2</p>");
@@ -348,6 +352,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTaskB->setToolTip("<p style='color: #ffffff;'>Task</p>");
     setNumListB->setToolTip("<p style='color: #ffffff;'>Numbered list</p>");
     setTableB->setToolTip("<p style='color: #ffffff;'>Insert table</p>");
+    setQuoteB->setToolTip("<p style='color: #ffffff;'>Set quote</p>");
 
     menuLayout->addWidget(menuButton);
     menuLayout->addWidget(setH1B);
@@ -357,6 +362,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->addWidget(setBoldB);
     menuLayout->addWidget(setItalicB);
     menuLayout->addWidget(setStrikeB);
+    menuLayout->addWidget(setQuoteB);
 
     menuLayout->addWidget(setListB);
     menuLayout->addWidget(setNumListB);
@@ -364,13 +370,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->addWidget(setTaskB);
     menuLayout->addWidget(setTableB);
 
-    // contentLayout->addWidget(notesList);
-    // contentLayout->addWidget(noteEdit);
-    // contentLayout->addWidget(mdPreview);
-
     notesCLayout->addLayout(menuLayout);
     notesCLayout->addWidget(noteSplitter);
-    // notesCLayout->addLayout(contentLayout);
 
     notesList->setVisible(isVisibleNotesList);
     mdPreview->setVisible(isVisiblePreview);
@@ -420,7 +421,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     label_1->setAlignment(Qt::AlignCenter);
 
     incompleteTasks = new QListWidget();
-    // incompleteTasks->setDragEnabled(true);
     incompleteTasks->setDragDropMode(QListWidget::DragDrop);
     incompleteTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     incompleteTasks->setWordWrap(true);
@@ -433,7 +433,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     label_2->setAlignment(Qt::AlignCenter);
 
     inprocessTasks = new QListWidget();
-    // inprocessTasks->setDragEnabled(true);
     inprocessTasks->setDragDropMode(QListWidget::DragDrop);
     inprocessTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     inprocessTasks->setWordWrap(true);
@@ -446,7 +445,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     label_3->setAlignment(Qt::AlignCenter);
 
     completeTasks = new QListWidget();
-    // completeTasks->setDragEnabled(true);
     completeTasks->setDragDropMode(QListWidget::DragDrop);
     completeTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     completeTasks->setWordWrap(true);
@@ -688,6 +686,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
     connect(setNumListB, &QPushButton::clicked, this, &MainWindow::setNumList);
     connect(setTableB, &QPushButton::clicked, this, &MainWindow::setTable);
+    connect(setQuoteB, &QPushButton::clicked, this, &MainWindow::setQuote);
 
     connect(notesList, &QTreeView::clicked, this, &MainWindow::onNoteDoubleClicked);
 
@@ -709,7 +708,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QShortcut *toThirdTab = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_3), this);
     QShortcut *toFourthTab = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_4), this);
 
-    // Connect QShortcuts to QTabWidget's setCurrentIndex function
     connect(toFirstTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(0); });
     connect(toSecondTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(1); });
     connect(toThirdTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(2); });
