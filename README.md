@@ -1,6 +1,6 @@
 # Notes manager for developers
 
-![header](imgs/header.png)
+![header](imgs/markdown.jpg)
 
 <div align="center">
 <a href="./LICENSE.md"><img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=85e185&logoColor=85e185&labelColor=0d1117" /></a>
@@ -45,7 +45,7 @@
   - [X] - Project creation functionality
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
-  - [ ] - Update markdown render ( migrate to QWebEngineView )
+  - [X] - Update markdown render ( migrate to QWebEngineView )
   - [ ] - Functionality of moving notes
   - [ ] - Multilang
   - [X] - Fix visual bugs

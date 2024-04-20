@@ -1,3 +1,6 @@
+#include "md4c-html.h"
+#include "md4c.h"
+
 QModelIndex indexFromItem(QTreeWidgetItem *item, int column) { }
 
 bool createFile(const QString &path)
@@ -15,10 +18,43 @@ bool createFile(const QString &path)
     }
 }
 
+
+
 void MainWindow::updateMDPreview()
 {
-    QString text = noteEdit->toPlainText();
-    mdPreview->setMarkdown(text);
+    QString md = noteEdit->toPlainText();
+
+    QString html = "<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
+                   "<script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>"
+                   "<style>"
+                        "html {"
+                        "    font-family: " + selectedFont.toString() + ";"
+                        "    font-size: " + font_size + ";"
+                        "    line-height: 1.5;"
+                        "}"
+
+                        "h1, h2, h3 {"
+                        "    font-weight: normal;"
+                        "    margin-top: 20px;"
+                        "    margin-bottom: 10px;"
+                        "    color:#f5f5f5;"
+                        "}"
+
+                        "code {"
+                        "    font-family: monospace;"
+                        "    background-color: #f5f5f5;"
+                        "    padding: 2px 5px;"
+                        "    border-radius: 3px;"
+                        "}"
+                        "quote {"
+                        "    font-family: monospace;"
+                        "    background-color: #f5f5f5;"
+                        "    padding: 2px 5px;"
+                        "    border-radius: 3px;"
+                        "}"
+                        "</style>" + md;
+
+    mdPreview->setHtml(html);
 }
 
 void MainWindow::saveNote()
@@ -102,6 +138,8 @@ void MainWindow::toViewMode()
     setStrikeB->setVisible(!isView);
     setTaskB->setVisible(!isView);
     setNumListB->setVisible(!isView);
+    setTableB->setVisible(!isView);
+    setQuoteB->setVisible(!isView);
 
     notesList->setVisible(!isView);
     noteEdit->setVisible(!isView);
