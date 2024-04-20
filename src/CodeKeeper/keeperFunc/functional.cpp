@@ -83,6 +83,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     noteName->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
     mdPreview->setFont(*selectedFont);
+    mdPreview->setStyleSheet("font-size: " + font_size + "pt;");
 
     noteEdit->setFont(*selectedFont);
     noteEdit->setStyleSheet("font-size: " + font_size + "pt;");

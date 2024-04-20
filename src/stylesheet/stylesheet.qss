@@ -256,7 +256,7 @@ QPlainTextEdit {
         alternate-background-color: #181818;
 }
 
-QTextBrowser {
+QWebEngineView {
         line-height: 10px;
         background-color: #222436;
         selection-background-color: #999999;
