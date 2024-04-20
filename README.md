@@ -45,7 +45,7 @@
   - [X] - Project creation functionality
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
-  - [ ] - Update markdown render ( migrate to QWebEngineView )
+  - [X] - Update markdown render ( migrate to QWebEngineView )
   - [ ] - Functionality of moving notes
   - [ ] - Multilang
   - [X] - Fix visual bugs
