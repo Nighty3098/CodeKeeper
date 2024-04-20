@@ -26,11 +26,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     restoreGeometry(globalSettings->value("geometry").toByteArray());
 
+    dir = globalSettings->value("path").value<QString>();
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
-    path = globalSettings->value("path").value<QDir>();
     isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
+    sortNotesRole = globalSettings->value("sortRole", Qt::DisplayRole).value<int>();
+    bool isVisibleNotesList = globalSettings->value("isVisibleNotesList", true).toBool();
+    bool isVisibleFolders = globalSettings->value("isVisibleFolders", true).toBool();
+    bool isVisiblePreview = globalSettings->value("isVisiblePreview", false).toBool();
+    bool isViewMode = globalSettings->value("isViewMode", false).toBool();
+
+    qDebug() << dir;
 
     closeBtn = new QPushButton();
     minimizeBtn = new QPushButton();
@@ -60,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                             "    background-repeat: no-repeat;"
                             "    background-color: rgba(0, 0, 0, 0);"
                             "}");
-                            
+
     minimizeBtn->setStyleSheet("QPushButton {"
                                "    border-color: rgba(0, 0, 0, 0);"
                                "    background-color: rgba(0, 0, 0, 0);"
@@ -119,23 +126,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         winControlL->addWidget(sizeGrip2);
     }
 
-    else {
-    }
-
     this->setMouseTracking(true);
     this->setMinimumSize(560, 400);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setWindowIcon(QIcon(":/icon.png"));
 
     mainLayout = new QGridLayout(centralWidget);
-
-    QString dir = path.absolutePath();
-    qDebug() << dir;
-
-    bool isVisibleNotesList = globalSettings->value("isVisibleNotesList", true).toBool();
-    bool isVisibleFolders = globalSettings->value("isVisibleFolders", true).toBool();
-    bool isVisiblePreview = globalSettings->value("isVisiblePreview", false).toBool();
-    bool isViewMode = globalSettings->value("isViewMode", false).toBool();
 
     // ========================================================
 
@@ -170,20 +166,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->setSizeConstraint(QLayout::SetFixedSize);
     menuLayout->setAlignment(Qt::AlignHCenter);
 
-    // icons
-    iconProvider = new CustomIconProvider();
-
     QStringList filters;
     filters << ""
             << "*.md"
             << "*.txt"
             << "*.html";
 
+    iconProvider = new CustomIconProvider();
+
     notesDirModel = new QFileSystemModel();
-    notesDirModel->setIconProvider(iconProvider);
-    notesDirModel->setRootPath("../");
+    notesDirModel->setRootPath(dir);
     notesDirModel->setNameFilters(filters);
     notesDirModel->setNameFilterDisables(false);
+    notesDirModel->iconProvider();
+    notesDirModel->setIconProvider(iconProvider);
 
     notesList = new QTreeView();
     notesList->setAnimated(true);
@@ -195,9 +191,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesList->setHeaderHidden(true);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
-    notesList->setRootIndex(notesDirModel->index("../"));
-
     notesList->setModel(notesDirModel);
+    notesList->setRootIndex(notesDirModel->index(dir));
+
     notesList->setColumnWidth(0, 297);
     notesList->setColumnHidden(1, true);
     notesList->setColumnHidden(2, true);
@@ -253,50 +249,48 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                              Qt::CTRL + Qt::Key_Delete);
     newFolder = menu->addAction(QPixmap(":/new_folder.png"), "New folder", this,
                                 SLOT(createFolder()), Qt::CTRL + Qt::SHIFT + Qt::Key_N);
-
+    renameItemA = menu->addAction(QPixmap(":/rename.png"), "Rename", this, SLOT(renameItem()),
+                                  Qt::Key_F2);
     menu->addSeparator();
-
     showList = viewMenu->addAction("Show notes list", this, SLOT(hideNotesList()),
                                    Qt::CTRL + Qt::SHIFT + Qt::Key_L);
     showList->setCheckable(true);
     showList->setChecked(isVisibleNotesList);
-
     showRender = viewMenu->addAction("Show md preview", this, SLOT(showPreview()),
                                      Qt::CTRL + Qt::SHIFT + Qt::Key_P);
     showRender->setCheckable(true);
     showRender->setChecked(isVisiblePreview);
-
     viewMenu->addSeparator();
-
     viewMode = viewMenu->addAction(QPixmap(":/view.png"), "Reading mode", this, SLOT(toViewMode()),
                                    Qt::CTRL + Qt::SHIFT + Qt::Key_V);
     viewMode->setCheckable(true);
     viewMode->setChecked(isViewMode);
 
     QMenu *editMenu = new QMenu("Edit", menu);
-
     setH1A = editMenu->addAction(QPixmap(":/h1.png"), "Set H1", this, SLOT(setH1()));
     setH2A = editMenu->addAction(QPixmap(":/h2.png"), "Set H2", this, SLOT(setH2()));
     setH3A = editMenu->addAction(QPixmap(":/h3.png"), "Set H3", this, SLOT(setH3()));
-
     editMenu->addSeparator();
-
+    setQuoteA = editMenu->addAction(QPixmap(":/quote.png"), "Add quote", this, SLOT(setQuote()));
     setListA = editMenu->addAction(QPixmap(":/list.png"), "Add list item", this, SLOT(setList()));
     setNumListA = editMenu->addAction(QPixmap(":/numList.png"), "Add numbered list", this,
                                       SLOT(setNumList()));
     setLinkA = editMenu->addAction(QPixmap(":/link.png"), "Add link", this, SLOT(setLink()));
     setTaskA = editMenu->addAction(QPixmap(":/checkbox.png"), "Add task", this, SLOT(setTask()));
-
     editMenu->addSeparator();
-
     setBoldA = editMenu->addAction(QPixmap(":/bold.png"), "Set bold", this, SLOT(setBold()));
     setItalicA =
             editMenu->addAction(QPixmap(":/italic.png"), "Set italic", this, SLOT(setItalic()));
     setStrikeA = editMenu->addAction(QPixmap(":/strikethrough.png"), "Set strikethrough", this,
                                      SLOT(setStrike()));
-
     setTableA = editMenu->addAction(QPixmap(":/table.png"), "Add table", this, SLOT(setTable()));
 
+    QMenu *sortMenu = new QMenu("Sort by", menu);
+    nameAction = sortMenu->addAction("Name");
+    typeAction = sortMenu->addAction("Type");
+    dateAction = sortMenu->addAction("Date");
+
+    // menu->addMenu(sortMenu);
     menu->addMenu(editMenu);
     menu->addMenu(viewMenu);
     menuButton->setMenu(menu);
@@ -312,6 +306,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTaskB = new QPushButton(QPixmap(":/checkbox.png"), "");
     setNumListB = new QPushButton(QPixmap(":/numList.png"), "");
     setTableB = new QPushButton(QPixmap(":/table.png"), "");
+    setQuoteB = new QPushButton(QPixmap(":/quote.png"), "");
 
     setH1B->setStyleSheet("background-color: #222436; border-color: #222436;");
     setH2B->setStyleSheet("background-color: #222436; border-color: #222436;");
@@ -324,6 +319,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTaskB->setStyleSheet("background-color: #222436; border-color: #222436;");
     setNumListB->setStyleSheet("background-color: #222436; border-color: #222436;");
     setTableB->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setQuoteB->setStyleSheet("background-color: #222436; border-color: #222436;");
 
     setH1B->setFixedSize(30, 30);
     setH2B->setFixedSize(30, 30);
@@ -336,6 +332,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTaskB->setFixedSize(30, 30);
     setNumListB->setFixedSize(30, 30);
     setTableB->setFixedSize(30, 30);
+    setQuoteB->setFixedSize(30, 30);
 
     setH1B->setToolTip("<p style='color: #ffffff;'>Heading 1</p>");
     setH2B->setToolTip("<p style='color: #ffffff;'>Heading 2</p>");
@@ -348,6 +345,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTaskB->setToolTip("<p style='color: #ffffff;'>Task</p>");
     setNumListB->setToolTip("<p style='color: #ffffff;'>Numbered list</p>");
     setTableB->setToolTip("<p style='color: #ffffff;'>Insert table</p>");
+    setQuoteB->setToolTip("<p style='color: #ffffff;'>Set quote</p>");
 
     menuLayout->addWidget(menuButton);
     menuLayout->addWidget(setH1B);
@@ -357,6 +355,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->addWidget(setBoldB);
     menuLayout->addWidget(setItalicB);
     menuLayout->addWidget(setStrikeB);
+    menuLayout->addWidget(setQuoteB);
 
     menuLayout->addWidget(setListB);
     menuLayout->addWidget(setNumListB);
@@ -364,13 +363,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->addWidget(setTaskB);
     menuLayout->addWidget(setTableB);
 
-    // contentLayout->addWidget(notesList);
-    // contentLayout->addWidget(noteEdit);
-    // contentLayout->addWidget(mdPreview);
-
     notesCLayout->addLayout(menuLayout);
     notesCLayout->addWidget(noteSplitter);
-    // notesCLayout->addLayout(contentLayout);
 
     notesList->setVisible(isVisibleNotesList);
     mdPreview->setVisible(isVisiblePreview);
@@ -420,7 +414,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     label_1->setAlignment(Qt::AlignCenter);
 
     incompleteTasks = new QListWidget();
-    // incompleteTasks->setDragEnabled(true);
     incompleteTasks->setDragDropMode(QListWidget::DragDrop);
     incompleteTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     incompleteTasks->setWordWrap(true);
@@ -433,7 +426,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     label_2->setAlignment(Qt::AlignCenter);
 
     inprocessTasks = new QListWidget();
-    // inprocessTasks->setDragEnabled(true);
     inprocessTasks->setDragDropMode(QListWidget::DragDrop);
     inprocessTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     inprocessTasks->setWordWrap(true);
@@ -446,7 +438,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     label_3->setAlignment(Qt::AlignCenter);
 
     completeTasks = new QListWidget();
-    // completeTasks->setDragEnabled(true);
     completeTasks->setDragDropMode(QListWidget::DragDrop);
     completeTasks->setDefaultDropAction(Qt::DropAction::MoveAction);
     completeTasks->setWordWrap(true);
@@ -571,7 +562,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tabs = new QTabWidget();
     tabs->setMovable(true);
-    // tabs->setTabPosition(QTabWidget::West);
 
     // main tab
     QWidget *mainTab = new QWidget();
@@ -663,10 +653,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             [=](QListWidgetItem *item) { renameItemOnDoubleClick(completeTasks, item); });
 
     connect(incompleteTasks, &QListWidget::itemDoubleClicked, this,
-            [=](QListWidgetItem *item) { renameItemOnDoubleClick(completeTasks, item); });
+            [=](QListWidgetItem *item) { renameItemOnDoubleClick(incompleteTasks, item); });
 
     connect(inprocessTasks, &QListWidget::itemDoubleClicked, this,
-            [=](QListWidgetItem *item) { renameItemOnDoubleClick(completeTasks, item); });
+            [=](QListWidgetItem *item) { renameItemOnDoubleClick(inprocessTasks, item); });
 
     connect(notStartedProjects, &QListWidget::itemDoubleClicked, this,
             [=](QListWidgetItem *item) { openProject(notStartedProjects, item); });
@@ -688,6 +678,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(setTaskB, &QPushButton::clicked, this, &MainWindow::setTask);
     connect(setNumListB, &QPushButton::clicked, this, &MainWindow::setNumList);
     connect(setTableB, &QPushButton::clicked, this, &MainWindow::setTable);
+    connect(setQuoteB, &QPushButton::clicked, this, &MainWindow::setQuote);
 
     connect(notesList, &QTreeView::clicked, this, &MainWindow::onNoteDoubleClicked);
 
@@ -709,7 +700,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QShortcut *toThirdTab = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_3), this);
     QShortcut *toFourthTab = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_4), this);
 
-    // Connect QShortcuts to QTabWidget's setCurrentIndex function
     connect(toFirstTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(0); });
     connect(toSecondTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(1); });
     connect(toThirdTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(2); });
@@ -793,7 +783,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     int font_size_int = font_size.toInt();
     setFontPr1(&selectedFont, &font_size_int);
 
-    qDebug() << path;
+    qDebug() << dir;
     qDebug() << "Load time:" << startup.elapsed() << "ms";
 }
 

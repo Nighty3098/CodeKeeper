@@ -30,8 +30,8 @@ void SettingsWindow::saveData()
     QString theme = themeSelector->currentText();
     globalSettings->setValue("theme", theme);
 
-    QString path = pathToFolder->text();
-    globalSettings->setValue("path", QVariant(path));
+    QString dir = pathToFolder->text();
+    globalSettings->setValue("path", dir);
 
     QString git_tokenS = gitToken->text();
     globalSettings->setValue("git_token", git_tokenS);
@@ -73,9 +73,9 @@ void SettingsWindow::fopenFolder()
 {
     QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
     if (!str.isEmpty()) {
-        QDir path = str;
-        globalSettings->setValue("path", QVariant(str));
-        qDebug() << path;
+        qDebug() << str;
+        globalSettings->setValue("path", str);
+
         pathToFolder->setText(str);
 
         QMessageBox *messageBox = new QMessageBox();

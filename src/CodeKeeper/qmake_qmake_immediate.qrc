@@ -1,6 +1,0 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource prefix="/">
-<file alias="../stylesheet/stylesheet.qss">/home/night/Dev/Git/CodeKeeper/src/stylesheet/stylesheet.qss</file>
-<file alias="../stylesheet/stylesheet_setting_window.qss">/home/night/Dev/Git/CodeKeeper/src/stylesheet/stylesheet_setting_window.qss</file>
-</qresource>
-</RCC>
