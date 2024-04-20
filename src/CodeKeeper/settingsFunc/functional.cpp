@@ -5,6 +5,23 @@ void SettingsWindow::QuitW()
     this->close();
 }
 
+bool MainWindow::createConnection(QString *path)
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(*path + "/data.db");
+
+    db.setUserName("admin");
+    db.setHostName("localhost");
+    db.setPassword("password");
+
+    if (!db.open()) {
+        qDebug() << db.lastError();
+        return false;
+    }
+
+    return true;
+}
+
 void SettingsWindow::closeEvent(QCloseEvent *event)
 {
     MainWindow *mainWindow = static_cast<MainWindow *>(parent());

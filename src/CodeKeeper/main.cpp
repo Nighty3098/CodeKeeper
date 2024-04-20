@@ -3,7 +3,6 @@
 #include <QSplashScreen>
 
 #include "mainwindow.h"
-#include "sql_db/connectionDB.cpp"
 
 int main(int argc, char *argv[])
 {
@@ -11,12 +10,6 @@ int main(int argc, char *argv[])
     file.open(QFile::ReadOnly);
 
     QApplication a(argc, argv);
-
-    if (createConnection() == false) {
-        return -1;
-    } else {
-        qDebug() << "Connected";
-    }
 
     MainWindow w;
 
