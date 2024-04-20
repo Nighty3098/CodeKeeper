@@ -134,6 +134,7 @@ private slots:
 
 
 protected:
+    bool createConnection(QString *path);
     void mousePressEvent(QMouseEvent *event) override
     {
         if (event->button() == Qt::LeftButton) {

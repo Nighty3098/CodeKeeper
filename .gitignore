@@ -1,0 +1,8 @@
+
+src/CodeKeeper/CodeKeeper
+src/CodeKeeper/data.db
+src/CodeKeeper/data.db
+*.db
+src/CodeKeeper/moc_predefs.h
+src/CodeKeeper/qmake_qmake_immediate.qrc
+*.db

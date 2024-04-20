@@ -774,6 +774,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         }
     });
 
+    createConnection(&dir);
+
     create_tasks_connection();
     create_projects_connection();
 
