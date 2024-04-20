@@ -48,8 +48,8 @@
   - [ ] - Update markdown render ( migrate to QWebEngineView )
   - [ ] - Functionality of moving notes
   - [ ] - Multilang
-  - [ ] - Fix visual bugs
-  - [ ] - Fix notes path bug
+  - [X] - Fix visual bugs
+  - [X] - Fix notes path bug
   - [ ] - Migrate to CMake
  
 ## Installing:
