@@ -16,15 +16,16 @@ public:
     QFont selectedFont;
     QString font_size;
     QString theme;
-    QDir path;
     QString git_repo;
     QString git_user;
     QString git_token;
+    QString path;
 
     bool isTimeB;
     bool isDateB;
     bool isHostB;
     bool isAutoSyncB;
+    bool isCustomTitlebar;
 
 private slots:
     void closeEvent(QCloseEvent *event);
@@ -33,7 +34,7 @@ private slots:
     void saveData();
     void fopenFolder();
 
-    void setFontPr2();
+    void setFontPr2(QFont *selectedFont, int *font_size_int);
 
 private:
     QWidget *centralWidget;
@@ -49,12 +50,6 @@ private:
     QLabel *versionInfo;
 
     QPushButton *checkUpdatesBtn;
-
-    // QLabel *languageLabel;
-
-    QSpinBox *fontSize;
-    QFontComboBox *fontSelector;
-    QComboBox *themeSelector;
 
     // sync settings
 
@@ -78,6 +73,12 @@ private:
     QLabel *fontLabel;
     QLabel *fontSizeLabel;
     QLabel *themeLabel;
+
+    QSpinBox *fontSize;
+    QFontComboBox *fontSelector;
+    QComboBox *themeSelector;
+
+    QCheckBox *customTitleBar;
 
     // storage
     QLabel *storageLabel;

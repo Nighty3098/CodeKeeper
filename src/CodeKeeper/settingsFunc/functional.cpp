@@ -30,8 +30,8 @@ void SettingsWindow::saveData()
     QString theme = themeSelector->currentText();
     globalSettings->setValue("theme", theme);
 
-    QString path = pathToFolder->text();
-    globalSettings->setValue("path", QVariant(path));
+    QString dir = pathToFolder->text();
+    globalSettings->setValue("path", dir);
 
     QString git_tokenS = gitToken->text();
     globalSettings->setValue("git_token", git_tokenS);
@@ -54,23 +54,28 @@ void SettingsWindow::saveData()
     isAutoSyncB = isSync->isChecked();
     globalSettings->setValue("isAutoSync", isAutoSyncB);
 
+    isCustomTitlebar = customTitleBar->isChecked();
+    globalSettings->setValue("isCustomTitlebar", isCustomTitlebar);
+
     messageBox->setIcon(QMessageBox::Information);
     messageBox->setWindowTitle("CodeKeeper - Settings");
     messageBox->setText("To apply the settings, restart the application.");
 
     messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    messageBox->exec();
+    // messageBox->exec();
 
-    setFontPr2();
+    MainWindow *mainWindow = static_cast<MainWindow *>(parent());
+    setFontPr2(&selectedFont, &font_size);
+    mainWindow->setFontPr1(&selectedFont, &font_size);
 }
 
 void SettingsWindow::fopenFolder()
 {
     QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
     if (!str.isEmpty()) {
-        QDir path = str;
-        globalSettings->setValue("path", QVariant(str));
-        qDebug() << path;
+        qDebug() << str;
+        globalSettings->setValue("path", str);
+
         pathToFolder->setText(str);
 
         QMessageBox *messageBox = new QMessageBox();
@@ -84,84 +89,89 @@ void SettingsWindow::fopenFolder()
     }
 }
 
-void SettingsWindow::setFontPr2()
+void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
 {
+    QString font_size = QString::number(*font_size_int);
+
     // set font
-    tabs->setFont(selectedFont);
+    tabs->setFont(*selectedFont);
     tabs->setStyleSheet("font-size: " + font_size + "pt;");
 
-    saveBtn->setFont(selectedFont);
+    saveBtn->setFont(*selectedFont);
     saveBtn->setStyleSheet("font-size: " + font_size + "pt;");
 
-    quitBtn->setFont(selectedFont);
+    quitBtn->setFont(*selectedFont);
     quitBtn->setStyleSheet("font-size: " + font_size + "pt;");
 
-    appName->setFont(selectedFont);
+    appName->setFont(*selectedFont);
 
-    urlToRepo->setFont(selectedFont);
+    urlToRepo->setFont(*selectedFont);
     urlToRepo->setStyleSheet("font-size: " + font_size + "pt;");
 
-    versionInfo->setFont(selectedFont);
+    versionInfo->setFont(*selectedFont);
     versionInfo->setStyleSheet("font-size: " + font_size + "pt;");
 
-    checkUpdatesBtn->setFont(selectedFont);
+    checkUpdatesBtn->setFont(*selectedFont);
     checkUpdatesBtn->setStyleSheet("font-size: " + font_size + "pt;");
 
-    fontSize->setFont(selectedFont);
+    fontSize->setFont(*selectedFont);
     fontSize->setStyleSheet("font-size: " + font_size + "pt;");
 
-    fontSelector->setFont(selectedFont);
+    fontSelector->setFont(*selectedFont);
     fontSelector->setStyleSheet("font-size: " + font_size + "pt;");
 
-    themeSelector->setFont(selectedFont);
+    themeSelector->setFont(*selectedFont);
     themeSelector->setStyleSheet("font-size: " + font_size + "pt;");
 
-    gitLabel->setFont(selectedFont);
+    gitLabel->setFont(*selectedFont);
 
-    gitLabel2->setFont(selectedFont);
+    gitLabel2->setFont(*selectedFont);
 
-    gitToken->setFont(selectedFont);
+    gitToken->setFont(*selectedFont);
     gitToken->setStyleSheet("font-size: " + font_size + "pt;");
 
-    gitUser->setFont(selectedFont);
+    gitUser->setFont(*selectedFont);
     gitUser->setStyleSheet("font-size: " + font_size + "pt;");
 
-    gitRepo->setFont(selectedFont);
+    gitRepo->setFont(*selectedFont);
     gitRepo->setStyleSheet("font-size: " + font_size + "pt;");
 
-    autoSyncAfterStart->setFont(selectedFont);
+    autoSyncAfterStart->setFont(*selectedFont);
     autoSyncAfterStart->setStyleSheet("font-size: " + font_size + "pt;");
 
-    isDate->setFont(selectedFont);
+    isDate->setFont(*selectedFont);
     isDate->setStyleSheet("font-size: " + font_size + "pt;");
 
-    isTime->setFont(selectedFont);
+    isTime->setFont(*selectedFont);
     isTime->setStyleSheet("font-size: " + font_size + "pt;");
 
-    isHost->setFont(selectedFont);
+    isHost->setFont(*selectedFont);
     isHost->setStyleSheet("font-size: " + font_size + "pt;");
 
-    mainTitle->setFont(selectedFont);
+    mainTitle->setFont(*selectedFont);
 
-    fontLabel->setFont(selectedFont);
-    fontSizeLabel->setFont(selectedFont);
+    fontLabel->setFont(*selectedFont);
+    fontSizeLabel->setFont(*selectedFont);
 
-    fontSizeLabel->setFont(selectedFont);
+    fontSizeLabel->setFont(*selectedFont);
     fontSizeLabel->setStyleSheet("font-size: " + font_size + "pt;");
 
-    themeLabel->setFont(selectedFont);
+    themeLabel->setFont(*selectedFont);
     themeLabel->setStyleSheet("font-size: " + font_size + "pt;");
 
-    storageLabel->setFont(selectedFont);
+    storageLabel->setFont(*selectedFont);
 
-    pathToFolder->setFont(selectedFont);
+    pathToFolder->setFont(*selectedFont);
     pathToFolder->setStyleSheet("font-size: " + font_size + "pt;");
 
-    openFolder->setFont(selectedFont);
+    openFolder->setFont(*selectedFont);
     openFolder->setStyleSheet("font-size: " + font_size + "pt;");
 
+    customTitleBar->setFont(*selectedFont);
+    customTitleBar->setStyleSheet("font-size: " + font_size + "pt;");
+
     // set Data
-    fontSelector->setCurrentFont(selectedFont);
+    fontSelector->setCurrentFont(*selectedFont);
     fontSize->setValue(font_size.toInt());
     themeSelector->setCurrentText(theme);
 }

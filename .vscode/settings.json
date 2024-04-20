@@ -88,6 +88,16 @@
         "valarray": "cpp",
         "variant": "cpp",
         "primitiveset": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "charconv": "cpp",
+        "ratio": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "__bit_reference": "cpp",
+        "bitset": "cpp",
+        "__memory": "cpp",
+        "limits": "cpp"
     },
 }

@@ -18,7 +18,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
-    path = globalSettings->value("path").value<QDir>();
+    path = globalSettings->value("path").value<QString>();
 
     git_repo = globalSettings->value("git_repo").value<QString>();
     git_user = globalSettings->value("git_user").value<QString>();
@@ -28,6 +28,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isDateB = globalSettings->value("isDate").value<bool>();
     isHostB = globalSettings->value("isHost").value<bool>();
     isAutoSyncB = globalSettings->value("isAutoSync").value<bool>();
+
+    isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
 
     this->setStyleSheet(file.readAll());
 
@@ -75,7 +77,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     versionInfo = new QLabel();
-    versionInfo->setText("Version: 0.1.0");
+    versionInfo->setText("Version: 0.1.1");
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn = new QPushButton(QPixmap(":/retry.png"), " Chech for updates");
@@ -161,16 +163,21 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     themeSelector = new QComboBox();
     themeSelector->setFixedHeight(25);
 
+    customTitleBar = new QCheckBox();
+    customTitleBar->setText("Use custom titlebar");
+    customTitleBar->setChecked(isCustomTitlebar);
+
     themeSelector->addItem("Dark");
     themeSelector->addItem("Light");
 
     layout1->addWidget(mainTitle, 0, 2, 0, 4);
-    layout1->addWidget(fontLabel, 1, 3);
-    layout1->addWidget(fontSelector, 1, 4);
-    layout1->addWidget(fontSizeLabel, 2, 3);
-    layout1->addWidget(fontSize, 2, 4);
-    layout1->addWidget(themeLabel, 3, 3);
-    layout1->addWidget(themeSelector, 3, 4);
+    layout1->addWidget(customTitleBar, 1, 2, 1, 4, Qt::AlignHCenter);
+    layout1->addWidget(fontLabel, 2, 3);
+    layout1->addWidget(fontSelector, 2, 4);
+    layout1->addWidget(fontSizeLabel, 3, 3);
+    layout1->addWidget(fontSize, 3, 4);
+    layout1->addWidget(themeLabel, 4, 3);
+    layout1->addWidget(themeSelector, 4, 4);
 
     // storage tab
     QGridLayout *storageL = new QGridLayout;
@@ -185,7 +192,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     pathToFolder->setText("Directory");
     pathToFolder->setPlaceholderText("Directory");
     pathToFolder->setMaximumHeight(30);
-    pathToFolder->setText(path.absolutePath());
+    pathToFolder->setText(path);
 
     openFolder = new QPushButton(QPixmap(":/open.png"), " Browse");
     openFolder->setMaximumHeight(30);
@@ -246,7 +253,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     connect(checkUpdatesBtnL, SIGNAL(clicked()), this, SLOT(checkUpdates()));
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
 
-    setFontPr2();
+    int font_size_int = font_size.toInt();
+    setFontPr2(&selectedFont, &font_size_int);
 }
 
 SettingsWindow::~SettingsWindow() { }
