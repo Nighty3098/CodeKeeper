@@ -138,7 +138,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // title
     mainTitle = new QLabel("CodeKeeper");
     mainTitle->setAlignment(Qt::AlignCenter);
-    mainTitle->setStyleSheet("font-size: 46px;");
+    mainTitle->setStyleSheet("font-size: 52px;");
 
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
@@ -208,6 +208,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     mdPreview->setOpenLinks(true);
     mdPreview->setOpenExternalLinks(true);
     mdPreview->setAlignment(Qt::AlignHCenter);
+
 
     noteEdit = new QMarkdownTextEdit();
     noteEdit->setPlaceholderText(" Just start typing");
@@ -290,9 +291,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     typeAction = sortMenu->addAction("Type");
     dateAction = sortMenu->addAction("Date");
 
-    // menu->addMenu(sortMenu);
+    QMenu *exportMenu = new QMenu("Export as", menu);
+    exportToHtml = exportMenu->addAction("HTML");
+    exportToPdf = exportMenu->addAction("Pdf");
+
     menu->addMenu(editMenu);
     menu->addMenu(viewMenu);
+    menu->addMenu(sortMenu);
+    menu->addMenu(exportMenu);
     menuButton->setMenu(menu);
 
     setH1B = new QPushButton(QPixmap(":/h1.png"), "");

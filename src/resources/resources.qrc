@@ -54,5 +54,6 @@
         <file>down-arrow.png</file>
         <file>quote.png</file>
         <file>rename.png</file>
+        <file>markdown.png</file>
     </qresource>
 </RCC>

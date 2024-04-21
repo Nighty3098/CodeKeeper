@@ -13,7 +13,6 @@
 #include "settingswindow.h"
 #include "syncwindow.h"
 
-
 class CustomIconProvider : public QFileIconProvider
 {
 public:
@@ -257,8 +256,9 @@ private:
     QAction *setStrikeA;
     QAction *setNumListA;
     QAction *setTableA;
+    QAction *exportToPdf;
+    QAction *exportToHtml;
     QAction *setQuoteA;
-
     QAction *nameAction;
     QAction *typeAction;
     QAction *dateAction;

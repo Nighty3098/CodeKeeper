@@ -19,6 +19,7 @@ void MainWindow::updateMDPreview()
 {
     QString text = noteEdit->toPlainText();
     mdPreview->setMarkdown(text);
+
 }
 
 void MainWindow::saveNote()
@@ -340,9 +341,16 @@ void MainWindow::setTable()
     QTextBlock block = noteEdit->document()->findBlockByNumber(lineNumber);
 
     cursor.movePosition(QTextCursor::StartOfLine);
-    cursor.insertText("|    title    |    title    |    title    | \n"
-                      "| ---------- |:-----:| -----:| \n"
-                      "|              |                |              |");
+    cursor.insertText("<table>\n"
+                      "<tr>\n"
+                      "    <td>Column 1</td>\n"
+                      "    <td>Column 2</td>\n"
+                      "</tr>\n\n"
+                      "<tr>\n"
+                      "    <td>Item 1</td>\n"
+                      "    <td>Item 2</td>\n"
+                      "</tr>\n"
+                      "</table>\n\n");
 
     noteEdit->setTextCursor(cursor);
 }
