@@ -98,6 +98,14 @@
         "__bit_reference": "cpp",
         "bitset": "cpp",
         "__memory": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "regex": "cpp",
+        "quat": "cpp",
+        "vec2d": "cpp",
+        "vec2f": "cpp",
+        "vec3d": "cpp",
+        "vec3f": "cpp",
+        "vec4d": "cpp",
+        "vec4f": "cpp"
     },
 }

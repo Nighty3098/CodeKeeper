@@ -7,6 +7,8 @@
 #include "3rdParty/qmarkdowntextedit/markdownhighlighter.h"
 #include "sql_db/projectsDB.cpp"
 #include "sql_db/tasksDB.cpp"
+
+#include <md4c-html.h>
 #include <QInputDialog>
 #include <QPropertyAnimation>
 #include <QSizeGrip>
@@ -204,11 +206,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     noteName->setFixedSize(200, 30);
     noteName->setPlaceholderText(" Name ...");
 
-    mdPreview = new QTextBrowser();
-    mdPreview->setOpenLinks(true);
-    mdPreview->setOpenExternalLinks(true);
-    mdPreview->setAlignment(Qt::AlignHCenter);
-
+    mdPreview = new QWebEngineView();
+    mdPreview->setMinimumWidth(300);
+    mdPreview->setAutoFillBackground(true);
+    mdPreview->page()->setBackgroundColor(Qt::transparent);
 
     noteEdit = new QMarkdownTextEdit();
     noteEdit->setPlaceholderText(" Just start typing");
