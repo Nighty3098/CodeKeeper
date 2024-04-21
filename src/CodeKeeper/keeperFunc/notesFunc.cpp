@@ -19,7 +19,6 @@ void MainWindow::updateMDPreview()
 {
     QString text = noteEdit->toPlainText();
     mdPreview->setMarkdown(text);
-
 }
 
 void MainWindow::saveNote()
