@@ -1,6 +1,10 @@
 # Notes manager for developers
 
+<<<<<<< HEAD
 <img src="imgs/markdown.png" align="center" />
+=======
+![header](imgs/header.png)
+>>>>>>> parent of b27ed05 (Merge pull request #46 from Nighty3098/InDev)
 
 <div align="center">
 <a href="./LICENSE.md"><img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=85e185&logoColor=85e185&labelColor=0d1117" /></a>
@@ -46,7 +50,13 @@
   - [X] - Project creation functionality
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
+<<<<<<< HEAD
   - [X] - Update markdown render ( migrate to QWebEngineView )
+=======
+  - [ ] - Update markdown render ( migrate to QWebEngineView )
+  - [ ] - Functionality of moving notes
+  - [ ] - Multilang
+>>>>>>> parent of b27ed05 (Merge pull request #46 from Nighty3098/InDev)
   - [X] - Fix visual bugs
   - [X] - Fix notes path bug
   - [ ] - Markdown to HTML converter
