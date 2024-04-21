@@ -8,8 +8,9 @@ INCLUDEPATH += "3rdParty/qmarkdowntextedit"
 LIBS += -L3rdParty/qmarkdowntextedit -L$$OUT_PWD
 win32: LIBS +=  -L$$OUT_PWD/release -L$$OUT_PWD/debug
 
+LIBS += -lmd4c-html
+
 SOURCES += \
-    keeperFunc/md2html.cpp \
     main.cpp \
     mainwindow.cpp \
     settingswindow.cpp \
@@ -20,7 +21,7 @@ SOURCES += \
     keeperFunc/projectsFunc.cpp \
     keeperFunc/notesFunc.cpp \
     sql_db/projectsDB.cpp \
-    sql_db/tasksDB.cpp
+    sql_db/tasksDB.cpp \
 
 HEADERS += \
     mainwindow.h \
