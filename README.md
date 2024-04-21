@@ -48,14 +48,11 @@
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
   - [ ] - Update markdown render ( migrate to QWebEngineView )
-  - [ ] - Functionality of moving notes
-  - [ ] - Multilang
-
+  - [ ] - Functionality of moving notes
   - [X] - Fix visual bugs
   - [X] - Fix notes path bug
   - [ ] - Markdown to HTML converter
-  - [ ] - Markdown to PDF converter
-  - [ ] - Functionality of moving notes
+  - [ ] - Markdown to PDF converter
   - [ ] - Multilang
   - [ ] - Migrate to CMake
  
