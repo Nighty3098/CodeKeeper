@@ -8,7 +8,6 @@
 #include <QTextBrowser>
 #include <QtWidgets>
 #include <QtConcurrent/QtConcurrent>
-#include <QWebEngineView>
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"
@@ -186,7 +185,7 @@ private:
     CustomIconProvider *iconProvider;
     QMarkdownTextEdit *noteEdit;
     MarkdownHighlighter *highlighter;
-    QWebEngineView *mdPreview;
+    QTextBrowser *mdPreview;
     QLineEdit *noteName;
     QToolButton *menuButton;
     QLabel *noteNameLabel;
