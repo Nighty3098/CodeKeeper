@@ -13,12 +13,12 @@
 #include <QPropertyAnimation>
 #include <QSizeGrip>
 #include <QtWidgets>
+#include <QWebEngineView>
 
 Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    // for startup time
     QTime startup;
     startup.start();
 
@@ -140,18 +140,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // title
     mainTitle = new QLabel("CodeKeeper");
     mainTitle->setAlignment(Qt::AlignCenter);
-    mainTitle->setStyleSheet("font-size: 52px;");
+    mainTitle->setStyleSheet("font-size: 54px;");
 
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
     openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), " Settings");
-    openSettingsBtn->setFixedSize(200, 25);
+    openSettingsBtn->setFixedSize(200, 30);
     settingsBtnLayout->addWidget(openSettingsBtn);
 
     // sync btn
     QHBoxLayout *syncDataLayout = new QHBoxLayout;
     syncDataBtn = new QPushButton(QPixmap(":/retry.png"), " Sync data");
-    syncDataBtn->setFixedSize(200, 25);
+    syncDataBtn->setFixedSize(200, 30);
     syncDataLayout->addWidget(syncDataBtn);
 
     // ========================================================
@@ -237,7 +237,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuButton->setIconSize(QSize(10, 10));
     menuButton->setPopupMode(QToolButton::InstantPopup);
     menuButton->setStyleSheet(
-            "background-color: #222436; border-color: #222436; border-width: 4px;");
+            "background-color: #1F1F28; border-color: #1F1F28; border-width: 4px;");
 
     QMenu *menu = new QMenu(menuButton);
     menu->setFont(selectedFont);
@@ -315,18 +315,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTableB = new QPushButton(QPixmap(":/table.png"), "");
     setQuoteB = new QPushButton(QPixmap(":/quote.png"), "");
 
-    setH1B->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setH2B->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setH3B->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setListB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setLinkB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setBoldB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setItalicB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setStrikeB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setTaskB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setNumListB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setTableB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setQuoteB->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setH1B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setH2B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setH3B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setListB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setLinkB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setBoldB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setItalicB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setStrikeB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setTaskB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setNumListB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setTableB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setQuoteB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
 
     setH1B->setFixedSize(30, 30);
     setH2B->setFixedSize(30, 30);
@@ -392,7 +392,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksMenuBtn->setFixedSize(30, 30);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
     tasksMenuBtn->setStyleSheet(
-            "background-color: #222436; border-color: #222436; border-width: 0px;");
+            "background-color: #1F1F28; border-color: #1F1F28; border-width: 0px;");
 
     QMenu *tasksMenu = new QMenu(tasksMenuBtn);
     tasksMenu->setFont(selectedFont);
@@ -486,7 +486,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsMenuButton->setFixedSize(30, 30);
     projectsMenuButton->setIconSize(QSize(40, 40));
     projectsMenuButton->setStyleSheet(
-            "background-color: #222436; border-color: #222436; border-width: 0px;");
+            "background-color: #1F1F28; border-color: #1F1F28; border-width: 0px;");
 
     projectsMenu = new QMenu(projectsMenuButton);
 

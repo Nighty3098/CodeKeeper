@@ -185,10 +185,11 @@ private:
     CustomIconProvider *iconProvider;
     QMarkdownTextEdit *noteEdit;
     MarkdownHighlighter *highlighter;
-    QWebEngineView *mdPreview;
     QLineEdit *noteName;
     QToolButton *menuButton;
     QLabel *noteNameLabel;
+
+    QWebEngineView *mdPreview;
 
     QPushButton *setH1B;
     QPushButton *setH2B;

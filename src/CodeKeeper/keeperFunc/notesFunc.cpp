@@ -1,5 +1,6 @@
 #include <md4.h>
 #include <md4c-html.h>
+#include <QWebEngineScript>
 
 QModelIndex indexFromItem(QTreeWidgetItem *item, int column) { }
 
@@ -22,23 +23,21 @@ void MainWindow::updateMDPreview()
 {
     QString md = noteEdit->toPlainText();
 
-    QString html;
-    md_html(
-            md.toUtf8().constData(), md.length(),
-            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
-                QString *htmlPtr = static_cast<QString *>(userdata);
-                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
-                *htmlPtr += htmlStr;
-            },
-            &html, 0, 0);
-    html += "</body></html>";
+        QString html;
+        md_html(
+                md.toUtf8().constData(), md.length(),
+                [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
+                    QString *htmlPtr = static_cast<QString *>(userdata);
+                    QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html),
+       html_size)); *htmlPtr += htmlStr;
+                },
+                &html, 0, 0);
+        html += "</body></html>";
 
     QString html_result =
             "<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
             "<script id='MathJax-script' async "
             "src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>"
-            "<script src='lib/codemirror.js'></script><link rel='stylesheet' "
-            "href='lib/codemirror.css'><script src='mode/javascript/javascript.js'></script>"
             "<style>"
             "body {"
             "    font-family: "
@@ -102,6 +101,30 @@ void MainWindow::updateMDPreview()
               "    margin-top: 20px;"
               "    margin-bottom: 10px;"
               "    color: #f5f5f5;"
+              "}"
+              "italic{"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    font-weight: normal;"
+              "    margin-top: 20px;"
+              "    margin-bottom: 10px;"
+              "    color: #ecbe7b;"
+              "}"
+              "bold{"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    font-weight: normal;"
+              "    margin-top: 20px;"
+              "    margin-bottom: 10px;"
+              "    color: #ecbe7b;"
               "}"
               "a{"
               "    font-family: "
@@ -216,7 +239,8 @@ void MainWindow::updateMDPreview()
               "    color:#f5f5f5;"
               "}"
               "</style>"
-            + html;
+              "<html>"
+                + html;
 
     mdPreview->setHtml(html_result);
 }

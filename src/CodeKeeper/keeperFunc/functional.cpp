@@ -94,7 +94,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     taskText->setStyleSheet("font-size: " + font_size + "pt;");
 
     incompleteTasks->setStyleSheet(
-            "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
             "0px; "
             "border-color: #838383;}"
             "QListWidget::item:selected {"
@@ -102,9 +102,9 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
             "}"
             "QListWidget::Item {"
             "margin: 0px;"
-            "background-color: rgb(255, 117, 127); color: #000000; "
+            "background-color: rgb(211, 102, 107); color: #000000; "
             "padding: 2px;"
-            "border-width: 0px; border-color: rgba(255, 117, 127); "
+            "border-width: 0px; border-color: rgba(211, 102, 107); "
             "border-radius: 5px;"
             "font-size: "
             + font_size
@@ -112,7 +112,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
               "}");
 
     inprocessTasks->setStyleSheet(
-            "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
             "0px; "
             "border-color: #838383;}"
             "QListWidget::item:selected {"
@@ -120,7 +120,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
             "}"
             "QListWidget::Item {"
             "margin: 0px;"
-            "background-color: rgb(255, 199, 119); "
+            "background-color: rgb(192, 163, 110); "
             "color: #000000; text-decoration: underline; "
             "border-width: 0px; "
             "padding: 2px;"
@@ -131,7 +131,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
               "}");
 
     completeTasks->setStyleSheet(
-            "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
             "0px; "
             "border-color: #838383;}"
             "QListWidget::item:selected {"
@@ -139,7 +139,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
             "}"
             "QListWidget::Item {"
             "margin: 0px;"
-            "background-color: rgb(195, 232, 141); "
+            "background-color: rgb(118, 148, 106); "
             "color: #000000;"
             "padding: 2px;"
             "border-radius: 5px;"
@@ -150,7 +150,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
               "}");
 
     notStartedProjects->setStyleSheet(
-            "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
             "0px; "
             "border-color: #838383;}"
             "QListWidget::item:selected {"
@@ -159,7 +159,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
             "QListWidget::Item {"
             "margin: 0px;"
             "padding: 2px;"
-            "background-color: rgb(255, 117, 127);"
+            "background-color: rgb(211, 102, 107);"
             "color: #000000; border-width: 0px; "
             "border-radius: 5px;"
             "border-color: #ff757f; "
@@ -169,7 +169,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
               "}");
 
     startedProjects->setStyleSheet(
-            "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
             "0px; "
             "border-color: #838383;}"
             "QListWidget::item:selected {"
@@ -177,7 +177,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
             "}"
             "QListWidget::Item {"
             "margin: 0px;"
-            "background-color: rgb(255, 199, 119); color: #000000; "
+            "background-color: rgb(192, 163, 110); color: #000000; "
             "border-radius: 5px;"
             "padding: 2px;"
             "border-width: 0px; border-color: #ffc777; "
@@ -187,7 +187,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
               "}");
 
     finishlineProjects->setStyleSheet(
-            "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
             "0px; "
             "border-color: #838383;}"
             "QListWidget::item:selected {"
@@ -195,7 +195,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
             "}"
             "QListWidget::Item {"
             "margin: 0px;"
-            "background-color: rgb(130, 170, 255 "
+            "background-color: rgb(126, 156, 216 "
             "); color: #000000; border-width: 0px; "
             "border-radius: 5px;"
             "padding: 2px;"
@@ -206,7 +206,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
               "}");
 
     finishedProjects->setStyleSheet(
-            "QListWidget {background-color: rgba(255, 117, 127, 0);  border-width: "
+            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
             "0px; "
             "border-color: #838383;}"
             "QListWidget::item:selected {"
@@ -214,7 +214,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
             "}"
             "QListWidget::Item {"
             "margin: 0px;"
-            "background-color: rgb(195, 232, 141); color: #000000; "
+            "background-color: rgb(118, 148, 106); color: #000000; "
             "border-radius: 5px;"
             "padding: 2px;"
             "border-width: 0px; border-color: #c3e88d; "
@@ -260,7 +260,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     tasksProgress->setFont(*selectedFont);
     tasksProgress->setStyleSheet(
-            "background-color: rgb(255, 117, 127); selection-background-color: "
-            "rgb(195, 232, 141); color: #222436; font-size: "
+            "background-color: rgb(211, 102, 107); selection-background-color: "
+            "rgb(118, 148, 106); color: #222436; font-size: "
             + font_size + "pt;");
 }

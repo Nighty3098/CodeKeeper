@@ -47,7 +47,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
-    saveBtn = new QPushButton(QPixmap(":/save.png"), " Save");
+    saveBtn = new QPushButton(QPixmap(":/save.png"), " Apply");
     saveBtn->setFixedSize(100, 30);
 
     quitBtn = new QPushButton(QPixmap(":/quit.png"), " Quit");
