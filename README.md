@@ -1,6 +1,7 @@
-# Notes manager for developers
+<h1 align="center">CodeKeeper</h1>
+<h3 align="center">Notes and projects manager for developers</h3>
 
-![header](imgs/markdown.jpg)
+<img src="imgs/markdown.png" align="center" />
 
 <div align="center">
 <a href="./LICENSE.md"><img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=85e185&logoColor=85e185&labelColor=0d1117" /></a>
@@ -20,25 +21,28 @@
 <a href="mailto:night3098game@gmail.com" target="blank"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"/></a>
 </div>
 
-## Tasks:
+<hr>
+
+<h2 align="center">Tasks:</h2>
 
   - [ ] - UI
+    - [X] - Custom window decorations
+    - [X] - Update project editor window
     - [ ] - Context menu for notes
     - [ ] - Context menu for tasks
     - [ ] - Context menu for projects
     - [ ] - Light theme
     - [ ] - Theme swither
-    - [X] - Custom window decorations
-    - [X] - Update project editor window
+    - [X] - Update view mode for markdown
 ******
-  - [ ] - Saving data:
+  - [X] - Saving data:
     - [X] - Saving notes to MD files
     - [X] - Saving a list of tasks in the DB
     - [X] - Saving a projects list  in the DB
 ******
   - [ ] - Crossplatform app:
-    - [X] - Linux
-    - [ ] - Windows
+    - [X] - Linux (AppImage)
+    - [ ] - Windows (exe)
     - [ ] - Mac
  ******
   - [X] - Task movement functionality
@@ -46,10 +50,13 @@
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
   - [X] - Update markdown render ( migrate to QWebEngineView )
-  - [ ] - Functionality of moving notes
-  - [ ] - Multilang
+  - [X] - Using marked js
   - [X] - Fix visual bugs
   - [X] - Fix notes path bug
+  - [ ] - Markdown to HTML converter
+  - [ ] - Markdown to PDF converter
+  - [ ] - Functionality of moving notes
+  - [ ] - Multilang
   - [ ] - Migrate to CMake
  
 ## Installing:
@@ -61,9 +68,15 @@ qmake CodeKeeper.pro
 make
 ```
 
-## Screenshots:
+<h2 align="center">Screenshots:</h2>
 
-![Main](imgs/1.png)
-![Editor](imgs/2.png)
-![Tasks](imgs/3.png)
-![Projects](imgs/4.png)
+<img src="imgs/1.png" align="center"/>
+<br />
+<br />
+<img src="imgs/2.png" align="center" />
+<br />
+<br />
+<img src="imgs/3.png" align="center" />
+<br />
+<br />
+<img src="imgs/4.png" align="center" />
