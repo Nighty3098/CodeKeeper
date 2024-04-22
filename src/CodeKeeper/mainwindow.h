@@ -132,7 +132,6 @@ private slots:
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
-
 protected:
     bool createConnection(QString *path);
     void mousePressEvent(QMouseEvent *event) override
@@ -264,7 +263,6 @@ private:
     QAction *nameAction;
     QAction *typeAction;
     QAction *dateAction;
-
 
     SettingsWindow *settingsWindow;
 };
