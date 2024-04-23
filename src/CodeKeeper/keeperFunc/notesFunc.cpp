@@ -23,21 +23,25 @@ void MainWindow::updateMDPreview()
 {
     QString md = noteEdit->toPlainText();
 
-        QString html;
-        md_html(
-                md.toUtf8().constData(), md.length(),
-                [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
-                    QString *htmlPtr = static_cast<QString *>(userdata);
-                    QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html),
-       html_size)); *htmlPtr += htmlStr;
-                },
-                &html, 0, 0);
-        html += "</body></html>";
+    QString html;
+    md_html(
+            md.toUtf8().constData(), md.length(),
+            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
+                QString *htmlPtr = static_cast<QString *>(userdata);
+                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
+                *htmlPtr += htmlStr;
+            },
+            &html, 0, 0);
+    html += "</body></html>";
 
     QString html_result =
             "<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
             "<script id='MathJax-script' async "
             "src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>"
+            "<script type='module'>"
+            "    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';"
+            "    mermaid.initialize({ startOnLoad: true });"
+            "</script>"
             "<style>"
             "body {"
             "    font-family: "
@@ -240,7 +244,7 @@ void MainWindow::updateMDPreview()
               "}"
               "</style>"
               "<html>"
-                + html;
+            + html;
 
     mdPreview->setHtml(html_result);
 }
