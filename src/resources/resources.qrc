@@ -59,5 +59,7 @@
         <file>connected.png</file>
         <file>auto_sync_off.png</file>
         <file>auto_sync_on.png</file>
+	<file>sorting.png</file>
+	<file>export.png</file>
     </qresource>
 </RCC>
