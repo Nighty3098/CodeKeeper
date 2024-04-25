@@ -55,5 +55,9 @@
         <file>quote.png</file>
         <file>rename.png</file>
         <file>markdown.png</file>
+        <file>disconnected.png</file>
+        <file>connected.png</file>
+        <file>auto_sync_off.png</file>
+        <file>auto_sync_on.png</file>
     </qresource>
 </RCC>
