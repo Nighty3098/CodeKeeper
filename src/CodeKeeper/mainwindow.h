@@ -114,6 +114,9 @@ private slots:
     void setTable();
     void setQuote();
 
+    void setSortByTime();
+    void setSortByName();
+
     void updateWindowTitle();
 
     QString getCurrentDateTimeString();
@@ -268,7 +271,6 @@ private:
     QAction *exportToHtml;
     QAction *setQuoteA;
     QAction *nameAction;
-    QAction *typeAction;
     QAction *dateAction;
 
     SettingsWindow *settingsWindow;

@@ -19,6 +19,16 @@ bool createFile(const QString &path)
     }
 }
 
+void MainWindow::setSortByTime()
+{
+    notesList->sortByColumn(3, Qt::SortOrder());
+}
+
+void MainWindow::setSortByName()
+{
+    notesList->sortByColumn(0, Qt::SortOrder());
+}
+
 void MainWindow::updateMDPreview()
 {
     QString md = noteEdit->toPlainText();

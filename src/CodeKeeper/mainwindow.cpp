@@ -173,8 +173,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QStringList filters;
     filters << ""
             << "*.md"
-            << "*.txt"
-            << "*.html";
+            << "*.html"
+            << "*.txt";
 
     iconProvider = new CustomIconProvider();
 
@@ -241,7 +241,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menu->setFont(selectedFont);
 
     QMenu *viewMenu = new QMenu("View", menu);
-
+    viewMenu->setIcon(QIcon(":/view.png"));
     // actions for menu
     newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()),
                               Qt::CTRL + Qt::Key_N);
@@ -267,6 +267,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     viewMode->setChecked(isViewMode);
 
     QMenu *editMenu = new QMenu("Edit", menu);
+    editMenu->setIcon(QIcon(":/edit.png"));
     setH1A = editMenu->addAction(QPixmap(":/h1.png"), "Set H1", this, SLOT(setH1()));
     setH2A = editMenu->addAction(QPixmap(":/h2.png"), "Set H2", this, SLOT(setH2()));
     setH3A = editMenu->addAction(QPixmap(":/h3.png"), "Set H3", this, SLOT(setH3()));
@@ -286,11 +287,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTableA = editMenu->addAction(QPixmap(":/table.png"), "Add table", this, SLOT(setTable()));
 
     QMenu *sortMenu = new QMenu("Sort by", menu);
-    nameAction = sortMenu->addAction("Name");
-    typeAction = sortMenu->addAction("Type");
-    dateAction = sortMenu->addAction("Date");
+    sortMenu->setIcon(QIcon(":/sorting.png"));
+    nameAction = sortMenu->addAction("Name", this, SLOT(setSortByName()));
+    dateAction = sortMenu->addAction("Date", this, SLOT(setSortByTime()));
 
     QMenu *exportMenu = new QMenu("Export as", menu);
+    exportMenu->setIcon(QIcon(":/export.png"));
     exportToHtml = exportMenu->addAction("HTML");
     exportToPdf = exportMenu->addAction("Pdf");
 
