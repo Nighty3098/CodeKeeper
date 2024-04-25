@@ -11,6 +11,50 @@ QString MainWindow::getCurrentDateTimeString()
     return dateTimeString;
 }
 
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasUrls()) {
+        QList<QUrl> urls = event->mimeData()->urls();
+        foreach (const QUrl &url, urls) {
+            QFileInfo fileInfo(url.toLocalFile());
+            QString fileName = fileInfo.fileName();
+            QString filePath = fileInfo.absoluteFilePath();
+            QString fileSuffix = fileInfo.suffix();
+
+            // Check if the file has a valid suffix for markdown files
+            if (fileSuffix == "md" || fileSuffix == "markdown") {
+                event->acceptProposedAction();
+                break;
+            }
+
+            // Check if the file is a text file
+            if (event->mimeData()->hasFormat("text/plain")) {
+                event->acceptProposedAction();
+                break;
+            }
+        }
+    }
+}
+
+void MainWindow::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasUrls()) {
+        QList<QUrl> urls = event->mimeData()->urls();
+        foreach (const QUrl &url, urls) {
+            QFile file(url.toLocalFile());
+            if (file.open(QIODevice::ReadOnly)) {
+                QTextStream stream(&file);
+                QString text = stream.readAll();
+                noteEdit->setPlainText(text);
+                file.close();
+            }
+        }
+    } else if (event->mimeData()->hasFormat("text/plain")) {
+        QString text = event->mimeData()->text();
+        noteEdit->setPlainText(text);
+    }
+}
+
 void MainWindow::openSettingsWindow()
 {
     QRect geo = this->geometry();

@@ -8,6 +8,8 @@
 #include "sql_db/projectsDB.cpp"
 #include "sql_db/tasksDB.cpp"
 
+#include <QDragEnterEvent>
+#include <QMimeData>
 #include <md4c-html.h>
 #include <QInputDialog>
 #include <QPropertyAnimation>
@@ -209,7 +211,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     mdPreview->setAutoFillBackground(true);
     mdPreview->page()->setBackgroundColor(Qt::transparent);
 
-    noteEdit = new QMarkdownTextEdit();
+    noteEdit = new NoteEditor();
     noteEdit->setPlaceholderText(" Just start typing");
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
     noteEdit->setLineNumberEnabled(true);

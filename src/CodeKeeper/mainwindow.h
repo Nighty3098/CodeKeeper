@@ -9,6 +9,11 @@
 #include <QtWidgets>
 #include <QtConcurrent/QtConcurrent>
 #include <QWebEngineView>
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include <QDropEvent>
+#include <QFile>
+#include <QTextStream>
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"
@@ -32,6 +37,44 @@ public:
             return QFileIconProvider::icon(type);
         }
     }
+};
+
+class NoteEditor : public QMarkdownTextEdit
+{
+protected:
+    // Bug with cursor - need fixed
+
+    /*
+    void dropEvent(QDropEvent *event)
+    {
+        QString filePath = event->mimeData()->text();
+        QFileInfo fileInfo(filePath);
+        QString fileSuffix = fileInfo.suffix();
+
+        qDebug() << "Dropped file:" << filePath;
+
+        if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md") {
+            QString newLine = "[Dropped file](" + filePath + ")";
+
+            QTextCursor cursor = this->textCursor();
+            int lineNumber = cursor.blockNumber();
+            QTextBlock block = this->document()->findBlockByNumber(lineNumber);
+            cursor.movePosition(QTextCursor::EndOfLine);
+            cursor.insertText(newLine);
+            this->setTextCursor(cursor);
+
+        } else {
+            QString newLine = "![Dropped file](" + filePath + ")";
+
+            QTextCursor cursor = this->textCursor();
+            int lineNumber = cursor.blockNumber();
+            QTextBlock block = this->document()->findBlockByNumber(lineNumber);
+            cursor.movePosition(QTextCursor::EndOfLine);
+            cursor.insertText(newLine);
+            this->setTextCursor(cursor);
+        }
+    }
+    */
 };
 
 class MainWindow : public QMainWindow
@@ -137,8 +180,11 @@ private slots:
                            QString *createdTime, QString *oldTime, QString *oldGit);
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
-    
+
     bool checkConnection();
+
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
 
 protected:
     bool createConnection(QString *path);
@@ -193,7 +239,7 @@ private:
     // notes tab
     QTreeView *notesList;
     CustomIconProvider *iconProvider;
-    QMarkdownTextEdit *noteEdit;
+    NoteEditor *noteEdit;
     MarkdownHighlighter *highlighter;
     QToolButton *menuButton;
     QLabel *noteNameLabel;
