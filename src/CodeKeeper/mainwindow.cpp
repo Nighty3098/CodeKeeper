@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     theme = globalSettings->value("theme").value<QString>();
     isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
     sortNotesRole = globalSettings->value("sortRole", Qt::DisplayRole).value<int>();
+    isAutoSyncing = globalSettings->value("isAutoSync").value<bool>();
     bool isVisibleNotesList = globalSettings->value("isVisibleNotesList", true).toBool();
     bool isVisibleFolders = globalSettings->value("isVisibleFolders", true).toBool();
     bool isVisiblePreview = globalSettings->value("isVisiblePreview", false).toBool();
@@ -134,6 +135,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->setWindowIcon(QIcon(":/icon.png"));
 
     mainLayout = new QGridLayout(centralWidget);
+    mainLayout->setSpacing(0);
 
     // ========================================================
 
@@ -201,10 +203,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesList->setColumnHidden(2, true);
     notesList->setColumnHidden(3, true);
     notesList->setColumnHidden(4, true);
-
-    noteName = new QLineEdit();
-    noteName->setFixedSize(200, 30);
-    noteName->setPlaceholderText(" Name ...");
 
     mdPreview = new QWebEngineView();
     mdPreview->setMinimumWidth(300);
@@ -620,10 +618,39 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         mainLayout->addLayout(winControlL, 0, 0, 1, 2);
     } else {
     }
+
+    isConnected = new QPushButton("");
+    isConnected->setStyleSheet("border: 0px; background-color: transparent;");
+    isConnected->setFixedSize(15, 15);
+
+    isAutoSync = new QPushButton("");
+    isAutoSync->setStyleSheet("border: 0px; background-color: transparent;");
+    isAutoSync->setFixedSize(15, 15);
+
+    winControlL->addWidget(isConnected, Qt::AlignRight);
+    winControlL->addWidget(isAutoSync, Qt::AlignRight);
+
     mainLayout->addWidget(tabs, 1, 0);
     mainLayout->addWidget(sizeGrip3, 2, 0);
     mainLayout->addWidget(sizeGrip4, 2, 1);
 
+    if (checkConnection()) {
+        isConnected->setIcon(QIcon(":/connected.png"));
+        isConnected->setToolTip("<p style='color: #ffffff;'>Connected</p>");
+    } else {
+        isConnected->setIcon(QIcon(":/disconnected.png"));
+        isConnected->setToolTip("<p style='color: #ffffff;'>Disconnected</p>");
+    }
+
+    if (isAutoSyncing) {
+        isAutoSync->setIcon(QIcon(":/auto_sync_on.png"));
+        isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync on</p>");
+    } else {
+        isAutoSync->setIcon(QIcon(":/auto_sync_off.png"));
+        isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync off</p>");
+    }
+
+    // ===================================================================================
     // connects
     connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));
 
@@ -780,6 +807,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                                        "}");
         }
     });
+
+    connect(syncDataBtn, SIGNAL(clicked()), this, SLOT(openSyncWindow()));
 
     createConnection(&dir);
 

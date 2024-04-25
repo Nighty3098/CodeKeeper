@@ -1,6 +1,8 @@
 #include <QDateTime>
 #include <QSyntaxHighlighter>
 #include <QGraphicsOpacityEffect>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 QString MainWindow::getCurrentDateTimeString()
 {
@@ -30,6 +32,51 @@ void MainWindow::openSettingsWindow()
     settingsWindow->show();
 
     settingsWindow->move(new_x, new_y);
+}
+
+void MainWindow::setSettingsData() { }
+
+bool MainWindow::checkConnection()
+{
+    QNetworkAccessManager nam;
+    QNetworkRequest req(QUrl("https://google.com/"));
+    QNetworkReply *reply = nam.get(req);
+    QEventLoop loop;
+    QObject::connect(reply, SIGNAL(readyRead()), &loop, SLOT(quit()));
+    QObject::connect(&nam, SIGNAL(finished(QNetworkReply *)), &loop, SLOT(quit()));
+
+    if (!reply->isFinished()) {
+        loop.exec();
+        if (reply->error() == QNetworkReply::NoError) {
+            qDebug() << "You are connected to the internet :)";
+            return true;
+        } else {
+            qDebug() << "You have an net error:" << reply->errorString();
+            return false;
+        }
+    }
+}
+
+void MainWindow::openSyncWindow()
+{
+    QRect geo = this->geometry();
+    int x = geo.x();
+    int y = geo.y();
+    int width = geo.width();
+    int height = geo.height();
+
+    syncWindow = new SyncWindow(this);
+
+    QRect geo2 = syncWindow->geometry();
+
+    int width2 = geo2.width();
+    int height2 = geo2.height();
+
+    int new_x = x + (width - width2) / 2;
+    int new_y = y + (height - height2) / 2;
+
+    syncWindow->show();
+    syncWindow->move(new_x, new_y);
 }
 
 void MainWindow::openFolder()
@@ -79,8 +126,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     menuButton->setFont(*selectedFont);
 
     tasksMenuBtn->setFont(*selectedFont);
-
-    noteName->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
     mdPreview->setFont(*selectedFont);
 

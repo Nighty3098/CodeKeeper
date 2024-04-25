@@ -47,10 +47,12 @@ public:
     QString theme;
     bool isCustomTitlebar;
     int sortNotesRole;
+    bool isAutoSyncing;
 
     QFileSystemModel *notesDirModel;
     QFileSystemModel *noteFileModel;
 
+    void setSettingsData();
     void setFontPr1(QFont *selectedFont, int *font_size_int);
 
     MainWindow(QWidget *parent = nullptr);
@@ -58,6 +60,7 @@ public:
 
 private slots:
     void openSettingsWindow();
+    void openSyncWindow();
     void openFolder();
 
     void hideNotesList();
@@ -131,7 +134,8 @@ private slots:
                            QString *createdTime, QString *oldTime, QString *oldGit);
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
-
+    
+    bool checkConnection();
 
 protected:
     bool createConnection(QString *path);
@@ -170,6 +174,9 @@ private:
     QPushButton *closeBtn;
     QPushButton *minimizeBtn;
 
+    QPushButton *isAutoSync;
+    QPushButton *isConnected;
+
     bool isFullScreen;
     QPoint m_dragPosition;
 
@@ -185,7 +192,6 @@ private:
     CustomIconProvider *iconProvider;
     QMarkdownTextEdit *noteEdit;
     MarkdownHighlighter *highlighter;
-    QLineEdit *noteName;
     QToolButton *menuButton;
     QLabel *noteNameLabel;
 
@@ -265,8 +271,8 @@ private:
     QAction *typeAction;
     QAction *dateAction;
 
-
     SettingsWindow *settingsWindow;
+    SyncWindow *syncWindow;
 };
 
 #endif // MAINWINDOW_H

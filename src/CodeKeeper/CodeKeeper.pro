@@ -1,4 +1,4 @@
-QT += core gui widgets sql webenginewidgets
+QT += core gui widgets sql webenginewidgets network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
