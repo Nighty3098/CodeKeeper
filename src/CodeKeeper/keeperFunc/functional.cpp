@@ -193,7 +193,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
             "margin: 0px;"
             "background-color: rgb(211, 102, 107); color: #000000; "
             "padding: 2px;"
-            "border-width: 0px; border-color: rgba(211, 102, 107); "
+            "border-width: 0px; border-color: rgb(211, 102, 107); "
             "border-radius: 5px;"
             "font-size: "
             + font_size
