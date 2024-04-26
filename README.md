@@ -59,7 +59,7 @@
   - [ ] - Multilang
   - [ ] - Migrate to CMake
  
-## Installing:
+<h2 align="center">Install CodeKeeper:</h2>
 
 ```bash
 git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
