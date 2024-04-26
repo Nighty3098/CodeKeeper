@@ -40,6 +40,13 @@ public:
     }
 };
 
+
+class notesTree : public QTreeView
+{
+protected:
+};
+
+
 class NoteEditor : public QMarkdownTextEdit
 {
 protected:
@@ -142,7 +149,7 @@ private slots:
     void createProject();
     void removeProject();
     void loadProjects();
-
+    
     void setH1();
     void setH2();
     void setH3();
@@ -234,7 +241,7 @@ private:
 
     // ========================================================
     // notes tab
-    QTreeView *notesList;
+    notesTree *notesList;
     CustomIconProvider *iconProvider;
     NoteEditor *noteEdit;
     MarkdownHighlighter *highlighter;
@@ -290,6 +297,7 @@ private:
 
     QAction *newNote;
     QAction *rmNote;
+    QAction *expandAllA;
     QAction *renameItemA;
     QAction *newFolder;
     QAction *showList;

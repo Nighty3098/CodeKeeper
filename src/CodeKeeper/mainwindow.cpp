@@ -187,7 +187,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesDirModel->iconProvider();
     notesDirModel->setIconProvider(iconProvider);
 
-    notesList = new QTreeView();
+    notesList = new notesTree();
     notesList->setAnimated(true);
     notesList->setWordWrap(true);
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
@@ -244,7 +244,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     QMenu *viewMenu = new QMenu("View", menu);
     viewMenu->setIcon(QIcon(":/view.png"));
-    // actions for menu
+
     newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()),
                               Qt::CTRL + Qt::Key_N);
     rmNote = menu->addAction(QPixmap(":/delete.png"), "Remove", this, SLOT(removeNote()),
@@ -253,6 +253,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                                 SLOT(createFolder()), Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     renameItemA = menu->addAction(QPixmap(":/rename.png"), "Rename", this, SLOT(renameItem()),
                                   Qt::Key_F2);
+
+    menu->addSeparator();
+
+    expandAllA = menu->addAction(
+            QPixmap(":/expand.png"), "Expand on one stage", [this]() { notesList->expandAll(); },
+            Qt::CTRL + Qt::Key_E);
+
     menu->addSeparator();
     showList = viewMenu->addAction("Show notes list", this, SLOT(hideNotesList()),
                                    Qt::CTRL + Qt::SHIFT + Qt::Key_L);
