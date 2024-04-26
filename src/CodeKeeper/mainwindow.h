@@ -14,6 +14,7 @@
 #include <QDropEvent>
 #include <QFile>
 #include <QTextStream>
+#include <QTabBar>
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"
@@ -44,7 +45,6 @@ class NoteEditor : public QMarkdownTextEdit
 protected:
     // Bug with cursor - need fixed
 
-    /*
     void dropEvent(QDropEvent *event)
     {
         QString filePath = event->mimeData()->text();
@@ -74,7 +74,6 @@ protected:
             this->setTextCursor(cursor);
         }
     }
-    */
 };
 
 class MainWindow : public QMainWindow
@@ -183,8 +182,6 @@ private slots:
 
     bool checkConnection();
 
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
 
 protected:
     bool createConnection(QString *path);
