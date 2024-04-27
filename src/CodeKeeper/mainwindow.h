@@ -90,6 +90,9 @@ class MainWindow : public QMainWindow
 public:
     QSettings *globalSettings;
     bool isVisibleNotesList;
+    bool isViewMode;
+    bool isVisiblePreview;
+    bool isVisibleFolders;
     QString dir;
     QFont selectedFont;
     QString font_size;
@@ -97,11 +100,14 @@ public:
     bool isCustomTitlebar;
     int sortNotesRole;
     bool isAutoSyncing;
+    
 
     QFileSystemModel *notesDirModel;
     QFileSystemModel *noteFileModel;
 
     void setSettingsData();
+    void getSettingsData();
+
     void setFontPr1(QFont *selectedFont, int *font_size_int);
     void loadNotes();
 
@@ -189,6 +195,7 @@ private slots:
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
     bool checkConnection();
+    void setSetConnectionStatus();
 
 
 protected:

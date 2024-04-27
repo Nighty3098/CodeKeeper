@@ -11,6 +11,37 @@ QString MainWindow::getCurrentDateTimeString()
     return dateTimeString;
 }
 
+void MainWindow::getSettingsData() {
+    selectedFont = globalSettings->value("font").value<QFont>();
+    font_size = globalSettings->value("fontSize").value<QString>();
+    theme = globalSettings->value("theme").value<QString>();
+    isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
+    sortNotesRole = globalSettings->value("sortRole", Qt::DisplayRole).value<int>();
+    isAutoSyncing = globalSettings->value("isAutoSync").value<bool>();
+    isVisibleNotesList = globalSettings->value("isVisibleNotesList", true).toBool();
+    isVisibleFolders = globalSettings->value("isVisibleFolders", true).toBool();
+    isVisiblePreview = globalSettings->value("isVisiblePreview", false).toBool();
+    isViewMode = globalSettings->value("isViewMode", false).toBool();
+}
+
+void MainWindow::setSetConnectionStatus() {
+    if (checkConnection()) {
+        isConnected->setIcon(QIcon(":/connected.png"));
+        isConnected->setToolTip("<p style='color: #ffffff;'>Connected</p>");
+    } else {
+        isConnected->setIcon(QIcon(":/disconnected.png"));
+        isConnected->setToolTip("<p style='color: #ffffff;'>Disconnected</p>");
+    }
+
+    if (isAutoSyncing) {
+        isAutoSync->setIcon(QIcon(":/auto_sync_on.png"));
+        isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync on</p>");
+    } else {
+        isAutoSync->setIcon(QIcon(":/auto_sync_off.png"));
+        isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync off</p>");
+    }
+}
+
 void MainWindow::openSettingsWindow()
 {
     QRect geo = this->geometry();

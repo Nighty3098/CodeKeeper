@@ -85,6 +85,7 @@ void SettingsWindow::saveData()
     setFontPr2(&selectedFont, &font_size);
     mainWindow->setFontPr1(&selectedFont, &font_size);
     mainWindow->loadNotes();
+    mainWindow->getSettingsData();
 }
 
 void SettingsWindow::fopenFolder()
