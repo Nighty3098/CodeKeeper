@@ -11,7 +11,8 @@ QString MainWindow::getCurrentDateTimeString()
     return dateTimeString;
 }
 
-void MainWindow::getSettingsData() {
+void MainWindow::getSettingsData()
+{
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
@@ -24,7 +25,8 @@ void MainWindow::getSettingsData() {
     isViewMode = globalSettings->value("isViewMode", false).toBool();
 }
 
-void MainWindow::setSetConnectionStatus() {
+void MainWindow::setSetConnectionStatus()
+{
     if (checkConnection()) {
         isConnected->setIcon(QIcon(":/connected.png"));
         isConnected->setToolTip("<p style='color: #ffffff;'>Connected</p>");

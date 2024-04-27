@@ -293,7 +293,7 @@ void MainWindow::updateMDPreview()
               "</body>"
               "</html>";
 
-              mdPreview->setHtml(html_result);
+    mdPreview->setHtml(html_result);
 }
 
 void MainWindow::saveNote()
