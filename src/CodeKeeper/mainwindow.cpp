@@ -49,9 +49,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     sizeGrip2 = new QSizeGrip(this);
-    sizeGrip2->setFixedSize(12, 12);
+    sizeGrip2->setFixedSize(11, 11);
     sizeGrip2->setVisible(true);
-    sizeGrip2->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+    sizeGrip2->setStyleSheet("background-color: #febe30; border-radius: 5px;");
 
     sizeGrip3 = new QSizeGrip(this);
     sizeGrip3->setFixedSize(12, 12);
@@ -568,14 +568,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     isAutoSync->setStyleSheet("border: 0px; background-color: transparent;");
     isAutoSync->setFixedSize(15, 15);
 
-    winControlL->addWidget(isConnected, Qt::AlignRight);
-    winControlL->addWidget(isAutoSync, Qt::AlignRight);
+    winControlL->addWidget(isConnected);
+    winControlL->addWidget(isAutoSync);
+    winControlL->addWidget(sizeGrip2);
 
     mainLayout->addWidget(tabs, 1, 0);
     mainLayout->addWidget(sizeGrip3, 2, 0);
     mainLayout->addWidget(sizeGrip4, 2, 1);
 
-    
     // ===================================================================================
     // connects
     connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));
@@ -740,7 +740,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S), this);
     connect(openSettingsWindowQS, &QShortcut::activated, this, [this]() { openSettingsWindow(); });
 
-    createConnection(&dir);
+    createConnection(dir);
 
     create_tasks_connection();
     create_projects_connection();
