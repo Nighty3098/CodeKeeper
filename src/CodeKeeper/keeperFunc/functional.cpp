@@ -25,7 +25,7 @@ void MainWindow::getSettingsData()
     isViewMode = globalSettings->value("isViewMode", false).toBool();
 }
 
-void MainWindow::setSetConnectionStatus()
+void MainWindow::setConnectionStatus()
 {
     if (checkConnection()) {
         isConnected->setIcon(QIcon(":/connected.png"));
@@ -41,6 +41,67 @@ void MainWindow::setSetConnectionStatus()
     } else {
         isAutoSync->setIcon(QIcon(":/auto_sync_off.png"));
         isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync off</p>");
+    }
+}
+
+void MainWindow::createCustomTitlebar()
+{
+    QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    closeBtn->setFixedSize(15, 15);
+    minimizeBtn->setFixedSize(15, 15);
+    maximizeBtn->setFixedSize(15, 15);
+
+    closeBtn->setStyleSheet("QPushButton {"
+                            "    border-color: rgba(0, 0, 0, 0);"
+                            "    background-color: rgba(0, 0, 0, 0);"
+                            "    background-image: url(':/red.png');"
+                            "    background-repeat: no-repeat;"
+                            "}"
+
+                            "QPushButton:hover {"
+                            "    border-color: rgba(0, 0, 0, 0);"
+                            "    background-image: url(':/redHovered.png');"
+                            "    background-repeat: no-repeat;"
+                            "    background-color: rgba(0, 0, 0, 0);"
+                            "}");
+
+    minimizeBtn->setStyleSheet("QPushButton {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/yellow.png');"
+                               "    background-repeat: no-repeat;"
+                               "}"
+
+                               "QPushButton:hover {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/yellowHovered.png');"
+                               "    background-repeat: no-repeat;"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "}");
+
+    maximizeBtn->setStyleSheet("QPushButton {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/green.png');"
+                               "    background-repeat: no-repeat;"
+                               "}"
+
+                               "QPushButton:hover {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/greenHovered.png');"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-repeat: no-repeat;"
+                               "}");
+
+    if (isCustomTitlebar) {
+        this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+
+        winControlL->addWidget(closeBtn);
+        winControlL->addWidget(minimizeBtn);
+        winControlL->addWidget(maximizeBtn);
+        winControlL->addItem(headerSp);
+        winControlL->addWidget(sizeGrip2);
     }
 }
 

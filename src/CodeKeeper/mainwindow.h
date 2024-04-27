@@ -108,6 +108,9 @@ public:
     void setSettingsData();
     void getSettingsData();
 
+    void createCustomTitlebar();
+    void setConnectionStatus();
+
     void setFontPr1(QFont *selectedFont, int *font_size_int);
     void loadNotes();
 
@@ -195,7 +198,6 @@ private slots:
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
     bool checkConnection();
-    void setSetConnectionStatus();
 
 
 protected:

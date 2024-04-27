@@ -43,54 +43,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     isFullScreen = false;
 
-    QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-    closeBtn->setFixedSize(15, 15);
-    minimizeBtn->setFixedSize(15, 15);
-    maximizeBtn->setFixedSize(15, 15);
-
-    closeBtn->setStyleSheet("QPushButton {"
-                            "    border-color: rgba(0, 0, 0, 0);"
-                            "    background-color: rgba(0, 0, 0, 0);"
-                            "    background-image: url(':/red.png');"
-                            "    background-repeat: no-repeat;"
-                            "}"
-
-                            "QPushButton:hover {"
-                            "    border-color: rgba(0, 0, 0, 0);"
-                            "    background-image: url(':/redHovered.png');"
-                            "    background-repeat: no-repeat;"
-                            "    background-color: rgba(0, 0, 0, 0);"
-                            "}");
-
-    minimizeBtn->setStyleSheet("QPushButton {"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/yellow.png');"
-                               "    background-repeat: no-repeat;"
-                               "}"
-
-                               "QPushButton:hover {"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/yellowHovered.png');"
-                               "    background-repeat: no-repeat;"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "}");
-
-    maximizeBtn->setStyleSheet("QPushButton {"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/green.png');"
-                               "    background-repeat: no-repeat;"
-                               "}"
-
-                               "QPushButton:hover {"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/greenHovered.png');"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-repeat: no-repeat;"
-                               "}");
-
     sizeGrip = new QSizeGrip(this);
     sizeGrip->setFixedSize(12, 12);
     sizeGrip->setVisible(true);
@@ -111,15 +63,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     sizeGrip4->setVisible(true);
     sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
-    if (isCustomTitlebar) {
-        this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-
-        winControlL->addWidget(closeBtn);
-        winControlL->addWidget(minimizeBtn);
-        winControlL->addWidget(maximizeBtn);
-        winControlL->addItem(headerSp);
-        winControlL->addWidget(sizeGrip2);
-    }
+    createCustomTitlebar();
 
     this->setMouseTracking(true);
     this->setMinimumSize(560, 400);
@@ -608,6 +552,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     if (isCustomTitlebar) {
         mainLayout->addLayout(winControlL, 0, 0, 1, 2);
+
+        QTimer *connectionTimer = new QTimer(this);
+        connect(connectionTimer, &QTimer::timeout, this, &MainWindow::setConnectionStatus);
+        connectionTimer->start(1000); // 1000ms = 1s
+
     } else {
     }
 
@@ -626,10 +575,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     mainLayout->addWidget(sizeGrip3, 2, 0);
     mainLayout->addWidget(sizeGrip4, 2, 1);
 
-    QTimer *connectionTimer = new QTimer(this);
-    connect(connectionTimer, &QTimer::timeout, this, &MainWindow::setSetConnectionStatus);
-    connectionTimer->start(1000); // 1000ms = 1s
-
+    
     // ===================================================================================
     // connects
     connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));

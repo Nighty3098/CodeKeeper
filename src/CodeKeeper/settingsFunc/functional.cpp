@@ -86,6 +86,10 @@ void SettingsWindow::saveData()
     mainWindow->setFontPr1(&selectedFont, &font_size);
     mainWindow->loadNotes();
     mainWindow->getSettingsData();
+
+    mainWindow->createCustomTitlebar();
+    mainWindow->setConnectionStatus();
+
 }
 
 void SettingsWindow::fopenFolder()
