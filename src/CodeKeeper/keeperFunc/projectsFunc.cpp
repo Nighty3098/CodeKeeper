@@ -91,13 +91,13 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QLineEdit *title = new QLineEdit();
         title->setPlaceholderText(" Project name: ");
-        title->setStyleSheet("font-size: " + font_size + ";");
+        title->setStyleSheet("font-size: " + font_size + "pt;");
         title->setFixedSize(380, 25);
         title->setFont(selectedFont);
 
         QLineEdit *linkToGit = new QLineEdit();
         linkToGit->setPlaceholderText(" Link to GIT");
-        linkToGit->setStyleSheet("font-size: " + font_size + ";");
+        linkToGit->setStyleSheet("font-size: " + font_size + "pt;");
         linkToGit->setFixedSize(380, 25);
         linkToGit->setFont(selectedFont);
 
@@ -107,7 +107,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QMarkdownTextEdit *note = new QMarkdownTextEdit();
         note->setPlaceholderText(" Just start typing");
-        note->setStyleSheet("font-size: " + font_size + ";");
+        note->setStyleSheet("font-size: " + font_size + "pt;");
         note->setLineWrapMode(QPlainTextEdit::WidgetWidth);
         note->setLineNumberEnabled(true);
         note->setLineNumbersCurrentLineColor("#51afef");
@@ -117,14 +117,14 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QLabel *lastMod = new QLabel();
         lastMod->setText("Last mod: ");
-        lastMod->setStyleSheet("font-size: " + font_size + ";");
+        lastMod->setStyleSheet("font-size: " + font_size + "pt;");
         lastMod->setFixedSize(380, 25);
         lastMod->setAlignment(Qt::AlignCenter);
         lastMod->setFont(selectedFont);
 
         QPushButton *saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
-        saveDataBtn->setStyleSheet("font-size: " + font_size + ";");
+        saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
         saveDataBtn->setFixedSize(180, 25);
         saveDataBtn->setIcon(QPixmap(":/save.png"));
         saveDataBtn->setIconSize(QSize(10, 10));
@@ -132,7 +132,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QPushButton *cancelBtn = new QPushButton();
         cancelBtn->setText("Cancel");
-        cancelBtn->setStyleSheet("font-size: " + font_size + ";");
+        cancelBtn->setStyleSheet("font-size: " + font_size + "pt;");
         cancelBtn->setFixedSize(180, 25);
         cancelBtn->setIcon(QPixmap(":/quit.png"));
         cancelBtn->setIconSize(QSize(10, 10));

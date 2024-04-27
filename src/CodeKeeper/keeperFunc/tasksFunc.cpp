@@ -95,20 +95,22 @@ void MainWindow::updateTasksProgress(QTabWidget *tasksTab, QListWidget *incomple
 void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
+        qDebug() << font_size;
+
         QString oldText = item->text();
         QStringList oldData = oldText.split("\n");
 
         QDialog dialog(this);
-        dialog.setFixedSize(220, 100);
+        dialog.setFixedSize(220, 200);
         dialog.setWindowTitle(tr("Edit task"));
         dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-        dialog.setStyleSheet("border-radius: 10px;");
 
         QVBoxLayout layout(&dialog);
         QLineEdit lineEdit(&dialog);
         lineEdit.setFont(selectedFont);
-        lineEdit.setFixedSize(200, 25);
-        lineEdit.setStyleSheet("font-size: " + font_size + ";");
+        lineEdit.setFixedSize(200, 100);
+        lineEdit.setAlignment(Qt::AlignCenter);
+        lineEdit.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: " + font_size + "pt; border-radius: 10px;");
 
         layout.addWidget(&lineEdit);
 
@@ -116,12 +118,12 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetIte
 
         QPushButton okButton(tr("OK"), &dialog);
         okButton.setFont(selectedFont);
-        okButton.setFixedSize(200, 20);
-        okButton.setStyleSheet("font-size: " + font_size + ";");
+        okButton.setFixedSize(200, 25);
+        okButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: " + font_size + "pt; border-radius: 10px;");
         QPushButton cancelButton(tr("Cancel"), &dialog);
         cancelButton.setFont(selectedFont);
-        cancelButton.setFixedSize(200, 20);
-        cancelButton.setStyleSheet("font-size: " + font_size + ";");
+        cancelButton.setFixedSize(200, 25);
+        cancelButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: " + font_size + "pt; border-radius: 10px;");
         layout.addWidget(&okButton);
         layout.addWidget(&cancelButton);
 
