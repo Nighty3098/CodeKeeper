@@ -22,7 +22,8 @@
 </div>
 
 
-<h2 align="center">Shortcuts:</h2>
+<details align="center" open>
+<summary><h2 align="center">Shortcuts:</h2></summary>
 <table align="center">
   <tr>
       <td>Alt+1</td>
@@ -85,50 +86,66 @@
     <td>Open settings</td>
   </tr>
 </table>
- 
-<h2 align="center">Install CodeKeeper:</h2>
 
-```bash
-git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
-cd CodeKeeper/src/CodeKeeper
-qmake CodeKeeper.pro
-make
-```
+</details>
 
-<h2 align="center">Screenshots:</h2>
 
-<img src="imgs/1.png" align="center"/>
-<br />
-<br />
-<img src="imgs/2.png" align="center" />
-<br />
-<br />
-<img src="imgs/3.png" align="center" />
-<br />
-<br />
-<img src="imgs/4.png" align="center" />
 
-<h2 align="center">Tasks:</h2>
 
-  - [ ] - UI
-    - [X] - Custom window decorations
-    - [X] - Update project editor window
-    - [ ] - Context menu for notes
-    - [ ] - Context menu for tasks
-    - [ ] - Context menu for projects
-    - [ ] - Light theme
-    - [ ] - Theme swither
-    - [X] - Update view mode for markdown
+<details align="center" open>
+  <summary><h2 align="center">Install CodeKeeper:</h2></summary>
+  
+  ```bash
+  git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
+  cd CodeKeeper/src/CodeKeeper
+  qmake CodeKeeper.pro
+  make
+  ```
+
+</details>
+
+
+
+
+<details align="center">
+  <summary><h2 align="center">Screenshots:</h2></summary>
+
+  <img src="imgs/1.png" align="center"/>
+  <br />
+  <br />
+  <img src="imgs/2.png" align="center" />
+  <br />
+  <br />
+  <img src="imgs/3.png" align="center" />
+  <br />
+  <br />
+  <img src="imgs/4.png" align="center" />
+
+</details>
+
+
+
+
+
+<details>
+<summary align="center"><h2 align="center">Tasks:</h2></summary>
+
+  - [X] - Custom window decorations
+  - [X] - Update project editor window
+  - [ ] - Context menu for notes
+  - [ ] - Context menu for tasks
+  - [ ] - Context menu for projects
+  - [ ] - Light theme
+  - [ ] - Theme swither
+  - [X] - Update view mode for markdown
 ******
-  - [X] - Saving data:
-    - [X] - Saving notes to MD files
-    - [X] - Saving a list of tasks in the DB
-    - [X] - Saving a projects list  in the DB
+  - [X] - Saving notes to MD files
+  - [X] - Saving a list of tasks in the DB
+  - [X] - Saving a projects list  in the DB
 ******
-  - [ ] - Crossplatform app:
-    - [X] - Linux (AppImage)
-    - [ ] - Windows (exe)
-    - [ ] - Mac
+  - [X] - Linux (AppImage)
+  - [ ] - Windows (exe)
+  - [ ] - Mac
  ******
   - [X] - Task movement functionality
   - [X] - Project creation functionality
@@ -144,3 +161,5 @@ make
   - [ ] - Multilang
   - [ ] - Migrate to CMake
   - [ ] - Update shortcuts
+
+</details>
