@@ -4,6 +4,27 @@
 
 #include "mainwindow.h"
 
+bool loadApp(QSplashScreen* psplash) {
+    QNetworkAccessManager nam;
+    QNetworkRequest req(QUrl("https://google.com/"));
+    QNetworkReply *reply = nam.get(req);
+    QEventLoop loop;
+    QObject::connect(reply, SIGNAL(readyRead()), &loop, SLOT(quit()));
+    QObject::connect(&nam, SIGNAL(finished(QNetworkReply *)), &loop, SLOT(quit()));
+
+    if (!reply->isFinished()) {
+        loop.exec();
+        if (reply->error() == QNetworkReply::NoError) {
+            qDebug() << "You are connected to the internet :)";
+            return true;
+        } else {
+            qDebug() << "You have an net error:" << reply->errorString();
+            return false;
+        }
+        qApp->processEvents();
+    }
+}
+
 int main(int argc, char *argv[])
 {
     QFile file(":/stylesheet/stylesheet.qss");
@@ -11,19 +32,17 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    MainWindow w;
+    QSplashScreen splash(QPixmap(":/icon.png"));
+    splash.show();
 
+    MainWindow keeper;
     a.setStyleSheet(file.readAll());
 
-    w.setWindowIcon(QIcon(":/icon.png"));
-    w.setStyleSheet("QMainWindow { border-radius: 10px; }");
-
-    QPainter pain;
-    w.setAttribute(Qt::WA_TranslucentBackground);
-    pain.setRenderHint(QPainter::Antialiasing);
-    pain.setPen(Qt::NoPen);
-    pain.drawRoundedRect(QRect(), 10, 10, Qt::AbsoluteSize);
-
-    w.show();
+    keeper.setWindowIcon(QIcon(":/icon.png"));
+    
+    loadApp(&splash);
+    splash.finish(&keeper);
+    keeper.show();
+    
     return a.exec();
 }
