@@ -30,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     restoreGeometry(globalSettings->value("geometry").toByteArray());
 
-    dir = globalSettings->value("path").value<QString>();
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
@@ -181,7 +180,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     iconProvider = new CustomIconProvider();
 
     notesDirModel = new QFileSystemModel();
-    notesDirModel->setRootPath(dir);
     notesDirModel->setNameFilters(filters);
     notesDirModel->setNameFilterDisables(false);
     notesDirModel->iconProvider();
@@ -197,14 +195,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesList->setHeaderHidden(true);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
-    notesList->setModel(notesDirModel);
-    notesList->setRootIndex(notesDirModel->index(dir));
-
-    notesList->setColumnWidth(0, 297);
-    notesList->setColumnHidden(1, true);
-    notesList->setColumnHidden(2, true);
-    notesList->setColumnHidden(3, true);
-    notesList->setColumnHidden(4, true);
 
     mdPreview = new QWebEngineView();
     mdPreview->setMinimumWidth(300);
@@ -821,11 +811,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     connect(syncDataBtn, SIGNAL(clicked()), this, SLOT(openSyncWindow()));
 
+    QShortcut *openSettingsWindowQS =
+            new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S), this);
+    connect(openSettingsWindowQS, &QShortcut::activated, this, [this]() { openSettingsWindow(); });
+
     createConnection(&dir);
 
     create_tasks_connection();
     create_projects_connection();
 
+    loadNotes();
     loadTasks();
     loadProjects();
 

@@ -19,6 +19,30 @@ bool createFile(const QString &path)
     }
 }
 
+void MainWindow::loadNotes()
+{
+    dir = globalSettings->value("path").value<QString>();
+    notesDirModel->setRootPath(dir);
+
+    notesList->setAnimated(true);
+    notesList->setWordWrap(true);
+    notesList->setDragDropMode(QAbstractItemView::DragDrop);
+    notesList->setDefaultDropAction(Qt::MoveAction);
+    notesList->setDragEnabled(true);
+    notesList->setMinimumWidth(100);
+    notesList->setHeaderHidden(true);
+    notesList->setColumnHidden(1, true);
+    notesList->setSortingEnabled(true);
+    notesList->setModel(notesDirModel);
+    notesList->setRootIndex(notesDirModel->index(dir));
+
+    notesList->setColumnWidth(0, 297);
+    notesList->setColumnHidden(1, true);
+    notesList->setColumnHidden(2, true);
+    notesList->setColumnHidden(3, true);
+    notesList->setColumnHidden(4, true);
+}
+
 void MainWindow::setSortByTime()
 {
     notesList->sortByColumn(3, Qt::SortOrder());
@@ -33,6 +57,7 @@ void MainWindow::updateMDPreview()
 {
     QString md = noteEdit->toPlainText();
 
+    /*
     QString html;
     md_html(
             md.toUtf8().constData(), md.length(),
@@ -43,6 +68,7 @@ void MainWindow::updateMDPreview()
             },
             &html, 0, 0);
     html += "</body></html>";
+    */
 
     QString html_result =
             "<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
@@ -255,9 +281,19 @@ void MainWindow::updateMDPreview()
               "}"
               "</style>"
               "<html>"
-            + html;
+              "<body>"
+              "  <div id='content'></div>"
+              "  <script src='https://cdn.jsdelivr.net/npm/marked/marked.min.js'></script>"
+              "  <script>"
+              "    document.getElementById('content').innerHTML ="
+              "       marked.parse('"
+            + md
+            + "');"
+              "  </script>"
+              "</body>"
+              "</html>";
 
-    mdPreview->setHtml(html_result);
+              mdPreview->setHtml(html_result);
 }
 
 void MainWindow::saveNote()

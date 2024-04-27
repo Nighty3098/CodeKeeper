@@ -103,6 +103,7 @@ public:
 
     void setSettingsData();
     void setFontPr1(QFont *selectedFont, int *font_size_int);
+    void loadNotes();
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

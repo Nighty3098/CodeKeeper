@@ -84,6 +84,7 @@ void SettingsWindow::saveData()
     MainWindow *mainWindow = static_cast<MainWindow *>(parent());
     setFontPr2(&selectedFont, &font_size);
     mainWindow->setFontPr1(&selectedFont, &font_size);
+    mainWindow->loadNotes();
 }
 
 void SettingsWindow::fopenFolder()
@@ -102,7 +103,9 @@ void SettingsWindow::fopenFolder()
         messageBox->setText("To apply the settings, restart the application.");
 
         messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-        messageBox->exec();
+        // messageBox->exec();
+        MainWindow *mainWindow = static_cast<MainWindow *>(parent());
+        mainWindow->loadNotes();
     }
 }
 
