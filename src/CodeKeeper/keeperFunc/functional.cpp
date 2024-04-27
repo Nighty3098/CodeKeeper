@@ -3,6 +3,28 @@
 #include <QGraphicsOpacityEffect>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QSqlDatabase>
+#include <QSqlError>
+
+bool MainWindow::createConnection(QString path)
+{
+    qDebug() << path;
+    qDebug() << "DB path: " << (path) + QStringLiteral("/data.db");
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName((path) + QStringLiteral("/data.db"));
+
+    db.setUserName("admin");
+    db.setHostName("localhost");
+    db.setPassword("password");
+
+    if (!db.open()) {
+        qDebug() << db.lastError();
+        return false;
+    }
+
+    return true;
+}
 
 QString MainWindow::getCurrentDateTimeString()
 {
@@ -13,6 +35,7 @@ QString MainWindow::getCurrentDateTimeString()
 
 void MainWindow::getSettingsData()
 {
+    dir = globalSettings->value("path").value<QString>();
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
@@ -30,6 +53,7 @@ void MainWindow::setConnectionStatus()
     if (checkConnection()) {
         isConnected->setIcon(QIcon(":/connected.png"));
         isConnected->setToolTip("<p style='color: #ffffff;'>Connected</p>");
+        sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
         isConnected->setIcon(QIcon(":/disconnected.png"));
         isConnected->setToolTip("<p style='color: #ffffff;'>Disconnected</p>");
@@ -38,6 +62,7 @@ void MainWindow::setConnectionStatus()
     if (isAutoSyncing) {
         isAutoSync->setIcon(QIcon(":/auto_sync_on.png"));
         isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync on</p>");
+        sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
         isAutoSync->setIcon(QIcon(":/auto_sync_off.png"));
         isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync off</p>");
@@ -101,7 +126,6 @@ void MainWindow::createCustomTitlebar()
         winControlL->addWidget(minimizeBtn);
         winControlL->addWidget(maximizeBtn);
         winControlL->addItem(headerSp);
-        winControlL->addWidget(sizeGrip2);
     }
 }
 
