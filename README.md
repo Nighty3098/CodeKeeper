@@ -21,7 +21,92 @@
 <a href="mailto:night3098game@gmail.com" target="blank"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"/></a>
 </div>
 
-<hr>
+
+<h2 align="center">Shortcuts:</h2>
+<table align="center">
+  <tr>
+      <td>Alt+1</td>
+      <td>Move to tab 1</td>
+  </tr>
+  <tr>
+    <td>Alt+2</td>
+    <td>Move to tab 2</td>
+  </tr>
+  <tr>
+    <td>Alt+3</td>
+    <td>Move to tab 3</td>
+  </tr>
+  <tr>
+    <td>Alt+4</td>
+    <td>Move to tab 4</td>
+  </tr>
+  <tr>
+    <td>Ctrl+E</td>
+    <td>Expand notes list to 1 step</td>
+  </tr>
+  <tr>
+    <td>Ctrl+Shift+P</td>
+    <td>Show notes preview</td>
+  </tr>
+  <tr>
+    <td>Ctrl+Shift+L</td>
+    <td>Show notes list</td>
+  </tr>
+  <tr>
+    <td>Ctrl+Shift+V</td>
+    <td>Toggle view mode</td>
+  </tr>
+  <tr>
+    <td>Ctrl+Shift+N</td>
+    <td>Create folder</td>
+  </tr>
+  <tr>
+    <td>Ctrl+N</td>
+    <td>Create note</td>
+  </tr>
+  <tr>
+    <td>Ctrl+Del</td>
+    <td>Delete note</td>
+  </tr>
+  <tr>
+    <td>F2</td>
+    <td>Rename note or folder</td>
+  </tr>
+  <tr>
+    <td>Del</td>
+    <td>Remove task or project</td>
+  </tr>
+  <tr>
+    <td>Ctrl+N</td>
+    <td>Create new project</td>
+  </tr>
+  <tr>
+    <td>Ctrl+Shift+S</td>
+    <td>Open settings</td>
+  </tr>
+</table>
+ 
+<h2 align="center">Install CodeKeeper:</h2>
+
+```bash
+git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
+cd CodeKeeper/src/CodeKeeper
+qmake CodeKeeper.pro
+make
+```
+
+<h2 align="center">Screenshots:</h2>
+
+<img src="imgs/1.png" align="center"/>
+<br />
+<br />
+<img src="imgs/2.png" align="center" />
+<br />
+<br />
+<img src="imgs/3.png" align="center" />
+<br />
+<br />
+<img src="imgs/4.png" align="center" />
 
 <h2 align="center">Tasks:</h2>
 
@@ -58,25 +143,4 @@
   - [ ] - Functionality of moving notes
   - [ ] - Multilang
   - [ ] - Migrate to CMake
- 
-<h2 align="center">Install CodeKeeper:</h2>
-
-```bash
-git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
-cd CodeKeeper/src/CodeKeeper
-qmake CodeKeeper.pro
-make
-```
-
-<h2 align="center">Screenshots:</h2>
-
-<img src="imgs/1.png" align="center"/>
-<br />
-<br />
-<img src="imgs/2.png" align="center" />
-<br />
-<br />
-<img src="imgs/3.png" align="center" />
-<br />
-<br />
-<img src="imgs/4.png" align="center" />
+  - [ ] - Update shortcuts
