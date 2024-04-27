@@ -92,10 +92,10 @@
 
 
 
-<details align="center" open>
+<details open>
   <summary><h2 align="center">Install CodeKeeper:</h2></summary>
   
-  ```bash
+  ```
   git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
   cd CodeKeeper/src/CodeKeeper
   qmake CodeKeeper.pro
