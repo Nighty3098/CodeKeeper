@@ -200,6 +200,9 @@ private slots:
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
+    bool checkConnection();
+
+
 protected:
     void mousePressEvent(QMouseEvent *event) override
     {
