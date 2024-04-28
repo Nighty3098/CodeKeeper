@@ -111,6 +111,10 @@
         "forward_list": "cpp",
         "list": "cpp",
         "__hash_table": "cpp",
-        "__tree": "cpp"
+        "__tree": "cpp",
+        "timer": "cpp",
+        "memory": "cpp",
+        "future": "cpp",
+        "istream": "cpp"
     },
 }

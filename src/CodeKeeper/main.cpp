@@ -15,13 +15,12 @@ bool loadApp(QSplashScreen* psplash) {
     if (!reply->isFinished()) {
         loop.exec();
         if (reply->error() == QNetworkReply::NoError) {
-            qDebug() << "You are connected to the internet :)";
+            qDebug() << "Connected";
             return true;
         } else {
-            qDebug() << "You have an net error:" << reply->errorString();
+            qDebug() << "Error: " << reply->errorString();
             return false;
         }
-        qApp->processEvents();
     }
 }
 
