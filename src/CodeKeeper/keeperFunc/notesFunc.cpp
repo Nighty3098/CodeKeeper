@@ -57,19 +57,6 @@ void MainWindow::updateMDPreview()
 {
     QString md = noteEdit->toPlainText();
 
-    /*
-    QString html;
-    md_html(
-            md.toUtf8().constData(), md.length(),
-            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
-                QString *htmlPtr = static_cast<QString *>(userdata);
-                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
-                *htmlPtr += htmlStr;
-            },
-            &html, 0, 0);
-    html += "</body></html>";
-    */
-
     QString html_result =
             "<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
             "<script id='MathJax-script' async "
