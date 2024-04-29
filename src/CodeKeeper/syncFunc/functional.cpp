@@ -1,0 +1,2 @@
+#include <QNetworkAccessManager>
+#include <QNetworkReply>

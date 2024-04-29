@@ -40,12 +40,10 @@ public:
     }
 };
 
-
 class notesTree : public QTreeView
 {
 protected:
 };
-
 
 class NoteEditor : public QMarkdownTextEdit
 {
@@ -100,7 +98,6 @@ public:
     bool isCustomTitlebar;
     int sortNotesRole;
     bool isAutoSyncing;
-    
 
     QFileSystemModel *notesDirModel;
     QFileSystemModel *noteFileModel;
@@ -119,7 +116,6 @@ public:
 
 private slots:
     bool createConnection(QString path);
-
 
     void openSettingsWindow();
     void openSyncWindow();
@@ -162,7 +158,7 @@ private slots:
     void createProject();
     void removeProject();
     void loadProjects();
-    
+
     void setH1();
     void setH2();
     void setH3();
@@ -201,7 +197,6 @@ private slots:
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
     bool checkConnection();
-
 
 protected:
     void mousePressEvent(QMouseEvent *event) override

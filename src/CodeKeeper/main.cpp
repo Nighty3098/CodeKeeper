@@ -4,7 +4,8 @@
 
 #include "mainwindow.h"
 
-bool loadApp(QSplashScreen* psplash) {
+bool loadApp(QSplashScreen *psplash)
+{
     QNetworkAccessManager nam;
     QNetworkRequest req(QUrl("https://google.com/"));
     QNetworkReply *reply = nam.get(req);
@@ -31,17 +32,17 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    QSplashScreen splash(QPixmap(":/icon.png"));
-    splash.show();
+    // QSplashScreen splash(QPixmap(":/icon.png"));
+    // splash.show();
 
     MainWindow keeper;
     a.setStyleSheet(file.readAll());
 
     keeper.setWindowIcon(QIcon(":/icon.png"));
-    
-    loadApp(&splash);
-    splash.finish(&keeper);
+
+    // loadApp(&splash);
+    // splash.finish(&keeper);
     keeper.show();
-    
+
     return a.exec();
 }

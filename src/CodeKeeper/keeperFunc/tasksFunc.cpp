@@ -110,7 +110,8 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetIte
         lineEdit.setFont(selectedFont);
         lineEdit.setFixedSize(200, 100);
         lineEdit.setAlignment(Qt::AlignCenter);
-        lineEdit.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: " + font_size + "pt; border-radius: 10px;");
+        lineEdit.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: "
+                               + font_size + "pt; border-radius: 10px;");
 
         layout.addWidget(&lineEdit);
 
@@ -119,11 +120,13 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetIte
         QPushButton okButton(tr("OK"), &dialog);
         okButton.setFont(selectedFont);
         okButton.setFixedSize(200, 25);
-        okButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: " + font_size + "pt; border-radius: 10px;");
+        okButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: "
+                               + font_size + "pt; border-radius: 10px;");
         QPushButton cancelButton(tr("Cancel"), &dialog);
         cancelButton.setFont(selectedFont);
         cancelButton.setFixedSize(200, 25);
-        cancelButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: " + font_size + "pt; border-radius: 10px;");
+        cancelButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: "
+                                   + font_size + "pt; border-radius: 10px;");
         layout.addWidget(&okButton);
         layout.addWidget(&cancelButton);
 

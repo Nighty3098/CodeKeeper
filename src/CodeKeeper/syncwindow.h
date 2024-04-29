@@ -1,20 +1,20 @@
 #ifndef SYNCWINDOW_H
 #define SYNCWINDOW_H
 
+#include "syncFunc/functional.cpp"
 #include <QtWidgets>
 #include <QSettings>
 #include <QGridLayout>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-
 class SyncWindow : public QMainWindow
 {
-    Q_OBJECT
+    Q_OBJECT;
 
 public:
     QSettings *globalSettings;
-    
+
     SyncWindow(QWidget *parent = nullptr);
     ~SyncWindow();
 
@@ -23,7 +23,7 @@ public:
     QString dir;
 
 private slots:
-    void checkConnection();
+    bool checkConnection();
 
 protected:
 private:
@@ -31,11 +31,6 @@ private:
     QGridLayout *mainLayout;
 
     QLabel *mainTitle;
-    QLabel *checkConnectionL;
-
-    QNetworkAccessManager* manager;
-    QNetworkReply* reply;
-
 };
 
 #endif // MAINWINDOW_H

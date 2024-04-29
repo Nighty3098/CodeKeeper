@@ -1,4 +1,6 @@
 #include "syncwindow.h"
+#include "syncFunc/functional.cpp"
+
 #include <QtWidgets>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -16,24 +18,30 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
 
     mainLayout = new QGridLayout;
 
-    manager = new QNetworkAccessManager();
-    reply = manager->get(QNetworkRequest(QUrl("http://www.google.com")));
-
-    mainTitle = new QLabel("");
+    mainTitle = new QLabel("Sync with Git");
 
     mainLayout->addWidget(mainTitle, 3, 0, 1, 1);
 
     centralWidget->setLayout(mainLayout);
-
-    QObject::connect(reply, &QNetworkReply::finished, [=]() {
-        if (reply->error() == QNetworkReply::NoError) {
-            qDebug() << "Internet connection is available";
-        } else {
-            qDebug() << "No internet connection found";
-        }
-    });
 }
 
 SyncWindow::~SyncWindow() { }
 
-void SyncWindow::checkConnection() { }
+bool SyncWindow::checkConnection()
+{
+    QNetworkAccessManager *manager;
+    QNetworkReply *reply;
+
+    manager = new QNetworkAccessManager();
+    reply = manager->get(QNetworkRequest(QUrl("http://www.google.com")));
+
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            qDebug() << "Internet connection is available";
+            return true;
+        } else {
+            qDebug() << "No internet connection found";
+            return false;
+        }
+    });
+}
