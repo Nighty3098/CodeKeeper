@@ -110,17 +110,11 @@
 
 <details align="center">
   <summary><h2 align="center">Screenshots:</h2></summary>
-
-  <img src="imgs/1.png" align="center"/>
-  <br />
-  <br />
-  <img src="imgs/2.png" align="center" />
-  <br />
-  <br />
-  <img src="imgs/3.png" align="center" />
-  <br />
-  <br />
-  <img src="imgs/4.png" align="center" />
+  
+  ![1](https://github.com/Nighty3098/CodeKeeper/assets/154594695/f12d4183-814c-4c43-a11d-73820b634025)
+  ![2](https://github.com/Nighty3098/CodeKeeper/assets/154594695/4a3e291f-fbe2-4ad4-a5be-7616fde2f98d)
+  ![3](https://github.com/Nighty3098/CodeKeeper/assets/154594695/34d023cc-2202-4418-a663-408e75e2c081)
+  ![4](https://github.com/Nighty3098/CodeKeeper/assets/154594695/cea8770d-acf5-4df6-af7f-fc5fa5ae7eaa)
 
 </details>
 
