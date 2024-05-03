@@ -3,6 +3,7 @@
 
 <img src="imgs/markdown.png" align="center" />
 
+
 <div align="center">
 <a href="./LICENSE.md"><img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=85e185&logoColor=85e185&labelColor=0d1117" /></a>
 <br>
@@ -153,12 +154,13 @@
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
   - [X] - Update markdown render ( migrate to QWebEngineView )
+  - [ ] - Functionality of moving notes
   - [X] - Fix visual bugs
   - [X] - Fix notes path bug
   - [ ] - Using marked js
   - [ ] - Markdown to HTML converter
   - [ ] - Markdown to PDF converter
-  - [ ] - Functionality of moving notes
+
   - [ ] - Multilang
   - [ ] - Migrate to CMake
   - [ ] - Update shortcuts
