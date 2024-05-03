@@ -553,7 +553,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
         QTimer *connectionTimer = new QTimer(this);
         connect(connectionTimer, &QTimer::timeout, this, &MainWindow::setConnectionStatus);
-        connectionTimer->start(10); // 1000ms = 1s
+        connectionTimer->start(100); // 1000ms = 1s
 
     } else {
     }
