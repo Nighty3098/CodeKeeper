@@ -15,6 +15,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QTabBar>
+#include <QThread>
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"

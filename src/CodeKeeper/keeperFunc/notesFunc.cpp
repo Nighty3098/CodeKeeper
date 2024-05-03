@@ -1,6 +1,7 @@
 #include <md4.h>
 #include <md4c-html.h>
 #include <QWebEngineScript>
+#include <md4c.h>
 
 QModelIndex indexFromItem(QTreeWidgetItem *item, int column) { }
 
@@ -56,6 +57,17 @@ void MainWindow::setSortByName()
 void MainWindow::updateMDPreview()
 {
     QString md = noteEdit->toPlainText();
+
+    QString html;
+    md_html(
+            md.toUtf8().constData(), md.length(),
+            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
+                QString *htmlPtr = static_cast<QString *>(userdata);
+                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
+                *htmlPtr += htmlStr;
+            },
+            &html, 0, 0);
+    html += "</body></html>";
 
     QString html_result =
             "<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
@@ -267,18 +279,7 @@ void MainWindow::updateMDPreview()
               "    color: #c3ceec;"
               "}"
               "</style>"
-              "<html>"
-              "<body>"
-              "  <div id='content'></div>"
-              "  <script src='https://cdn.jsdelivr.net/npm/marked/marked.min.js'></script>"
-              "  <script>"
-              "    document.getElementById('content').innerHTML ="
-              "       marked.parse('"
-            + md
-            + "');"
-              "  </script>"
-              "</body>"
-              "</html>";
+            + html;
 
     mdPreview->setHtml(html_result);
 }

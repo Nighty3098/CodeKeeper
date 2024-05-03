@@ -6,6 +6,7 @@
 #include <QNetworkConfigurationManager>
 #include <QSqlDatabase>
 #include <QSqlError>
+#include <QThread>
 
 bool MainWindow::createConnection(QString path)
 {
@@ -167,10 +168,10 @@ bool MainWindow::checkConnection()
     if (!reply->isFinished()) {
         loop.exec();
         if (reply->error() == QNetworkReply::NoError) {
-            qDebug() << "You are connected to the internet :)";
+            // qDebug() << "You are connected to the internet :)";
             return true;
         } else {
-            qDebug() << "You have an net error:" << reply->errorString();
+            // qDebug() << "You have an net error:" << reply->errorString();
             return false;
         }
     }

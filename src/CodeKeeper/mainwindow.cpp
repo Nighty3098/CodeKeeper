@@ -8,6 +8,7 @@
 #include "sql_db/projectsDB.cpp"
 #include "sql_db/tasksDB.cpp"
 
+#include <QThread>
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <md4c-html.h>
@@ -107,10 +108,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->setAlignment(Qt::AlignHCenter);
 
     QStringList filters;
-    filters << ""
-            << "*.md"
-            << "*.html"
-            << "*.txt";
+    filters << "" << "*.md" << "*.html" << "*.txt";
 
     iconProvider = new CustomIconProvider();
 
@@ -555,7 +553,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
         QTimer *connectionTimer = new QTimer(this);
         connect(connectionTimer, &QTimer::timeout, this, &MainWindow::setConnectionStatus);
-        connectionTimer->start(1000); // 1000ms = 1s
+        connectionTimer->start(10); // 1000ms = 1s
 
     } else {
     }
