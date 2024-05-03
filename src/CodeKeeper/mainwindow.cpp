@@ -7,16 +7,21 @@
 #include "3rdParty/qmarkdowntextedit/markdownhighlighter.h"
 #include "sql_db/projectsDB.cpp"
 #include "sql_db/tasksDB.cpp"
+
+#include <QThread>
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include <md4c-html.h>
 #include <QInputDialog>
 #include <QPropertyAnimation>
 #include <QSizeGrip>
 #include <QtWidgets>
+#include <QWebEngineView>
 
 Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    // for startup time
     QTime startup;
     startup.start();
 
@@ -26,16 +31,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     restoreGeometry(globalSettings->value("geometry").toByteArray());
 
-    dir = globalSettings->value("path").value<QString>();
-    selectedFont = globalSettings->value("font").value<QFont>();
-    font_size = globalSettings->value("fontSize").value<QString>();
-    theme = globalSettings->value("theme").value<QString>();
-    isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
-    sortNotesRole = globalSettings->value("sortRole", Qt::DisplayRole).value<int>();
-    bool isVisibleNotesList = globalSettings->value("isVisibleNotesList", true).toBool();
-    bool isVisibleFolders = globalSettings->value("isVisibleFolders", true).toBool();
-    bool isVisiblePreview = globalSettings->value("isVisiblePreview", false).toBool();
-    bool isViewMode = globalSettings->value("isViewMode", false).toBool();
+    getSettingsData();
 
     qDebug() << dir;
 
@@ -48,63 +44,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     isFullScreen = false;
 
-    QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-    closeBtn->setFixedSize(15, 15);
-    minimizeBtn->setFixedSize(15, 15);
-    maximizeBtn->setFixedSize(15, 15);
-
-    closeBtn->setStyleSheet("QPushButton {"
-                            "    border-color: rgba(0, 0, 0, 0);"
-                            "    background-color: rgba(0, 0, 0, 0);"
-                            "    background-image: url(':/red.png');"
-                            "    background-repeat: no-repeat;"
-                            "}"
-
-                            "QPushButton:hover {"
-                            "    border-color: rgba(0, 0, 0, 0);"
-                            "    background-image: url(':/redHovered.png');"
-                            "    background-repeat: no-repeat;"
-                            "    background-color: rgba(0, 0, 0, 0);"
-                            "}");
-
-    minimizeBtn->setStyleSheet("QPushButton {"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/yellow.png');"
-                               "    background-repeat: no-repeat;"
-                               "}"
-
-                               "QPushButton:hover {"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/yellowHovered.png');"
-                               "    background-repeat: no-repeat;"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "}");
-
-    maximizeBtn->setStyleSheet("QPushButton {"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/green.png');"
-                               "    background-repeat: no-repeat;"
-                               "}"
-
-                               "QPushButton:hover {"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/greenHovered.png');"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-repeat: no-repeat;"
-                               "}");
-
     sizeGrip = new QSizeGrip(this);
     sizeGrip->setFixedSize(12, 12);
     sizeGrip->setVisible(true);
     sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     sizeGrip2 = new QSizeGrip(this);
-    sizeGrip2->setFixedSize(12, 12);
+    sizeGrip2->setFixedSize(11, 11);
     sizeGrip2->setVisible(true);
-    sizeGrip2->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+    sizeGrip2->setStyleSheet("background-color: #febe30; border-radius: 5px;");
 
     sizeGrip3 = new QSizeGrip(this);
     sizeGrip3->setFixedSize(12, 12);
@@ -116,15 +64,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     sizeGrip4->setVisible(true);
     sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
-    if (isCustomTitlebar) {
-        this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-
-        winControlL->addWidget(closeBtn);
-        winControlL->addWidget(minimizeBtn);
-        winControlL->addWidget(maximizeBtn);
-        winControlL->addItem(headerSp);
-        winControlL->addWidget(sizeGrip2);
-    }
+    createCustomTitlebar();
 
     this->setMouseTracking(true);
     this->setMinimumSize(560, 400);
@@ -132,24 +72,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->setWindowIcon(QIcon(":/icon.png"));
 
     mainLayout = new QGridLayout(centralWidget);
+    mainLayout->setSpacing(0);
 
     // ========================================================
 
     // title
     mainTitle = new QLabel("CodeKeeper");
     mainTitle->setAlignment(Qt::AlignCenter);
-    mainTitle->setStyleSheet("font-size: 52px;");
+    mainTitle->setStyleSheet("font-size: 54px;");
 
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
     openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), " Settings");
-    openSettingsBtn->setFixedSize(200, 25);
+    openSettingsBtn->setFixedSize(200, 30);
     settingsBtnLayout->addWidget(openSettingsBtn);
 
     // sync btn
     QHBoxLayout *syncDataLayout = new QHBoxLayout;
     syncDataBtn = new QPushButton(QPixmap(":/retry.png"), " Sync data");
-    syncDataBtn->setFixedSize(200, 25);
+    syncDataBtn->setFixedSize(200, 30);
     syncDataLayout->addWidget(syncDataBtn);
 
     // ========================================================
@@ -167,21 +108,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->setAlignment(Qt::AlignHCenter);
 
     QStringList filters;
-    filters << ""
-            << "*.md"
-            << "*.txt"
-            << "*.html";
+    filters << "" << "*.md" << "*.html" << "*.txt";
 
     iconProvider = new CustomIconProvider();
 
     notesDirModel = new QFileSystemModel();
-    notesDirModel->setRootPath(dir);
     notesDirModel->setNameFilters(filters);
     notesDirModel->setNameFilterDisables(false);
     notesDirModel->iconProvider();
     notesDirModel->setIconProvider(iconProvider);
 
-    notesList = new QTreeView();
+    notesList = new notesTree();
     notesList->setAnimated(true);
     notesList->setWordWrap(true);
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
@@ -191,26 +128,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesList->setHeaderHidden(true);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
-    notesList->setModel(notesDirModel);
-    notesList->setRootIndex(notesDirModel->index(dir));
 
-    notesList->setColumnWidth(0, 297);
-    notesList->setColumnHidden(1, true);
-    notesList->setColumnHidden(2, true);
-    notesList->setColumnHidden(3, true);
-    notesList->setColumnHidden(4, true);
+    mdPreview = new QWebEngineView();
+    mdPreview->setMinimumWidth(300);
+    mdPreview->setAutoFillBackground(true);
+    mdPreview->page()->setBackgroundColor(Qt::transparent);
 
-    noteName = new QLineEdit();
-    noteName->setFixedSize(200, 30);
-    noteName->setPlaceholderText(" Name ...");
-
-    mdPreview = new QTextBrowser();
-    mdPreview->setOpenLinks(true);
-    mdPreview->setOpenExternalLinks(true);
-    mdPreview->setAlignment(Qt::AlignHCenter);
-
-
-    noteEdit = new QMarkdownTextEdit();
+    noteEdit = new NoteEditor();
     noteEdit->setPlaceholderText(" Just start typing");
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
     noteEdit->setLineNumberEnabled(true);
@@ -236,14 +160,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuButton->setIconSize(QSize(10, 10));
     menuButton->setPopupMode(QToolButton::InstantPopup);
     menuButton->setStyleSheet(
-            "background-color: #222436; border-color: #222436; border-width: 4px;");
+            "background-color: #1F1F28; border-color: #1F1F28; border-width: 4px;");
 
     QMenu *menu = new QMenu(menuButton);
     menu->setFont(selectedFont);
 
     QMenu *viewMenu = new QMenu("View", menu);
+    viewMenu->setIcon(QIcon(":/view.png"));
 
-    // actions for menu
     newNote = menu->addAction(QPixmap(":/new.png"), "New Note", this, SLOT(createNote()),
                               Qt::CTRL + Qt::Key_N);
     rmNote = menu->addAction(QPixmap(":/delete.png"), "Remove", this, SLOT(removeNote()),
@@ -252,6 +176,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                                 SLOT(createFolder()), Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     renameItemA = menu->addAction(QPixmap(":/rename.png"), "Rename", this, SLOT(renameItem()),
                                   Qt::Key_F2);
+
+    menu->addSeparator();
+
+    expandAllA = menu->addAction(
+            QPixmap(":/expand.png"), "Expand on one stage", [this]() { notesList->expandAll(); },
+            Qt::CTRL + Qt::Key_E);
+
     menu->addSeparator();
     showList = viewMenu->addAction("Show notes list", this, SLOT(hideNotesList()),
                                    Qt::CTRL + Qt::SHIFT + Qt::Key_L);
@@ -268,6 +199,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     viewMode->setChecked(isViewMode);
 
     QMenu *editMenu = new QMenu("Edit", menu);
+    editMenu->setIcon(QIcon(":/edit.png"));
     setH1A = editMenu->addAction(QPixmap(":/h1.png"), "Set H1", this, SLOT(setH1()));
     setH2A = editMenu->addAction(QPixmap(":/h2.png"), "Set H2", this, SLOT(setH2()));
     setH3A = editMenu->addAction(QPixmap(":/h3.png"), "Set H3", this, SLOT(setH3()));
@@ -287,11 +219,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTableA = editMenu->addAction(QPixmap(":/table.png"), "Add table", this, SLOT(setTable()));
 
     QMenu *sortMenu = new QMenu("Sort by", menu);
-    nameAction = sortMenu->addAction("Name");
-    typeAction = sortMenu->addAction("Type");
-    dateAction = sortMenu->addAction("Date");
+    sortMenu->setIcon(QIcon(":/sorting.png"));
+    nameAction = sortMenu->addAction("Name", this, SLOT(setSortByName()));
+    dateAction = sortMenu->addAction("Date", this, SLOT(setSortByTime()));
 
     QMenu *exportMenu = new QMenu("Export as", menu);
+    exportMenu->setIcon(QIcon(":/export.png"));
     exportToHtml = exportMenu->addAction("HTML");
     exportToPdf = exportMenu->addAction("Pdf");
 
@@ -314,18 +247,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTableB = new QPushButton(QPixmap(":/table.png"), "");
     setQuoteB = new QPushButton(QPixmap(":/quote.png"), "");
 
-    setH1B->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setH2B->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setH3B->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setListB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setLinkB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setBoldB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setItalicB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setStrikeB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setTaskB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setNumListB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setTableB->setStyleSheet("background-color: #222436; border-color: #222436;");
-    setQuoteB->setStyleSheet("background-color: #222436; border-color: #222436;");
+    setH1B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setH2B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setH3B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setListB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setLinkB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setBoldB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setItalicB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setStrikeB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setTaskB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setNumListB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setTableB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setQuoteB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
 
     setH1B->setFixedSize(30, 30);
     setH2B->setFixedSize(30, 30);
@@ -391,7 +324,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksMenuBtn->setFixedSize(30, 30);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
     tasksMenuBtn->setStyleSheet(
-            "background-color: #222436; border-color: #222436; border-width: 0px;");
+            "background-color: #1F1F28; border-color: #1F1F28; border-width: 0px;");
 
     QMenu *tasksMenu = new QMenu(tasksMenuBtn);
     tasksMenu->setFont(selectedFont);
@@ -485,7 +418,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsMenuButton->setFixedSize(30, 30);
     projectsMenuButton->setIconSize(QSize(40, 40));
     projectsMenuButton->setStyleSheet(
-            "background-color: #222436; border-color: #222436; border-width: 0px;");
+            "background-color: #1F1F28; border-color: #1F1F28; border-width: 0px;");
 
     projectsMenu = new QMenu(projectsMenuButton);
 
@@ -617,12 +550,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     if (isCustomTitlebar) {
         mainLayout->addLayout(winControlL, 0, 0, 1, 2);
+
+        QTimer *connectionTimer = new QTimer(this);
+        connect(connectionTimer, &QTimer::timeout, this, &MainWindow::setConnectionStatus);
+        connectionTimer->start(100); // 1000ms = 1s
+
     } else {
     }
+
+    isConnected = new QPushButton("");
+    isConnected->setStyleSheet("border: 0px; background-color: transparent;");
+    isConnected->setFixedSize(15, 15);
+
+    isAutoSync = new QPushButton("");
+    isAutoSync->setStyleSheet("border: 0px; background-color: transparent;");
+    isAutoSync->setFixedSize(15, 15);
+
+    winControlL->addWidget(isConnected);
+    winControlL->addWidget(isAutoSync);
+    winControlL->addWidget(sizeGrip2);
+
     mainLayout->addWidget(tabs, 1, 0);
     mainLayout->addWidget(sizeGrip3, 2, 0);
     mainLayout->addWidget(sizeGrip4, 2, 1);
 
+    // ===================================================================================
     // connects
     connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));
 
@@ -762,7 +714,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                                        "    background-color: rgba(0, 0, 0, 0);"
                                        "    background-repeat: no-repeat;"
                                        "}");
-
         } else {
             maximizeBtn->setStyleSheet("QPushButton {"
                                        "    border-color: rgba(0, 0, 0, 0);"
@@ -780,11 +731,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         }
     });
 
-    createConnection(&dir);
+    connect(syncDataBtn, SIGNAL(clicked()), this, SLOT(openSyncWindow()));
+
+    QShortcut *openSettingsWindowQS =
+            new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S), this);
+    connect(openSettingsWindowQS, &QShortcut::activated, this, [this]() { openSettingsWindow(); });
+
+    createConnection(dir);
 
     create_tasks_connection();
     create_projects_connection();
 
+    loadNotes();
     loadTasks();
     loadProjects();
 

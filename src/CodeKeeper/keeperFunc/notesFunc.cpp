@@ -1,3 +1,8 @@
+#include <md4.h>
+#include <md4c-html.h>
+#include <QWebEngineScript>
+#include <md4c.h>
+
 QModelIndex indexFromItem(QTreeWidgetItem *item, int column) { }
 
 bool createFile(const QString &path)
@@ -15,10 +20,268 @@ bool createFile(const QString &path)
     }
 }
 
+void MainWindow::loadNotes()
+{
+    dir = globalSettings->value("path").value<QString>();
+    notesDirModel->setRootPath(dir);
+
+    notesList->setAnimated(true);
+    notesList->setWordWrap(true);
+    notesList->setDragDropMode(QAbstractItemView::DragDrop);
+    notesList->setDefaultDropAction(Qt::MoveAction);
+    notesList->setDragEnabled(true);
+    notesList->setMinimumWidth(100);
+    notesList->setHeaderHidden(true);
+    notesList->setColumnHidden(1, true);
+    notesList->setSortingEnabled(true);
+    notesList->setModel(notesDirModel);
+    notesList->setRootIndex(notesDirModel->index(dir));
+
+    notesList->setColumnWidth(0, 297);
+    notesList->setColumnHidden(1, true);
+    notesList->setColumnHidden(2, true);
+    notesList->setColumnHidden(3, true);
+    notesList->setColumnHidden(4, true);
+}
+
+void MainWindow::setSortByTime()
+{
+    notesList->sortByColumn(3, Qt::SortOrder());
+}
+
+void MainWindow::setSortByName()
+{
+    notesList->sortByColumn(0, Qt::SortOrder());
+}
+
 void MainWindow::updateMDPreview()
 {
-    QString text = noteEdit->toPlainText();
-    mdPreview->setMarkdown(text);
+    QString md = noteEdit->toPlainText();
+
+    QString html;
+    md_html(
+            md.toUtf8().constData(), md.length(),
+            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
+                QString *htmlPtr = static_cast<QString *>(userdata);
+                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
+                *htmlPtr += htmlStr;
+            },
+            &html, 0, 0);
+    html += "</body></html>";
+
+    QString html_result =
+            "<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
+            "<script id='MathJax-script' async "
+            "src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>"
+            "<script type='module'>"
+            "    import mermaid from "
+            "'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';"
+            "    mermaid.initialize({ startOnLoad: true });"
+            "</script>"
+            "<style>"
+            "body {"
+            "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    line-height: 1.5;"
+              "}"
+              "h1, h2, h3, h4, h5, h6 {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-weight: normal;"
+              "    margin-top: 20px;"
+              "    margin-bottom: 10px;"
+              "    color: #c3ceec;"
+              "}"
+              "hr {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    color: #ecbe7b;"
+              "}"
+              "p{"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    font-weight: normal;"
+              "    margin-top: 20px;"
+              "    margin-bottom: 10px;"
+              "    color: #c3ceec;"
+              "}"
+              "ul{"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    font-weight: normal;"
+              "    margin-top: 20px;"
+              "    margin-bottom: 10px;"
+              "    color: #c3ceec;"
+              "}"
+              "li{"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    font-weight: normal;"
+              "    margin-top: 20px;"
+              "    margin-bottom: 10px;"
+              "    color: #c3ceec;"
+              "}"
+              "italic{"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    font-weight: normal;"
+              "    margin-top: 20px;"
+              "    margin-bottom: 10px;"
+              "    color: #ecbe7b;"
+              "}"
+              "bold{"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    font-weight: normal;"
+              "    margin-top: 20px;"
+              "    margin-bottom: 10px;"
+              "    color: #ecbe7b;"
+              "}"
+              "a{"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    font-weight: normal;"
+              "    margin-top: 20px;"
+              "    margin-bottom: 10px;"
+              "    color: #ecbe7b;"
+              "}"
+              "blockquote {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    color: #222436;"
+              "    background-color: #7e6c9c;"
+              "    padding: 2px 5px;"
+              "    border-radius: 6px;"
+              "}"
+              "code {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    background-color: #7e6c9c;"
+              "    padding: 2px 5px;"
+              "    border-radius: 6px;"
+              "}"
+              "quote {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    background-color: #7e6c9c;"
+              "    padding: 2px 5px;"
+              "    border-radius: 6px;"
+              "}"
+              "body::-webkit-scrollbar {"
+              "    width: 6px;"
+              "}"
+              "body::-webkit-scrollbar-track {"
+              "    background: transparent;"
+              "}"
+              "body::-webkit-scrollbar-thumb {"
+              "    background-color: transparent;"
+              "    border-radius: 20px;"
+              "    border: 4px solid #666c72;"
+              "}"
+              "table {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    border-collapse: collapse;"
+              "    width: 100%;"
+              "    color: #c3ceec;"
+              "}"
+              "th, td {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    border: 1px solid #dddddd;"
+              "    padding: 8px;"
+              "    text-align: left;"
+              "    color: #c3ceec;"
+              "}"
+              "th {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    background-color: #2f334d;"
+              "    color: #c3ceec;"
+              "    font-weight: bold;"
+              "    color: #c3ceec;"
+              "}"
+              "tr:nth-child(even) {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    background-color: #2f334d;"
+              "    color: #c3ceec;"
+              "}"
+              "tr:hover {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-size: "
+            + font_size
+            + ";"
+              "    background-color: #2f334d;"
+              "    color: #c3ceec;"
+              "}"
+              "</style>"
+            + html;
+
+    mdPreview->setHtml(html_result);
 }
 
 void MainWindow::saveNote()
@@ -102,6 +365,8 @@ void MainWindow::toViewMode()
     setStrikeB->setVisible(!isView);
     setTaskB->setVisible(!isView);
     setNumListB->setVisible(!isView);
+    setTableB->setVisible(!isView);
+    setQuoteB->setVisible(!isView);
 
     notesList->setVisible(!isView);
     noteEdit->setVisible(!isView);

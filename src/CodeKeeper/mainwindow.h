@@ -8,6 +8,14 @@
 #include <QTextBrowser>
 #include <QtWidgets>
 #include <QtConcurrent/QtConcurrent>
+#include <QWebEngineView>
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include <QDropEvent>
+#include <QFile>
+#include <QTextStream>
+#include <QTabBar>
+#include <QThread>
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "settingswindow.h"
@@ -33,6 +41,47 @@ public:
     }
 };
 
+class notesTree : public QTreeView
+{
+protected:
+};
+
+class NoteEditor : public QMarkdownTextEdit
+{
+protected:
+    // Bug with cursor - need fixed
+
+    void dropEvent(QDropEvent *event)
+    {
+        QString filePath = event->mimeData()->text();
+        QFileInfo fileInfo(filePath);
+        QString fileSuffix = fileInfo.suffix();
+
+        qDebug() << "Dropped file:" << filePath;
+
+        if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md") {
+            QString newLine = "[Dropped file](" + filePath + ")";
+
+            QTextCursor cursor = this->textCursor();
+            int lineNumber = cursor.blockNumber();
+            QTextBlock block = this->document()->findBlockByNumber(lineNumber);
+            cursor.movePosition(QTextCursor::EndOfLine);
+            cursor.insertText(newLine);
+            this->setTextCursor(cursor);
+
+        } else {
+            QString newLine = "![Dropped file](" + filePath + ")";
+
+            QTextCursor cursor = this->textCursor();
+            int lineNumber = cursor.blockNumber();
+            QTextBlock block = this->document()->findBlockByNumber(lineNumber);
+            cursor.movePosition(QTextCursor::EndOfLine);
+            cursor.insertText(newLine);
+            this->setTextCursor(cursor);
+        }
+    }
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -40,23 +89,37 @@ class MainWindow : public QMainWindow
 public:
     QSettings *globalSettings;
     bool isVisibleNotesList;
+    bool isViewMode;
+    bool isVisiblePreview;
+    bool isVisibleFolders;
     QString dir;
     QFont selectedFont;
     QString font_size;
     QString theme;
     bool isCustomTitlebar;
     int sortNotesRole;
+    bool isAutoSyncing;
 
     QFileSystemModel *notesDirModel;
     QFileSystemModel *noteFileModel;
 
+    void setSettingsData();
+    void getSettingsData();
+
+    void createCustomTitlebar();
+    void setConnectionStatus();
+
     void setFontPr1(QFont *selectedFont, int *font_size_int);
+    void loadNotes();
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
+    bool createConnection(QString path);
+
     void openSettingsWindow();
+    void openSyncWindow();
     void openFolder();
 
     void hideNotesList();
@@ -110,6 +173,9 @@ private slots:
     void setTable();
     void setQuote();
 
+    void setSortByTime();
+    void setSortByName();
+
     void updateWindowTitle();
 
     QString getCurrentDateTimeString();
@@ -131,9 +197,9 @@ private slots:
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
+    bool checkConnection();
 
 protected:
-    bool createConnection(QString *path);
     void mousePressEvent(QMouseEvent *event) override
     {
         if (event->button() == Qt::LeftButton) {
@@ -169,6 +235,9 @@ private:
     QPushButton *closeBtn;
     QPushButton *minimizeBtn;
 
+    QPushButton *isAutoSync;
+    QPushButton *isConnected;
+
     bool isFullScreen;
     QPoint m_dragPosition;
 
@@ -180,14 +249,14 @@ private:
 
     // ========================================================
     // notes tab
-    QTreeView *notesList;
+    notesTree *notesList;
     CustomIconProvider *iconProvider;
-    QMarkdownTextEdit *noteEdit;
+    NoteEditor *noteEdit;
     MarkdownHighlighter *highlighter;
-    QTextBrowser *mdPreview;
-    QLineEdit *noteName;
     QToolButton *menuButton;
     QLabel *noteNameLabel;
+
+    QWebEngineView *mdPreview;
 
     QPushButton *setH1B;
     QPushButton *setH2B;
@@ -236,6 +305,7 @@ private:
 
     QAction *newNote;
     QAction *rmNote;
+    QAction *expandAllA;
     QAction *renameItemA;
     QAction *newFolder;
     QAction *showList;
@@ -260,11 +330,10 @@ private:
     QAction *exportToHtml;
     QAction *setQuoteA;
     QAction *nameAction;
-    QAction *typeAction;
     QAction *dateAction;
 
-
     SettingsWindow *settingsWindow;
+    SyncWindow *syncWindow;
 };
 
 #endif // MAINWINDOW_H

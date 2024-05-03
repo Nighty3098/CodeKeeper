@@ -1,4 +1,4 @@
-QT += core gui widgets sql
+QT += core gui widgets sql webenginewidgets network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,6 +20,7 @@ SOURCES += \
     keeperFunc/tasksFunc.cpp \
     keeperFunc/projectsFunc.cpp \
     keeperFunc/notesFunc.cpp \
+    syncFunc/functional.cpp \
     sql_db/projectsDB.cpp \
     sql_db/tasksDB.cpp \
 

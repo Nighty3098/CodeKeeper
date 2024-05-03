@@ -5,23 +5,6 @@ void SettingsWindow::QuitW()
     this->close();
 }
 
-bool MainWindow::createConnection(QString *path)
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(*path + "/data.db");
-
-    db.setUserName("admin");
-    db.setHostName("localhost");
-    db.setPassword("password");
-
-    if (!db.open()) {
-        qDebug() << db.lastError();
-        return false;
-    }
-
-    return true;
-}
-
 void SettingsWindow::closeEvent(QCloseEvent *event)
 {
     MainWindow *mainWindow = static_cast<MainWindow *>(parent());
@@ -84,6 +67,11 @@ void SettingsWindow::saveData()
     MainWindow *mainWindow = static_cast<MainWindow *>(parent());
     setFontPr2(&selectedFont, &font_size);
     mainWindow->setFontPr1(&selectedFont, &font_size);
+    mainWindow->loadNotes();
+    mainWindow->getSettingsData();
+
+    // mainWindow->createCustomTitlebar();
+    mainWindow->setConnectionStatus();
 }
 
 void SettingsWindow::fopenFolder()
@@ -102,7 +90,9 @@ void SettingsWindow::fopenFolder()
         messageBox->setText("To apply the settings, restart the application.");
 
         messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-        messageBox->exec();
+        // messageBox->exec();
+        MainWindow *mainWindow = static_cast<MainWindow *>(parent());
+        mainWindow->loadNotes();
     }
 }
 
