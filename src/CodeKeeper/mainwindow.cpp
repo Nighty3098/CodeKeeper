@@ -108,7 +108,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->setAlignment(Qt::AlignHCenter);
 
     QStringList filters;
-    filters << "" << "*.md" << "*.html" << "*.txt";
+    filters << ""
+            << "*.md"
+            << "*.html"
+            << "*.txt";
 
     iconProvider = new CustomIconProvider();
 
@@ -225,8 +228,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     QMenu *exportMenu = new QMenu("Export as", menu);
     exportMenu->setIcon(QIcon(":/export.png"));
-    exportToHtml = exportMenu->addAction("HTML");
-    exportToPdf = exportMenu->addAction("Pdf");
+    exportToHtml = exportMenu->addAction("HTML", this, SLOT(exportNoteToHtml()));
+    exportToPdf = exportMenu->addAction("Pdf", this, SLOT(exportNoteToPdf()));
 
     menu->addMenu(editMenu);
     menu->addMenu(viewMenu);

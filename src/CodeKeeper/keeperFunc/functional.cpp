@@ -48,6 +48,14 @@ void MainWindow::getSettingsData()
     isVisibleFolders = globalSettings->value("isVisibleFolders", true).toBool();
     isVisiblePreview = globalSettings->value("isVisiblePreview", false).toBool();
     isViewMode = globalSettings->value("isViewMode", false).toBool();
+    git_repo = globalSettings->value("git_repo").value<QString>();
+    git_user = globalSettings->value("git_user").value<QString>();
+    git_token = globalSettings->value("git_token").value<QString>();
+    isAutoSyncB = globalSettings->value("isAutoSync").value<bool>();
+
+    qDebug() << dir << selectedFont << font_size << theme << isCustomTitlebar << sortNotesRole
+             << isAutoSyncing << isVisibleNotesList << isVisibleFolders << isVisiblePreview
+             << isViewMode << git_repo << git_user << git_token << isAutoSyncB;
 }
 
 void MainWindow::setConnectionStatus()
