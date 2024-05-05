@@ -76,7 +76,7 @@ void SettingsWindow::saveData()
 
 void SettingsWindow::fopenFolder()
 {
-    QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
+    QString str = QFileDialog::getExistingDirectory(this, "Select Folder");
     if (!str.isEmpty()) {
         qDebug() << str;
         globalSettings->setValue("path", str);
