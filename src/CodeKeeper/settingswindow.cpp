@@ -77,7 +77,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     versionInfo = new QLabel();
-    versionInfo->setText("Version: 0.1.1");
+    versionInfo->setText("Version: 0.1.3");
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn = new QPushButton(QPixmap(":/retry.png"), " Chech for updates");
