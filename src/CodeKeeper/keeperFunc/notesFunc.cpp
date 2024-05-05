@@ -61,9 +61,8 @@ void MainWindow::exportNoteToHtml()
         file.close();
         qDebug() << "File saved successfully at" << filePath;
     } else {
-        qDebug() << "Error", "Failed to open file for writing.";
+        qDebug() << "Error, Failed to open file for writing.";
     }
-    // qDebug() << html;
 }
 
 void MainWindow::loadNotes()
