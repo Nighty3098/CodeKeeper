@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm -rf src/CodeKeeper/build
 rm src/CodeKeeper/CodeKeeper.pro.user
 rm src/CodeKeeper/CodeKeeper.pro.user.1f90c22
 rm src/CodeKeeper/main.o

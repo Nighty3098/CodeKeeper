@@ -100,6 +100,11 @@ public:
     int sortNotesRole;
     bool isAutoSyncing;
 
+    QString git_repo;
+    QString git_user;
+    QString git_token;
+    bool isAutoSyncB;
+
     QFileSystemModel *notesDirModel;
     QFileSystemModel *noteFileModel;
 
@@ -182,6 +187,9 @@ private slots:
 
     void create_tasks_connection();
     void create_projects_connection();
+
+    void exportNoteToPdf();
+    void exportNoteToHtml();
 
     void updateTaskStatus(QString *task, QString *status, QString *cT);
     void updateTaskData(QString *task, QString *status, QString *cT);
