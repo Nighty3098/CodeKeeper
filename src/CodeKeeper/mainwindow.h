@@ -188,6 +188,7 @@ private slots:
     void create_tasks_connection();
     void create_projects_connection();
 
+    void toPdf(const QString &html, const QString &outputFile);
     void exportNoteToPdf();
     void exportNoteToHtml();
 
