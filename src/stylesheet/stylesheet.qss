@@ -138,10 +138,10 @@ QTabWidget::pane {
 } 
 
 QMenu {
-    background-color: #1F1F28;
+    background-color: 2D4F67;
     color: #fff;
-    border: 6px solid #1F1F28;
-    border-radius: 10px;
+    border: 6px solid 2D4F67;
+    border-radius: 0px;
 }
 
 QMenu::separator {
@@ -151,8 +151,8 @@ QMenu::separator {
 }
 
 QMenu::item {
-    border-radius: 10px;
-    background-color: #1F1F28;
+    border-radius: 0px;
+    background-color: 2D4F67;
     color: #fff;
     padding: 5px 10px;
 }
