@@ -152,11 +152,11 @@
   - [X] - Fix visual bugs
   - [X] - Fix notes path bug
   - [ ] - Using marked js
-  - [ ] - Markdown to HTML converter
-  - [ ] - Markdown to PDF converter
+  - [X] - Markdown to HTML converter
+  - [X] - Markdown to PDF converter
 
   - [ ] - Multilang
   - [ ] - Migrate to CMake
-  - [ ] - Update shortcuts
+  - [X] - Update shortcuts
 
 </details>
