@@ -101,6 +101,11 @@ void MainWindow::removeProjectFromDB(QString *git_url, QString *status, QString 
 
 void MainWindow::loadProjects()
 {
+    notStartedProjects->clear();
+    startedProjects->clear();
+    finishlineProjects->clear();
+    finishedProjects->clear();
+
     QSqlQuery query;
 
     query.exec("SELECT * FROM projects");

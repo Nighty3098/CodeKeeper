@@ -67,11 +67,14 @@ void SettingsWindow::saveData()
     MainWindow *mainWindow = static_cast<MainWindow *>(parent());
     setFontPr2(&selectedFont, &font_size);
     mainWindow->setFontPr1(&selectedFont, &font_size);
-    mainWindow->loadNotes();
     mainWindow->getSettingsData();
 
     // mainWindow->createCustomTitlebar();
     mainWindow->setConnectionStatus();
+    mainWindow->createConnection(dir);
+    mainWindow->loadNotes();
+    mainWindow->loadTasks();
+    mainWindow->loadProjects();
 }
 
 void SettingsWindow::fopenFolder()

@@ -116,13 +116,15 @@ public:
 
     void setFontPr1(QFont *selectedFont, int *font_size_int);
     void loadNotes();
+    void loadProjects();
+    void loadTasks();
+
+    bool createConnection(QString path);
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
-    bool createConnection(QString path);
-
     void openSettingsWindow();
     void openSyncWindow();
     void openFolder();
@@ -138,7 +140,6 @@ private slots:
     void createFolder();
     void renameItem();
 
-    void loadTasks();
     void removeTaskFromDB(QString *task, QString *status);
     void saveTaskToDB(QString *task, QString *status);
     void addNewTask();
@@ -163,7 +164,6 @@ private slots:
 
     void createProject();
     void removeProject();
-    void loadProjects();
 
     void setH1();
     void setH2();

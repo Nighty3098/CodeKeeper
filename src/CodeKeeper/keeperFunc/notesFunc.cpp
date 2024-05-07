@@ -23,7 +23,8 @@ bool createFile(const QString &path)
     }
 }
 
-void MainWindow::toPdf(const QString &html, const QString &outputFile) {
+void MainWindow::toPdf(const QString &html, const QString &outputFile)
+{
     QPrinter printer;
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOutputFileName(outputFile);

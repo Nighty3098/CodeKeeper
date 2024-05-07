@@ -18,6 +18,8 @@
 #include <QtWidgets>
 #include <QWebEngineView>
 
+#include <git2.h>
+
 Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -250,35 +252,38 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTableB = new QPushButton(QPixmap(":/table.png"), "");
     setQuoteB = new QPushButton(QPixmap(":/quote.png"), "");
 
-    setH1B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setH2B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setH3B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setListB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setLinkB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setBoldB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setItalicB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setStrikeB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setTaskB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setNumListB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setTableB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
-    setQuoteB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28;");
+    setH1B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setH2B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setH3B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setListB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setLinkB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setBoldB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setItalicB->setStyleSheet(
+            "background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setStrikeB->setStyleSheet(
+            "background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setTaskB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setNumListB->setStyleSheet(
+            "background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setTableB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setQuoteB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
 
-    setH1B->setFixedSize(30, 30);
-    setH2B->setFixedSize(30, 30);
-    setH3B->setFixedSize(30, 30);
-    setListB->setFixedSize(30, 30);
-    setLinkB->setFixedSize(30, 30);
-    setBoldB->setFixedSize(30, 30);
-    setItalicB->setFixedSize(30, 30);
-    setStrikeB->setFixedSize(30, 30);
-    setTaskB->setFixedSize(30, 30);
-    setNumListB->setFixedSize(30, 30);
-    setTableB->setFixedSize(30, 30);
-    setQuoteB->setFixedSize(30, 30);
+    setH1B->setFixedSize(20, 20);
+    setH2B->setFixedSize(20, 20);
+    setH3B->setFixedSize(20, 20);
+    setListB->setFixedSize(20, 20);
+    setLinkB->setFixedSize(20, 20);
+    setBoldB->setFixedSize(20, 20);
+    setItalicB->setFixedSize(20, 20);
+    setStrikeB->setFixedSize(20, 20);
+    setTaskB->setFixedSize(20, 20);
+    setNumListB->setFixedSize(20, 20);
+    setTableB->setFixedSize(20, 20);
+    setQuoteB->setFixedSize(20, 20);
 
-    setH1B->setToolTip("<p style='color: #ffffff;'>Heading 1</p>");
-    setH2B->setToolTip("<p style='color: #ffffff;'>Heading 2</p>");
-    setH3B->setToolTip("<p style='color: #ffffff;'>Heading 3</p>");
+    setH1B->setToolTip("<p style='color: #ffffff;'>Set heading 1</p>");
+    setH2B->setToolTip("<p style='color: #ffffff;'>Set heading 2</p>");
+    setH3B->setToolTip("<p style='color: #ffffff;'>Set heading 3</p>");
     setListB->setToolTip("<p style='color: #ffffff;'>List</p>");
     setLinkB->setToolTip("<p style='color: #ffffff;'>Link</p>");
     setBoldB->setToolTip("<p style='color: #ffffff;'>Bold text</p>");
@@ -342,7 +347,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksProgress = new QProgressBar();
     tasksProgress->setMaximum(100);
     tasksProgress->setMaximumWidth(300);
-    tasksProgress->setFixedHeight(25);
+    tasksProgress->setFixedHeight(20);
     tasksProgress->setAlignment(Qt::AlignCenter);
 
     tasksStatsL->addItem(spacer1);
