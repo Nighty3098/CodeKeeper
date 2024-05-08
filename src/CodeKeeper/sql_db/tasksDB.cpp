@@ -75,6 +75,10 @@ void MainWindow::removeTaskFromDB(QString *task, QString *status)
 
 void MainWindow::loadTasks()
 {
+    incompleteTasks->clear();
+    inprocessTasks->clear();
+    completeTasks->clear();
+
     QSqlQuery query;
 
     query.exec("SELECT * FROM tasks");

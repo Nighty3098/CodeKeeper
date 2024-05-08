@@ -4,6 +4,7 @@
 #include <QWebChannel>
 #include <md4c.h>
 #include <QFile>
+#include <QPrinter>
 
 QModelIndex indexFromItem(QTreeWidgetItem *item, int column) { }
 
@@ -22,6 +23,17 @@ bool createFile(const QString &path)
     }
 }
 
+void MainWindow::toPdf(const QString &html, const QString &outputFile)
+{
+    QPrinter printer;
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(outputFile);
+    QTextDocument document;
+    document.setHtml(html);
+    document.setPageSize(printer.pageRect().size());
+    document.print(&printer);
+}
+
 void MainWindow::exportNoteToPdf()
 {
     QModelIndex selectedIndex = notesList->currentIndex();
@@ -29,7 +41,22 @@ void MainWindow::exportNoteToPdf()
     QString filePath = fileSystemModel->filePath(selectedIndex);
     qDebug() << "File Path: " << filePath;
 
-    QFile markdownFile(filePath);
+    QString str = QFileDialog::getSaveFileName(0, "Enter filename");
+    QString pdf_file = str + ".pdf";
+
+    QString md = noteEdit->toPlainText();
+
+    QString html;
+    md_html(
+            md.toUtf8().constData(), md.length(),
+            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
+                QString *htmlPtr = static_cast<QString *>(userdata);
+                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
+                *htmlPtr += htmlStr;
+            },
+            &html, 0, 0);
+
+    toPdf(html, pdf_file);
 }
 
 void MainWindow::exportNoteToHtml()
