@@ -95,6 +95,7 @@ QFileDialog QPushButton {
     color: #DCD7BA;
     border: 1px solid #565f89;
     border-radius: 5px;
+    height: 30px;
     min-width: 80px;
 }
 
@@ -313,22 +314,22 @@ QTreeView::item:alternate {
 
 QTreeView::item:selected {
     height: 14px;
-    background-color: #1F1F28;
-    border: 1px solid #2D4F67;
+    background-color: #2d4f67;
+    border: 0px solid #2D4F67;
     border-radius: 0px;
 }
 
 QTreeView::item:selected:!active {
     height: 14px;
     background-color: #1F1F28;
-    color: #2D4F67;
+    color: #ffffff;
     border-radius: 0px;
 }
 
 QTreeView::item:selected:active {
     height: 14px;
-    background-color: #1F1F28;
-    color: #2D4F67;
+    background-color: #2d4f67;
+    color: #ffffff;
     border-radius: 0px;
 }
 
