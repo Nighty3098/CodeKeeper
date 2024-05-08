@@ -646,11 +646,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(setTableB, &QPushButton::clicked, this, &MainWindow::setTable);
     connect(setQuoteB, &QPushButton::clicked, this, &MainWindow::setQuote);
 
-    connect(notesList, &QTreeView::clicked, this, &MainWindow::onNoteDoubleClicked);
+    connect(notesList, &QTreeView::doubleClicked, this, &MainWindow::onNoteDoubleClicked);
 
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::saveNote);
 
-    connect(notesList, &QTreeView::entered, this, [=](const QModelIndex &index) {
+    connect(notesList, &QTreeView::clicked, this, [=](const QModelIndex &index) {
         if (index.isValid()) {
             QDateTime lastModified = notesDirModel->data(index, Qt::UserRole + 1).toDateTime();
             if (lastModified.isValid()) {
