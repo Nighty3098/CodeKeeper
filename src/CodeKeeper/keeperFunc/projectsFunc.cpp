@@ -13,6 +13,26 @@ void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
     updateProjectStatus(&status, &date, &data[2]);
 }
 
+void loadDocumentations(QDir path, QComboBox &comboBox) {
+    QFileInfoList fileInfoList =
+            path.entryInfoList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+    foreach (const QFileInfo &fileInfo, fileInfoList) {
+        if (fileInfo.suffix() == "md") {
+            comboBox.addItem(fileInfo.baseName());
+        }
+    }
+
+    QDir subdir;
+    QFileInfoList subdirList =
+            path.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+    foreach (const QFileInfo &subdirInfo, subdirList) {
+        subdir.setPath(subdirInfo.filePath());
+        if (subdir.exists()) {
+            loadDocumentations(subdir, comboBox);
+        }
+    }
+}
+
 void MainWindow::createProject()
 {
     QString date = getCurrentDateTimeString();
@@ -143,6 +163,9 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         note->setPlainText(projectData[3]);
         lastMod->setText("Last mod: " + projectData[5]);
 
+        loadDocumentations(dir, *documentation);
+        documentation->setCurrentText(projectData[2]);
+
         mainLayout.addWidget(title, 0, 0, 1, 2);
         mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
         mainLayout.addWidget(documentation, 2, 0, 1, 2);
@@ -176,23 +199,3 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
     }
 }
 
-void MainWindow::loadDocumentations(QDir path, QComboBox &comboBox)
-{
-    QFileInfoList fileInfoList =
-            path.entryInfoList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
-    foreach (const QFileInfo &fileInfo, fileInfoList) {
-        if (fileInfo.suffix() == "md") {
-            comboBox.addItem(fileInfo.baseName());
-        }
-    }
-
-    QDir subdir;
-    QFileInfoList subdirList =
-            path.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
-    foreach (const QFileInfo &subdirInfo, subdirList) {
-        subdir.setPath(subdirInfo.filePath());
-        if (subdir.exists()) {
-            loadDocumentations(subdir, comboBox);
-        }
-    }
-}

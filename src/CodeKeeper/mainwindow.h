@@ -159,7 +159,6 @@ private slots:
                           QListWidget *startedProjects, QListWidget *finishedProjects,
                           QListWidget *finishlineProjects);
 
-    void loadDocumentations(QDir path, QComboBox &comboBox);
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
 
     void createProject();

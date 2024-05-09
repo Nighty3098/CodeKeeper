@@ -18,7 +18,6 @@
 #include <QtWidgets>
 #include <QWebEngineView>
 
-#include <git2.h>
 
 Q_DECLARE_METATYPE(QDir)
 
