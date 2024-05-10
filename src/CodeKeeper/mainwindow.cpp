@@ -18,7 +18,6 @@
 #include <QtWidgets>
 #include <QWebEngineView>
 
-
 Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -669,6 +668,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(toSecondTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(1); });
     connect(toThirdTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(2); });
     connect(toFourthTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(3); });
+
+    connect(tabs, &QTabWidget::currentChanged, this, [=](int index) { qDebug() << index; });
 
     connect(incompleteTasks, &QListWidget::itemChanged, this,
             [=](QListWidgetItem *item) { onMovingTaskTo(item, incompleteTasks); });

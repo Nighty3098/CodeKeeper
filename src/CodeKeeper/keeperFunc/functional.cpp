@@ -82,10 +82,17 @@ void MainWindow::setConnectionStatus()
 void MainWindow::createCustomTitlebar()
 {
     QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QSpacerItem *headerSp2 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     closeBtn->setFixedSize(15, 15);
     minimizeBtn->setFixedSize(15, 15);
     maximizeBtn->setFixedSize(15, 15);
+
+    QLabel *windowTitle = new QLabel();
+    windowTitle->setAlignment(Qt::AlignCenter);
+    windowTitle->setText("CodeKeeper");
+    windowTitle->setStyleSheet("font-size: " + font_size + "pt;");
+    windowTitle->setFont(selectedFont);
 
     closeBtn->setStyleSheet("QPushButton {"
                             "    border-color: rgba(0, 0, 0, 0);"
@@ -136,6 +143,8 @@ void MainWindow::createCustomTitlebar()
         winControlL->addWidget(minimizeBtn);
         winControlL->addWidget(maximizeBtn);
         winControlL->addItem(headerSp);
+        winControlL->addWidget(windowTitle);
+        winControlL->addItem(headerSp2);
     }
 }
 
@@ -401,10 +410,10 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     nsProjects->setFont(*selectedFont);
     sProjects->setFont(*selectedFont);
 
-    nsProjects->setStyleSheet("font-size: 16px;");
-    sProjects->setStyleSheet("font-size: 16px;");
-    flProjects->setStyleSheet("font-size: 16px;");
-    fProjects->setStyleSheet("font-size: 16px;");
+    nsProjects->setStyleSheet("font-size: " + font_size + "pt;");
+    sProjects->setStyleSheet("font-size: " + font_size + "pt;");
+    flProjects->setStyleSheet("font-size: " + font_size + "pt;");
+    fProjects->setStyleSheet("font-size: " + font_size + "pt;");
 
     projectsMainLabel->setFont(*selectedFont);
     notStartedProjects->setFont(*selectedFont);
@@ -425,11 +434,11 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     completeTasks->setFont(*selectedFont);
 
     label_1->setFont(*selectedFont);
-    label_1->setStyleSheet("font-size: 16px;");
+    label_1->setStyleSheet("font-size: " + font_size + "pt;");
     label_2->setFont(*selectedFont);
-    label_2->setStyleSheet("font-size: 16px;");
+    label_2->setStyleSheet("font-size: " + font_size + "pt;");
     label_3->setFont(*selectedFont);
-    label_3->setStyleSheet("font-size: 16px;");
+    label_3->setStyleSheet("font-size: " + font_size + "pt;");
 
     tasksProgress->setFont(*selectedFont);
     tasksProgress->setStyleSheet(

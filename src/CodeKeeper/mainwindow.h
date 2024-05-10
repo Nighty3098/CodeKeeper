@@ -229,6 +229,7 @@ protected:
     }
 
 private:
+    QLabel *windowTitle;
     QWidget *centralWidget;
     QGridLayout *mainLayout;
     QTabWidget *tabs;

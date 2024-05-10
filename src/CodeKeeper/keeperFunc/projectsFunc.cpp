@@ -13,7 +13,8 @@ void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
     updateProjectStatus(&status, &date, &data[2]);
 }
 
-void loadDocumentations(QDir path, QComboBox &comboBox) {
+void loadDocumentations(QDir path, QComboBox &comboBox)
+{
     QFileInfoList fileInfoList =
             path.entryInfoList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
     foreach (const QFileInfo &fileInfo, fileInfoList) {
@@ -198,4 +199,3 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         qDebug() << "Error";
     }
 }
-
