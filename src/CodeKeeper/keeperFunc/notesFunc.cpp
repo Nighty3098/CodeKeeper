@@ -18,7 +18,7 @@ bool createFile(const QString &path)
         qDebug() << "File created successfully at" << path;
         return true;
     } else {
-        qDebug() << "Failed to create file at" << path << ": " << file.errorString();
+        qWarning() << "Failed to create file at" << path << ": " << file.errorString();
         return false;
     }
 }
@@ -88,7 +88,7 @@ void MainWindow::exportNoteToHtml()
         file.close();
         qDebug() << "File saved successfully at" << filePath;
     } else {
-        qDebug() << "Error, Failed to open file for writing.";
+        qWarning() << "Error, Failed to open file for writing.";
     }
 }
 
@@ -140,7 +140,7 @@ void MainWindow::saveNote()
             file.close();
             // qDebug() << "Success", "Text written to file successfully.";
         } else {
-            qDebug() << "Error", "Failed to open file for writing.";
+            qWarning() << "Error", "Failed to open file for writing.";
         }
     } else {
         qDebug() << "Error", "Please select a valid file.";
@@ -165,6 +165,7 @@ void MainWindow::onNoteDoubleClicked()
             }
         } else {
             noteEdit->setPlainText("### File format not supported.");
+            qWarning() << "File format not supported";
         }
     }
 }

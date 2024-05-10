@@ -29,7 +29,7 @@ void MainWindow::addNewTask()
         QString status = incompleteTasks->objectName();
         saveTaskToDB(&task, &status);
     } else {
-        qDebug() << "Task is empty";
+        qWarning() << "Task is empty";
     }
 }
 

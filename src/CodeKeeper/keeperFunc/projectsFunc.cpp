@@ -93,15 +93,6 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStart
 void MainWindow::openNote(QString filePath)
 {
     QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly)) {
-        qWarning() << "Could not open file:" << filePath;
-    }
-
-    QTextStream stream(&file);
-    QString contents = stream.readAll();
-    noteEdit->setPlainText(contents);
-    file.close();
-
 }
 
 QString findFileInDirectoryAndSubdirectories(QDir dir, const QString &fileName)
@@ -116,7 +107,7 @@ QString findFileInDirectoryAndSubdirectories(QDir dir, const QString &fileName)
 void MainWindow::openDoc(QComboBox *comboBox, QDir dir)
 {
     QString doc = comboBox->currentText();
-    
+
     QString filePath = findFileInDirectoryAndSubdirectories(dir, doc);
     tabs->setCurrentIndex(1);
     openNote(filePath);
@@ -245,6 +236,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         dialog.exec();
     } else {
-        qDebug() << "Error";
+        qWarning() << "Error";
     }
 }

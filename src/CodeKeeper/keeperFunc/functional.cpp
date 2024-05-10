@@ -21,7 +21,7 @@ bool MainWindow::createConnection(QString path)
     db.setPassword("password");
 
     if (!db.open()) {
-        qDebug() << db.lastError();
+        qCritical() << db.lastError();
         return false;
     }
 
@@ -188,7 +188,7 @@ bool MainWindow::checkConnection()
             // qDebug() << "You are connected to the internet :)";
             return true;
         } else {
-            // qDebug() << "You have an net error:" << reply->errorString();
+            qWarning() << "You have an net error:" << reply->errorString();
             return false;
         }
     }

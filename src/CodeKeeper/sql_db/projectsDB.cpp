@@ -18,7 +18,7 @@ void MainWindow::create_projects_connection()
                   ");";
 
     if (!query.exec(str)) {
-        qDebug() << query.lastError();
+        qWarning() << query.lastError();
     } else {
         qDebug() << "Projects db was created";
     }
@@ -41,7 +41,7 @@ QStringList MainWindow::GetProjectData(QString *title, QString *status, QString 
             qDebug() << "Load project: " << projectData;
         }
     } else {
-        qDebug() << "Error querying projects database:" << query.lastError();
+        qWarning() << "Error querying projects database:" << query.lastError();
     }
     return projectData;
 }
@@ -55,7 +55,7 @@ void MainWindow::updateProjectData(QString *title, QString *git_url, QString *do
                     + "', projectDoc = '" + *doc + "', note = '" + *note + "', createdTime = '"
                     + *createdTime + "' WHERE createdTime = '" + *oldTime + "' AND git_url = '"
                     + oldGit + "'")) {
-        qDebug() << query.lastError();
+        qWarning() << query.lastError();
     } else {
         qDebug() << "Sucsessfull updated";
     }
@@ -70,7 +70,7 @@ void MainWindow::saveProjectToDB(QString *title, QString *git_url, QString *stat
                     "VALUES('"
                     + *title + "', '" + *git_url + "', ' ', '# New project', '" + *status + "', '"
                     + *createdTime + "')")) {
-        qDebug() << query.lastError();
+        qWarning() << query.lastError();
     } else {
         qDebug() << "Sucsessfull saved";
     }
@@ -82,7 +82,7 @@ void MainWindow::updateProjectStatus(QString *status, QString *createdTime, QStr
 
     if (!query.exec("UPDATE projects SET status = '" + *status + "' WHERE createdTime = '"
                     + *oldTime + "'")) {
-        qDebug() << query.lastError();
+        qWarning() << query.lastError();
     } else {
         qDebug() << "Sucsessfull updated";
     }
@@ -93,7 +93,7 @@ void MainWindow::removeProjectFromDB(QString *git_url, QString *status, QString 
     QSqlQuery query;
 
     if (!query.exec("DELETE FROM projects WHERE git_url = '" + *git_url + "'")) {
-        qDebug() << query.lastError();
+        qWarning() << query.lastError();
     } else {
         qDebug() << "Sucsessfull removed";
     }
@@ -134,7 +134,7 @@ void MainWindow::loadProjects()
         if (status == "FinishedProjects") {
             finishedProjects->addItem(item);
         } else {
-            qDebug() << "Unknown status: " << status;
+            qWarning() << "Unknown status: " << status;
         }
     }
     qDebug() << "Projects was loaded";
