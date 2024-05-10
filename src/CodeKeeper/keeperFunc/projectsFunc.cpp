@@ -1,3 +1,6 @@
+#include <QDir>
+#include <QFileInfo>
+
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
 {
     qDebug() << "Moving project: " << item->text() << " from: " << list->objectName();
@@ -87,6 +90,38 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStart
     }
 }
 
+void MainWindow::openNote(QString filePath)
+{
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning() << "Could not open file:" << filePath;
+    }
+
+    QTextStream stream(&file);
+    QString contents = stream.readAll();
+    noteEdit->setPlainText(contents);
+    file.close();
+
+}
+
+QString findFileInDirectoryAndSubdirectories(QDir dir, const QString &fileName)
+{
+    QFileInfo fileInfo(dir, fileName);
+
+    QString filePath = fileInfo.absoluteFilePath() + ".md";
+    qDebug() << "File: " << filePath;
+    return filePath;
+}
+
+void MainWindow::openDoc(QComboBox *comboBox, QDir dir)
+{
+    QString doc = comboBox->currentText();
+    
+    QString filePath = findFileInDirectoryAndSubdirectories(dir, doc);
+    tabs->setCurrentIndex(1);
+    openNote(filePath);
+}
+
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
@@ -151,6 +186,14 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         saveDataBtn->setIconSize(QSize(10, 10));
         saveDataBtn->setFont(selectedFont);
 
+        QPushButton *openDocBtn = new QPushButton();
+        openDocBtn->setText("Open");
+        openDocBtn->setStyleSheet("font-size: " + font_size + "pt;");
+        openDocBtn->setIcon(QPixmap(":/read.png"));
+        openDocBtn->setFixedSize(180, 25);
+        openDocBtn->setIconSize(QSize(10, 10));
+        openDocBtn->setFont(selectedFont);
+
         QPushButton *cancelBtn = new QPushButton();
         cancelBtn->setText("Cancel");
         cancelBtn->setStyleSheet("font-size: " + font_size + "pt;");
@@ -169,7 +212,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         mainLayout.addWidget(title, 0, 0, 1, 2);
         mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
-        mainLayout.addWidget(documentation, 2, 0, 1, 2);
+        mainLayout.addWidget(documentation, 2, 0);
+        mainLayout.addWidget(openDocBtn, 2, 1);
         mainLayout.addWidget(note, 3, 0, 1, 2);
         mainLayout.addWidget(lastMod, 4, 0, 1, 2);
         mainLayout.addWidget(saveDataBtn, 5, 0);
@@ -193,6 +237,11 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         });
 
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
+
+        QObject::connect(openDocBtn, &QPushButton::clicked, [&]() {
+            openDoc(documentation, dir);
+            dialog.close();
+        });
 
         dialog.exec();
     } else {

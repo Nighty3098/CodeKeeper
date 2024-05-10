@@ -105,8 +105,13 @@ public:
     QString git_token;
     bool isAutoSyncB;
 
+    NoteEditor *noteEdit;
+    notesTree *notesList;
+
     QFileSystemModel *notesDirModel;
     QFileSystemModel *noteFileModel;
+
+    QTabWidget *tabs;
 
     void setSettingsData();
     void getSettingsData();
@@ -118,6 +123,9 @@ public:
     void loadNotes();
     void loadProjects();
     void loadTasks();
+
+    void openNote(QString filePath);
+    void openDoc(QComboBox *comboBox, QDir dir);
 
     bool createConnection(QString path);
 
@@ -232,7 +240,6 @@ private:
     QLabel *windowTitle;
     QWidget *centralWidget;
     QGridLayout *mainLayout;
-    QTabWidget *tabs;
     QHBoxLayout *winControlL;
 
     QSizeGrip *sizeGrip;
@@ -258,9 +265,7 @@ private:
 
     // ========================================================
     // notes tab
-    notesTree *notesList;
     CustomIconProvider *iconProvider;
-    NoteEditor *noteEdit;
     MarkdownHighlighter *highlighter;
     QToolButton *menuButton;
     QLabel *noteNameLabel;

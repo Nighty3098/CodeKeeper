@@ -62,5 +62,6 @@
 	    <file>sorting.png</file>
 	    <file>export.png</file>
         <file>expand.png</file>
+        <file>read.png</file>
     </qresource>
 </RCC>
