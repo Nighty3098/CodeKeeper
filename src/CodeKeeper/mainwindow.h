@@ -124,9 +124,6 @@ public:
     void loadProjects();
     void loadTasks();
 
-    void openNote(QString filePath);
-    void openDocumentation(QComboBox &comboBox);
-
     bool createConnection(QString path);
 
     QMarkdownTextEdit *note;
