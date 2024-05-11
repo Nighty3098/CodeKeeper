@@ -39,11 +39,12 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     setCentralWidget(centralWidget);
 
     mainLayout = new QVBoxLayout(centralWidget);
-    setMinimumSize(500, 500);
+    setFixedSize(600, 600);
 
     // tabs
     tabs = new QTabWidget();
     tabs->setMovable(true);
+    tabs->setTabPosition(QTabWidget::West);
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
