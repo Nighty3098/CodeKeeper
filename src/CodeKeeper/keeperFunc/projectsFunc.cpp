@@ -90,33 +90,6 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStart
     }
 }
 
-void MainWindow::openNote(QString filePath)
-{
-    QFile file(filePath);
-
-    if (file.open(QIODevice::ReadWrite)) {
-        QTextStream stream(&file);
-        noteEdit->setPlainText(stream.readAll());
-        file.close();
-    } else {
-        qWarning() << "Error: " << file.error();
-    }
-}
-
-QString findFileInDirectoryAndSubdirectories(QDir dir, const QString &fileName)
-{
-    return dir.absoluteFilePath(fileName);
-}
-
-void MainWindow::openDocumentation(QComboBox &comboBox)
-{
-    QString doc = comboBox.currentText();
-
-    QString filePath = findFileInDirectoryAndSubdirectories(dir, doc);
-    tabs->setCurrentIndex(1);
-    openNote(filePath);
-}
-
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
@@ -205,8 +178,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(saveDataBtn, 4, 0);
         mainLayout.addWidget(cancelBtn, 4, 1);
 
-        openDocumentation(*documentation);
-
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
             QString projectTitle = title->text();
             QString projectLink = linkToGit->text();
@@ -225,10 +196,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         });
 
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
-
-        QObject::connect(
-                documentation, &QComboBox::currentTextChanged, this,
-                [this, documentation](const QString &text) { openDocumentation(*documentation); });
 
         dialog.exec();
     } else {
