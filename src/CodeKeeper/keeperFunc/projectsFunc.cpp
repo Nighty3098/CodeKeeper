@@ -93,20 +93,24 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStart
 void MainWindow::openNote(QString filePath)
 {
     QFile file(filePath);
+
+    if (file.open(QIODevice::ReadWrite)) {
+        QTextStream stream(&file);
+        noteEdit->setPlainText(stream.readAll());
+        file.close();
+    } else {
+        qWarning() << "Error: " << file.error();
+    }
 }
 
 QString findFileInDirectoryAndSubdirectories(QDir dir, const QString &fileName)
 {
-    QFileInfo fileInfo(dir, fileName);
-
-    QString filePath = fileInfo.absoluteFilePath() + ".md";
-    qDebug() << "File: " << filePath;
-    return filePath;
+    return dir.absoluteFilePath(fileName);
 }
 
-void MainWindow::openDoc(QComboBox *comboBox, QDir dir)
+void MainWindow::openDocumentation(QComboBox &comboBox)
 {
-    QString doc = comboBox->currentText();
+    QString doc = comboBox.currentText();
 
     QString filePath = findFileInDirectoryAndSubdirectories(dir, doc);
     tabs->setCurrentIndex(1);
@@ -117,7 +121,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(400, 460);
+        dialog.setMinimumSize(400, 400);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -139,20 +143,20 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QLineEdit *title = new QLineEdit();
         title->setPlaceholderText(" Project name: ");
         title->setStyleSheet("font-size: " + font_size + "pt;");
-        title->setFixedSize(380, 25);
+        title->setFixedHeight(25);
         title->setFont(selectedFont);
 
         QLineEdit *linkToGit = new QLineEdit();
         linkToGit->setPlaceholderText(" Link to GIT");
         linkToGit->setStyleSheet("font-size: " + font_size + "pt;");
-        linkToGit->setFixedSize(380, 25);
+        linkToGit->setFixedHeight(25);
         linkToGit->setFont(selectedFont);
 
         QComboBox *documentation = new QComboBox();
-        documentation->setFixedSize(380, 25);
+        documentation->setFixedHeight(25);
         documentation->setFont(selectedFont);
 
-        QMarkdownTextEdit *note = new QMarkdownTextEdit();
+        note = new QMarkdownTextEdit();
         note->setPlaceholderText(" Just start typing");
         note->setStyleSheet("font-size: " + font_size + "pt;");
         note->setLineWrapMode(QPlainTextEdit::WidgetWidth);
@@ -165,30 +169,22 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QLabel *lastMod = new QLabel();
         lastMod->setText("Last mod: ");
         lastMod->setStyleSheet("font-size: " + font_size + "pt;");
-        lastMod->setFixedSize(380, 25);
+        lastMod->setFixedHeight(25);
         lastMod->setAlignment(Qt::AlignCenter);
         lastMod->setFont(selectedFont);
 
         QPushButton *saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
         saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        saveDataBtn->setFixedSize(180, 25);
+        saveDataBtn->setFixedHeight(30);
         saveDataBtn->setIcon(QPixmap(":/save.png"));
         saveDataBtn->setIconSize(QSize(10, 10));
         saveDataBtn->setFont(selectedFont);
 
-        QPushButton *openDocBtn = new QPushButton();
-        openDocBtn->setText("Open");
-        openDocBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        openDocBtn->setIcon(QPixmap(":/read.png"));
-        openDocBtn->setFixedSize(180, 25);
-        openDocBtn->setIconSize(QSize(10, 10));
-        openDocBtn->setFont(selectedFont);
-
         QPushButton *cancelBtn = new QPushButton();
         cancelBtn->setText("Cancel");
         cancelBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        cancelBtn->setFixedSize(180, 25);
+        cancelBtn->setFixedHeight(30);
         cancelBtn->setIcon(QPixmap(":/quit.png"));
         cancelBtn->setIconSize(QSize(10, 10));
         cancelBtn->setFont(selectedFont);
@@ -203,12 +199,13 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         mainLayout.addWidget(title, 0, 0, 1, 2);
         mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
-        mainLayout.addWidget(documentation, 2, 0);
-        mainLayout.addWidget(openDocBtn, 2, 1);
+        mainLayout.addWidget(documentation, 2, 0, 1, 2);
         mainLayout.addWidget(note, 3, 0, 1, 2);
-        mainLayout.addWidget(lastMod, 4, 0, 1, 2);
-        mainLayout.addWidget(saveDataBtn, 5, 0);
-        mainLayout.addWidget(cancelBtn, 5, 1);
+        mainLayout.addWidget(lastMod, 5, 0, 1, 2);
+        mainLayout.addWidget(saveDataBtn, 4, 0);
+        mainLayout.addWidget(cancelBtn, 4, 1);
+
+        openDocumentation(*documentation);
 
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
             QString projectTitle = title->text();
@@ -229,10 +226,9 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
 
-        QObject::connect(openDocBtn, &QPushButton::clicked, [&]() {
-            openDoc(documentation, dir);
-            dialog.close();
-        });
+        QObject::connect(
+                documentation, &QComboBox::currentTextChanged, this,
+                [this, documentation](const QString &text) { openDocumentation(*documentation); });
 
         dialog.exec();
     } else {
