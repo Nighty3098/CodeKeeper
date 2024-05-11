@@ -143,7 +143,7 @@ void MainWindow::saveNote()
             qWarning() << "Error", "Failed to open file for writing.";
         }
     } else {
-        qDebug() << "Error", "Please select a valid file.";
+        qWarning() << "Error", "Please select a valid file.";
     }
 }
 

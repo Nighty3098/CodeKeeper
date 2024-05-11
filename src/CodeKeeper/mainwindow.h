@@ -125,9 +125,11 @@ public:
     void loadTasks();
 
     void openNote(QString filePath);
-    void openDoc(QComboBox *comboBox, QDir dir);
+    void openDocumentation(QComboBox &comboBox);
 
     bool createConnection(QString path);
+
+    QMarkdownTextEdit *note;
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

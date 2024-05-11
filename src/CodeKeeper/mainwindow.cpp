@@ -109,9 +109,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     QStringList filters;
     filters << ""
-            << "*.md"
-            << "*.html"
-            << "*.txt";
+            << "*.md";
 
     iconProvider = new CustomIconProvider();
 
