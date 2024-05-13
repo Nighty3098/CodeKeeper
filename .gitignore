@@ -6,3 +6,5 @@ src/CodeKeeper/data.db
 src/CodeKeeper/moc_predefs.h
 src/CodeKeeper/qmake_qmake_immediate.qrc
 *.db
+mykey.asc
+src/CodeKeeper/CodeKeeper.asc
