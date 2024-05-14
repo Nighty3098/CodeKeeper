@@ -44,7 +44,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     // tabs
     tabs = new QTabWidget();
     tabs->setMovable(true);
-    tabs->setTabPosition(QTabWidget::West);
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 

@@ -90,6 +90,36 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStart
     }
 }
 
+void MainWindow::openDocumentation(QString fileName)
+{
+    qDebug() << fileName;
+    tabs->setCurrentIndex(1);
+
+    selectFileInQTreeView(notesList, fileName);
+}
+
+void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName)
+{
+    // Make sure the tree view is enabled and has focus
+    if (!treeView || !treeView->isEnabled() || !treeView->hasFocus()) {
+        return;
+    }
+
+    // Find the item with the given file name
+    QModelIndex index = treeView->model()->index(0, 0); // start from the root
+    while (index.isValid()) {
+        QVariant data = treeView->model()->data(index, Qt::DisplayRole);
+        if (data.toString() == fileName) {
+            // Found the item, select and scroll to it
+            treeView->selectionModel()->select(index, QItemSelectionModel::Select);
+            treeView->scrollTo(index);
+            break;
+        }
+        // Go to the next sibling
+        index = index.sibling(index.row() + 1, index.column());
+    }
+}
+
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
@@ -162,6 +192,14 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         cancelBtn->setIconSize(QSize(10, 10));
         cancelBtn->setFont(selectedFont);
 
+        QPushButton *openButton = new QPushButton();
+        openButton->setText("Open");
+        openButton->setStyleSheet("font-size: " + font_size + "pt;");
+        openButton->setFixedHeight(30);
+        openButton->setIcon(QPixmap(":/read.png"));
+        openButton->setIconSize(QSize(10, 10));
+        openButton->setFont(selectedFont);
+
         title->setText(projectData[0]);
         linkToGit->setText(projectData[1]);
         note->setPlainText(projectData[3]);
@@ -172,7 +210,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         mainLayout.addWidget(title, 0, 0, 1, 2);
         mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
-        mainLayout.addWidget(documentation, 2, 0, 1, 2);
+        mainLayout.addWidget(documentation, 2, 0);
+        mainLayout.addWidget(openButton, 2, 1);
         mainLayout.addWidget(note, 3, 0, 1, 2);
         mainLayout.addWidget(lastMod, 5, 0, 1, 2);
         mainLayout.addWidget(saveDataBtn, 4, 0);
@@ -196,6 +235,12 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         });
 
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
+
+        QObject::connect(openButton, &QPushButton::clicked, [&]() {
+            dialog.close();
+            QString doc = documentation->currentText();
+            openDocumentation(doc);
+        });
 
         dialog.exec();
     } else {

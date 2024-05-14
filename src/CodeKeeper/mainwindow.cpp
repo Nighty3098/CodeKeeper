@@ -570,13 +570,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     isAutoSync->setStyleSheet("border: 0px; background-color: transparent;");
     isAutoSync->setFixedSize(15, 15);
 
+    statusLabel = new QLabel();
+    statusLabel->setAlignment(Qt::AlignHCenter);
+
     winControlL->addWidget(isConnected);
     winControlL->addWidget(isAutoSync);
     winControlL->addWidget(sizeGrip2);
 
+    QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QSpacerItem *headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    QHBoxLayout *bottomLayout = new QHBoxLayout();
+    bottomLayout->setAlignment(Qt::AlignHCenter);
+    bottomLayout->addWidget(sizeGrip3);
+    bottomLayout->addSpacerItem(headerSp3);
+    bottomLayout->addWidget(statusLabel);
+    bottomLayout->addSpacerItem(headerSp4);
+    bottomLayout->addWidget(sizeGrip4);
+
     mainLayout->addWidget(tabs, 1, 0);
-    mainLayout->addWidget(sizeGrip3, 2, 0);
-    mainLayout->addWidget(sizeGrip4, 2, 1);
+    mainLayout->addLayout(bottomLayout, 2, 0);
 
     // ===================================================================================
     // connects

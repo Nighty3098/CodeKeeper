@@ -57,7 +57,7 @@ protected:
         QFileInfo fileInfo(filePath);
         QString fileSuffix = fileInfo.suffix();
 
-        qDebug() << "Dropped file:" << filePath;
+        qDebug() << "[Dropped file]:" << filePath;
 
         if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md") {
             QString newLine = "[Dropped file](" + filePath + ")";
@@ -112,6 +112,7 @@ public:
     QFileSystemModel *noteFileModel;
 
     QTabWidget *tabs;
+    QLabel *statusLabel;
 
     void setSettingsData();
     void getSettingsData();
@@ -135,6 +136,9 @@ private slots:
     void openSettingsWindow();
     void openSyncWindow();
     void openFolder();
+    void openDocumentation(QString fileName);
+
+    void selectFileInQTreeView(QTreeView *treeView, const QString &fileName);
 
     void hideNotesList();
     void showPreview();
