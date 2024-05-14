@@ -19,9 +19,11 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
     mainLayout = new QGridLayout;
 
     mainTitle = new QLabel("Sync with Git");
+    mainTitle->setAlignment(Qt::AlignCenter);
 
     mainLayout->addWidget(mainTitle, 3, 0, 1, 1);
 
+    setFontStyle();
     centralWidget->setLayout(mainLayout);
 }
 
@@ -44,4 +46,9 @@ bool SyncWindow::checkConnection()
             return false;
         }
     });
+}
+
+void SyncWindow::setFontStyle() {
+    mainTitle->setFont(selectedFont);
+    mainTitle->setStyleSheet("font-size: " + font_size + "pt;");
 }

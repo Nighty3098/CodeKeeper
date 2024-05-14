@@ -3,12 +3,12 @@
 
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "Moving project: " << item->text() << " from: " << list->objectName();
+    qDebug() << "🟢 Moving project: " << item->text() << " from: " << list->objectName();
 }
 
 void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "Moved project: " << item->text() << " to: " << list->objectName();
+    qDebug() << "🟢 Moved project: " << item->text() << " to: " << list->objectName();
     QStringList data = item->text().split("\n");
     QString status = list->objectName();
     QString date = getCurrentDateTimeString();
@@ -45,7 +45,7 @@ void MainWindow::createProject()
     QString git = "https://github.com/";
     QString newProjectTeamplate = title + "\n" + git + "\n" + date;
 
-    qDebug() << "New project: " << newProjectTeamplate;
+    qDebug() << "🟢 New project: " << newProjectTeamplate;
 
     notStartedProjects->addItem(newProjectTeamplate);
 
@@ -67,7 +67,7 @@ void MainWindow::removeProject()
 
             removeProjectFromDB(&data[1], &status, &data[2]);
 
-            qDebug() << "Removed project: " << item->text();
+            qDebug() << "🟢 Removed project: " << item->text();
             delete item;
             break;
         }
@@ -244,6 +244,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         dialog.exec();
     } else {
-        qWarning() << "Error";
+        qWarning() << "🔴 Error";
     }
 }

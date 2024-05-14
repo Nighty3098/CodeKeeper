@@ -61,4 +61,23 @@
     "window.customTitleBarVisibility": "auto",
 
     "terminal.integrated.tabs.enabled": false,
+    "files.associations": {
+        "chrono": "cpp",
+        "optional": "cpp",
+        "format": "cpp",
+        "system_error": "cpp",
+        "__node_handle": "cpp",
+        "*.tcc": "cpp",
+        "affinity": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "array": "cpp",
+        "span": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "vector": "cpp",
+        "*.inc": "cpp"
+    },
 }

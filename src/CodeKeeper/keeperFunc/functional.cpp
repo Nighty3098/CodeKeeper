@@ -10,8 +10,7 @@
 
 bool MainWindow::createConnection(QString path)
 {
-    qDebug() << path;
-    qDebug() << "DB path: " << (path) + QStringLiteral("/data.db");
+    qDebug() << "🔸DB path: " << (path) + QStringLiteral("/data.db");
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName((path) + QStringLiteral("/data.db"));
@@ -21,7 +20,7 @@ bool MainWindow::createConnection(QString path)
     db.setPassword("password");
 
     if (!db.open()) {
-        qCritical() << db.lastError();
+        qCritical() << "🔴 " << db.lastError();
         return false;
     }
 
@@ -53,7 +52,7 @@ void MainWindow::getSettingsData()
     git_token = globalSettings->value("git_token").value<QString>();
     isAutoSyncB = globalSettings->value("isAutoSync").value<bool>();
 
-    qDebug() << dir << selectedFont << font_size << theme << isCustomTitlebar << sortNotesRole
+    qDebug() <<  "🔸 " << dir << selectedFont << font_size << theme << isCustomTitlebar << sortNotesRole
              << isAutoSyncing << isVisibleNotesList << isVisibleFolders << isVisiblePreview
              << isViewMode << git_repo << git_user << git_token << isAutoSyncB;
 }
@@ -188,7 +187,7 @@ bool MainWindow::checkConnection()
             // qDebug() << "You are connected to the internet :)";
             return true;
         } else {
-            qWarning() << "You have an net error:" << reply->errorString();
+            qWarning() << "🔴 You have an net error:" << reply->errorString();
             return false;
         }
     }
@@ -221,7 +220,7 @@ void MainWindow::openFolder()
     QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
     if (!str.isEmpty()) {
         globalSettings->setValue("path", str);
-        qDebug() << str;
+        qDebug() << "🟢 " << str;
     }
 }
 

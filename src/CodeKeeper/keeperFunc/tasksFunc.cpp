@@ -1,6 +1,6 @@
 void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "Moving task: " << item->text() << " from: " << list->objectName();
+    qDebug() << "🟢 Moving task: " << item->text() << " from: " << list->objectName();
 
     QString task = item->text();
     QString status = list->objectName();
@@ -8,7 +8,7 @@ void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list)
 
 void MainWindow::onMovingTaskTo(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "Moved task: " << item->text() << " to: " << list->objectName();
+    qDebug() << "🟢 Moved task: " << item->text() << " to: " << list->objectName();
 
     QString task = item->text();
     QString status = list->objectName();
@@ -24,12 +24,12 @@ void MainWindow::addNewTask()
     if (!text.isEmpty()) {
         taskText->clear();
         QString task = text + "\n" + getCurrentDateTimeString();
-        qDebug() << "Added new task: " << task;
+        qDebug() << "🟢 Added new task: " << task;
         incompleteTasks->addItem(task);
         QString status = incompleteTasks->objectName();
         saveTaskToDB(&task, &status);
     } else {
-        qWarning() << "Task is empty";
+        qWarning() << "🟠 Task is empty";
     }
 }
 
@@ -41,7 +41,7 @@ void MainWindow::removeTask()
         QListWidgetItem *item = listWidget->currentItem();
         if (item) {
             listWidget->takeItem(listWidget->row(item));
-            qDebug() << "Removed task: " << item->text();
+            qDebug() << "🔴 Removed task: " << item->text();
 
             QString task = item->text();
             QString status = listWidget->objectName();

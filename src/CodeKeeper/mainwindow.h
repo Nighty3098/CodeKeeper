@@ -57,7 +57,7 @@ protected:
         QFileInfo fileInfo(filePath);
         QString fileSuffix = fileInfo.suffix();
 
-        qDebug() << "[Dropped file]:" << filePath;
+        qDebug() << "🟠 [Dropped file]:" << filePath;
 
         if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md") {
             QString newLine = "[Dropped file](" + filePath + ")";

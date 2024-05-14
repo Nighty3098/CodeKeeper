@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QTime startup;
     startup.start();
 
+    qDebug() << "✨ Starting CodeKeeper ✨";
+
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
@@ -32,8 +34,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     restoreGeometry(globalSettings->value("geometry").toByteArray());
 
     getSettingsData();
-
-    qDebug() << dir;
 
     closeBtn = new QPushButton();
     minimizeBtn = new QPushButton();
@@ -665,7 +665,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             if (lastModified.isValid()) {
                 QString toolTip = "Last modified: " + lastModified.toString();
                 notesList->setToolTip(toolTip);
-                qDebug() << toolTip;
+                qDebug() << "🔸 " << toolTip;
             }
         }
     });
@@ -679,8 +679,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(toSecondTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(1); });
     connect(toThirdTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(2); });
     connect(toFourthTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(3); });
-
-    connect(tabs, &QTabWidget::currentChanged, this, [=](int index) { qDebug() << index; });
 
     connect(incompleteTasks, &QListWidget::itemChanged, this,
             [=](QListWidgetItem *item) { onMovingTaskTo(item, incompleteTasks); });
@@ -768,8 +766,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     int font_size_int = font_size.toInt();
     setFontPr1(&selectedFont, &font_size_int);
 
-    qDebug() << dir;
-    qDebug() << "Load time:" << startup.elapsed() << "ms";
+    qDebug() << "🔸 " << dir;
+    qDebug() << "🔸 Load time:" << startup.elapsed() << "ms";
 }
 
 MainWindow::~MainWindow()
