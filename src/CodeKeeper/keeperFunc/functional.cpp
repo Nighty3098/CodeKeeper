@@ -242,6 +242,8 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 
 void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 {
+    qDebug() << "🟢 Applying preferences";
+
     QString font_size = QString::number(*font_size_int);
 
     mainTitle->setFont(*selectedFont);
@@ -274,135 +276,128 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     taskText->setFont(*selectedFont);
     taskText->setStyleSheet("font-size: " + font_size + "pt;");
 
-    incompleteTasks->setStyleSheet(
-            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
-            "0px; "
-            "border-color: #838383;}"
-            "QListWidget::item:selected {"
-            "color: #FFFFFF;"
-            "}"
-            "QListWidget::Item {"
-            "margin: 0px;"
-            "background-color: rgb(211, 102, 107); color: #000000; "
-            "padding: 2px;"
-            "border-width: 0px; border-color: rgb(211, 102, 107); "
-            "border-radius: 5px;"
-            "font-size: "
-            + font_size
-            + "pt;"
-              "}");
+    incompleteTasks->setStyleSheet("QListWidget {"
+                                   "font-size: "
+                                   + font_size
+                                   + "pt;"
+                                     "}"
+                                     "QListWidget::Item {"
+                                     "margin: 0px;"
+                                     "background-color: rgb(211, 102, 107); color: #000000; "
+                                     "padding: 2px;"
+                                     "border-width: 0px; border-color: rgb(211, 102, 107); "
+                                     "border-radius: 5px;"
+                                     "font-size: "
+                                   + font_size
+                                   + "pt;"
+                                     "}");
 
-    inprocessTasks->setStyleSheet(
-            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
-            "0px; "
-            "border-color: #838383;}"
-            "QListWidget::item:selected {"
-            "color: #FFFFFF;"
-            "}"
-            "QListWidget::Item {"
-            "margin: 0px;"
-            "background-color: rgb(192, 163, 110); "
-            "color: #000000; text-decoration: underline; "
-            "border-width: 0px; "
-            "padding: 2px;"
-            "border-radius: 5px;"
-            "font-size: "
-            + font_size
-            + "pt;"
-              "}");
+    inprocessTasks->setStyleSheet("QListWidget {"
+                                  "font-size: "
+                                  + font_size
+                                  + "pt;"
+                                    "}"
+                                    "}"
+                                    "QListWidget::Item {"
+                                    "margin: 0px;"
+                                    "background-color: rgb(192, 163, 110); "
+                                    "color: #000000; text-decoration: underline; "
+                                    "border-width: 0px; "
+                                    "padding: 2px;"
+                                    "border-radius: 5px;"
+                                    "font-size: "
+                                  + font_size
+                                  + "pt;"
+                                    "}");
 
-    completeTasks->setStyleSheet(
-            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
-            "0px; "
-            "border-color: #838383;}"
-            "QListWidget::item:selected {"
-            "color: #FFFFFF;"
-            "}"
-            "QListWidget::Item {"
-            "margin: 0px;"
-            "background-color: rgb(118, 148, 106); "
-            "color: #000000;"
-            "padding: 2px;"
-            "border-radius: 5px;"
-            "line-through; border-width: 0px; "
-            "font-size: "
-            + font_size
-            + "pt;"
-              "}");
+    completeTasks->setStyleSheet("QListWidget {"
+                                 "font-size: "
+                                 + font_size
+                                 + "pt;"
+                                   "}"
+                                   "QListWidget::item:selected {"
+                                   "color: #FFFFFF;"
+                                   "}"
+                                   "QListWidget::Item {"
+                                   "margin: 0px;"
+                                   "background-color: rgb(118, 148, 106); "
+                                   "color: #000000;"
+                                   "padding: 2px;"
+                                   "border-radius: 5px;"
+                                   "line-through; border-width: 0px; "
+                                   "font-size: "
+                                 + font_size
+                                 + "pt;"
+                                   "}");
 
-    notStartedProjects->setStyleSheet(
-            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
-            "0px; "
-            "border-color: #838383;}"
-            "QListWidget::item:selected {"
-            "color: #FFFFFF;"
-            "}"
-            "QListWidget::Item {"
-            "margin: 0px;"
-            "padding: 2px;"
-            "background-color: rgb(211, 102, 107);"
-            "color: #000000; border-width: 0px; "
-            "border-radius: 5px;"
-            "border-color: #ff757f; "
-            "font-size: "
-            + font_size
-            + "pt;"
-              "}");
+    notStartedProjects->setStyleSheet("QListWidget {"
+                                      "font-size: "
+                                      + font_size
+                                      + "pt;"
+                                        "}"
+                                        "QListWidget::Item {"
+                                        "margin: 0px;"
+                                        "padding: 2px;"
+                                        "background-color: rgb(211, 102, 107);"
+                                        "color: #000000; border-width: 0px; "
+                                        "border-radius: 5px;"
+                                        "border-color: #ff757f; "
+                                        "font-size: "
+                                      + font_size
+                                      + "pt;"
+                                        "}");
 
-    startedProjects->setStyleSheet(
-            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
-            "0px; "
-            "border-color: #838383;}"
-            "QListWidget::item:selected {"
-            "color: #FFFFFF;"
-            "}"
-            "QListWidget::Item {"
-            "margin: 0px;"
-            "background-color: rgb(192, 163, 110); color: #000000; "
-            "border-radius: 5px;"
-            "padding: 2px;"
-            "border-width: 0px; border-color: #ffc777; "
-            "font-size: "
-            + font_size
-            + "pt;"
-              "}");
+    startedProjects->setStyleSheet("QListWidget {"
+                                   "font-size: "
+                                   + font_size
+                                   + "pt;"
+                                     "}"
+                                     "QListWidget::item:selected {"
+                                     "color: #FFFFFF;"
+                                     "}"
+                                     "QListWidget::Item {"
+                                     "margin: 0px;"
+                                     "background-color: rgb(192, 163, 110); color: #000000; "
+                                     "border-radius: 5px;"
+                                     "padding: 2px;"
+                                     "border-width: 0px; border-color: #ffc777; "
+                                     "font-size: "
+                                   + font_size
+                                   + "pt;"
+                                     "}");
 
-    finishlineProjects->setStyleSheet(
-            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
-            "0px; "
-            "border-color: #838383;}"
-            "QListWidget::item:selected {"
-            "color: #FFFFFF;"
-            "}"
-            "QListWidget::Item {"
-            "margin: 0px;"
-            "background-color: rgb(126, 156, 216 "
-            "); color: #000000; border-width: 0px; "
-            "border-radius: 5px;"
-            "padding: 2px;"
-            "border-color: #82aaff; "
-            "font-size: "
-            + font_size
-            + "pt;"
-              "}");
+    finishlineProjects->setStyleSheet("QListWidget {"
+                                      "font-size: "
+                                      + font_size
+                                      + "pt;"
+                                        "}"
+                                        "QListWidget::Item {"
+                                        "margin: 0px;"
+                                        "background-color: rgb(126, 156, 216 "
+                                        "); color: #000000; border-width: 0px; "
+                                        "border-radius: 5px;"
+                                        "padding: 2px;"
+                                        "border-color: #82aaff; "
+                                        "font-size: "
+                                      + font_size
+                                      + "pt;"
+                                        "}");
 
-    finishedProjects->setStyleSheet(
-            "QListWidget {background-color: rgba(211, 102, 107, 0);  border-width: "
-            "0px; "
-            "border-color: #838383;}"
-            "QListWidget::item:selected {"
-            "color: #FFFFFF;"
-            "}"
-            "QListWidget::Item {"
-            "margin: 0px;"
-            "background-color: rgb(118, 148, 106); color: #000000; "
-            "border-radius: 5px;"
-            "padding: 2px;"
-            "border-width: 0px; border-color: #c3e88d; "
-            "font-size: "
-            + font_size
-            + "pt;"
-              "}");
+    finishedProjects->setStyleSheet("QListWidget {"
+                                    "font-size: "
+                                    + font_size
+                                    + "pt;"
+                                      "}"
+                                      "QListWidget::Item {"
+                                      "margin: 0px;"
+                                      "background-color: rgb(118, 148, 106); color: #000000; "
+                                      "border-radius: 5px;"
+                                      "padding: 2px;"
+                                      "border-width: 0px; border-color: #c3e88d; "
+                                      "font-size: "
+                                    + font_size
+                                    + "pt;"
+                                      "}");
 
     fProjects->setFont(*selectedFont);
     flProjects->setFont(*selectedFont);
@@ -423,7 +418,8 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     projectsMenu->setFont(*selectedFont);
 
     tabs->setFont(*selectedFont);
-    tabs->setStyleSheet("font-size: " + font_size + "pt;");
+    tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size
+                        + "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
 
     totalProjectsL->setFont(*selectedFont);
     totalProjectsL->setStyleSheet("font-size: " + font_size + "pt;");
@@ -447,4 +443,13 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     statusLabel->setFont(*selectedFont);
     statusLabel->setStyleSheet("font-size: " + font_size + "pt;");
+
+    menu->setStyleSheet("font-size: " + font_size + "pt;");
+    menu->setFont(*selectedFont);
+
+    tasksMenu->setFont(*selectedFont);
+    tasksMenu->setStyleSheet("font-size: " + font_size + "pt;");
+
+    projectsMenu->setFont(*selectedFont);
+    projectsMenu->setStyleSheet("font-size: " + font_size + "pt;");
 }

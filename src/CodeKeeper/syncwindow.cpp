@@ -10,7 +10,7 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
     this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    this->setMinimumSize(500, 500);
+    this->setFixedSize(500, 500);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     selectedFont = globalSettings->value("font").value<QFont>();
@@ -60,9 +60,9 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
     mainLayout->addLayout(buttonsLayout, 3, 0, 1, 2, Qt::AlignCenter);
 
     setFontStyle();
-    
+
     qDebug() << "🟢 Opening Sync Window";
-    
+
     centralWidget->setLayout(mainLayout);
 
     connect(startSyncing, SIGNAL(clicked()), this, SLOT(startSyncingFunc()));
@@ -106,15 +106,14 @@ void SyncWindow::setFontStyle()
     stopSyncing->setStyleSheet("font-size: " + font_size + "pt;");
 }
 
-
-void SyncWindow::startSyncingFunc ()
+void SyncWindow::startSyncingFunc()
 {
     qDebug() << "🟢 Starting syncing...";
 
     syncingProgress->setValue(90);
 }
 
-void SyncWindow::cancelSyncingFunc ()
+void SyncWindow::cancelSyncingFunc()
 {
     qDebug() << "🔴 Canceling syncing...";
 

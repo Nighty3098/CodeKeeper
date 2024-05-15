@@ -10,13 +10,14 @@ void SettingsWindow::closeEvent(QCloseEvent *event)
     MainWindow *mainWindow = static_cast<MainWindow *>(parent());
     mainWindow->setGraphicsEffect(nullptr);
     QMainWindow::closeEvent(event);
+    saveData();
 }
 
 void SettingsWindow::checkUpdates() { }
 
 void SettingsWindow::saveData()
 {
-    qDebug() << "saveData";
+    qDebug() << "🟢 Saving data";
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     QMessageBox *messageBox = new QMessageBox();
@@ -101,11 +102,14 @@ void SettingsWindow::fopenFolder()
 
 void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
 {
+    qDebug() << "🟢 Applying preferences";
+
     QString font_size = QString::number(*font_size_int);
 
     // set font
     tabs->setFont(*selectedFont);
-    tabs->setStyleSheet("font-size: " + font_size + "pt;");
+    tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size
+                        + "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
 
     saveBtn->setFont(*selectedFont);
     saveBtn->setStyleSheet("font-size: " + font_size + "pt;");
