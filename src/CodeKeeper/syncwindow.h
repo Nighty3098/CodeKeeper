@@ -29,13 +29,22 @@ public:
 private slots:
     bool checkConnection();
     void setFontStyle();
+    void startSyncingFunc();
+    void cancelSyncingFunc();
 
 protected:
 private:
     QWidget *centralWidget;
     QGridLayout *mainLayout;
 
-    QLabel *mainTitle;
+    QLabel *appIcon;
+    QLabel *appName;
+    QLabel *infoLabel;
+
+    QProgressBar *syncingProgress;
+
+    QPushButton *startSyncing;
+    QPushButton *stopSyncing;
 };
 
 #endif // MAINWINDOW_H

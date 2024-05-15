@@ -84,13 +84,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
     openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), " Settings");
-    openSettingsBtn->setFixedSize(200, 30);
+    openSettingsBtn->setFixedSize(200, 25);
     settingsBtnLayout->addWidget(openSettingsBtn);
 
     // sync btn
     QHBoxLayout *syncDataLayout = new QHBoxLayout;
     syncDataBtn = new QPushButton(QPixmap(":/retry.png"), " Sync data");
-    syncDataBtn->setFixedSize(200, 30);
+    syncDataBtn->setFixedSize(200, 25);
     syncDataLayout->addWidget(syncDataBtn);
 
     // ========================================================
@@ -419,7 +419,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsMenuButton = new QToolButton();
     projectsMenuButton->setIcon(QPixmap(":/main.png"));
     projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
-    projectsMenuButton->setFixedSize(30, 30);
+    projectsMenuButton->setFixedSize(30, 25);
     projectsMenuButton->setIconSize(QSize(40, 40));
     projectsMenuButton->setStyleSheet(
             "background-color: #1F1F28; border-color: #1F1F28; border-width: 0px;");

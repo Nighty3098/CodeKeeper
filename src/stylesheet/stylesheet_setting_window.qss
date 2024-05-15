@@ -109,7 +109,7 @@ QTabWidget::tab-bar { alignment: center; }
 
 QTabBar::tab {
     width: 100px;
-    height: 20px;
+    height: 10px;
     font-size: 10px;
     background: #16161D; 
     color: #DCD7BA;
@@ -122,7 +122,7 @@ QTabBar::tab {
 
 QTabBar::tab:selected { 
     width: 100px;
-    height: 20px;
+    height: 10px;
     font-size: 10px;
     color: #DCD7BA;
     background: #2D4F67; 

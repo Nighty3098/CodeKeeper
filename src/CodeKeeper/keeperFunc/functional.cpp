@@ -52,9 +52,9 @@ void MainWindow::getSettingsData()
     git_token = globalSettings->value("git_token").value<QString>();
     isAutoSyncB = globalSettings->value("isAutoSync").value<bool>();
 
-    qDebug() <<  "🔸 " << dir << selectedFont << font_size << theme << isCustomTitlebar << sortNotesRole
-             << isAutoSyncing << isVisibleNotesList << isVisibleFolders << isVisiblePreview
-             << isViewMode << git_repo << git_user << git_token << isAutoSyncB;
+    qDebug() << "🔸 " << dir << selectedFont << font_size << theme << isCustomTitlebar
+             << sortNotesRole << isAutoSyncing << isVisibleNotesList << isVisibleFolders
+             << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB;
 }
 
 void MainWindow::setConnectionStatus()

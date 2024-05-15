@@ -78,6 +78,18 @@
         "string": "cpp",
         "string_view": "cpp",
         "vector": "cpp",
-        "*.inc": "cpp"
+        "*.inc": "cpp",
+        "valuemap": "cpp",
+        "valueobject": "cpp"
     },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "data",
+            "database": "/home/night/OBSIDIAN/data.db",
+            "group": "data"
+        }
+    ],
+    "sqltools.useNodeRuntime": true,
 }
