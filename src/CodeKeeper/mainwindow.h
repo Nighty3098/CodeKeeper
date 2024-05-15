@@ -307,7 +307,6 @@ private:
     // projects tab
     QLabel *projectsMainLabel;
     QToolButton *projectsMenuButton;
-    QMenu *projectsMenu;
 
     QLabel *totalProjectsL;
     QLabel *fProjects;
@@ -348,6 +347,10 @@ private:
     QAction *setQuoteA;
     QAction *nameAction;
     QAction *dateAction;
+
+    QMenu *menu;
+    QMenu *tasksMenu;
+    QMenu *projectsMenu;
 
     SettingsWindow *settingsWindow;
     SyncWindow *syncWindow;

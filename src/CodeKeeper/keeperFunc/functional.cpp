@@ -242,6 +242,8 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 
 void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 {
+    qDebug() << "🟢 Applying preferences";
+
     QString font_size = QString::number(*font_size_int);
 
     mainTitle->setFont(*selectedFont);
@@ -441,4 +443,13 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     statusLabel->setFont(*selectedFont);
     statusLabel->setStyleSheet("font-size: " + font_size + "pt;");
+
+    menu->setStyleSheet("font-size: " + font_size + "pt;");
+    menu->setFont(*selectedFont);
+
+    tasksMenu->setFont(*selectedFont);
+    tasksMenu->setStyleSheet("font-size: " + font_size + "pt;");
+
+    projectsMenu->setFont(*selectedFont);
+    projectsMenu->setStyleSheet("font-size: " + font_size + "pt;");
 }

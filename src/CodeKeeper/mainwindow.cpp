@@ -163,8 +163,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuButton->setStyleSheet(
             "background-color: #1F1F28; border-color: #1F1F28; border-width: 4px;");
 
-    QMenu *menu = new QMenu(menuButton);
-    menu->setFont(selectedFont);
+    menu = new QMenu(menuButton);
 
     QMenu *viewMenu = new QMenu("View", menu);
     viewMenu->setIcon(QIcon(":/view.png"));
@@ -330,8 +329,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksMenuBtn->setStyleSheet(
             "background-color: #1F1F28; border-color: #1F1F28; border-width: 0px;");
 
-    QMenu *tasksMenu = new QMenu(tasksMenuBtn);
-    tasksMenu->setFont(selectedFont);
+    tasksMenu = new QMenu(tasksMenuBtn);
 
     addTask = tasksMenu->addAction(QPixmap(":/new.png"), "Add task", this, SLOT(addNewTask()),
                                    Qt::Key_Return);

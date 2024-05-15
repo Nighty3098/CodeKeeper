@@ -1,3 +1,15 @@
+QSplitter::handle:vertical {
+    border: 0px solid #2d4f67;
+    background-color: #2d4f67;
+    border-radius: 1px;
+}
+
+QSplitter::handle:horizontal {
+    border: 0px solid #2d4f67;
+    background-color: #2d4f67;
+    border-radius: 1px;
+}
+
 QDialog {
     background-color: #1f1f28;
     border-width: 2px;

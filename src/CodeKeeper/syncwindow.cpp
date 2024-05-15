@@ -10,7 +10,7 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
     this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    this->setMinimumSize(500, 500);
+    this->setFixedSize(500, 500);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     selectedFont = globalSettings->value("font").value<QFont>();
