@@ -39,7 +39,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     setCentralWidget(centralWidget);
 
     mainLayout = new QVBoxLayout(centralWidget);
-    setMinimumSize(500, 500);
+    setFixedSize(600, 600);
 
     // tabs
     tabs = new QTabWidget();
@@ -48,10 +48,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
     saveBtn = new QPushButton(QPixmap(":/save.png"), " Apply");
-    saveBtn->setFixedSize(100, 30);
+    saveBtn->setFixedSize(100, 25);
 
     quitBtn = new QPushButton(QPixmap(":/quit.png"), " Quit");
-    quitBtn->setFixedSize(100, 30);
+    quitBtn->setFixedSize(100, 25);
 
     BtnsL->addWidget(saveBtn);
     BtnsL->addWidget(quitBtn);
@@ -81,13 +81,13 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn = new QPushButton(QPixmap(":/retry.png"), " Chech for updates");
-    checkUpdatesBtn->setFixedSize(200, 30);
+    checkUpdatesBtn->setFixedSize(200, 25);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
     subAppInfoL->addWidget(appName);
     subAppInfoL->addWidget(urlToRepo);
     subAppInfoL->addWidget(versionInfo);
-    subAppInfoL->addLayout(checkUpdatesBtnL);
+    // subAppInfoL->addLayout(checkUpdatesBtnL);
 
     appInfoL->addLayout(subAppInfoL);
 
@@ -105,19 +105,19 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     gitToken = new QLineEdit();
     gitToken->setPlaceholderText("GitHub token");
     gitToken->setAlignment(Qt::AlignCenter);
-    gitToken->setFixedSize(200, 30);
+    gitToken->setFixedSize(200, 25);
     gitToken->setText(git_token);
 
     gitUser = new QLineEdit();
     gitUser->setPlaceholderText("GitHub user");
     gitUser->setAlignment(Qt::AlignCenter);
-    gitUser->setFixedSize(200, 30);
+    gitUser->setFixedSize(200, 25);
     gitUser->setText(git_user);
 
     gitRepo = new QLineEdit();
     gitRepo->setPlaceholderText("GitHub repo");
     gitRepo->setAlignment(Qt::AlignCenter);
-    gitRepo->setFixedSize(200, 30);
+    gitRepo->setFixedSize(200, 25);
     gitRepo->setText(git_repo);
 
     autoSyncAfterStart = new QCheckBox("Auto sync after start");
@@ -181,7 +181,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     // storage tab
     QGridLayout *storageL = new QGridLayout;
-    storageL->setSpacing(30);
+    storageL->setSpacing(25);
 
     storageLabel = new QLabel();
     storageLabel->setText("Storage settings");
@@ -191,11 +191,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     pathToFolder = new QLineEdit();
     pathToFolder->setText("Directory");
     pathToFolder->setPlaceholderText("Directory");
-    pathToFolder->setMaximumHeight(30);
+    pathToFolder->setMaximumHeight(25);
     pathToFolder->setText(path);
 
     openFolder = new QPushButton(QPixmap(":/open.png"), " Browse");
-    openFolder->setMaximumHeight(30);
+    openFolder->setMaximumHeight(25);
 
     storageL->setSpacing(10);
     storageL->addWidget(storageLabel, 0, 1, 0, 4);

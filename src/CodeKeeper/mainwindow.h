@@ -57,7 +57,7 @@ protected:
         QFileInfo fileInfo(filePath);
         QString fileSuffix = fileInfo.suffix();
 
-        qDebug() << "Dropped file:" << filePath;
+        qDebug() << "🟠 [Dropped file]:" << filePath;
 
         if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md") {
             QString newLine = "[Dropped file](" + filePath + ")";
@@ -105,8 +105,14 @@ public:
     QString git_token;
     bool isAutoSyncB;
 
+    NoteEditor *noteEdit;
+    notesTree *notesList;
+
     QFileSystemModel *notesDirModel;
     QFileSystemModel *noteFileModel;
+
+    QTabWidget *tabs;
+    QLabel *statusLabel;
 
     void setSettingsData();
     void getSettingsData();
@@ -121,6 +127,8 @@ public:
 
     bool createConnection(QString path);
 
+    QMarkdownTextEdit *note;
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -128,6 +136,9 @@ private slots:
     void openSettingsWindow();
     void openSyncWindow();
     void openFolder();
+    void openDocumentation(QString fileName);
+
+    void selectFileInQTreeView(QTreeView *treeView, const QString &fileName);
 
     void hideNotesList();
     void showPreview();
@@ -159,7 +170,6 @@ private slots:
                           QListWidget *startedProjects, QListWidget *finishedProjects,
                           QListWidget *finishlineProjects);
 
-    void loadDocumentations(QDir path, QComboBox &comboBox);
     void openProject(QListWidget *listWidget, QListWidgetItem *item);
 
     void createProject();
@@ -230,9 +240,9 @@ protected:
     }
 
 private:
+    QLabel *windowTitle;
     QWidget *centralWidget;
     QGridLayout *mainLayout;
-    QTabWidget *tabs;
     QHBoxLayout *winControlL;
 
     QSizeGrip *sizeGrip;
@@ -258,9 +268,7 @@ private:
 
     // ========================================================
     // notes tab
-    notesTree *notesList;
     CustomIconProvider *iconProvider;
-    NoteEditor *noteEdit;
     MarkdownHighlighter *highlighter;
     QToolButton *menuButton;
     QLabel *noteNameLabel;

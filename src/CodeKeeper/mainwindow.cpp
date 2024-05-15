@@ -18,14 +18,14 @@
 #include <QtWidgets>
 #include <QWebEngineView>
 
-#include <git2.h>
-
 Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     QTime startup;
     startup.start();
+
+    qDebug() << "✨ Starting CodeKeeper ✨";
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
@@ -34,8 +34,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     restoreGeometry(globalSettings->value("geometry").toByteArray());
 
     getSettingsData();
-
-    qDebug() << dir;
 
     closeBtn = new QPushButton();
     minimizeBtn = new QPushButton();
@@ -86,13 +84,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // settings btn
     QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
     openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), " Settings");
-    openSettingsBtn->setFixedSize(200, 30);
+    openSettingsBtn->setFixedSize(200, 25);
     settingsBtnLayout->addWidget(openSettingsBtn);
 
     // sync btn
     QHBoxLayout *syncDataLayout = new QHBoxLayout;
     syncDataBtn = new QPushButton(QPixmap(":/retry.png"), " Sync data");
-    syncDataBtn->setFixedSize(200, 30);
+    syncDataBtn->setFixedSize(200, 25);
     syncDataLayout->addWidget(syncDataBtn);
 
     // ========================================================
@@ -111,9 +109,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     QStringList filters;
     filters << ""
-            << "*.md"
-            << "*.html"
-            << "*.txt";
+            << "*.md";
 
     iconProvider = new CustomIconProvider();
 
@@ -423,7 +419,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsMenuButton = new QToolButton();
     projectsMenuButton->setIcon(QPixmap(":/main.png"));
     projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
-    projectsMenuButton->setFixedSize(30, 30);
+    projectsMenuButton->setFixedSize(30, 25);
     projectsMenuButton->setIconSize(QSize(40, 40));
     projectsMenuButton->setStyleSheet(
             "background-color: #1F1F28; border-color: #1F1F28; border-width: 0px;");
@@ -574,13 +570,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     isAutoSync->setStyleSheet("border: 0px; background-color: transparent;");
     isAutoSync->setFixedSize(15, 15);
 
+    statusLabel = new QLabel();
+    statusLabel->setAlignment(Qt::AlignHCenter);
+
     winControlL->addWidget(isConnected);
     winControlL->addWidget(isAutoSync);
     winControlL->addWidget(sizeGrip2);
 
+    QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QSpacerItem *headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    QHBoxLayout *bottomLayout = new QHBoxLayout();
+    bottomLayout->setAlignment(Qt::AlignHCenter);
+    bottomLayout->addWidget(sizeGrip3);
+    bottomLayout->addSpacerItem(headerSp3);
+    bottomLayout->addWidget(statusLabel);
+    bottomLayout->addSpacerItem(headerSp4);
+    bottomLayout->addWidget(sizeGrip4);
+
     mainLayout->addWidget(tabs, 1, 0);
-    mainLayout->addWidget(sizeGrip3, 2, 0);
-    mainLayout->addWidget(sizeGrip4, 2, 1);
+    mainLayout->addLayout(bottomLayout, 2, 0);
 
     // ===================================================================================
     // connects
@@ -656,7 +665,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             if (lastModified.isValid()) {
                 QString toolTip = "Last modified: " + lastModified.toString();
                 notesList->setToolTip(toolTip);
-                qDebug() << toolTip;
+                qDebug() << "🔸 " << toolTip;
             }
         }
     });
@@ -757,8 +766,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     int font_size_int = font_size.toInt();
     setFontPr1(&selectedFont, &font_size_int);
 
-    qDebug() << dir;
-    qDebug() << "Load time:" << startup.elapsed() << "ms";
+    qDebug() << "🔸 " << dir;
+    qDebug() << "🔸 Load time:" << startup.elapsed() << "ms";
 }
 
 MainWindow::~MainWindow()

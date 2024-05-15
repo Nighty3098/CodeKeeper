@@ -1,16 +1,40 @@
+#include <QDir>
+#include <QFileInfo>
+
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "Moving project: " << item->text() << " from: " << list->objectName();
+    qDebug() << "🟢 Moving project: " << item->text() << " from: " << list->objectName();
 }
 
 void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "Moved project: " << item->text() << " to: " << list->objectName();
+    qDebug() << "🟢 Moved project: " << item->text() << " to: " << list->objectName();
     QStringList data = item->text().split("\n");
     QString status = list->objectName();
     QString date = getCurrentDateTimeString();
 
     updateProjectStatus(&status, &date, &data[2]);
+}
+
+void loadDocumentations(QDir path, QComboBox &comboBox)
+{
+    QFileInfoList fileInfoList =
+            path.entryInfoList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+    foreach (const QFileInfo &fileInfo, fileInfoList) {
+        if (fileInfo.suffix() == "md") {
+            comboBox.addItem(fileInfo.baseName());
+        }
+    }
+
+    QDir subdir;
+    QFileInfoList subdirList =
+            path.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+    foreach (const QFileInfo &subdirInfo, subdirList) {
+        subdir.setPath(subdirInfo.filePath());
+        if (subdir.exists()) {
+            loadDocumentations(subdir, comboBox);
+        }
+    }
 }
 
 void MainWindow::createProject()
@@ -21,7 +45,7 @@ void MainWindow::createProject()
     QString git = "https://github.com/";
     QString newProjectTeamplate = title + "\n" + git + "\n" + date;
 
-    qDebug() << "New project: " << newProjectTeamplate;
+    qDebug() << "🟢 New project: " << newProjectTeamplate;
 
     notStartedProjects->addItem(newProjectTeamplate);
 
@@ -43,7 +67,7 @@ void MainWindow::removeProject()
 
             removeProjectFromDB(&data[1], &status, &data[2]);
 
-            qDebug() << "Removed project: " << item->text();
+            qDebug() << "🟢 Removed project: " << item->text();
             delete item;
             break;
         }
@@ -66,11 +90,41 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStart
     }
 }
 
+void MainWindow::openDocumentation(QString fileName)
+{
+    qDebug() << fileName;
+    tabs->setCurrentIndex(1);
+
+    selectFileInQTreeView(notesList, fileName);
+}
+
+void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName)
+{
+    // Make sure the tree view is enabled and has focus
+    if (!treeView || !treeView->isEnabled() || !treeView->hasFocus()) {
+        return;
+    }
+
+    // Find the item with the given file name
+    QModelIndex index = treeView->model()->index(0, 0); // start from the root
+    while (index.isValid()) {
+        QVariant data = treeView->model()->data(index, Qt::DisplayRole);
+        if (data.toString() == fileName) {
+            // Found the item, select and scroll to it
+            treeView->selectionModel()->select(index, QItemSelectionModel::Select);
+            treeView->scrollTo(index);
+            break;
+        }
+        // Go to the next sibling
+        index = index.sibling(index.row() + 1, index.column());
+    }
+}
+
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(400, 460);
+        dialog.setMinimumSize(400, 400);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -92,20 +146,20 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QLineEdit *title = new QLineEdit();
         title->setPlaceholderText(" Project name: ");
         title->setStyleSheet("font-size: " + font_size + "pt;");
-        title->setFixedSize(380, 25);
+        title->setFixedHeight(25);
         title->setFont(selectedFont);
 
         QLineEdit *linkToGit = new QLineEdit();
         linkToGit->setPlaceholderText(" Link to GIT");
         linkToGit->setStyleSheet("font-size: " + font_size + "pt;");
-        linkToGit->setFixedSize(380, 25);
+        linkToGit->setFixedHeight(25);
         linkToGit->setFont(selectedFont);
 
         QComboBox *documentation = new QComboBox();
-        documentation->setFixedSize(380, 25);
+        documentation->setFixedHeight(25);
         documentation->setFont(selectedFont);
 
-        QMarkdownTextEdit *note = new QMarkdownTextEdit();
+        note = new QMarkdownTextEdit();
         note->setPlaceholderText(" Just start typing");
         note->setStyleSheet("font-size: " + font_size + "pt;");
         note->setLineWrapMode(QPlainTextEdit::WidgetWidth);
@@ -118,14 +172,14 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QLabel *lastMod = new QLabel();
         lastMod->setText("Last mod: ");
         lastMod->setStyleSheet("font-size: " + font_size + "pt;");
-        lastMod->setFixedSize(380, 25);
+        lastMod->setFixedHeight(25);
         lastMod->setAlignment(Qt::AlignCenter);
         lastMod->setFont(selectedFont);
 
         QPushButton *saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
         saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        saveDataBtn->setFixedSize(180, 25);
+        saveDataBtn->setFixedHeight(30);
         saveDataBtn->setIcon(QPixmap(":/save.png"));
         saveDataBtn->setIconSize(QSize(10, 10));
         saveDataBtn->setFont(selectedFont);
@@ -133,23 +187,35 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QPushButton *cancelBtn = new QPushButton();
         cancelBtn->setText("Cancel");
         cancelBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        cancelBtn->setFixedSize(180, 25);
+        cancelBtn->setFixedHeight(30);
         cancelBtn->setIcon(QPixmap(":/quit.png"));
         cancelBtn->setIconSize(QSize(10, 10));
         cancelBtn->setFont(selectedFont);
+
+        QPushButton *openButton = new QPushButton();
+        openButton->setText("Open");
+        openButton->setStyleSheet("font-size: " + font_size + "pt;");
+        openButton->setFixedHeight(30);
+        openButton->setIcon(QPixmap(":/read.png"));
+        openButton->setIconSize(QSize(10, 10));
+        openButton->setFont(selectedFont);
 
         title->setText(projectData[0]);
         linkToGit->setText(projectData[1]);
         note->setPlainText(projectData[3]);
         lastMod->setText("Last mod: " + projectData[5]);
 
+        loadDocumentations(dir, *documentation);
+        documentation->setCurrentText(projectData[2]);
+
         mainLayout.addWidget(title, 0, 0, 1, 2);
         mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
-        mainLayout.addWidget(documentation, 2, 0, 1, 2);
+        mainLayout.addWidget(documentation, 2, 0);
+        mainLayout.addWidget(openButton, 2, 1);
         mainLayout.addWidget(note, 3, 0, 1, 2);
-        mainLayout.addWidget(lastMod, 4, 0, 1, 2);
-        mainLayout.addWidget(saveDataBtn, 5, 0);
-        mainLayout.addWidget(cancelBtn, 5, 1);
+        mainLayout.addWidget(lastMod, 5, 0, 1, 2);
+        mainLayout.addWidget(saveDataBtn, 4, 0);
+        mainLayout.addWidget(cancelBtn, 4, 1);
 
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
             QString projectTitle = title->text();
@@ -170,29 +236,14 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
 
+        QObject::connect(openButton, &QPushButton::clicked, [&]() {
+            dialog.close();
+            QString doc = documentation->currentText();
+            openDocumentation(doc);
+        });
+
         dialog.exec();
     } else {
-        qDebug() << "Error";
-    }
-}
-
-void MainWindow::loadDocumentations(QDir path, QComboBox &comboBox)
-{
-    QFileInfoList fileInfoList =
-            path.entryInfoList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
-    foreach (const QFileInfo &fileInfo, fileInfoList) {
-        if (fileInfo.suffix() == "md") {
-            comboBox.addItem(fileInfo.baseName());
-        }
-    }
-
-    QDir subdir;
-    QFileInfoList subdirList =
-            path.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
-    foreach (const QFileInfo &subdirInfo, subdirList) {
-        subdir.setPath(subdirInfo.filePath());
-        if (subdir.exists()) {
-            loadDocumentations(subdir, comboBox);
-        }
+        qWarning() << "🔴 Error";
     }
 }
