@@ -423,7 +423,8 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     projectsMenu->setFont(*selectedFont);
 
     tabs->setFont(*selectedFont);
-    tabs->setStyleSheet("font-size: " + font_size + "pt;");
+    tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size
+                        + "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
 
     totalProjectsL->setFont(*selectedFont);
     totalProjectsL->setStyleSheet("font-size: " + font_size + "pt;");
