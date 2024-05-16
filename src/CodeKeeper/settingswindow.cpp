@@ -47,10 +47,16 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
-    saveBtn = new QPushButton(QPixmap(":/save.png").scaled(font_size.toInt()+3, font_size.toInt()+3, Qt::KeepAspectRatio), " Apply");
+    saveBtn = new QPushButton(
+            QPixmap(":/save.png")
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+            " Apply");
     saveBtn->setFixedSize(100, 25);
 
-    quitBtn = new QPushButton(QPixmap(":/quit.png").scaled(font_size.toInt()+3, font_size.toInt()+3, Qt::KeepAspectRatio), " Quit");
+    quitBtn = new QPushButton(
+            QPixmap(":/quit.png")
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+            " Quit");
     quitBtn->setFixedSize(100, 25);
 
     BtnsL->addWidget(saveBtn);
@@ -80,7 +86,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     versionInfo->setText("Version: 0.1.3");
     versionInfo->setAlignment(Qt::AlignCenter);
 
-    checkUpdatesBtn = new QPushButton(QPixmap(":/retry.png").scaled(font_size.toInt()+3, font_size.toInt()+3, Qt::KeepAspectRatio), " Chech for updates");
+    checkUpdatesBtn = new QPushButton(
+            QPixmap(":/retry.png")
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+            " Chech for updates");
     checkUpdatesBtn->setFixedSize(200, 25);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
@@ -194,7 +203,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     pathToFolder->setMaximumHeight(25);
     pathToFolder->setText(path);
 
-    openFolder = new QPushButton(QPixmap(":/open.png").scaled(font_size.toInt()+3, font_size.toInt()+3, Qt::KeepAspectRatio), " Browse");
+    openFolder = new QPushButton(
+            QPixmap(":/open.png")
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+            " Browse");
     openFolder->setMaximumHeight(25);
 
     storageL->setSpacing(10);
@@ -239,10 +251,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     QIcon storageIco;
     QIcon paletteIco;
 
-    aboutIco.addFile(":/about.png", QSize(font_size.toInt()+3, font_size.toInt()+3));
-    syncIco.addFile(":/refresh.png", QSize(font_size.toInt()+3, font_size.toInt()+3));
-    storageIco.addFile(":/storage.png", QSize(font_size.toInt()+3, font_size.toInt()+3));
-    paletteIco.addFile(":/palette.png", QSize(font_size.toInt()+3, font_size.toInt()+3));
+    aboutIco.addFile(":/about.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
+    syncIco.addFile(":/refresh.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
+    storageIco.addFile(":/storage.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
+    paletteIco.addFile(":/palette.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
 
     tabs->setTabIcon(tabs->indexOf(aboutTab), aboutIco);
     tabs->setTabIcon(tabs->indexOf(syncTab), syncIco);
