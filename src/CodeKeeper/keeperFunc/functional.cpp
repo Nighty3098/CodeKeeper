@@ -441,9 +441,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
             "rgb(118, 148, 106); color: #222436; font-size: "
             + font_size + "pt;");
 
-    statusLabel->setFont(*selectedFont);
-    statusLabel->setStyleSheet("font-size: " + font_size + "pt;");
-
     menu->setStyleSheet("font-size: " + font_size + "pt;");
     menu->setFont(*selectedFont);
 

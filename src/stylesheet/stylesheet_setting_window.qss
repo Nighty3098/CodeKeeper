@@ -259,13 +259,16 @@ QTreeWidget::item:hover {
 
 
 QProgressBar {
-    color: #DCD7BA;
-    background-color: #2D4F67;
+    color: #1F1F28;
+    background-color: #ff757f;
+    border-radius: 5px;
 }
 
-
-
-
+QProgressBar::chunk {
+    color: #1F1F28;
+    background-color: #c3e88d;
+    border-radius: 5px;
+}
 
 QScrollBar:horizontal
 {

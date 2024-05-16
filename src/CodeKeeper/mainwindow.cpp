@@ -125,7 +125,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesList->setDragDropMode(QAbstractItemView::DragDrop);
     notesList->setDefaultDropAction(Qt::MoveAction);
     notesList->setDragEnabled(true);
-    notesList->setMinimumWidth(100);
+    notesList->setMaximumWidth(300);
     notesList->setHeaderHidden(true);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
@@ -387,7 +387,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     taskText = new QLineEdit();
     taskText->setPlaceholderText(" Task...");
-    taskText->setFixedHeight(30);
+    taskText->setFixedHeight(25);
 
     tasksGLayout->addLayout(tasksStatsL, 0, 0, 1, 3);
 
@@ -503,6 +503,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tabs = new QTabWidget();
     tabs->setMovable(true);
+    tabs->setTabPosition(QTabWidget::South);
 
     // main tab
     QWidget *mainTab = new QWidget();
@@ -568,9 +569,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     isAutoSync->setStyleSheet("border: 0px; background-color: transparent;");
     isAutoSync->setFixedSize(15, 15);
 
-    statusLabel = new QLabel();
-    statusLabel->setAlignment(Qt::AlignHCenter);
-
     winControlL->addWidget(isConnected);
     winControlL->addWidget(isAutoSync);
     winControlL->addWidget(sizeGrip2);
@@ -578,16 +576,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    QHBoxLayout *bottomLayout = new QHBoxLayout();
-    bottomLayout->setAlignment(Qt::AlignHCenter);
-    bottomLayout->addWidget(sizeGrip3);
-    bottomLayout->addSpacerItem(headerSp3);
-    bottomLayout->addWidget(statusLabel);
-    bottomLayout->addSpacerItem(headerSp4);
-    bottomLayout->addWidget(sizeGrip4);
-
     mainLayout->addWidget(tabs, 1, 0);
-    mainLayout->addLayout(bottomLayout, 2, 0);
 
     // ===================================================================================
     // connects

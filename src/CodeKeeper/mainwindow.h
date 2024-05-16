@@ -112,7 +112,6 @@ public:
     QFileSystemModel *noteFileModel;
 
     QTabWidget *tabs;
-    QLabel *statusLabel;
 
     void setSettingsData();
     void getSettingsData();
