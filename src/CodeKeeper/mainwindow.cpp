@@ -81,17 +81,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     mainTitle->setAlignment(Qt::AlignCenter);
     mainTitle->setStyleSheet("font-size: 54px;");
 
+    appIcon = new QLabel();
+    appIcon->setAlignment(Qt::AlignCenter);
+    appIcon->setPixmap(QPixmap(":/icon.png"));
+
     // settings btn
-    QHBoxLayout *settingsBtnLayout = new QHBoxLayout;
     openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), " Settings");
     openSettingsBtn->setFixedSize(200, 25);
-    settingsBtnLayout->addWidget(openSettingsBtn);
 
     // sync btn
-    QHBoxLayout *syncDataLayout = new QHBoxLayout;
     syncDataBtn = new QPushButton(QPixmap(":/retry.png"), " Sync data");
     syncDataBtn->setFixedSize(200, 25);
-    syncDataLayout->addWidget(syncDataBtn);
 
     // ========================================================
     QHBoxLayout *menuLayout = new QHBoxLayout;
@@ -611,9 +611,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QWidget *mainTab = new QWidget();
     QVBoxLayout *firstLayout = new QVBoxLayout(mainTab);
 
-    firstLayout->addWidget(mainTitle);
-    firstLayout->addLayout(syncDataLayout);
-    firstLayout->addLayout(settingsBtnLayout);
+    QVBoxLayout *infoLayout = new QVBoxLayout();
+    infoLayout->setAlignment(Qt::AlignCenter);
+    infoLayout->addWidget(appIcon);
+    infoLayout->addWidget(mainTitle);
+
+    QVBoxLayout *buttonsLayout = new QVBoxLayout();
+    buttonsLayout->setAlignment(Qt::AlignHCenter);
+    buttonsLayout->addWidget(openSettingsBtn);
+    buttonsLayout->addWidget(syncDataBtn);
+
+    firstLayout->addLayout(infoLayout);
+    firstLayout->addLayout(buttonsLayout);
 
     tabs->addTab(mainTab, "Homepage");
 
