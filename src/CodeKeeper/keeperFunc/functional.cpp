@@ -60,20 +60,20 @@ void MainWindow::getSettingsData()
 void MainWindow::setConnectionStatus()
 {
     if (checkConnection()) {
-        isConnected->setIcon(QIcon(":/connected.png"));
+        isConnected->setIcon(QPixmap(":/connected.png").scaled(15, 15, Qt::KeepAspectRatio));
         isConnected->setToolTip("<p style='color: #ffffff;'>Connected</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
-        isConnected->setIcon(QIcon(":/disconnected.png"));
+        isConnected->setIcon(QPixmap(":/disconnected.png").scaled(15, 15, Qt::KeepAspectRatio));
         isConnected->setToolTip("<p style='color: #ffffff;'>Disconnected</p>");
     }
 
     if (isAutoSyncing) {
-        isAutoSync->setIcon(QIcon(":/auto_sync_on.png"));
+        isAutoSync->setIcon(QPixmap(":/auto_sync_on.png").scaled(15, 15, Qt::KeepAspectRatio));
         isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync on</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
-        isAutoSync->setIcon(QIcon(":/auto_sync_off.png"));
+        isAutoSync->setIcon(QPixmap(":/auto_sync_off.png").scaled(15, 15, Qt::KeepAspectRatio));
         isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync off</p>");
     }
 }
