@@ -26,6 +26,8 @@
     "window.menuBarVisibility": "compact",
     "window.dialogStyle": "custom",
     "window.titleBarStyle": "custom",
+    "window.enableMenuBarMnemonics": false,
+    "window.customMenuBarAltFocus": false,
     "window.density.editorTabHeight": "compact",
     "window.commandCenter": true,
     "workbench.layoutControl.enabled": true,
