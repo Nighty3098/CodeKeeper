@@ -13,7 +13,7 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
     this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    this->setFixedSize(500, 500);
+    this->setFixedSize(300, 500);
     this->setStyleSheet(file.readAll());
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");

@@ -61,20 +61,20 @@ void MainWindow::setConnectionStatus()
 {
     if (checkConnection()) {
         isConnected->setIcon(QPixmap(":/connected.png").scaled(15, 15, Qt::KeepAspectRatio));
-        isConnected->setToolTip("<p style='color: #ffffff;'>Connected</p>");
+        isConnected->setToolTip("<p style='color: #dCD7BA;'>Connected</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
         isConnected->setIcon(QPixmap(":/disconnected.png").scaled(15, 15, Qt::KeepAspectRatio));
-        isConnected->setToolTip("<p style='color: #ffffff;'>Disconnected</p>");
+        isConnected->setToolTip("<p style='color: #dCD7BA;'>Disconnected</p>");
     }
 
     if (isAutoSyncing) {
         isAutoSync->setIcon(QPixmap(":/auto_sync_on.png").scaled(15, 15, Qt::KeepAspectRatio));
-        isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync on</p>");
+        isAutoSync->setToolTip("<p style='color: #dCD7BA;'>Auto sync on</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
         isAutoSync->setIcon(QPixmap(":/auto_sync_off.png").scaled(15, 15, Qt::KeepAspectRatio));
-        isAutoSync->setToolTip("<p style='color: #ffffff;'>Auto sync off</p>");
+        isAutoSync->setToolTip("<p style='color: #dCD7BA;'>Auto sync off</p>");
     }
 }
 
@@ -281,6 +281,9 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                    + font_size
                                    + "pt;"
                                      "}"
+                                     "QListWidget::item:selected {"
+                                     "color: #DCD7BA;"
+                                     "}"
                                      "QListWidget::Item {"
                                      "margin: 0px;"
                                      "background-color: rgb(211, 102, 107); color: #000000; "
@@ -297,6 +300,8 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                   + font_size
                                   + "pt;"
                                     "}"
+                                    "QListWidget::item:selected {"
+                                    "color: #DCD7BA;"
                                     "}"
                                     "QListWidget::Item {"
                                     "margin: 0px;"
@@ -316,7 +321,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                  + "pt;"
                                    "}"
                                    "QListWidget::item:selected {"
-                                   "color: #FFFFFF;"
+                                   "color: #DCD7BA;"
                                    "}"
                                    "QListWidget::Item {"
                                    "margin: 0px;"
@@ -334,6 +339,9 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                       "font-size: "
                                       + font_size
                                       + "pt;"
+                                        "}"
+                                        "QListWidget::item:selected {"
+                                        "color: #DCD7BA;"
                                         "}"
                                         "QListWidget::Item {"
                                         "margin: 0px;"
@@ -353,7 +361,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                    + "pt;"
                                      "}"
                                      "QListWidget::item:selected {"
-                                     "color: #FFFFFF;"
+                                     "color: #DCD7BA;"
                                      "}"
                                      "QListWidget::Item {"
                                      "margin: 0px;"
@@ -371,6 +379,9 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                       + font_size
                                       + "pt;"
                                         "}"
+                                        "QListWidget::item:selected {"
+                                        "color: #DCD7BA;"
+                                        "}"
                                         "QListWidget::Item {"
                                         "margin: 0px;"
                                         "background-color: rgb(126, 156, 216 "
@@ -387,6 +398,9 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                     "font-size: "
                                     + font_size
                                     + "pt;"
+                                      "}"
+                                      "QListWidget::item:selected {"
+                                      "color: #DCD7BA;"
                                       "}"
                                       "QListWidget::Item {"
                                       "margin: 0px;"

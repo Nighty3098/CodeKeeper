@@ -163,7 +163,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuButton->setIconSize(QSize(10, 10));
     menuButton->setPopupMode(QToolButton::InstantPopup);
     menuButton->setStyleSheet(
-            "background-color: #1F1F28; border-color: #1F1F28; border-width: 4px;");
+            "background-color: #0D1117; border-color: #0D1117; border-width: 4px;");
 
     menu = new QMenu(menuButton);
 
@@ -337,21 +337,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                     .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
             "");
 
-    setH1B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
-    setH2B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
-    setH3B->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
-    setListB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
-    setLinkB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
-    setBoldB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+    setH1B->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+    setH2B->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+    setH3B->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+    setListB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+    setLinkB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+    setBoldB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
     setItalicB->setStyleSheet(
-            "background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+            "background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
     setStrikeB->setStyleSheet(
-            "background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
-    setTaskB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+            "background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+    setTaskB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
     setNumListB->setStyleSheet(
-            "background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
-    setTableB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
-    setQuoteB->setStyleSheet("background-color: #1F1F28; border-color: #1F1F28; margin-left: 4px;");
+            "background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+    setTableB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+    setQuoteB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
 
     setH1B->setFixedSize(20, 20);
     setH2B->setFixedSize(20, 20);
@@ -366,18 +366,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTableB->setFixedSize(20, 20);
     setQuoteB->setFixedSize(20, 20);
 
-    setH1B->setToolTip("<p style='color: #ffffff;'>Set heading 1</p>");
-    setH2B->setToolTip("<p style='color: #ffffff;'>Set heading 2</p>");
-    setH3B->setToolTip("<p style='color: #ffffff;'>Set heading 3</p>");
-    setListB->setToolTip("<p style='color: #ffffff;'>List</p>");
-    setLinkB->setToolTip("<p style='color: #ffffff;'>Link</p>");
-    setBoldB->setToolTip("<p style='color: #ffffff;'>Bold text</p>");
-    setItalicB->setToolTip("<p style='color: #ffffff;'>Italic text</p>");
-    setStrikeB->setToolTip("<p style='color: #ffffff;'>Strikethrough text</p>");
-    setTaskB->setToolTip("<p style='color: #ffffff;'>Task</p>");
-    setNumListB->setToolTip("<p style='color: #ffffff;'>Numbered list</p>");
-    setTableB->setToolTip("<p style='color: #ffffff;'>Insert table</p>");
-    setQuoteB->setToolTip("<p style='color: #ffffff;'>Set quote</p>");
+    setH1B->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Set heading 1</p>");
+    setH2B->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Set heading 2</p>");
+    setH3B->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Set heading 3</p>");
+    setListB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>List</p>");
+    setLinkB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Link</p>");
+    setBoldB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Bold text</p>");
+    setItalicB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Italic text</p>");
+    setStrikeB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Strikethrough text</p>");
+    setTaskB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Task</p>");
+    setNumListB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Numbered list</p>");
+    setTableB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Insert table</p>");
+    setQuoteB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Set quote</p>");
 
     menuLayout->addWidget(menuButton);
     menuLayout->addWidget(setH1B);
@@ -419,7 +419,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksMenuBtn->setFixedSize(30, 30);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
     tasksMenuBtn->setStyleSheet(
-            "background-color: #1F1F28; border-color: #1F1F28; border-width: 0px;");
+            "background-color: #0D1117; border-color: #0D1117; border-width: 0px;");
 
     tasksMenu = new QMenu(tasksMenuBtn);
 
@@ -518,7 +518,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsMenuButton->setFixedSize(30, 25);
     projectsMenuButton->setIconSize(QSize(40, 40));
     projectsMenuButton->setStyleSheet(
-            "background-color: #1F1F28; border-color: #1F1F28; border-width: 0px;");
+            "background-color: #0D1117; border-color: #0D1117; border-width: 0px;");
 
     projectsMenu = new QMenu(projectsMenuButton);
 
