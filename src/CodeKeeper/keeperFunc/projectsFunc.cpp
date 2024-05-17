@@ -124,7 +124,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setMinimumSize(400, 400);
+        dialog.setMinimumSize(450, 400);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -144,12 +144,14 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QGridLayout mainLayout(&dialog);
 
         QLineEdit *title = new QLineEdit();
+        title->setAlignment(Qt::AlignCenter);
         title->setPlaceholderText(" Project name: ");
         title->setStyleSheet("font-size: " + font_size + "pt;");
         title->setFixedHeight(25);
         title->setFont(selectedFont);
 
         QLineEdit *linkToGit = new QLineEdit();
+        linkToGit->setAlignment(Qt::AlignCenter);
         linkToGit->setPlaceholderText(" Link to GIT");
         linkToGit->setStyleSheet("font-size: " + font_size + "pt;");
         linkToGit->setFixedHeight(25);
@@ -179,7 +181,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QPushButton *saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
         saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        saveDataBtn->setFixedHeight(30);
+        saveDataBtn->setFixedHeight(25);
         saveDataBtn->setIcon(QPixmap(":/save.png"));
         saveDataBtn->setIconSize(QSize(10, 10));
         saveDataBtn->setFont(selectedFont);
@@ -187,16 +189,20 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QPushButton *cancelBtn = new QPushButton();
         cancelBtn->setText("Cancel");
         cancelBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        cancelBtn->setFixedHeight(30);
-        cancelBtn->setIcon(QPixmap(":/quit.png"));
+        cancelBtn->setFixedHeight(25);
+        cancelBtn->setIcon(
+                QPixmap(":/quit.png")
+                        .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
         cancelBtn->setIconSize(QSize(10, 10));
         cancelBtn->setFont(selectedFont);
 
         QPushButton *openButton = new QPushButton();
         openButton->setText("Open");
         openButton->setStyleSheet("font-size: " + font_size + "pt;");
-        openButton->setFixedHeight(30);
-        openButton->setIcon(QPixmap(":/read.png"));
+        openButton->setFixedHeight(25);
+        openButton->setIcon(
+                QPixmap(":/read.png")
+                        .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
         openButton->setIconSize(QSize(10, 10));
         openButton->setFont(selectedFont);
 
