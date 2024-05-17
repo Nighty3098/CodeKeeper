@@ -49,7 +49,7 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
 
     QVBoxLayout *infoLayout = new QVBoxLayout();
     infoLayout->setAlignment(Qt::AlignHCenter);
-    infoLayout->addWidget(appIcon);
+    // infoLayout->addWidget(appIcon);
     infoLayout->addWidget(appName);
     infoLayout->addWidget(infoLabel);
 

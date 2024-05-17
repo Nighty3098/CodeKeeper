@@ -32,14 +32,13 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
 
     this->setStyleSheet(file.readAll());
-
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
     mainLayout = new QVBoxLayout(centralWidget);
-    setFixedSize(600, 600);
+    setFixedSize(400, 600);
 
     // tabs
     tabs = new QTabWidget();

@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     isFullScreen = false;
 
     sizeGrip = new QSizeGrip(this);
-    sizeGrip->setFixedSize(12, 12);
+    sizeGrip->setFixedSize(11, 11);
     sizeGrip->setVisible(true);
     sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
@@ -55,12 +55,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     sizeGrip2->setStyleSheet("background-color: #febe30; border-radius: 5px;");
 
     sizeGrip3 = new QSizeGrip(this);
-    sizeGrip3->setFixedSize(12, 12);
+    sizeGrip3->setFixedSize(11, 11);
     sizeGrip3->setVisible(true);
     sizeGrip3->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     sizeGrip4 = new QSizeGrip(this);
-    sizeGrip4->setFixedSize(12, 12);
+    sizeGrip4->setFixedSize(11, 11);
     sizeGrip4->setVisible(true);
     sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // title
     mainTitle = new QLabel("CodeKeeper");
     mainTitle->setAlignment(Qt::AlignCenter);
-    mainTitle->setStyleSheet("font-size: 54px;");
+    mainTitle->setStyleSheet("font-size: 40px;");
 
     appIcon = new QLabel();
     appIcon->setAlignment(Qt::AlignCenter);
