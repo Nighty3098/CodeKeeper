@@ -112,7 +112,6 @@ public:
     QFileSystemModel *noteFileModel;
 
     QTabWidget *tabs;
-    QLabel *statusLabel;
 
     void setSettingsData();
     void getSettingsData();
@@ -240,6 +239,7 @@ protected:
     }
 
 private:
+    QLabel *appIcon;
     QLabel *windowTitle;
     QWidget *centralWidget;
     QGridLayout *mainLayout;

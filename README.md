@@ -24,7 +24,7 @@
 
 
 <details align="center" open>
-<summary><h2 align="center">Shortcuts:</h2></summary>
+<summary align="center">Shortcuts:</summary>
 <table align="center">
   <tr>
       <td>Alt+1</td>
@@ -93,8 +93,8 @@
 
 
 
-<details open>
-  <summary><h2 align="center">Install CodeKeeper:</h2></summary>
+<details open align="center">
+  <summary align="center">Install CodeKeeper:</summary>
   
   ```
   git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
@@ -109,7 +109,7 @@
 
 
 <details align="center">
-  <summary><h2 align="center">Screenshots:</h2></summary>
+  <summary align="center">Screenshots:</summary>
   
   ![1](https://github.com/Nighty3098/CodeKeeper/assets/154594695/f12d4183-814c-4c43-a11d-73820b634025)
   ![2](https://github.com/Nighty3098/CodeKeeper/assets/154594695/4a3e291f-fbe2-4ad4-a5be-7616fde2f98d)
@@ -122,8 +122,8 @@
 
 
 
-<details>
-<summary align="center"><h2 align="center">Tasks:</h2></summary>
+<details align="center">
+<summary align="center">Tasks:</summary>
 
   - [X] - Custom window decorations
   - [X] - Update project editor window

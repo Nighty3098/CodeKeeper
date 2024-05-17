@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Kanagawa",
+    "workbench.colorTheme": "Bearded Theme HC Ebony",
     "workbench.iconTheme": "vscode-icons-mac",
     "editor.fontFamily": "Maple Mono",
     "editor.fontLigatures": true,
@@ -26,6 +26,8 @@
     "window.menuBarVisibility": "compact",
     "window.dialogStyle": "custom",
     "window.titleBarStyle": "custom",
+    "window.enableMenuBarMnemonics": false,
+    "window.customMenuBarAltFocus": false,
     "window.density.editorTabHeight": "compact",
     "window.commandCenter": true,
     "workbench.layoutControl.enabled": true,
@@ -80,7 +82,16 @@
         "vector": "cpp",
         "*.inc": "cpp",
         "valuemap": "cpp",
-        "valueobject": "cpp"
+        "valueobject": "cpp",
+        "boundingbox": "cpp",
+        "boundingsphere": "cpp",
+        "__bit_reference": "cpp",
+        "bitset": "cpp",
+        "deque": "cpp",
+        "__memory": "cpp",
+        "limits": "cpp",
+        "ratio": "cpp",
+        "tuple": "cpp"
     },
     "sqltools.connections": [
         {
