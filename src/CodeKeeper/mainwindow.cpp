@@ -373,9 +373,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setLinkB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Link</p>");
     setBoldB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Bold text</p>");
     setItalicB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Italic text</p>");
-    setStrikeB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Strikethrough text</p>");
+    setStrikeB->setToolTip(
+            "<p style='color: #ffffff; background-color: #0D1117;'>Strikethrough text</p>");
     setTaskB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Task</p>");
-    setNumListB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Numbered list</p>");
+    setNumListB->setToolTip(
+            "<p style='color: #ffffff; background-color: #0D1117;'>Numbered list</p>");
     setTableB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Insert table</p>");
     setQuoteB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Set quote</p>");
 
