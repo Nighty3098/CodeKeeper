@@ -121,5 +121,5 @@ void SyncWindow::cancelSyncingFunc()
 {
     qDebug() << "🔴 Canceling syncing...";
 
-    this->close();
+    SyncWindow->close();
 }
