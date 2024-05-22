@@ -38,7 +38,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     setCentralWidget(centralWidget);
 
     mainLayout = new QVBoxLayout(centralWidget);
-    setFixedSize(400, 600);
+    setFixedSize(450, 600);
 
     // tabs
     tabs = new QTabWidget();
@@ -73,9 +73,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     appName->setStyleSheet("font-size: 32px;");
 
     urlToRepo = new QLabel();
-    urlToRepo->setText("<a style='color: #84a0bf' "
-                       "href=\"https://github.com/Nighty3098/CodeKeeper\">Nighty3098/"
-                       "CodeKeeper</a>");
+    urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size + "' "
+                       "href=\"https://github.com/Nighty3098/CodeKeeper\">Source</a>");
     urlToRepo->setTextFormat(Qt::RichText);
     urlToRepo->setTextInteractionFlags(Qt::TextBrowserInteraction);
     urlToRepo->setOpenExternalLinks(true);
@@ -95,7 +94,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     subAppInfoL->addWidget(appName);
     subAppInfoL->addWidget(urlToRepo);
     subAppInfoL->addWidget(versionInfo);
-    // subAppInfoL->addLayout(checkUpdatesBtnL);
 
     appInfoL->addLayout(subAppInfoL);
 
@@ -250,10 +248,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     QIcon storageIco;
     QIcon paletteIco;
 
-    aboutIco.addFile(":/about.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
-    syncIco.addFile(":/refresh.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
-    storageIco.addFile(":/storage.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
-    paletteIco.addFile(":/palette.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
+    aboutIco.addFile(":/about.png", QSize(font_size.toInt(), font_size.toInt()));
+    syncIco.addFile(":/refresh.png", QSize(font_size.toInt(), font_size.toInt()));
+    storageIco.addFile(":/storage.png", QSize(font_size.toInt(), font_size.toInt()));
+    paletteIco.addFile(":/palette.png", QSize(font_size.toInt(), font_size.toInt()));
 
     tabs->setTabIcon(tabs->indexOf(aboutTab), aboutIco);
     tabs->setTabIcon(tabs->indexOf(syncTab), syncIco);

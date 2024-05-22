@@ -69,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->setMouseTracking(true);
     this->setMinimumSize(560, 400);
     this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setWindowIcon(QIcon(":/icon.png"));
+    this->setWindowIcon(QPixmap(":/icon.png"));
 
     mainLayout = new QGridLayout(centralWidget);
     mainLayout->setSpacing(0);
@@ -86,11 +86,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     appIcon->setPixmap(QPixmap(":/icon.png"));
 
     // settings btn
-    openSettingsBtn = new QPushButton(QPixmap(":/settings.png"), " Settings");
+    openSettingsBtn = new QPushButton(
+            QPixmap(":/settings.png")
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+            " Settings");
     openSettingsBtn->setFixedSize(200, 25);
 
     // sync btn
-    syncDataBtn = new QPushButton(QPixmap(":/retry.png"), " Sync data");
+    syncDataBtn = new QPushButton(
+            QPixmap(":/retry.png")
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+            " Sync data");
     syncDataBtn->setFixedSize(200, 25);
 
     // ========================================================
@@ -219,15 +225,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                     .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
     setH1A = editMenu->addAction(
             QPixmap(":/h1.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
             "Set H1", this, SLOT(setH1()));
     setH2A = editMenu->addAction(
             QPixmap(":/h2.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
             "Set H2", this, SLOT(setH2()));
     setH3A = editMenu->addAction(
             QPixmap(":/h3.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
             "Set H3", this, SLOT(setH3()));
     editMenu->addSeparator();
     setQuoteA = editMenu->addAction(
@@ -290,15 +296,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     setH1B = new QPushButton(
             QPixmap(":/h1.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
             "");
     setH2B = new QPushButton(
             QPixmap(":/h2.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
             "");
     setH3B = new QPushButton(
             QPixmap(":/h3.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
             "");
     setListB = new QPushButton(
             QPixmap(":/list.png")
@@ -373,9 +379,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setLinkB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Link</p>");
     setBoldB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Bold text</p>");
     setItalicB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Italic text</p>");
-    setStrikeB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Strikethrough text</p>");
+    setStrikeB->setToolTip(
+            "<p style='color: #ffffff; background-color: #0D1117;'>Strikethrough text</p>");
     setTaskB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Task</p>");
-    setNumListB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Numbered list</p>");
+    setNumListB->setToolTip(
+            "<p style='color: #ffffff; background-color: #0D1117;'>Numbered list</p>");
     setTableB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Insert table</p>");
     setQuoteB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Set quote</p>");
 
@@ -655,10 +663,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QIcon noteIco;
     QIcon tasksIco;
 
-    mainIco.addFile(":/main.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
-    projectsIco.addFile(":/project.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
-    noteIco.addFile(":/edit.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
-    tasksIco.addFile(":/task.png", QSize(font_size.toInt() + 3, font_size.toInt() + 3));
+    mainIco.addFile(":/main.png", QSize(font_size.toInt(), font_size.toInt()));
+    projectsIco.addFile(":/project.png", QSize(font_size.toInt(), font_size.toInt()));
+    noteIco.addFile(":/edit.png", QSize(font_size.toInt(), font_size.toInt()));
+    tasksIco.addFile(":/task.png", QSize(font_size.toInt(), font_size.toInt()));
 
     tabs->setTabIcon(tabs->indexOf(mainTab), mainIco);
     tabs->setTabIcon(tabs->indexOf(notesTab), noteIco);
