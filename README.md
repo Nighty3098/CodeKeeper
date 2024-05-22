@@ -1,27 +1,30 @@
 <h1 align="center">CodeKeeper</h1>
 <h3 align="center">Notes and projects manager for developers</h3>
+<img src="imgs/markdown.png" align="center"/>
 
-<img src="imgs/markdown.png" align="center" />
 
 <div align="center">
-<a href="./LICENSE.md">
 
-<img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=85e185&logoColor=85e185&labelColor=0d1117" /></a>
+<a href="https://discord.gg/6xEc5WFK"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=e1ac85&logoColor=FFFFFF&labelColor=0d1117" /></a>
+<br><br>
+<a href="./LICENSE.md"><img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=85e185&logoColor=85e185&labelColor=0d1117" /></a>
+<img src="https://img.shields.io/github/release/Nighty3098/CodeKeeper?style=for-the-badge&color=8b85e1&logoColor=85e185&labelColor=0d1117"/>
+<br>
+<img src="https://img.shields.io/github/issues/Nighty3098/CodeKeeper?style=for-the-badge&color=e185d4&logoColor=85e185&labelColor=0d1117" />
+<img src="https://img.shields.io/github/issues-pr/Nighty3098/CodeKeeper?style=for-the-badge&color=e1ac85&logoColor=85e185&labelColor=0d1117" />
 <br>
 <img src="https://img.shields.io/github/last-commit/Nighty3098/CodeKeeper?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=0d1117"/>
 <img src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=0d1117"/>
-<!--<img src="https://img.shields.io/endpoint?url=https://waka.mehalter.com/api/compat/shields/v1/mehalter/interval:any/label:Nighty3098&style=for-the-badge&label=wakatime&logo=wakatime&color=a6da95&logoColor=D9E0EE&labelColor=0d1117"/>-->
-<br>
+
+
+<br><br>
 <img src="https://img.shields.io/badge/c  ++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white"/>
 <img src="https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white"/>
 <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white"/>
 <img src="https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white"/>
 <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" />
-<br>
-<a href="https://discord.gg/#9707" target="blank"><img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white"/></a>
-<a href="https://t.me/Night3098" target="blank"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/></a>
-<a href="mailto:night3098game@gmail.com" target="blank"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"/></a>
 </div>
+
 
 
 <details align="center" open>
@@ -161,3 +164,4 @@
   - [X] - Update shortcuts
 
 </details>
+

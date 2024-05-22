@@ -73,15 +73,16 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     appName->setStyleSheet("font-size: 32px;");
 
     urlToRepo = new QLabel();
-    urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size + "' "
-                       "href=\"https://github.com/Nighty3098/CodeKeeper\">Source</a>");
+    urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size
+                       + "' "
+                         "href=\"https://github.com/Nighty3098/CodeKeeper\">Source</a>");
     urlToRepo->setTextFormat(Qt::RichText);
     urlToRepo->setTextInteractionFlags(Qt::TextBrowserInteraction);
     urlToRepo->setOpenExternalLinks(true);
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     versionInfo = new QLabel();
-    versionInfo->setText("Version: 0.1.3");
+    versionInfo->setText("Version: 0.1.5");
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn = new QPushButton(

@@ -37,6 +37,50 @@ QDialog {
 QCheckBox {
     color: #fff;
 }
+QCheckBox::indicator {
+    border-radius: 7px;
+    width: 15px;
+    height: 15px;
+}
+QCheckBox::indicator:unchecked {
+    border-radius: 7px;
+    background-color: #3e4a6b;
+}
+QCheckBox::indicator:unchecked:hover {
+    border-radius: 7px;
+    background-color: #3e4a6b;
+}
+
+QCheckBox::indicator:unchecked:pressed {
+    border-radius: 7px;
+    background-color: #3e4a6b;
+}
+
+QCheckBox::indicator:checked {
+    border-radius: 7px;
+    background-color: #c3e88d;
+}
+
+QCheckBox::indicator:checked:hover {
+    border-radius: 7px;
+    background-color: #c3e88d;
+}
+
+QCheckBox::indicator:checked:pressed {
+    border-radius: 7px;
+    background-color: #c3e88d;
+}
+
+QCheckBox::indicator:indeterminate:hover {
+    border-radius: 7px;
+    background-color: #c3e88d;
+}
+
+QCheckBox::indicator:indeterminate:pressed {
+    border-radius: 7px;
+    background-color: #c3e88d;
+}
+
 
 QFontComboBox {
     color: #fff;
