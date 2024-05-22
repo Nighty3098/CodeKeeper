@@ -1,6 +1,6 @@
 <h1 align="center">CodeKeeper</h1>
 <h3 align="center">Notes and projects manager for developers</h3>
-![[markdown.png]]
+<img src="imgs/markdown.png" align="center"/>
 
 
 <div align="center">
