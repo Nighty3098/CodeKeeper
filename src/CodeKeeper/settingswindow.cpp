@@ -73,8 +73,9 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     appName->setStyleSheet("font-size: 32px;");
 
     urlToRepo = new QLabel();
-    urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size + "' "
-                       "href=\"https://github.com/Nighty3098/CodeKeeper\">Source</a>");
+    urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size
+                       + "' "
+                         "href=\"https://github.com/Nighty3098/CodeKeeper\">Source</a>");
     urlToRepo->setTextFormat(Qt::RichText);
     urlToRepo->setTextInteractionFlags(Qt::TextBrowserInteraction);
     urlToRepo->setOpenExternalLinks(true);
