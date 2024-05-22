@@ -4,9 +4,10 @@
 
 
 <div align="center">
-<a href="./LICENSE.md">
 
-<img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=85e185&logoColor=85e185&labelColor=0d1117" /></a>
+<a href="https://discord.gg/6xEc5WFK"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=e1ac85&logoColor=FFFFFF&labelColor=0d1117" /></a>
+<br><br>
+<a href="./LICENSE.md"><img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=85e185&logoColor=85e185&labelColor=0d1117" /></a>
 <img src="https://img.shields.io/github/release/Nighty3098/CodeKeeper?style=for-the-badge&color=8b85e1&logoColor=85e185&labelColor=0d1117"/>
 <br>
 <img src="https://img.shields.io/github/issues/Nighty3098/CodeKeeper?style=for-the-badge&color=e185d4&logoColor=85e185&labelColor=0d1117" />
@@ -22,8 +23,6 @@
 <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white"/>
 <img src="https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white"/>
 <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" />
-<br><br>
-	<a href="https://discord.gg/6xEc5WFK"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=e1ac85&logoColor=FFFFFF&labelColor=0d1117" /></a>
 </div>
 
 
