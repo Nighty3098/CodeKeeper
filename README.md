@@ -27,7 +27,7 @@
 
 
 
-<details align="center" open>
+<details align="center">
 <summary align="center">Shortcuts:</summary>
 <table align="center">
   <tr>
@@ -97,7 +97,7 @@
 
 
 
-<details open align="center">
+<details align="center">
   <summary align="center">Install CodeKeeper:</summary>
   
   ```
