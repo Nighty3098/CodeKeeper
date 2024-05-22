@@ -295,7 +295,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                      "QListWidget::Item {"
                                      "margin: 0px;"
                                      "background-color: rgb(211, 102, 107); color: #000000; "
-                                     "padding: 2px;"
                                      "border-width: 0px; border-color: rgb(211, 102, 107); "
                                      "border-radius: 5px;"
                                      "font-size: "
@@ -316,7 +315,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                     "background-color: rgb(231, 232, 141); "
                                     "color: #000000; text-decoration: underline; "
                                     "border-width: 0px; "
-                                    "padding: 2px;"
                                     "border-radius: 5px;"
                                     "font-size: "
                                   + font_size
@@ -335,7 +333,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                    "margin: 0px;"
                                    "background-color: rgb(195, 232, 141); "
                                    "color: #000000;"
-                                   "padding: 2px;"
                                    "border-radius: 5px;"
                                    "line-through; border-width: 0px; "
                                    "font-size: "
@@ -353,7 +350,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                         "}"
                                         "QListWidget::Item {"
                                         "margin: 0px;"
-                                        "padding: 2px;"
                                         "background-color: rgb(211, 102, 107);"
                                         "color: #000000; border-width: 0px; "
                                         "border-radius: 5px;"
@@ -375,7 +371,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                      "margin: 0px;"
                                      "background-color: rgb(231, 232, 141); color: #000000; "
                                      "border-radius: 5px;"
-                                     "padding: 2px;"
                                      "border-width: 0px; border-color: #ffc777; "
                                      "font-size: "
                                    + font_size
@@ -395,7 +390,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                         "background-color: rgb(126, 156, 216 "
                                         "); color: #000000; border-width: 0px; "
                                         "border-radius: 5px;"
-                                        "padding: 2px;"
                                         "border-color: #82aaff; "
                                         "font-size: "
                                       + font_size
@@ -414,7 +408,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
                                       "margin: 0px;"
                                       "background-color: rgb(195, 232, 141); color: #000000; "
                                       "border-radius: 5px;"
-                                      "padding: 2px;"
                                       "border-width: 0px; border-color: #c3e88d; "
                                       "font-size: "
                                     + font_size
