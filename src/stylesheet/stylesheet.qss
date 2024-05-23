@@ -21,6 +21,53 @@ QMainWindow {
     color: #fff;
 }
 
+QCheckBox {
+    color: #fff;
+}
+QCheckBox::indicator {
+    border-radius: 7px;
+    width: 15px;
+    height: 15px;
+}
+QCheckBox::indicator:unchecked {
+    border-radius: 7px;
+    background-color: #3e4a6b;
+}
+QCheckBox::indicator:unchecked:hover {
+    border-radius: 7px;
+    background-color: #3e4a6b;
+}
+
+QCheckBox::indicator:unchecked:pressed {
+    border-radius: 7px;
+    background-color: #3e4a6b;
+}
+
+QCheckBox::indicator:checked {
+    border-radius: 7px;
+    background-color: #c3e88d;
+}
+
+QCheckBox::indicator:checked:hover {
+    border-radius: 7px;
+    background-color: #c3e88d;
+}
+
+QCheckBox::indicator:checked:pressed {
+    border-radius: 7px;
+    background-color: #c3e88d;
+}
+
+QCheckBox::indicator:indeterminate:hover {
+    border-radius: 7px;
+    background-color: #c3e88d;
+}
+
+QCheckBox::indicator:indeterminate:pressed {
+    border-radius: 7px;
+    background-color: #c3e88d;
+}
+
 QStatusBar {
     background-color: #0D1117;
     border-top-left-radius: 12px;
@@ -164,6 +211,45 @@ QMenu::item:selected {
     color: #7289DA;
     text-decoration: underline;
 }
+QMenu::indicator {
+    border-radius: 4px;
+    width: 10px;
+    height: 10px;
+}
+QMenu::indicator:unchecked {
+    border-radius: 4px;
+    background-color: #0d1117;
+}
+QMenu::indicator:unchecked:hover {
+    border-radius: 4px;
+    background-color: #0d1117;
+}
+
+QMenu::indicator:unchecked:pressed {
+    border-radius: 4px;
+    background-color: #0d1117;
+}
+QMenu::indicator:checked {
+    border-radius: 4px;
+    background-color: #c3e88d;
+}
+QMenu::indicator:checked:hover {
+    border-radius: 4px;
+    background-color: #c3e88d;
+}
+QMenu::indicator:checked:pressed {
+    border-radius: 4px;
+    background-color: #c3e88d;
+}
+QMenu::indicator:indeterminate:hover {
+    border-radius: 4px;
+    background-color: #c3e88d;
+}
+QMenu::indicator:indeterminate:pressed {
+    border-radius: 4px;
+    background-color: #c3e88d;
+}
+
 
 QToolButton {
     background-color: #0D1117;

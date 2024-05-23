@@ -48,13 +48,13 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     saveBtn = new QPushButton(
             QPixmap(":/save.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             " Apply");
     saveBtn->setFixedSize(100, 25);
 
     quitBtn = new QPushButton(
             QPixmap(":/quit.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             " Quit");
     quitBtn->setFixedSize(100, 25);
 
@@ -87,7 +87,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     checkUpdatesBtn = new QPushButton(
             QPixmap(":/retry.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             " Chech for updates");
     checkUpdatesBtn->setFixedSize(200, 25);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
@@ -203,7 +203,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     openFolder = new QPushButton(
             QPixmap(":/open.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             " Browse");
     openFolder->setMaximumHeight(25);
 
@@ -249,15 +249,18 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     QIcon storageIco;
     QIcon paletteIco;
 
-    aboutIco.addFile(":/about.png", QSize(font_size.toInt(), font_size.toInt()));
-    syncIco.addFile(":/refresh.png", QSize(font_size.toInt(), font_size.toInt()));
-    storageIco.addFile(":/storage.png", QSize(font_size.toInt(), font_size.toInt()));
-    paletteIco.addFile(":/palette.png", QSize(font_size.toInt(), font_size.toInt()));
+    aboutIco.addFile(":/about.png");
+    syncIco.addFile(":/refresh.png");
+    storageIco.addFile(":/storage.png");
+    paletteIco.addFile(":/palette.png");
 
     tabs->setTabIcon(tabs->indexOf(aboutTab), aboutIco);
     tabs->setTabIcon(tabs->indexOf(syncTab), syncIco);
     tabs->setTabIcon(tabs->indexOf(storageTab), storageIco);
     tabs->setTabIcon(tabs->indexOf(appereanceTab), paletteIco);
+
+    tabs->setIconSize(QSize(font_size.toInt(), font_size.toInt()));
+    tabs->setTabBarAutoHide(true);
 
     mainLayout->addWidget(tabs);
     mainLayout->addLayout(BtnsL);

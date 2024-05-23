@@ -88,14 +88,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // settings btn
     openSettingsBtn = new QPushButton(
             QPixmap(":/settings.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             " Settings");
     openSettingsBtn->setFixedSize(200, 25);
 
     // sync btn
     syncDataBtn = new QPushButton(
             QPixmap(":/retry.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             " Sync data");
     syncDataBtn->setFixedSize(200, 25);
 
@@ -165,7 +165,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuButton = new QToolButton;
     menuButton->setIcon(
             QPixmap(":/main.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
     menuButton->setIconSize(QSize(10, 10));
     menuButton->setPopupMode(QToolButton::InstantPopup);
     menuButton->setStyleSheet(
@@ -176,30 +176,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QMenu *viewMenu = new QMenu("View", menu);
     viewMenu->setIcon(
             QPixmap(":/view.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
 
     newNote = menu->addAction(
             QPixmap(":/new.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "New Note", this, SLOT(createNote()), Qt::CTRL + Qt::Key_N);
     rmNote = menu->addAction(
             QPixmap(":/delete.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Remove", this, SLOT(removeNote()), Qt::CTRL + Qt::Key_Delete);
     newFolder = menu->addAction(
             QPixmap(":/new_folder.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "New folder", this, SLOT(createFolder()), Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     renameItemA = menu->addAction(
             QPixmap(":/rename.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Rename", this, SLOT(renameItem()), Qt::Key_F2);
 
     menu->addSeparator();
 
     expandAllA = menu->addAction(
             QPixmap(":/expand.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Expand on one stage", [this]() { notesList->expandAll(); }, Qt::CTRL + Qt::Key_E);
 
     menu->addSeparator();
@@ -214,7 +214,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     viewMenu->addSeparator();
     viewMode = viewMenu->addAction(
             QPixmap(":/view.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Reading mode", this, SLOT(toViewMode()), Qt::CTRL + Qt::SHIFT + Qt::Key_V);
     viewMode->setCheckable(true);
     viewMode->setChecked(isViewMode);
@@ -222,69 +222,69 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QMenu *editMenu = new QMenu("Edit", menu);
     editMenu->setIcon(
             QPixmap(":/edit.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
     setH1A = editMenu->addAction(
             QPixmap(":/h1.png")
-                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
             "Set H1", this, SLOT(setH1()));
     setH2A = editMenu->addAction(
             QPixmap(":/h2.png")
-                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
             "Set H2", this, SLOT(setH2()));
     setH3A = editMenu->addAction(
             QPixmap(":/h3.png")
-                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
             "Set H3", this, SLOT(setH3()));
     editMenu->addSeparator();
     setQuoteA = editMenu->addAction(
             QPixmap(":/quote.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Add quote", this, SLOT(setQuote()));
     setListA = editMenu->addAction(
             QPixmap(":/list.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Add list item", this, SLOT(setList()));
     setNumListA = editMenu->addAction(
             QPixmap(":/numList.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Add numbered list", this, SLOT(setNumList()));
     setLinkA = editMenu->addAction(
             QPixmap(":/link.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Add link", this, SLOT(setLink()));
     setTaskA = editMenu->addAction(
             QPixmap(":/checkbox.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Add task", this, SLOT(setTask()));
     editMenu->addSeparator();
     setBoldA = editMenu->addAction(
             QPixmap(":/bold.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Set bold", this, SLOT(setBold()));
     setItalicA = editMenu->addAction(
             QPixmap(":/italic.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Set italic", this, SLOT(setItalic()));
     setStrikeA = editMenu->addAction(
             QPixmap(":/strikethrough.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Set strikethrough", this, SLOT(setStrike()));
     setTableA = editMenu->addAction(
             QPixmap(":/table.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Add table", this, SLOT(setTable()));
 
     QMenu *sortMenu = new QMenu("Sort by", menu);
     sortMenu->setIcon(
             QPixmap(":/sorting.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
     nameAction = sortMenu->addAction("Name", this, SLOT(setSortByName()));
     dateAction = sortMenu->addAction("Date", this, SLOT(setSortByTime()));
 
     QMenu *exportMenu = new QMenu("Export as", menu);
     exportMenu->setIcon(
             QPixmap(":/export.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
     exportToHtml = exportMenu->addAction("HTML", this, SLOT(exportNoteToHtml()));
     exportToPdf = exportMenu->addAction("Pdf", this, SLOT(exportNoteToPdf()));
 
@@ -296,51 +296,51 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     setH1B = new QPushButton(
             QPixmap(":/h1.png")
-                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
             "");
     setH2B = new QPushButton(
             QPixmap(":/h2.png")
-                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
             "");
     setH3B = new QPushButton(
             QPixmap(":/h3.png")
-                    .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
             "");
     setListB = new QPushButton(
             QPixmap(":/list.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "");
     setLinkB = new QPushButton(
             QPixmap(":/link.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "");
     setBoldB = new QPushButton(
             QPixmap(":/bold.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "");
     setItalicB = new QPushButton(
             QPixmap(":/italic.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "");
     setStrikeB = new QPushButton(
             QPixmap(":/strikethrough.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "");
     setTaskB = new QPushButton(
             QPixmap(":/checkbox.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "");
     setNumListB = new QPushButton(
             QPixmap(":/numList.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "");
     setTableB = new QPushButton(
             QPixmap(":/table.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "");
     setQuoteB = new QPushButton(
             QPixmap(":/quote.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "");
 
     setH1B->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
@@ -422,7 +422,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksMenuBtn = new QToolButton;
     tasksMenuBtn->setIcon(
             QPixmap(":/main.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
     tasksMenuBtn->setIconSize(QSize(50, 50));
     tasksMenuBtn->setFixedSize(30, 30);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
@@ -433,11 +433,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     addTask = tasksMenu->addAction(
             QPixmap(":/new.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Add task", this, SLOT(addNewTask()), Qt::Key_Return);
     rmTask = tasksMenu->addAction(
             QPixmap(":/delete.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Delete task", this, SLOT(removeTask()), Qt::Key_Delete);
 
     tasksMenuBtn->setMenu(tasksMenu);
@@ -521,7 +521,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsMenuButton = new QToolButton();
     projectsMenuButton->setIcon(
             QPixmap(":/main.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
     projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
     projectsMenuButton->setFixedSize(30, 25);
     projectsMenuButton->setIconSize(QSize(40, 40));
@@ -533,11 +533,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // actions for menu
     newProject = projectsMenu->addAction(
             QPixmap(":/new.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "New", this, SLOT(createProject()), Qt::CTRL + Qt::Key_N);
     rmProject = projectsMenu->addAction(
             QPixmap(":/delete.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
             "Remove", this, SLOT(removeProject()), Qt::Key_Delete);
 
     projectsMenuButton->setMenu(projectsMenu);
@@ -663,16 +663,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QIcon noteIco;
     QIcon tasksIco;
 
-    mainIco.addFile(":/main.png", QSize(font_size.toInt(), font_size.toInt()));
-    projectsIco.addFile(":/project.png", QSize(font_size.toInt(), font_size.toInt()));
-    noteIco.addFile(":/edit.png", QSize(font_size.toInt(), font_size.toInt()));
-    tasksIco.addFile(":/task.png", QSize(font_size.toInt(), font_size.toInt()));
+    mainIco.addFile(":/main.png");
+    projectsIco.addFile(":/project.png");
+    noteIco.addFile(":/edit.png");
+    tasksIco.addFile(":/task.png");
 
     tabs->setTabIcon(tabs->indexOf(mainTab), mainIco);
     tabs->setTabIcon(tabs->indexOf(notesTab), noteIco);
     tabs->setTabIcon(tabs->indexOf(tasksTab), tasksIco);
     tabs->setTabIcon(tabs->indexOf(projectsTab), projectsIco);
 
+    tabs->setIconSize(QSize(font_size.toInt(), font_size.toInt()));
     tabs->setTabBarAutoHide(true);
 
     if (isCustomTitlebar) {
