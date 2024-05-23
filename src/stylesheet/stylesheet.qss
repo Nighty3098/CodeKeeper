@@ -1,20 +1,12 @@
 QDialog {
     background-color: #0d1117;
     border-width: 2px;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    border-bottom-left-radius: 12px;
 }
 
 QWidget {
     background-color: #0D1117;
     border-width: 2px;
     border-color: #fff;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    border-bottom-left-radius: 12px;
 }
 QMainWindow {
     background-color: #0D1117;
