@@ -92,32 +92,15 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStart
 
 void MainWindow::openDocumentation(QString fileName)
 {
-    qDebug() << fileName;
+    QString name = fileName + ".md";
+    qDebug() << name;
     tabs->setCurrentIndex(1);
 
-    selectFileInQTreeView(notesList, fileName);
+    selectFileInQTreeView(notesList, name);
 }
 
 void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName)
 {
-    // Make sure the tree view is enabled and has focus
-    if (!treeView || !treeView->isEnabled() || !treeView->hasFocus()) {
-        return;
-    }
-
-    // Find the item with the given file name
-    QModelIndex index = treeView->model()->index(0, 0); // start from the root
-    while (index.isValid()) {
-        QVariant data = treeView->model()->data(index, Qt::DisplayRole);
-        if (data.toString() == fileName) {
-            // Found the item, select and scroll to it
-            treeView->selectionModel()->select(index, QItemSelectionModel::Select);
-            treeView->scrollTo(index);
-            break;
-        }
-        // Go to the next sibling
-        index = index.sibling(index.row() + 1, index.column());
-    }
 }
 
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
