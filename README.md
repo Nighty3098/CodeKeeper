@@ -43,8 +43,6 @@
 
 </details>
 
-
-
 <details align="center">
 <summary align="center">Shortcuts:</summary>
 <table align="center">
