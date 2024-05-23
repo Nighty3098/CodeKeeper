@@ -2,32 +2,27 @@
 <h3 align="center">Notes and projects manager for developers</h3>
 <img src="imgs/markdown.png" align="center"/>
 
-
-<div align="center">
-
-<a href="https://discord.gg/6xEc5WFK"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=e1ac85&logoColor=FFFFFF&labelColor=0d1117" /></a>
 <br><br>
-<a href="./LICENSE.md"><img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=85e185&logoColor=85e185&labelColor=0d1117" /></a>
-<img src="https://img.shields.io/github/release/Nighty3098/CodeKeeper?style=for-the-badge&color=8b85e1&logoColor=85e185&labelColor=0d1117"/>
-<br>
-<img src="https://img.shields.io/github/issues/Nighty3098/CodeKeeper?style=for-the-badge&color=e185d4&logoColor=85e185&labelColor=0d1117" />
-<img src="https://img.shields.io/github/issues-pr/Nighty3098/CodeKeeper?style=for-the-badge&color=e1ac85&logoColor=85e185&labelColor=0d1117" />
-<br>
-<img src="https://img.shields.io/github/last-commit/Nighty3098/CodeKeeper?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=0d1117"/>
-<img src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=0d1117"/>
-
-
-<br><br>
-<img src="https://img.shields.io/badge/c  ++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white"/>
-<img src="https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white"/>
-<img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white"/>
-<img src="https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white"/>
-<img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" />
+    <div align="center">
+    <a href="./LICENSE.md"><img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=a6e0b8&logoColor=85e185&labelColor=1c1c29" /></a>
+    <img src="https://img.shields.io/github/release/Nighty3098/CodeKeeper?style=for-the-badge&color=7589d5&logoColor=85e185&labelColor=1c1c29"/>
+    <img src="https://img.shields.io/github/issues/Nighty3098/CodeKeeper?style=for-the-badge&color=dbb6ed&logoColor=85e185&labelColor=1c1c29" />
+    <img src="https://img.shields.io/github/issues-pr/Nighty3098/CodeKeeper?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29" />
+    <img src="https://img.shields.io/github/last-commit/Nighty3098/CodeKeeper?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29"/>
+    <img src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29"/>
+    <br><br>
+    <img src="https://img.shields.io/badge/c  ++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=black&color=7dc4e4"/>
+    <img src="https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=black&color=a6e0b8"/>
+    <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=black&color=7dc4e4"/>
+    <img src="https://img.shields.io/badge/markdown-%231c1c29.svg?style=for-the-badge&logo=markdown&logoColor=white"/>
+    <img src="https://img.shields.io/badge/github-%231c1c29.svg?style=for-the-badge&logo=github&logoColor=white" />
+    <br><br>
+    <a href="https://discord.gg/6xEc5WFK"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" /></a>
 </div>
 
 
 
-<details align="center" open>
+<details align="center">
 <summary align="center">Shortcuts:</summary>
 <table align="center">
   <tr>
@@ -97,7 +92,7 @@
 
 
 
-<details open align="center">
+<details>
   <summary align="center">Install CodeKeeper:</summary>
   
   ```
