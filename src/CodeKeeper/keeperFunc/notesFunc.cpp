@@ -515,7 +515,7 @@ void MainWindow::updateMDPreview()
               "    color: #c3ceec;"
               "}"
               "img {"
-              "    height: " + font_size + " "
+              "    height: 20px "
               "}"
               "hr {"
               "    font-family: "
