@@ -194,9 +194,9 @@ QMenu {
 }
 
 QMenu::separator {
-    background-color: #7289DA;
-    border: 0pxl solid #7289DA;
+    height: 3px;
     border-radius: 1px;
+    background-color: #7289DA;
 }
 
 QMenu::item {
