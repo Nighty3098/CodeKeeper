@@ -17,10 +17,31 @@
     <img src="https://img.shields.io/badge/markdown-%231c1c29.svg?style=for-the-badge&logo=markdown&logoColor=white"/>
     <img src="https://img.shields.io/badge/github-%231c1c29.svg?style=for-the-badge&logo=github&logoColor=white" />
     <br><br>
-    <a href="https://discord.gg/6xEc5WFK"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" /></a>
+    <a href="https://discord.gg/KK4Xdcqb"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" /></a>
 </div>
 
+<details open>
+  <summary align="center">Install CodeKeeper:</summary>
+  
+  ```
+  git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
+  cd CodeKeeper/src/CodeKeeper
+  qmake CodeKeeper.pro
+  make
+  ```
 
+</details>
+
+
+<details align="center">
+  <summary align="center">Screenshots:</summary>
+  
+  ![1](https://github.com/Nighty3098/CodeKeeper/assets/154594695/f12d4183-814c-4c43-a11d-73820b634025)
+  ![2](https://github.com/Nighty3098/CodeKeeper/assets/154594695/4a3e291f-fbe2-4ad4-a5be-7616fde2f98d)
+  ![3](https://github.com/Nighty3098/CodeKeeper/assets/154594695/34d023cc-2202-4418-a663-408e75e2c081)
+  ![4](https://github.com/Nighty3098/CodeKeeper/assets/154594695/cea8770d-acf5-4df6-af7f-fc5fa5ae7eaa)
+
+</details>
 
 <details align="center">
 <summary align="center">Shortcuts:</summary>
@@ -89,38 +110,6 @@
 
 </details>
 
-
-
-
-<details>
-  <summary align="center">Install CodeKeeper:</summary>
-  
-  ```
-  git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
-  cd CodeKeeper/src/CodeKeeper
-  qmake CodeKeeper.pro
-  make
-  ```
-
-</details>
-
-
-
-
-<details align="center">
-  <summary align="center">Screenshots:</summary>
-  
-  ![1](https://github.com/Nighty3098/CodeKeeper/assets/154594695/f12d4183-814c-4c43-a11d-73820b634025)
-  ![2](https://github.com/Nighty3098/CodeKeeper/assets/154594695/4a3e291f-fbe2-4ad4-a5be-7616fde2f98d)
-  ![3](https://github.com/Nighty3098/CodeKeeper/assets/154594695/34d023cc-2202-4418-a663-408e75e2c081)
-  ![4](https://github.com/Nighty3098/CodeKeeper/assets/154594695/cea8770d-acf5-4df6-af7f-fc5fa5ae7eaa)
-
-</details>
-
-
-
-
-
 <details align="center">
 <summary align="center">Tasks:</summary>
 
@@ -160,3 +149,4 @@
 
 </details>
 
+<div align="center"><img src="https://wakatime.com/badge/user/018e8f78-65a7-4aa8-8c67-51796499853b/project/018e8f7e-5c5a-471e-ba73-04384fbc3cda.svg?style=for-the-badge&logo=apachespark&color=000"/></div>
