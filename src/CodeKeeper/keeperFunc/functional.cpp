@@ -62,26 +62,26 @@ void MainWindow::setConnectionStatus()
     if (checkConnection()) {
         isConnected->setIcon(
                 QPixmap(":/connected.png")
-                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
+                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip("<p style='color: #dCD7BA;'>Connected</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
         isConnected->setIcon(
                 QPixmap(":/disconnected.png")
-                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
+                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip("<p style='color: #dCD7BA;'>Disconnected</p>");
     }
 
     if (isAutoSyncing) {
         isAutoSync->setIcon(
                 QPixmap(":/auto_sync_on.png")
-                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
+                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip("<p style='color: #dCD7BA;'>Auto sync on</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
         isAutoSync->setIcon(
                 QPixmap(":/auto_sync_off.png")
-                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio));
+                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip("<p style='color: #dCD7BA;'>Auto sync off</p>");
     }
 }

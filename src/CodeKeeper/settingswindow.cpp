@@ -48,13 +48,13 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     saveBtn = new QPushButton(
             QPixmap(":/save.png")
-                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
             " Apply");
     saveBtn->setFixedSize(100, 25);
 
     quitBtn = new QPushButton(
             QPixmap(":/quit.png")
-                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
             " Quit");
     quitBtn->setFixedSize(100, 25);
 
@@ -87,7 +87,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     checkUpdatesBtn = new QPushButton(
             QPixmap(":/retry.png")
-                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
             " Chech for updates");
     checkUpdatesBtn->setFixedSize(200, 25);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
@@ -209,7 +209,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     openFolder = new QPushButton(
             QPixmap(":/open.png")
-                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
             " Browse");
     openFolder->setMaximumHeight(25);
 

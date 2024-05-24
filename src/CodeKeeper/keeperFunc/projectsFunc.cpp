@@ -206,7 +206,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         cancelBtn->setFixedHeight(25);
         cancelBtn->setIcon(
                 QPixmap(":/quit.png")
-                        .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
+                        .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         cancelBtn->setIconSize(QSize(10, 10));
         cancelBtn->setFont(selectedFont);
 
@@ -216,7 +216,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         openButton->setFixedHeight(25);
         openButton->setIcon(
                 QPixmap(":/read.png")
-                        .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio));
+                        .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         openButton->setIconSize(QSize(10, 10));
         openButton->setFont(selectedFont);
 
