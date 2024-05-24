@@ -254,8 +254,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     QString font_size = QString::number(*font_size_int);
 
-    mainTitle->setFont(*selectedFont);
-
     projectsMainLabel->setFont(*selectedFont);
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 

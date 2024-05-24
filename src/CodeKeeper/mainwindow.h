@@ -263,7 +263,6 @@ private:
 
     // ========================================================
     // main tab
-    QLabel *mainTitle;
     QPushButton *syncDataBtn;
     QPushButton *openSettingsBtn;
 

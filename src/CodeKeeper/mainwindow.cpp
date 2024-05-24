@@ -76,11 +76,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // ========================================================
 
-    // title
-    mainTitle = new QLabel("CodeKeeper");
-    mainTitle->setAlignment(Qt::AlignCenter);
-    mainTitle->setStyleSheet("font-size: 40px;");
-
     appIcon = new QLabel();
     appIcon->setAlignment(Qt::AlignCenter);
     appIcon->setPixmap(QPixmap(":/icon.png").scaled(200, 200, Qt::KeepAspectRatio,  Qt::SmoothTransformation));
@@ -90,14 +85,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             QPixmap(":/settings.png")
                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio,  Qt::SmoothTransformation),
             " Settings");
-    openSettingsBtn->setFixedSize(200, 25);
+    openSettingsBtn->setFixedSize(100, 25);
 
     // sync btn
     syncDataBtn = new QPushButton(
             QPixmap(":/retry.png")
                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio,  Qt::SmoothTransformation),
             " Sync data");
-    syncDataBtn->setFixedSize(200, 25);
+    syncDataBtn->setFixedSize(100, 25);
 
     // ========================================================
     QHBoxLayout *menuLayout = new QHBoxLayout;
@@ -622,7 +617,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QVBoxLayout *infoLayout = new QVBoxLayout();
     infoLayout->setAlignment(Qt::AlignCenter);
     infoLayout->addWidget(appIcon);
-    // infoLayout->addWidget(mainTitle);
 
     QVBoxLayout *buttonsLayout = new QVBoxLayout();
     buttonsLayout->setAlignment(Qt::AlignHCenter);
