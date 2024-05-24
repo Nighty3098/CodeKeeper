@@ -35,6 +35,7 @@ private slots:
     void fopenFolder();
 
     void setFontPr2(QFont *selectedFont, int *font_size_int);
+    void checkRepo(QString repo);
 
 private:
     QWidget *centralWidget;
@@ -52,7 +53,7 @@ private:
     QPushButton *checkUpdatesBtn;
 
     // sync settings
-
+    QLabel *repoAvailability;
     QLabel *gitLabel;
     QLabel *gitLabel2;
 

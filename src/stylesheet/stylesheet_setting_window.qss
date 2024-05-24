@@ -101,7 +101,6 @@ QSpinBox {
 }
 
 QTabWidget {
-    background-color: #7289DA;
     font-size: 9px;
 }
 

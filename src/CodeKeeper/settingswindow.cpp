@@ -138,16 +138,22 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isSync = new QCheckBox("Auto sync after start");
     isSync->setChecked(isAutoSyncB);
 
+    repoAvailability = new QLabel("Repo");
+    repoAvailability->setAlignment(Qt::AlignHCenter);
+    QString repo = "https://github.com/" + gitUser->text() + "/" + gitRepo->text();
+    checkRepo(repo);
+
     mainSyncLayout->setSpacing(10);
     mainSyncLayout->addWidget(gitLabel, 0, 2, 1, 1);
     mainSyncLayout->addWidget(gitToken, 1, 2, 1, 1);
     mainSyncLayout->addWidget(gitUser, 2, 2, 1, 1);
     mainSyncLayout->addWidget(gitRepo, 3, 2, 1, 1);
-    mainSyncLayout->addWidget(isSync, 4, 2, 1, 1, Qt::AlignHCenter);
-    mainSyncLayout->addWidget(gitLabel2, 5, 2, 1, 1);
-    mainSyncLayout->addWidget(isDate, 6, 2, 1, 1, Qt::AlignHCenter);
-    mainSyncLayout->addWidget(isTime, 7, 2, 1, 1, Qt::AlignHCenter);
-    mainSyncLayout->addWidget(isHost, 8, 2, 1, 1, Qt::AlignHCenter);
+    mainSyncLayout->addWidget(repoAvailability, 4, 2, 1, 1, Qt::AlignHCenter);
+    mainSyncLayout->addWidget(isSync, 5, 2, 1, 1, Qt::AlignHCenter);
+    mainSyncLayout->addWidget(gitLabel2, 6, 2, 1, 1);
+    mainSyncLayout->addWidget(isDate, 7, 2, 1, 1, Qt::AlignHCenter);
+    mainSyncLayout->addWidget(isTime, 8, 2, 1, 1, Qt::AlignHCenter);
+    mainSyncLayout->addWidget(isHost, 9, 2, 1, 1, Qt::AlignHCenter);
 
     // appereance
     QGridLayout *layout1 = new QGridLayout();
@@ -270,6 +276,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     connect(quitBtn, SIGNAL(clicked()), this, SLOT(QuitW()));
     connect(checkUpdatesBtnL, SIGNAL(clicked()), this, SLOT(checkUpdates()));
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
+
+    QObject::connect(gitRepo, &QLineEdit::textChanged, [&]() {
+        QString repo = "https://github.com/" + gitUser->text() + "/" + gitRepo->text();
+        checkRepo(repo);
+    });
 
     int font_size_int = font_size.toInt();
     setFontPr2(&selectedFont, &font_size_int);
