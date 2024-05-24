@@ -107,7 +107,6 @@ void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileN
 void MainWindow::createGitBadges(QString git_url, QWebEngineView *page) {
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
-    qDebug() << repo;
 
     page->setHtml("<style>"
                     "   .badge {"
