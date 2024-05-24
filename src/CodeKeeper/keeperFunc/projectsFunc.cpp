@@ -110,17 +110,24 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView *page) {
     qDebug() << repo;
 
     page->setHtml("<style>"
-                    "img {"
-                    "   height: 25px"
-                    "}"
+                    "   .badge {"
+                    "       top: 10%;"
+                    "       position: relative;"
+                    "       height: 20px;"
+                    "       margin: 3px 3px;"
+                    "       border: 0px;"
+                    "       border-radius: 5px;"
+                    "   }"
                     "</style>"
                     "<html>"
-                    "   <div align='center'><img src='https://img.shields.io/github/license/" + repo + "?style=for-the-badge&color=a6e0b8&logoColor=85e185&labelColor=1c1c29' /><br>"
-                    "   <img src='https://img.shields.io/github/release/" + repo + "?style=for-the-badge&color=7589d5&logoColor=85e185&labelColor=1c1c29'/><br>"
-                    "   <img src='https://img.shields.io/github/issues/" + repo + "?style=for-the-badge&color=dbb6ed&logoColor=85e185&labelColor=1c1c29' /><br>"
-                    "   <img src='https://img.shields.io/github/issues-pr/" + repo + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29' /><br>"
-                    "   <img src='https://img.shields.io/github/last-commit/" + repo + "?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29'/><br>"
-                    "   <img src='https://img.shields.io/github/stars/" + repo + "?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29'/></div>"
+                    "   <div align='center' style='position: relative; height: 100%;'>"
+                    "       <img class='badge' src='https://img.shields.io/github/last-commit/" + repo + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/license/" + repo + "?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/release/" + repo + "?style=for-the-badge&color=7589d5&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/issues/" + repo + "?style=for-the-badge&color=dbb6ed&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/issues-pr/" + repo + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/stars/" + repo + "?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=171b22'/>"
+                    "</div>"
                     "</html>");
 }
 
@@ -128,7 +135,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setMinimumSize(600, 400);
+        dialog.setFixedSize(300, 400);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -161,7 +168,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         linkToGit->setFont(selectedFont);
 
         QComboBox *documentation = new QComboBox();
-        documentation->setFixedHeight(25);
+        documentation->setFixedSize(140, 25);
         documentation->setFont(selectedFont);
 
         QLabel *lastMod = new QLabel();
@@ -241,6 +248,14 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             dialog.close();
             QString doc = documentation->currentText();
             openDocumentation(doc);
+        });
+
+        QObject::connect(linkToGit, &QLineEdit::textChanged, [&]() {
+            QString prefix = "https://github.com/";
+            QString projectLink = linkToGit->text();
+            QString repo = projectLink.replace(prefix, "");
+
+            createGitBadges(repo, git_stats);
         });
 
         dialog.exec();
