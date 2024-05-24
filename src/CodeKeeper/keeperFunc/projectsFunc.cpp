@@ -100,32 +100,43 @@ void MainWindow::openDocumentation(QString fileName)
     selectFileInQTreeView(notesList, name);
 }
 
-void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName)
-{
-}
+void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName) { }
 
-void MainWindow::createGitBadges(QString git_url, QWebEngineView *page) {
+void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
+{
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
 
     page->setHtml("<style>"
-                    "   .badge {"
-                    "       top: 10%;"
-                    "       position: relative;"
-                    "       height: 20px;"
-                    "       margin: 3px 3px;"
-                    "       border: 0px;"
-                    "       border-radius: 5px;"
-                    "   }"
-                    "</style>"
-                    "<html>"
-                    "   <div align='center' style='position: relative; height: 100%;'>"
-                    "       <img class='badge' src='https://img.shields.io/github/last-commit/" + repo + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/license/" + repo + "?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/release/" + repo + "?style=for-the-badge&color=7589d5&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/issues/" + repo + "?style=for-the-badge&color=dbb6ed&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/issues-pr/" + repo + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/stars/" + repo + "?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=171b22'/>"
+                  "   .badge {"
+                  "       top: 10%;"
+                  "       position: relative;"
+                  "       height: 20px;"
+                  "       margin: 3px 3px;"
+                  "       border: 0px;"
+                  "       border-radius: 5px;"
+                  "   }"
+                  "</style>"
+                  "<html>"
+                  "   <div align='center' style='position: relative; height: 100%;'>"
+                  "       <img class='badge' src='https://img.shields.io/github/last-commit/"
+                  + repo
+                  + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/license/"
+                  + repo
+                  + "?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/release/"
+                  + repo
+                  + "?style=for-the-badge&color=7589d5&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/issues/"
+                  + repo
+                  + "?style=for-the-badge&color=dbb6ed&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/issues-pr/"
+                  + repo
+                  + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/stars/"
+                  + repo
+                  + "?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=171b22'/>"
                     "</div>"
                     "</html>");
 }
@@ -230,7 +241,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             QString projectLink = linkToGit->text();
             QString projectCreatedTime = getCurrentDateTimeString();
             QString projectDocumentation = documentation->currentText();
-            
+
             QString itemText = projectTitle + "\n" + projectLink + "\n" + projectCreatedTime;
             item->setText(itemText);
             qDebug() << itemText;

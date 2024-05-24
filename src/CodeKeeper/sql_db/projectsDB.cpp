@@ -44,15 +44,14 @@ QStringList MainWindow::GetProjectData(QString *title, QString *status, QString 
     return projectData;
 }
 
-void MainWindow::updateProjectData(QString *title, QString *git_url, QString *doc, 
+void MainWindow::updateProjectData(QString *title, QString *git_url, QString *doc,
                                    QString *createdTime, QString *oldTime, QString *oldGit)
 {
     QSqlQuery query;
 
     if (!query.exec("UPDATE projects SET title = '" + *title + "', git_url = '" + *git_url
-                    + "', projectDoc = '" + *doc + "', createdTime = '"
-                    + *createdTime + "' WHERE createdTime = '" + *oldTime + "' AND git_url = '"
-                    + oldGit + "'")) {
+                    + "', projectDoc = '" + *doc + "', createdTime = '" + *createdTime
+                    + "' WHERE createdTime = '" + *oldTime + "' AND git_url = '" + oldGit + "'")) {
         qWarning() << "🔴 " << query.lastError();
     } else {
         qDebug() << "🟢 Sucsessfull updated";
@@ -66,8 +65,8 @@ void MainWindow::saveProjectToDB(QString *title, QString *git_url, QString *stat
 
     if (!query.exec("INSERT INTO projects (title, git_url, projectDoc, status, createdTime) "
                     "VALUES('"
-                    + *title + "', '" + *git_url + "', ' ', '" + *status + "', '"
-                    + *createdTime + "')")) {
+                    + *title + "', '" + *git_url + "', ' ', '" + *status + "', '" + *createdTime
+                    + "')")) {
         qWarning() << "🔴 " << query.lastError();
     } else {
         qDebug() << "🟢 Sucsessfull saved";

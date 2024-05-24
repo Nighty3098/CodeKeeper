@@ -17,7 +17,8 @@ void SettingsWindow::closeEvent(QCloseEvent *event)
 
 void SettingsWindow::checkUpdates() { }
 
-void SettingsWindow::checkRepo(QString repo) {
+void SettingsWindow::checkRepo(QString repo)
+{
 
     QNetworkAccessManager nam;
     QNetworkReply *reply = nam.get(QNetworkRequest(QUrl(repo)));
