@@ -1,4 +1,6 @@
 #include "mainwindow.h"
+#include <QNetworkAccessManager>
+#include <QNetworkConfigurationManager>
 
 void SettingsWindow::QuitW()
 {
@@ -14,6 +16,28 @@ void SettingsWindow::closeEvent(QCloseEvent *event)
 }
 
 void SettingsWindow::checkUpdates() { }
+
+void SettingsWindow::checkRepo(QString repo)
+{
+
+    QNetworkAccessManager nam;
+    QNetworkReply *reply = nam.get(QNetworkRequest(QUrl(repo)));
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    if (reply->error() == QNetworkReply::NoError) {
+        qDebug() << repo;
+        qDebug() << "🟢 Repository is available";
+        repoAvailability->setText("Repository is available");
+    } else {
+        qDebug() << repo;
+        qWarning() << "🔴 The repository isn't available";
+        repoAvailability->setText("The repository isn't available");
+    }
+
+    reply->deleteLater();
+}
 
 void SettingsWindow::saveData()
 {
@@ -183,6 +207,9 @@ void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
 
     customTitleBar->setFont(*selectedFont);
     customTitleBar->setStyleSheet("font-size: " + font_size + "pt;");
+
+    repoAvailability->setFont(*selectedFont);
+    repoAvailability->setStyleSheet("font-size: " + font_size + "pt;");
 
     // set Data
     fontSelector->setCurrentFont(*selectedFont);

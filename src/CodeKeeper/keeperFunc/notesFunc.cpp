@@ -505,6 +505,18 @@ void MainWindow::updateMDPreview()
               "    margin-bottom: 10px;"
               "    color: #c3ceec;"
               "}"
+              "details, summary {"
+              "    font-family: "
+            + selectedFont.toString()
+            + ";"
+              "    font-weight: normal;"
+              "    margin-top: 20px;"
+              "    margin-bottom: 10px;"
+              "    color: #c3ceec;"
+              "}"
+              "img {"
+              "    height: 20px "
+              "}"
               "hr {"
               "    font-family: "
             + selectedFont.toString()

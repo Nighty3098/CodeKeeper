@@ -12,7 +12,6 @@ void MainWindow::create_projects_connection()
                   "title TEXT,"
                   "git_url TEXT,"
                   "projectDoc TEXT,"
-                  "note TEXT,"
                   "status VARCHAR(50),"
                   "createdTime VARCHAR(50)"
                   ");";
@@ -35,7 +34,6 @@ QStringList MainWindow::GetProjectData(QString *title, QString *status, QString 
             projectData << query.value("title").toString();
             projectData << query.value("git_url").toString();
             projectData << query.value("projectDoc").toString();
-            projectData << query.value("note").toString();
             projectData << query.value("status").toString();
             projectData << query.value("createdTime").toString();
             qDebug() << "🟢 Load project: " << projectData;
@@ -46,15 +44,14 @@ QStringList MainWindow::GetProjectData(QString *title, QString *status, QString 
     return projectData;
 }
 
-void MainWindow::updateProjectData(QString *title, QString *git_url, QString *doc, QString *note,
+void MainWindow::updateProjectData(QString *title, QString *git_url, QString *doc,
                                    QString *createdTime, QString *oldTime, QString *oldGit)
 {
     QSqlQuery query;
 
     if (!query.exec("UPDATE projects SET title = '" + *title + "', git_url = '" + *git_url
-                    + "', projectDoc = '" + *doc + "', note = '" + *note + "', createdTime = '"
-                    + *createdTime + "' WHERE createdTime = '" + *oldTime + "' AND git_url = '"
-                    + oldGit + "'")) {
+                    + "', projectDoc = '" + *doc + "', createdTime = '" + *createdTime
+                    + "' WHERE createdTime = '" + *oldTime + "' AND git_url = '" + oldGit + "'")) {
         qWarning() << "🔴 " << query.lastError();
     } else {
         qDebug() << "🟢 Sucsessfull updated";
@@ -66,10 +63,10 @@ void MainWindow::saveProjectToDB(QString *title, QString *git_url, QString *stat
 {
     QSqlQuery query;
 
-    if (!query.exec("INSERT INTO projects (title, git_url, projectDoc, note, status, createdTime) "
+    if (!query.exec("INSERT INTO projects (title, git_url, projectDoc, status, createdTime) "
                     "VALUES('"
-                    + *title + "', '" + *git_url + "', ' ', '# New project', '" + *status + "', '"
-                    + *createdTime + "')")) {
+                    + *title + "', '" + *git_url + "', ' ', '" + *status + "', '" + *createdTime
+                    + "')")) {
         qWarning() << "🔴 " << query.lastError();
     } else {
         qDebug() << "🟢 Sucsessfull saved";

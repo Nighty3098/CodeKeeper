@@ -48,13 +48,13 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     saveBtn = new QPushButton(
             QPixmap(":/save.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
             " Apply");
     saveBtn->setFixedSize(100, 25);
 
     quitBtn = new QPushButton(
             QPixmap(":/quit.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
             " Quit");
     quitBtn->setFixedSize(100, 25);
 
@@ -87,7 +87,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     checkUpdatesBtn = new QPushButton(
             QPixmap(":/retry.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
             " Chech for updates");
     checkUpdatesBtn->setFixedSize(200, 25);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
@@ -138,16 +138,22 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isSync = new QCheckBox("Auto sync after start");
     isSync->setChecked(isAutoSyncB);
 
+    repoAvailability = new QLabel("Repo");
+    repoAvailability->setAlignment(Qt::AlignHCenter);
+    QString repo = "https://github.com/" + gitUser->text() + "/" + gitRepo->text();
+    checkRepo(repo);
+
     mainSyncLayout->setSpacing(10);
     mainSyncLayout->addWidget(gitLabel, 0, 2, 1, 1);
     mainSyncLayout->addWidget(gitToken, 1, 2, 1, 1);
     mainSyncLayout->addWidget(gitUser, 2, 2, 1, 1);
     mainSyncLayout->addWidget(gitRepo, 3, 2, 1, 1);
-    mainSyncLayout->addWidget(isSync, 4, 2, 1, 1, Qt::AlignHCenter);
-    mainSyncLayout->addWidget(gitLabel2, 5, 2, 1, 1);
-    mainSyncLayout->addWidget(isDate, 6, 2, 1, 1, Qt::AlignHCenter);
-    mainSyncLayout->addWidget(isTime, 7, 2, 1, 1, Qt::AlignHCenter);
-    mainSyncLayout->addWidget(isHost, 8, 2, 1, 1, Qt::AlignHCenter);
+    mainSyncLayout->addWidget(repoAvailability, 4, 2, 1, 1, Qt::AlignHCenter);
+    mainSyncLayout->addWidget(isSync, 5, 2, 1, 1, Qt::AlignHCenter);
+    mainSyncLayout->addWidget(gitLabel2, 6, 2, 1, 1);
+    mainSyncLayout->addWidget(isDate, 7, 2, 1, 1, Qt::AlignHCenter);
+    mainSyncLayout->addWidget(isTime, 8, 2, 1, 1, Qt::AlignHCenter);
+    mainSyncLayout->addWidget(isHost, 9, 2, 1, 1, Qt::AlignHCenter);
 
     // appereance
     QGridLayout *layout1 = new QGridLayout();
@@ -203,7 +209,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     openFolder = new QPushButton(
             QPixmap(":/open.png")
-                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio),
+                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
             " Browse");
     openFolder->setMaximumHeight(25);
 
@@ -249,15 +255,18 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     QIcon storageIco;
     QIcon paletteIco;
 
-    aboutIco.addFile(":/about.png", QSize(font_size.toInt(), font_size.toInt()));
-    syncIco.addFile(":/refresh.png", QSize(font_size.toInt(), font_size.toInt()));
-    storageIco.addFile(":/storage.png", QSize(font_size.toInt(), font_size.toInt()));
-    paletteIco.addFile(":/palette.png", QSize(font_size.toInt(), font_size.toInt()));
+    aboutIco.addFile(":/about.png");
+    syncIco.addFile(":/refresh.png");
+    storageIco.addFile(":/storage.png");
+    paletteIco.addFile(":/palette.png");
 
     tabs->setTabIcon(tabs->indexOf(aboutTab), aboutIco);
     tabs->setTabIcon(tabs->indexOf(syncTab), syncIco);
     tabs->setTabIcon(tabs->indexOf(storageTab), storageIco);
     tabs->setTabIcon(tabs->indexOf(appereanceTab), paletteIco);
+
+    tabs->setIconSize(QSize(font_size.toInt(), font_size.toInt()));
+    tabs->setTabBarAutoHide(true);
 
     mainLayout->addWidget(tabs);
     mainLayout->addLayout(BtnsL);
@@ -267,6 +276,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     connect(quitBtn, SIGNAL(clicked()), this, SLOT(QuitW()));
     connect(checkUpdatesBtnL, SIGNAL(clicked()), this, SLOT(checkUpdates()));
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
+
+    QObject::connect(gitRepo, &QLineEdit::textChanged, [&]() {
+        QString repo = "https://github.com/" + gitUser->text() + "/" + gitRepo->text();
+        checkRepo(repo);
+    });
 
     int font_size_int = font_size.toInt();
     setFontPr2(&selectedFont, &font_size_int);

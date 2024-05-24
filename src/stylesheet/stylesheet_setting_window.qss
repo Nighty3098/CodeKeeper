@@ -38,46 +38,46 @@ QCheckBox {
     color: #fff;
 }
 QCheckBox::indicator {
-    border-radius: 7px;
-    width: 15px;
-    height: 15px;
+    border-radius: 4px;
+    width: 10px;
+    height: 10px;
 }
 QCheckBox::indicator:unchecked {
-    border-radius: 7px;
-    background-color: #3e4a6b;
+    border-radius: 4px;
+    background-color: #171b22;
 }
 QCheckBox::indicator:unchecked:hover {
-    border-radius: 7px;
-    background-color: #3e4a6b;
+    border-radius: 4px;
+    background-color: #171b22;
 }
 
 QCheckBox::indicator:unchecked:pressed {
-    border-radius: 7px;
-    background-color: #3e4a6b;
+    border-radius: 4px;
+    background-color: #171b22;
 }
 
 QCheckBox::indicator:checked {
-    border-radius: 7px;
+    border-radius: 4px;
     background-color: #c3e88d;
 }
 
 QCheckBox::indicator:checked:hover {
-    border-radius: 7px;
+    border-radius: 4px;
     background-color: #c3e88d;
 }
 
 QCheckBox::indicator:checked:pressed {
-    border-radius: 7px;
+    border-radius: 4px;
     background-color: #c3e88d;
 }
 
 QCheckBox::indicator:indeterminate:hover {
-    border-radius: 7px;
+    border-radius: 4px;
     background-color: #c3e88d;
 }
 
 QCheckBox::indicator:indeterminate:pressed {
-    border-radius: 7px;
+    border-radius: 4px;
     background-color: #c3e88d;
 }
 
@@ -101,7 +101,6 @@ QSpinBox {
 }
 
 QTabWidget {
-    background-color: #7289DA;
     font-size: 9px;
 }
 
@@ -120,9 +119,9 @@ QMenu {
 }
 
 QMenu::separator {
-    background-color: #84a0bf;
-    border: 1pxl solid #84a0bf;
+    height: 3px;
     border-radius: 1px;
+    background-color: #84a0bf;
 }
 
 QMenu::item {
