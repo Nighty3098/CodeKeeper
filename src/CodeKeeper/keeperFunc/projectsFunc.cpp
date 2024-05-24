@@ -109,7 +109,7 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
 
     page->setHtml("<style>"
                   "   .badge {"
-                  "       top: 10%;"
+                  "       top: 5%;"
                   "       position: relative;"
                   "       height: 20px;"
                   "       margin: 3px 3px;"
@@ -122,21 +122,30 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
                   "       <img class='badge' src='https://img.shields.io/github/last-commit/"
                   + repo
                   + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/issues-pr/"
+                  + repo
+                  + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29'/><br>"
+                    "       <img class='badge' src='https://img.shields.io/github/issues/"
+                  + repo
+                  + "?style=for-the-badge&color=dbb6ed&logoColor=D9E0EE&labelColor=171b22'/><br>"
                     "       <img class='badge' src='https://img.shields.io/github/license/"
                   + repo
                   + "?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=171b22'/><br>"
                     "       <img class='badge' src='https://img.shields.io/github/release/"
                   + repo
                   + "?style=for-the-badge&color=7589d5&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/issues/"
-                  + repo
-                  + "?style=for-the-badge&color=dbb6ed&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/issues-pr/"
-                  + repo
-                  + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29'/><br>"
                     "       <img class='badge' src='https://img.shields.io/github/stars/"
                   + repo
-                  + "?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=171b22'/>"
+                  + "?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                  "       <img class='badge' src='https://img.shields.io/github/forks/"
+                  + repo
+                  + "?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                  "       <img class='badge' src='https://img.shields.io/github/repo-size/"
+                  + repo
+                  + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22'/><br>"
+                  "       <img class='badge' src='https://img.shields.io/github/downloads/"
+                  + repo
+                  + "/total?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22'/>"
                     "</div>"
                     "</html>");
 }
@@ -145,7 +154,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(300, 400);
+        dialog.setFixedSize(300, 450);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
