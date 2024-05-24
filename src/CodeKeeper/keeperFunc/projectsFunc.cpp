@@ -1,5 +1,6 @@
 #include <QDir>
 #include <QFileInfo>
+#include <QWebEngineView>
 
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
 {
@@ -103,6 +104,26 @@ void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileN
 {
 }
 
+void MainWindow::createGitBadges(QString git_url, QWebEngineView *page) {
+    QString prefix = "https://github.com/";
+    QString repo = git_url.replace(prefix, "");
+    qDebug() << repo;
+
+    page->setHtml("<style>"
+                    "img {"
+                    "   height: 25px"
+                    "}"
+                    "</style>"
+                    "<html>"
+                    "   <div align='center'><img src='https://img.shields.io/github/license/" + repo + "?style=for-the-badge&color=a6e0b8&logoColor=85e185&labelColor=1c1c29' /><br>"
+                    "   <img src='https://img.shields.io/github/release/" + repo + "?style=for-the-badge&color=7589d5&logoColor=85e185&labelColor=1c1c29'/><br>"
+                    "   <img src='https://img.shields.io/github/issues/" + repo + "?style=for-the-badge&color=dbb6ed&logoColor=85e185&labelColor=1c1c29' /><br>"
+                    "   <img src='https://img.shields.io/github/issues-pr/" + repo + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29' /><br>"
+                    "   <img src='https://img.shields.io/github/last-commit/" + repo + "?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29'/><br>"
+                    "   <img src='https://img.shields.io/github/stars/" + repo + "?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29'/></div>"
+                    "</html>");
+}
+
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
@@ -121,8 +142,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QStringList projectData = GetProjectData(&PTitle, &PStatus, &PGit);
         qDebug() << "Open project: " << projectData[0] << " " << projectData[1] << " "
-                 << projectData[2] << " " << projectData[3] << " " << projectData[4] << " "
-                 << projectData[5];
+                 << projectData[2] << " " << projectData[3] << " " << projectData[4];
 
         QGridLayout mainLayout(&dialog);
 
@@ -144,22 +164,16 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         documentation->setFixedHeight(25);
         documentation->setFont(selectedFont);
 
-        note = new QMarkdownTextEdit();
-        note->setPlaceholderText(" Just start typing");
-        note->setStyleSheet("font-size: " + font_size + "pt;");
-        note->setLineWrapMode(QPlainTextEdit::WidgetWidth);
-        note->setLineNumberEnabled(true);
-        note->setLineNumbersCurrentLineColor("#51afef");
-        note->setLineWidth(font_size.toInt());
-        note->setHighlightingEnabled(true);
-        note->setFont(selectedFont);
-
         QLabel *lastMod = new QLabel();
         lastMod->setText("Last mod: ");
         lastMod->setStyleSheet("font-size: " + font_size + "pt;");
         lastMod->setFixedHeight(25);
         lastMod->setAlignment(Qt::AlignCenter);
         lastMod->setFont(selectedFont);
+
+        QWebEngineView *git_stats = new QWebEngineView();
+        git_stats->page()->setBackgroundColor(Qt::transparent);
+        createGitBadges(projectData[1], git_stats);
 
         QPushButton *saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
@@ -191,8 +205,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         title->setText(projectData[0]);
         linkToGit->setText(projectData[1]);
-        note->setPlainText(projectData[3]);
-        lastMod->setText("Last mod: " + projectData[5]);
+        lastMod->setText("Last mod: " + projectData[4]);
 
         loadDocumentations(dir, *documentation);
         documentation->setCurrentText(projectData[2]);
@@ -201,7 +214,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
         mainLayout.addWidget(documentation, 2, 0);
         mainLayout.addWidget(openButton, 2, 1);
-        mainLayout.addWidget(note, 3, 0, 1, 2);
+        mainLayout.addWidget(git_stats, 3, 0, 1, 2);
         mainLayout.addWidget(lastMod, 5, 0, 1, 2);
         mainLayout.addWidget(saveDataBtn, 4, 0);
         mainLayout.addWidget(cancelBtn, 4, 1);
@@ -211,13 +224,12 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             QString projectLink = linkToGit->text();
             QString projectCreatedTime = getCurrentDateTimeString();
             QString projectDocumentation = documentation->currentText();
-            QString noteT = note->toPlainText();
-
+            
             QString itemText = projectTitle + "\n" + projectLink + "\n" + projectCreatedTime;
             item->setText(itemText);
             qDebug() << itemText;
 
-            updateProjectData(&projectTitle, &projectLink, &projectDocumentation, &noteT,
+            updateProjectData(&projectTitle, &projectLink, &projectDocumentation,
                               &projectCreatedTime, &PCreatedTime, &PGit);
 
             dialog.close();
