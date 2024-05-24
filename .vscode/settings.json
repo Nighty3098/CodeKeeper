@@ -102,7 +102,7 @@
         }
     ],
     "sqltools.useNodeRuntime": true,
-    "workbench.colorTheme": "Bearded Theme Black & Amethyst",
+    "workbench.colorTheme": "Nightfox",
     "glassit.alpha": 220,
     "animations.Command-Palette": "Slide",
 }
