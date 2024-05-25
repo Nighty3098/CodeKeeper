@@ -35,11 +35,12 @@
 
 <details align="center">
   <summary align="center">Screenshots:</summary>
-  
-  ![1](https://github.com/Nighty3098/CodeKeeper/assets/154594695/f12d4183-814c-4c43-a11d-73820b634025)
-  ![2](https://github.com/Nighty3098/CodeKeeper/assets/154594695/4a3e291f-fbe2-4ad4-a5be-7616fde2f98d)
-  ![3](https://github.com/Nighty3098/CodeKeeper/assets/154594695/34d023cc-2202-4418-a663-408e75e2c081)
-  ![4](https://github.com/Nighty3098/CodeKeeper/assets/154594695/cea8770d-acf5-4df6-af7f-fc5fa5ae7eaa)
+  <img src="imgs/1.png" />
+  <img src="imgs/2.png" />
+  <img src="imgs/3.png" />
+  <img src="imgs/4.png" />
+  <br>
+  <img src="imgs/5.png" />
 
 </details>
 
@@ -142,10 +143,13 @@
   - [ ] - Using marked js
   - [X] - Markdown to HTML converter
   - [X] - Markdown to PDF converter
-
+******
   - [ ] - Multilang
   - [ ] - Migrate to CMake
   - [X] - Update shortcuts
+******
+  - [ ] - Git Api
+  - [ ] - Git Sync
 
 </details>
 
