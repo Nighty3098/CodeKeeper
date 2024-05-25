@@ -23,16 +23,16 @@ QCheckBox::indicator {
 }
 QCheckBox::indicator:unchecked {
     border-radius: 7px;
-    background-color: #3e4a6b;
+    background-color: #171b22;
 }
 QCheckBox::indicator:unchecked:hover {
     border-radius: 7px;
-    background-color: #3e4a6b;
+    background-color: #171b22;
 }
 
 QCheckBox::indicator:unchecked:pressed {
     border-radius: 7px;
-    background-color: #3e4a6b;
+    background-color: #171b22;
 }
 
 QCheckBox::indicator:checked {
@@ -208,16 +208,16 @@ QMenu::indicator {
 }
 QMenu::indicator:unchecked {
     border-radius: 4px;
-    background-color: #0d1117;
+    background-color: #171b22;
 }
 QMenu::indicator:unchecked:hover {
     border-radius: 4px;
-    background-color: #0d1117;
+    background-color: #171b22;
 }
 
 QMenu::indicator:unchecked:pressed {
     border-radius: 4px;
-    background-color: #0d1117;
+    background-color: #171b22;
 }
 QMenu::indicator:checked {
     border-radius: 4px;
