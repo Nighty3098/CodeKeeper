@@ -608,7 +608,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tabs = new QTabWidget();
     tabs->setMovable(true);
-    tabs->setTabPosition(QTabWidget::South);
+    // tabs->setTabPosition(QTabWidget::South);
 
     // main tab
     QWidget *mainTab = new QWidget();
