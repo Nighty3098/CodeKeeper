@@ -28,8 +28,8 @@ void SettingsWindow::checkRepo()
     loop.exec();
 
     if (reply->error() == QNetworkReply::NoError) {
-        qDebug() << repo;
-        qDebug() << "🟢 Repository is available";
+        // qDebug() << repo;
+        // qDebug() << "🟢 Repository is available";
         repoAvailability->setText("Repository is available");
     } else {
         qDebug() << repo;
