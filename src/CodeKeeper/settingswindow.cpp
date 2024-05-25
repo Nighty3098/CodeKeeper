@@ -140,8 +140,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     repoAvailability = new QLabel("Repo");
     repoAvailability->setAlignment(Qt::AlignHCenter);
-    QString repo = "https://github.com/" + gitUser->text() + "/" + gitRepo->text();
-    checkRepo(repo);
 
     mainSyncLayout->setSpacing(10);
     mainSyncLayout->addWidget(gitLabel, 0, 2, 1, 1);
@@ -277,10 +275,17 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     connect(checkUpdatesBtnL, SIGNAL(clicked()), this, SLOT(checkUpdates()));
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
 
+    /*
     QObject::connect(gitRepo, &QLineEdit::textChanged, [&]() {
         QString repo = "https://github.com/" + gitUser->text() + "/" + gitRepo->text();
         checkRepo(repo);
     });
+    */
+
+    QTimer *repoTimer = new QTimer(this);
+    connect(repoTimer, &QTimer::timeout, this, &SettingsWindow::checkRepo);
+    repoTimer->start(100); // 1000ms = 1s
+
 
     int font_size_int = font_size.toInt();
     setFontPr2(&selectedFont, &font_size_int);

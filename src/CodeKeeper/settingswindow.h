@@ -35,7 +35,7 @@ private slots:
     void fopenFolder();
 
     void setFontPr2(QFont *selectedFont, int *font_size_int);
-    void checkRepo(QString repo);
+    void checkRepo();
 
 private:
     QWidget *centralWidget;

@@ -117,7 +117,7 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetIte
 
         lineEdit.setText(oldData[0]);
 
-        QPushButton okButton(tr("OK"), &dialog);
+        QPushButton okButton(tr("Save"), &dialog);
         okButton.setFont(selectedFont);
         okButton.setFixedSize(200, 25);
         okButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: "

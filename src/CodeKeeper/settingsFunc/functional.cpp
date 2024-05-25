@@ -17,8 +17,9 @@ void SettingsWindow::closeEvent(QCloseEvent *event)
 
 void SettingsWindow::checkUpdates() { }
 
-void SettingsWindow::checkRepo(QString repo)
+void SettingsWindow::checkRepo()
 {
+    QString repo = "https://github.com/" + gitUser->text() + "/" + gitRepo->text();
 
     QNetworkAccessManager nam;
     QNetworkReply *reply = nam.get(QNetworkRequest(QUrl(repo)));
