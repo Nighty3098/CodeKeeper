@@ -46,7 +46,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
-
     this->setStyleSheet(file.readAll());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 

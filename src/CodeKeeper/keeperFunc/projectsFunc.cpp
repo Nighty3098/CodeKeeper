@@ -108,55 +108,71 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
     QString repo = git_url.replace(prefix, "");
 
     QString html = "<style>"
-    ".badge {"
-    "    height: 20px;"
-    "    margin: 1% 1%;"
-    "    border: 0px;"
-    "    border-radius: 5px;"
-    "}"
-    "</style>"
-    "<html>"
-    "    <body>"
-    "        <div style='align-items: center; justify-content: center; display: flex; vertical-align: middle; flex-direction: column;'>";
+                   ".badge {"
+                   "    height: 20px;"
+                   "    margin: 1% 1%;"
+                   "    border: 0px;"
+                   "    border-radius: 5px;"
+                   "}"
+                   "</style>"
+                   "<html>"
+                   "    <body>"
+                   "        <div style='align-items: center; justify-content: center; display: "
+                   "flex; vertical-align: middle; flex-direction: column;'>";
 
-    if(isCreated) {
-        html += "            <img class='badge' src='https://img.shields.io/github/created-at/" + repo + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29' />";
+    if (isCreated) {
+        html += "            <img class='badge' src='https://img.shields.io/github/created-at/"
+                + repo + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
-    if(isReleaseDate) {
-        html += "            <img class='badge' src='https://img.shields.io/github/release-date/" + repo + "?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=171b22' />";
+    if (isReleaseDate) {
+        html += "            <img class='badge' src='https://img.shields.io/github/release-date/"
+                + repo + "?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=171b22' />";
     }
-    if(isLastCommit) {
-        html += "            <img class='badge' src='https://img.shields.io/github/last-commit/" + repo + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29'/>";
+    if (isLastCommit) {
+        html += "            <img class='badge' src='https://img.shields.io/github/last-commit/"
+                + repo + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29'/>";
     }
-    if(isPullReq) {
-        html += "            <img class='badge' src='https://img.shields.io/github/issues-pr/" + repo + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29' />";
+    if (isPullReq) {
+        html += "            <img class='badge' src='https://img.shields.io/github/issues-pr/"
+                + repo + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29' />";
     }
-    if(isLicense) {
-        html += "            <img class='badge' src='https://img.shields.io/github/license/" + repo + "?style=for-the-badge&color=a6e0b8&logoColor=ffffff&labelColor=1c1c29' />";
+    if (isLicense) {
+        html += "            <img class='badge' src='https://img.shields.io/github/license/" + repo
+                + "?style=for-the-badge&color=a6e0b8&logoColor=ffffff&labelColor=1c1c29' />";
     }
-    if(isRelease) {
-        html += "            <img class='badge' src='https://img.shields.io/github/release/" + repo + "?style=for-the-badge&color=7589d5&logoColor=ffffff&labelColor=1c1c29'/>";
+    if (isRelease) {
+        html += "            <img class='badge' src='https://img.shields.io/github/release/" + repo
+                + "?style=for-the-badge&color=7589d5&logoColor=ffffff&labelColor=1c1c29'/>";
     }
-    if(isIssue) {
-        html += "            <img class='badge' src='https://img.shields.io/github/issues/" + repo + "?style=for-the-badge&color=dbb6ed&logoColor=ffffff&labelColor=1c1c29' />";
+    if (isIssue) {
+        html += "            <img class='badge' src='https://img.shields.io/github/issues/" + repo
+                + "?style=for-the-badge&color=dbb6ed&logoColor=ffffff&labelColor=1c1c29' />";
     }
-    if(isDownloads) {
-        html += "            <img class='badge' src='https://img.shields.io/github/downloads/" + repo + "/total?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=1c1c29' />";
+    if (isDownloads) {
+        html += "            <img class='badge' src='https://img.shields.io/github/downloads/"
+                + repo
+                + "/total?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
-    if(isCommit) {
-        html += "            <img class='badge' src='https://img.shields.io/github/commit-activity/t/" + repo + "?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=1c1c29' />";
+    if (isCommit) {
+        html += "            <img class='badge' "
+                "src='https://img.shields.io/github/commit-activity/t/"
+                + repo + "?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
-    if(isLang) {
-        html += "            <img class='badge' src='https://img.shields.io/github/languages/count/" + repo + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=1c1c29' />";
+    if (isLang) {
+        html += "            <img class='badge' src='https://img.shields.io/github/languages/count/"
+                + repo + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
-    if(isStars) {
-        html += "            <img class='badge' src='https://img.shields.io/github/stars/" + repo + "?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29' />";
+    if (isStars) {
+        html += "            <img class='badge' src='https://img.shields.io/github/stars/" + repo
+                + "?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
-    if(isForks) {
-        html += "            <img class='badge' src='https://img.shields.io/github/forks/" + repo + "?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=1c1c29' />";
+    if (isForks) {
+        html += "            <img class='badge' src='https://img.shields.io/github/forks/" + repo
+                + "?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
-    if(isRepoSize) {
-        html += "            <img class='badge' src='https://img.shields.io/github/repo-size/" + repo + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22'/>";
+    if (isRepoSize) {
+        html += "            <img class='badge' src='https://img.shields.io/github/repo-size/"
+                + repo + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22'/>";
     }
 
     html += "        </div>"
