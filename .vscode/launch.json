@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/nighty/Dev/Git/CodeKeeper/src/CodeKeeper/keeperFunc",
-      "program": "/home/nighty/Dev/Git/CodeKeeper/src/CodeKeeper/keeperFunc/build/Debug/outDebug",
+      "cwd": "/home/nighty/Dev/Git/CodeKeeper/src/CodeKeeper",
+      "program": "/home/nighty/Dev/Git/CodeKeeper/src/CodeKeeper/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
