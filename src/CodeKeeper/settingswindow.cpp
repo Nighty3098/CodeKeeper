@@ -3,6 +3,7 @@
 #include <QGraphicsBlurEffect>
 #include <QSpacerItem>
 #include <QtWidgets>
+#include <QThread>
 
 #include "mainwindow.cpp"
 #include "mainwindow.h"
@@ -31,6 +32,21 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
 
+    isCreated = globalSettings->value("isCreated").value<bool>();
+    isReleaseDate = globalSettings->value("isReleaseDate").value<bool>();
+    isLastCommit = globalSettings->value("isLastCommit").value<bool>();
+    isPullReq = globalSettings->value("isPullReq").value<bool>();
+    isLicense = globalSettings->value("isLicense").value<bool>();
+    isRelease = globalSettings->value("isRelease").value<bool>();
+    isIssue = globalSettings->value("isIssue").value<bool>();
+    isDownloads = globalSettings->value("isDownloads").value<bool>();
+    isCommit = globalSettings->value("isCommit").value<bool>();
+    isLang = globalSettings->value("isLang").value<bool>();
+    isStars = globalSettings->value("isStars").value<bool>();
+    isForks = globalSettings->value("isForks").value<bool>();
+    isRepoSize = globalSettings->value("isRepoSize").value<bool>();
+
+
     this->setStyleSheet(file.readAll());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -38,7 +54,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     setCentralWidget(centralWidget);
 
     mainLayout = new QVBoxLayout(centralWidget);
-    setFixedSize(450, 600);
+    setFixedSize(600, 600);
 
     // tabs
     tabs = new QTabWidget();
@@ -46,16 +62,16 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
-    saveBtn = new QPushButton(
-            QPixmap(":/save.png")
-                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-            " Apply");
+    saveBtn = new QPushButton(QPixmap(":/save.png")
+                                      .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                              Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                              " Apply");
     saveBtn->setFixedSize(100, 25);
 
-    quitBtn = new QPushButton(
-            QPixmap(":/quit.png")
-                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-            " Quit");
+    quitBtn = new QPushButton(QPixmap(":/quit.png")
+                                      .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                              Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                              " Quit");
     quitBtn->setFixedSize(100, 25);
 
     BtnsL->addWidget(saveBtn);
@@ -85,10 +101,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     versionInfo->setText("Version: 0.1.5");
     versionInfo->setAlignment(Qt::AlignCenter);
 
-    checkUpdatesBtn = new QPushButton(
-            QPixmap(":/retry.png")
-                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-            " Chech for updates");
+    checkUpdatesBtn =
+            new QPushButton(QPixmap(":/retry.png")
+                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                            Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                            " Chech for updates");
     checkUpdatesBtn->setFixedSize(200, 25);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
@@ -140,8 +157,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     repoAvailability = new QLabel("Repo");
     repoAvailability->setAlignment(Qt::AlignHCenter);
-    QString repo = "https://github.com/" + gitUser->text() + "/" + gitRepo->text();
-    checkRepo(repo);
 
     mainSyncLayout->setSpacing(10);
     mainSyncLayout->addWidget(gitLabel, 0, 2, 1, 1);
@@ -207,16 +222,67 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     pathToFolder->setMaximumHeight(25);
     pathToFolder->setText(path);
 
-    openFolder = new QPushButton(
-            QPixmap(":/open.png")
-                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-            " Browse");
+    openFolder = new QPushButton(QPixmap(":/open.png")
+                                         .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                                 Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                                 " Browse");
     openFolder->setMaximumHeight(25);
 
-    storageL->setSpacing(10);
+    storageL->setSpacing(25);
     storageL->addWidget(storageLabel, 0, 1, 0, 4);
     storageL->addWidget(pathToFolder, 1, 3);
     storageL->addWidget(openFolder, 2, 3);
+
+    // projects content tab
+    QGridLayout *projectsContentL = new QGridLayout;
+    projectsContentL->setSpacing(10);
+    projectsContentL->setAlignment(Qt::AlignCenter);
+
+    projectsContentLabel = new QLabel("Projects content");
+    projectsContentLabel->setStyleSheet("font-size: 32px;");
+    projectsContentLabel->setAlignment(Qt::AlignCenter);
+
+    CisCreated = new QCheckBox("Created time");
+    CisCreated->setChecked(isCreated);
+    CisReleaseDate = new QCheckBox("Last release time");
+    CisReleaseDate->setChecked(isReleaseDate);
+    CisLastCommit = new QCheckBox("Last commit time");
+    CisLastCommit->setChecked(isLastCommit);
+    CisPullReq = new QCheckBox("Total pull requests");
+    CisPullReq->setChecked(isPullReq);
+    CisLicense = new QCheckBox("License");
+    CisLicense->setChecked(isLicense);
+    CisRelease = new QCheckBox("Release");
+    CisRelease->setChecked(isRelease);
+    CisIssue = new QCheckBox("Issues");
+    CisIssue->setChecked(isIssue);
+    CisDownloads = new QCheckBox("downloads");
+    CisDownloads->setChecked(isDownloads);
+    CisCommit = new QCheckBox("Commits");
+    CisCommit->setChecked(isCommit);
+    CisLang = new QCheckBox("Langs");
+    CisLang->setChecked(isLang);
+    CisStars = new QCheckBox("Stars");
+    CisStars->setChecked(isStars);
+    CisForks = new QCheckBox("Forks");
+    CisForks->setChecked(isForks);
+    CisRepoSize = new QCheckBox("Repo size");
+    CisRepoSize->setChecked(isRepoSize);
+
+    projectsContentL->addWidget(projectsContentLabel, 0, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisCreated, 1, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisReleaseDate, 2, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisLastCommit, 3, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisPullReq, 4, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisLicense, 5, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisRelease, 6, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisIssue, 7, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisDownloads, 8, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisCommit, 9, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisLang, 10, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisStars, 11, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisForks, 12, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addWidget(CisRepoSize, 13, 0, 1, 1, Qt::AlignCenter);
 
     // info tab
     QWidget *aboutTab = new QWidget();
@@ -250,20 +316,28 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     tabs->addTab(appereanceTab, "Appereance");
 
+    // projects content
+    QWidget *projectsContentTab = new QWidget();
+    projectsContentTab->setLayout(projectsContentL);
+    tabs->addTab(projectsContentTab, "Projects");
+
     QIcon aboutIco;
     QIcon syncIco;
     QIcon storageIco;
     QIcon paletteIco;
+    QIcon projectsIco;
 
     aboutIco.addFile(":/about.png");
     syncIco.addFile(":/refresh.png");
     storageIco.addFile(":/storage.png");
     paletteIco.addFile(":/palette.png");
+    projectsIco.addFile(":/project.png");
 
     tabs->setTabIcon(tabs->indexOf(aboutTab), aboutIco);
     tabs->setTabIcon(tabs->indexOf(syncTab), syncIco);
     tabs->setTabIcon(tabs->indexOf(storageTab), storageIco);
     tabs->setTabIcon(tabs->indexOf(appereanceTab), paletteIco);
+    tabs->setTabIcon(tabs->indexOf(projectsContentTab), projectsIco);
 
     tabs->setIconSize(QSize(font_size.toInt(), font_size.toInt()));
     tabs->setTabBarAutoHide(true);
@@ -277,10 +351,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     connect(checkUpdatesBtnL, SIGNAL(clicked()), this, SLOT(checkUpdates()));
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
 
-    QObject::connect(gitRepo, &QLineEdit::textChanged, [&]() {
-        QString repo = "https://github.com/" + gitUser->text() + "/" + gitRepo->text();
-        checkRepo(repo);
-    });
+    QTimer *repoTimer = new QTimer(this);
+    qDebug() << "checking";
+
+    connect(repoTimer, &QTimer::timeout, [=]() { checkRepo(); });
+    repoTimer->start(100);
 
     int font_size_int = font_size.toInt();
     setFontPr2(&selectedFont, &font_size_int);

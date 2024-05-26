@@ -107,54 +107,70 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
 
-    page->setHtml("<style>"
-                  "   .badge {"
-                  "       top: 5%;"
-                  "       position: relative;"
-                  "       height: 20px;"
-                  "       margin: 3px 3px;"
-                  "       border: 0px;"
-                  "       border-radius: 5px;"
-                  "   }"
-                  "</style>"
-                  "<html>"
-                  "   <div align='center' style='position: relative; height: 100%;'>"
-                  "       <img class='badge' src='https://img.shields.io/github/last-commit/"
-                  + repo
-                  + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/issues-pr/"
-                  + repo
-                  + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/issues/"
-                  + repo
-                  + "?style=for-the-badge&color=dbb6ed&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/license/"
-                  + repo
-                  + "?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/release/"
-                  + repo
-                  + "?style=for-the-badge&color=7589d5&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                    "       <img class='badge' src='https://img.shields.io/github/stars/"
-                  + repo
-                  + "?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                  "       <img class='badge' src='https://img.shields.io/github/forks/"
-                  + repo
-                  + "?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                  "       <img class='badge' src='https://img.shields.io/github/repo-size/"
-                  + repo
-                  + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22'/><br>"
-                  "       <img class='badge' src='https://img.shields.io/github/downloads/"
-                  + repo
-                  + "/total?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22'/>"
-                    "</div>"
-                    "</html>");
+    QString html = "<style>"
+    ".badge {"
+    "    height: 20px;"
+    "    margin: 1% 1%;"
+    "    border: 0px;"
+    "    border-radius: 5px;"
+    "}"
+    "</style>"
+    "<html>"
+    "    <body>"
+    "        <div style='align-items: center; justify-content: center; display: flex; vertical-align: middle; flex-direction: column;'>";
+
+    if(isCreated) {
+        html += "            <img class='badge' src='https://img.shields.io/github/created-at/" + repo + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29' />";
+    }
+    if(isReleaseDate) {
+        html += "            <img class='badge' src='https://img.shields.io/github/release-date/" + repo + "?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=171b22' />";
+    }
+    if(isLastCommit) {
+        html += "            <img class='badge' src='https://img.shields.io/github/last-commit/" + repo + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29'/>";
+    }
+    if(isPullReq) {
+        html += "            <img class='badge' src='https://img.shields.io/github/issues-pr/" + repo + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29' />";
+    }
+    if(isLicense) {
+        html += "            <img class='badge' src='https://img.shields.io/github/license/" + repo + "?style=for-the-badge&color=a6e0b8&logoColor=ffffff&labelColor=1c1c29' />";
+    }
+    if(isRelease) {
+        html += "            <img class='badge' src='https://img.shields.io/github/release/" + repo + "?style=for-the-badge&color=7589d5&logoColor=ffffff&labelColor=1c1c29'/>";
+    }
+    if(isIssue) {
+        html += "            <img class='badge' src='https://img.shields.io/github/issues/" + repo + "?style=for-the-badge&color=dbb6ed&logoColor=ffffff&labelColor=1c1c29' />";
+    }
+    if(isDownloads) {
+        html += "            <img class='badge' src='https://img.shields.io/github/downloads/" + repo + "/total?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=1c1c29' />";
+    }
+    if(isCommit) {
+        html += "            <img class='badge' src='https://img.shields.io/github/commit-activity/t/" + repo + "?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=1c1c29' />";
+    }
+    if(isLang) {
+        html += "            <img class='badge' src='https://img.shields.io/github/languages/count/" + repo + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=1c1c29' />";
+    }
+    if(isStars) {
+        html += "            <img class='badge' src='https://img.shields.io/github/stars/" + repo + "?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29' />";
+    }
+    if(isForks) {
+        html += "            <img class='badge' src='https://img.shields.io/github/forks/" + repo + "?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=1c1c29' />";
+    }
+    if(isRepoSize) {
+        html += "            <img class='badge' src='https://img.shields.io/github/repo-size/" + repo + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22'/>";
+    }
+
+    html += "        </div>"
+            "    </body>"
+            "</html>";
+
+    page->setHtml(html);
 }
 
 void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(300, 450);
+        dialog.setFixedSize(400, 550);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -187,7 +203,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         linkToGit->setFont(selectedFont);
 
         QComboBox *documentation = new QComboBox();
-        documentation->setFixedSize(140, 25);
+        documentation->setFixedSize(190, 25);
         documentation->setFont(selectedFont);
 
         QLabel *lastMod = new QLabel();
@@ -213,9 +229,9 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         cancelBtn->setText("Cancel");
         cancelBtn->setStyleSheet("font-size: " + font_size + "pt;");
         cancelBtn->setFixedHeight(25);
-        cancelBtn->setIcon(
-                QPixmap(":/quit.png")
-                        .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        cancelBtn->setIcon(QPixmap(":/quit.png")
+                                   .scaled(font_size.toInt() + 3, font_size.toInt() + 3,
+                                           Qt::KeepAspectRatio, Qt::SmoothTransformation));
         cancelBtn->setIconSize(QSize(10, 10));
         cancelBtn->setFont(selectedFont);
 
@@ -223,9 +239,9 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         openButton->setText("Open");
         openButton->setStyleSheet("font-size: " + font_size + "pt;");
         openButton->setFixedHeight(25);
-        openButton->setIcon(
-                QPixmap(":/read.png")
-                        .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        openButton->setIcon(QPixmap(":/read.png")
+                                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3,
+                                            Qt::KeepAspectRatio, Qt::SmoothTransformation));
         openButton->setIconSize(QSize(10, 10));
         openButton->setFont(selectedFont);
 
