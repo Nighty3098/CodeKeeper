@@ -90,7 +90,13 @@
         "__memory": "cpp",
         "limits": "cpp",
         "ratio": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "random": "cpp",
+        "cstdlib": "cpp",
+        "charconv": "cpp",
+        "functional": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp"
     },
     "sqltools.connections": [
         {
@@ -102,7 +108,7 @@
         }
     ],
     "sqltools.useNodeRuntime": true,
-    "workbench.colorTheme": "Nightfox",
+    "workbench.colorTheme": "Vim Nightfly Theme",
     "glassit.alpha": 220,
     "animations.Command-Palette": "Slide",
 }
