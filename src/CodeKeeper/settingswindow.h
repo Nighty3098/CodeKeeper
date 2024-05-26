@@ -27,6 +27,20 @@ public:
     bool isAutoSyncB;
     bool isCustomTitlebar;
 
+    bool isCreated;
+    bool isReleaseDate;
+    bool isLastCommit;
+    bool isPullReq;
+    bool isLicense;
+    bool isRelease;
+    bool isIssue;
+    bool isDownloads;
+    bool isCommit;
+    bool isLang;
+    bool isStars;
+    bool isForks;
+    bool isRepoSize;
+
 private slots:
     void closeEvent(QCloseEvent *event);
     void QuitW();
@@ -85,6 +99,24 @@ private:
     QLabel *storageLabel;
     QLineEdit *pathToFolder;
     QPushButton *openFolder;
+
+    // projects content
+    QLabel *projectsContentLabel;
+
+    QCheckBox *CisCreated;
+    QCheckBox *CisReleaseDate;
+    QCheckBox *CisLastCommit;
+    QCheckBox *CisPullReq;
+    QCheckBox *CisLicense;
+    QCheckBox *CisRelease;
+    QCheckBox *CisIssue;
+    QCheckBox *CisDownloads;
+    QCheckBox *CisCommit;
+    QCheckBox *CisLang;
+    QCheckBox *CisStars;
+    QCheckBox *CisForks;
+    QCheckBox *CisRepoSize;
+
 };
 
 #endif // SETTINGSWINDOW_H

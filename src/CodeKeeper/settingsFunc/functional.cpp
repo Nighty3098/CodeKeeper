@@ -83,6 +83,33 @@ void SettingsWindow::saveData()
     isCustomTitlebar = customTitleBar->isChecked();
     globalSettings->setValue("isCustomTitlebar", isCustomTitlebar);
 
+    isCreated = CisCreated->isChecked();
+    globalSettings->setValue("isCreated", isCreated);
+    isReleaseDate = CisReleaseDate->isChecked();
+    globalSettings->setValue("isReleaseDate", isReleaseDate);
+    isLastCommit = CisLastCommit->isChecked();
+    globalSettings->setValue("isLastCommit", isLastCommit);
+    isPullReq = CisPullReq->isChecked();
+    globalSettings->setValue("isPullReq", isPullReq);
+    isLicense = CisLicense->isChecked();
+    globalSettings->setValue("isLicense", isLicense);
+    isRelease = CisRelease->isChecked();
+    globalSettings->setValue("isRelease", isRelease);
+    isIssue = CisIssue->isChecked();
+    globalSettings->setValue("isIssue", isIssue);
+    isDownloads = CisDownloads->isChecked();
+    globalSettings->setValue("isDownloads", isDownloads);
+    isCommit = CisCommit->isChecked();
+    globalSettings->setValue("isCommit", isCommit);
+    isLang = CisLang->isChecked();
+    globalSettings->setValue("isLang", isLang);
+    isStars = CisStars->isChecked();
+    globalSettings->setValue("isStars", isStars);
+    isForks = CisForks->isChecked();
+    globalSettings->setValue("isForks", isForks);
+    isRepoSize = CisRepoSize->isChecked();
+    globalSettings->setValue("isRepoSize", isRepoSize);
+
     messageBox->setIcon(QMessageBox::Information);
     messageBox->setWindowTitle("CodeKeeper - Settings");
     messageBox->setText("To apply the settings, restart the application.");
@@ -211,6 +238,34 @@ void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
 
     repoAvailability->setFont(*selectedFont);
     repoAvailability->setStyleSheet("font-size: " + font_size + "pt;");
+
+    projectsContentLabel->setFont(*selectedFont);
+
+    CisCreated->setFont(*selectedFont);
+    CisReleaseDate->setFont(*selectedFont);
+    CisLastCommit->setFont(*selectedFont);
+    CisPullReq->setFont(*selectedFont);
+    CisLicense->setFont(*selectedFont);
+    CisRelease->setFont(*selectedFont);
+    CisIssue->setFont(*selectedFont);
+    CisDownloads->setFont(*selectedFont);
+    CisCommit->setFont(*selectedFont);
+    CisLang->setFont(*selectedFont);
+    CisStars->setFont(*selectedFont);
+    CisForks->setFont(*selectedFont);
+
+    CisCreated->setStyleSheet("font-size: " + font_size + "pt;");
+    CisReleaseDate->setStyleSheet("font-size: " + font_size + "pt;");
+    CisLastCommit->setStyleSheet("font-size: " + font_size + "pt;");
+    CisPullReq->setStyleSheet("font-size: " + font_size + "pt;");
+    CisLicense->setStyleSheet("font-size: " + font_size + "pt;");
+    CisRelease->setStyleSheet("font-size: " + font_size + "pt;");
+    CisIssue->setStyleSheet("font-size: " + font_size + "pt;");
+    CisDownloads->setStyleSheet("font-size: " + font_size + "pt;");
+    CisCommit->setStyleSheet("font-size: " + font_size + "pt;");
+    CisLang->setStyleSheet("font-size: " + font_size + "pt;");
+    CisStars->setStyleSheet("font-size: " + font_size + "pt;");
+    CisForks->setStyleSheet("font-size: " + font_size + "pt;");
 
     // set Data
     fontSelector->setCurrentFont(*selectedFont);

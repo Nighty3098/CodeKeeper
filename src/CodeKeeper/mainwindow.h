@@ -131,6 +131,20 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    bool isCreated;
+    bool isReleaseDate;
+    bool isLastCommit;
+    bool isPullReq;
+    bool isLicense;
+    bool isRelease;
+    bool isIssue;
+    bool isDownloads;
+    bool isCommit;
+    bool isLang;
+    bool isStars;
+    bool isForks;
+    bool isRepoSize;
+    
 private slots:
     void openSettingsWindow();
     void openSyncWindow();

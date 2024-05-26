@@ -52,6 +52,20 @@ void MainWindow::getSettingsData()
     git_token = globalSettings->value("git_token").value<QString>();
     isAutoSyncB = globalSettings->value("isAutoSync").value<bool>();
 
+    isCreated = globalSettings->value("isCreated").value<bool>();
+    isReleaseDate = globalSettings->value("isReleaseDate").value<bool>();
+    isLastCommit = globalSettings->value("isLastCommit").value<bool>();
+    isPullReq = globalSettings->value("isPullReq").value<bool>();
+    isLicense = globalSettings->value("isLicense").value<bool>();
+    isRelease = globalSettings->value("isRelease").value<bool>();
+    isIssue = globalSettings->value("isIssue").value<bool>();
+    isDownloads = globalSettings->value("isDownloads").value<bool>();
+    isCommit = globalSettings->value("isCommit").value<bool>();
+    isLang = globalSettings->value("isLang").value<bool>();
+    isStars = globalSettings->value("isStars").value<bool>();
+    isForks = globalSettings->value("isForks").value<bool>();
+    isRepoSize = globalSettings->value("isRepoSize").value<bool>();
+
     qDebug() << "🔸 " << dir << selectedFont << font_size << theme << isCustomTitlebar
              << sortNotesRole << isAutoSyncing << isVisibleNotesList << isVisibleFolders
              << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB;
@@ -60,28 +74,28 @@ void MainWindow::getSettingsData()
 void MainWindow::setConnectionStatus()
 {
     if (checkConnection()) {
-        isConnected->setIcon(
-                QPixmap(":/connected.png")
-                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isConnected->setIcon(QPixmap(":/connected.png")
+                                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                             Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip("<p style='color: #dCD7BA;'>Connected</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
-        isConnected->setIcon(
-                QPixmap(":/disconnected.png")
-                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isConnected->setIcon(QPixmap(":/disconnected.png")
+                                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                             Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip("<p style='color: #dCD7BA;'>Disconnected</p>");
     }
 
     if (isAutoSyncing) {
-        isAutoSync->setIcon(
-                QPixmap(":/auto_sync_on.png")
-                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isAutoSync->setIcon(QPixmap(":/auto_sync_on.png")
+                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                            Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip("<p style='color: #dCD7BA;'>Auto sync on</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
-        isAutoSync->setIcon(
-                QPixmap(":/auto_sync_off.png")
-                        .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isAutoSync->setIcon(QPixmap(":/auto_sync_off.png")
+                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                            Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip("<p style='color: #dCD7BA;'>Auto sync off</p>");
     }
 }
