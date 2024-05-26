@@ -8,3 +8,4 @@ src/CodeKeeper/qmake_qmake_immediate.qrc
 *.db
 mykey.asc
 src/CodeKeeper/CodeKeeper.asc
+src/CodeKeeper/build/
