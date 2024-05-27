@@ -46,7 +46,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
-
     this->setStyleSheet(file.readAll());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -241,6 +240,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     projectsContentLabel = new QLabel("Projects content");
     projectsContentLabel->setStyleSheet("font-size: 32px;");
     projectsContentLabel->setAlignment(Qt::AlignCenter);
+    projectsContentLabel->setFixedHeight(150);
 
     CisCreated = new QCheckBox("Created time");
     CisCreated->setChecked(isCreated);
