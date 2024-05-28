@@ -1,7 +1,6 @@
 #ifndef SYNCWINDOW_H
 #define SYNCWINDOW_H
 
-#include "syncFunc/functional.cpp"
 #include <QtWidgets>
 #include <QSettings>
 #include <QGridLayout>
@@ -13,6 +12,8 @@ class SyncWindow : public QMainWindow
     Q_OBJECT;
 
 public:
+    void setFontStyle();
+
     QSettings *globalSettings;
 
     SyncWindow(QWidget *parent = nullptr);
@@ -28,7 +29,6 @@ public:
 
 private slots:
     bool checkConnection();
-    void setFontStyle();
     void startSyncingFunc();
     void cancelSyncingFunc();
 

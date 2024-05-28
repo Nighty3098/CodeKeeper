@@ -128,6 +128,9 @@ void SettingsWindow::saveData()
     mainWindow->loadNotes();
     mainWindow->loadTasks();
     mainWindow->loadProjects();
+
+    SyncWindow *syncWindow = static_cast<SyncWindow *>(parent());
+    // syncWindow->setFontStyle();
 }
 
 void SettingsWindow::fopenFolder()
