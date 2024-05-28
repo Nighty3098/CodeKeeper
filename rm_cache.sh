@@ -36,5 +36,10 @@ rm src/CodeKeeper/settings.json
 rm src/CodeKeeper/settingswindow.o
 rm src/CodeKeeper/syncwindow.o
 rm src/CodeKeeper/ui_qplaintexteditsearchwidget.h
+rm src/CodeKeeper/accountwindow.o
+rm src/CodeKeeper/moc_accountwindow.cpp
+rm src/CodeKeeper/moc_accountwindow.o
+rm src/CodeKeeper/object_script.CodeKeeper.Debug
+rm src/CodeKeeper/object_script.CodeKeeper.Release
 
 echo "Done!"

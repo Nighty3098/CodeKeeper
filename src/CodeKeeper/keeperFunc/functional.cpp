@@ -157,6 +157,10 @@ void MainWindow::createCustomTitlebar()
                                "    background-repeat: no-repeat;"
                                "}");
 
+    openAccountWindow->setStyleSheet(
+            "QPushButton {background-color: transparent; color: #ffffff;} "
+            "QPushButton:hover{text-decoration: none; background-color: transparent; color: #37d442;}");
+
     if (isCustomTitlebar) {
         this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -164,9 +168,33 @@ void MainWindow::createCustomTitlebar()
         winControlL->addWidget(minimizeBtn);
         winControlL->addWidget(maximizeBtn);
         winControlL->addItem(headerSp);
-        winControlL->addWidget(windowTitle);
+        // winControlL->addWidget(windowTitle);
         winControlL->addItem(headerSp2);
+        winControlL->addWidget(openAccountWindow);
     }
+}
+
+void MainWindow::fOpenAccountWindow()
+{
+    QRect geo = this->geometry();
+    int x = geo.x();
+    int y = geo.y();
+    int width = geo.width();
+    int height = geo.height();
+
+    accountWindow = new AccountWindow(this);
+
+    QRect geo2 = accountWindow->geometry();
+
+    int width2 = geo2.width();
+    int height2 = geo2.height();
+
+    int new_x = x + (width - width2) / 2;
+    int new_y = y + (height - height2) / 2;
+
+    accountWindow->show();
+
+    accountWindow->move(new_x, new_y);
 }
 
 void MainWindow::openSettingsWindow()
@@ -476,4 +504,9 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     projectsMenu->setFont(*selectedFont);
     projectsMenu->setStyleSheet("font-size: " + font_size + "pt;");
+
+    openAccountWindow->setFont(*selectedFont);
+    openAccountWindow->setStyleSheet(
+            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size + "pt;} "
+            "QPushButton:hover{text-decoration: none; background-color: transparent; color: #37d442; font-size: " + font_size + "pt;}");
 }

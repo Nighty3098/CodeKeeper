@@ -39,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     minimizeBtn = new QPushButton();
     maximizeBtn = new QPushButton();
 
+    openAccountWindow = new QPushButton();
+    openAccountWindow->setText(git_user);
+
     winControlL = new QHBoxLayout;
     winControlL->setSpacing(7);
 
@@ -708,6 +711,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // ===================================================================================
     // connects
     connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));
+    connect(openAccountWindow, SIGNAL(clicked()), this, SLOT(fOpenAccountWindow()));
 
     connect(notStartedProjects, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
