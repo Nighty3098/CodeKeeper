@@ -4,20 +4,24 @@
 
 <br><br>
     <div align="center">
-    <a href="./LICENSE.md"><img src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=a6e0b8&logoColor=85e185&labelColor=1c1c29" /></a>
-    <img src="https://img.shields.io/github/release/Nighty3098/CodeKeeper?style=for-the-badge&color=7589d5&logoColor=85e185&labelColor=1c1c29"/>
-    <img src="https://img.shields.io/github/issues/Nighty3098/CodeKeeper?style=for-the-badge&color=dbb6ed&logoColor=85e185&labelColor=1c1c29" />
-    <img src="https://img.shields.io/github/issues-pr/Nighty3098/CodeKeeper?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29" />
-    <img src="https://img.shields.io/github/last-commit/Nighty3098/CodeKeeper?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29"/>
-    <img src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29"/>
+    <a href="./LICENSE.md"><img  class="badge" src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=a6e0b8&logoColor=ffffff&labelColor=1c1c29"  style="border-radius: 5px;"/></a><br>
+    <img src="https://img.shields.io/github/release-date/Nighty3098/CodeKeeper?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=171b22" style="border-radius: 5px;" />
+    <img class="badge" src="https://img.shields.io/github/release/Nighty3098/CodeKeeper?style=for-the-badge&color=ea9de7&logoColor=ffffff&labelColor=1c1c29" style="border-radius: 5px;"/>
+    <img class="badge" src="https://img.shields.io/github/downloads/Nighty3098/CodeKeeper/total?style=for-the-badge&color=dbb6ed&logoColor=D9E0EE&labelColor=171b22" style="border-radius: 5px;"/>
+    <br>
+    <img class="badge" src="https://img.shields.io/github/issues-pr/Nighty3098/CodeKeeper?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29" style="border-radius: 5px;" />
+    <img class="badge" src="https://img.shields.io/github/issues/Nighty3098/CodeKeeper?style=for-the-badge&color=dbb6ed&logoColor=ffffff&labelColor=1c1c29"  style="border-radius: 5px;"/>
+    <img src="https://img.shields.io/github/commit-activity/t/Nighty3098/CodeKeeper?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=171b22" style="border-radius: 5px;"/>
+    <img class="badge" src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29" style="border-radius: 5px;"/>
+    <img class="badge" src="https://img.shields.io/github/forks/Nighty3098/CodeKeeper?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=1c1c29"  style="border-radius: 5px;"/>
     <br><br>
-    <img src="https://img.shields.io/badge/c  ++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=black&color=7dc4e4"/>
-    <img src="https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=black&color=a6e0b8"/>
-    <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=black&color=7dc4e4"/>
-    <img src="https://img.shields.io/badge/markdown-%231c1c29.svg?style=for-the-badge&logo=markdown&logoColor=white"/>
-    <img src="https://img.shields.io/badge/github-%231c1c29.svg?style=for-the-badge&logo=github&logoColor=white" />
+    <img src="https://img.shields.io/badge/c  ++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=black&color=7dc4e4" style="border-radius: 5px;"/>
+    <img src="https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=black&color=a6e0b8" style="border-radius: 5px;"/>
+    <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=black&color=7dc4e4" style="border-radius: 5px;"/>
+    <img src="https://img.shields.io/badge/markdown-%231c1c29.svg?style=for-the-badge&logo=markdown&logoColor=white" style="border-radius: 5px;"/>
+    <img src="https://img.shields.io/badge/github-%231c1c29.svg?style=for-the-badge&logo=github&logoColor=white" style="border-radius: 5px;"/>
     <br><br>
-    <a href="https://discord.gg/KK4Xdcqb"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" /></a>
+    <a href="https://discord.gg/KK4Xdcqb"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/></a>
 </div>
 
 <details open>
@@ -153,4 +157,4 @@
 
 </details>
 
-<div align="center"><img src="https://wakatime.com/badge/user/018e8f78-65a7-4aa8-8c67-51796499853b/project/018e8f7e-5c5a-471e-ba73-04384fbc3cda.svg?style=for-the-badge&logo=apachespark&color=000"/></div>
+<div align="center"><img src="https://wakatime.com/badge/user/018e8f78-65a7-4aa8-8c67-51796499853b/project/018e8f7e-5c5a-471e-ba73-04384fbc3cda.svg?&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/></div>
