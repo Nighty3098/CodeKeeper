@@ -1,5 +1,5 @@
 <h1 align="center">CodeKeeper</h1>
-<h3 align="center">Notes and projects manager for developers</h3>
+<h3 align="center">Projects manager for developers</h3>
 <img src="imgs/markdown.png" align="center"/>
 
 <br><br>
