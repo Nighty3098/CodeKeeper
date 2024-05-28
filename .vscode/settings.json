@@ -84,8 +84,9 @@
     "charconv": "cpp",
     "functional": "cpp",
     "type_traits": "cpp",
-    "utility": "cpp"
-  },
+    "utility": "cpp",
+    "fstream": "cpp"
+},
   "sqltools.connections": [
     {
       "previewLimit": 50,
