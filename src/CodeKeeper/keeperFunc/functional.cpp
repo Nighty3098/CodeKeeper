@@ -505,6 +505,8 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     projectsMenu->setFont(*selectedFont);
     projectsMenu->setStyleSheet("font-size: " + font_size + "pt;");
 
+    openAccountWindow->setText(git_user);
+
     openAccountWindow->setFont(*selectedFont);
     openAccountWindow->setStyleSheet(
             "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size
