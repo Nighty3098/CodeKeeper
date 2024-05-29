@@ -13,6 +13,8 @@ public:
     explicit AccountWindow(QWidget *parent = nullptr);
     ~AccountWindow();
 
+    void setFontStyle();
+
     QSettings *globalSettings;
 
     QFont selectedFont;
@@ -36,10 +38,10 @@ private:
     QPushButton *closeWindow;
 
 private slots:
+    void setUserData(const QString& username, QLabel* label);
     void closeWindowSlot();
     void getSettingsData();
-    void setFontStyle();
-    void setGithubAvatar(const QString &username, QLabel *label);
+    void setImageFromUrl(const QString& url, QLabel* label);
 };
 
 #endif // ACCOUNTWINDOW_H

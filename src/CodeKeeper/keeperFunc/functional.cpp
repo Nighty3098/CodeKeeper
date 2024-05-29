@@ -157,9 +157,9 @@ void MainWindow::createCustomTitlebar()
                                "    background-repeat: no-repeat;"
                                "}");
 
-    openAccountWindow->setStyleSheet(
-            "QPushButton {background-color: transparent; color: #ffffff;} "
-            "QPushButton:hover{text-decoration: none; background-color: transparent; color: #37d442;}");
+    openAccountWindow->setStyleSheet("QPushButton {background-color: transparent; color: #ffffff;} "
+                                     "QPushButton:hover{text-decoration: none; background-color: "
+                                     "transparent; color: #37d442;}");
 
     if (isCustomTitlebar) {
         this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
@@ -507,6 +507,9 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     openAccountWindow->setFont(*selectedFont);
     openAccountWindow->setStyleSheet(
-            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size + "pt;} "
-            "QPushButton:hover{text-decoration: none; background-color: transparent; color: #37d442; font-size: " + font_size + "pt;}");
+            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size
+            + "pt;} "
+              "QPushButton:hover{text-decoration: none; background-color: transparent; color: "
+              "#37d442; font-size: "
+            + font_size + "pt;}");
 }
