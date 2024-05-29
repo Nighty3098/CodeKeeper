@@ -13,7 +13,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     setCentralWidget(centralWidget);
 
     mainLayout = new QGridLayout(centralWidget);
-    setFixedSize(400, 600);
+    setFixedSize(400, 640);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -22,19 +22,19 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     profilePicture = new QLabel();
     profilePicture->setStyleSheet("border-radius: 145px;");
 
-    profileName = new QLabel();
-    profileName->setText(git_user);
-    profileName->setAlignment(Qt::AlignHCenter);
+    profileInfo = new QLabel();
+    profileInfo->setText(git_user);
+    profileInfo->setAlignment(Qt::AlignHCenter);
 
-    closeWindow = new QPushButton(QPixmap(":/quit.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), " close");
-    closeWindow->setFixedSize(100, 25);
+    closeWindow = new QPushButton("");
+    closeWindow->setFixedSize(15, 15);
 
     setFontStyle();
     setUserData(git_user, profilePicture);
 
-    mainLayout->addWidget(profilePicture, 0, 0, 3, 3, Qt::AlignCenter);
-    mainLayout->addWidget(profileName, 4, 0, 1, 3, Qt::AlignCenter);
-    mainLayout->addWidget(closeWindow, 5, 0, 1, 3, Qt::AlignCenter);
+    mainLayout->addWidget(closeWindow, 0, 0, 1, 3, Qt::AlignLeft);
+    mainLayout->addWidget(profilePicture, 1, 0, 3, 3, Qt::AlignCenter);
+    mainLayout->addWidget(profileInfo, 5, 0, 1, 3, Qt::AlignCenter);
 
     connect(closeWindow, SIGNAL(clicked()), this, SLOT(closeWindowSlot()));
 }

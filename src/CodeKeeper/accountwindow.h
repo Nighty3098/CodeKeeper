@@ -33,7 +33,7 @@ private:
     QGridLayout *mainLayout;
 
     QLabel *profilePicture;
-    QLabel *profileName;
+    QLabel *profileInfo;
 
     QPushButton *closeWindow;
 

@@ -6,7 +6,8 @@
 #include <QPixmap>
 #include <QLabel>
 
-void AccountWindow::setImageFromUrl(const QString& url, QLabel* label) {
+void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
+{
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QNetworkReply *reply = manager->get(QNetworkRequest(QUrl(url)));
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
@@ -50,11 +51,25 @@ void AccountWindow::setFontStyle()
     profilePicture->setFont(selectedFont);
     profilePicture->setStyleSheet("font-size: " + font_size + "pt;");
 
-    profileName->setFont(selectedFont);
-    profileName->setStyleSheet("font-size: " + font_size + "pt;");
+    profileInfo->setFont(selectedFont);
+    profileInfo->setStyleSheet("font-size: " + font_size + "pt;");
+
+    closeWindow->setStyleSheet("QPushButton {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/red.png');"
+                               "    background-repeat: no-repeat;"
+                               "}"
+                               "QPushButton:hover {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/redHovered.png');"
+                               "    background-repeat: no-repeat;"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "}");
 }
 
-void AccountWindow::setUserData(const QString& username, QLabel* label) {
+void AccountWindow::setUserData(const QString &username, QLabel *label)
+{
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/users/" + git_user);
 
@@ -80,14 +95,20 @@ void AccountWindow::setUserData(const QString& username, QLabel* label) {
         qDebug() << "Html_url:" << obj["html_url"].toString();
         qDebug() << "Created_at:" << obj["created_at"].toString();
         qDebug() << "Updated_at:" << obj["updated_at"].toString();
-        qDebug() << "Following:" << obj["following"].toString();
-        qDebug() << "Followers:" << obj["followers"].toString();
-        qDebug() << "Public_repos:" << obj["public_repos"].toString();
+        qDebug() << "Following:" << obj["following"].toInt();
+        qDebug() << "Followers:" << obj["followers"].toInt();
+        qDebug() << "Public_repos:" << obj["public_repos"].toInt();
         qDebug() << "Bio:" << obj["bio"].toString();
         qDebug() << "Company:" << obj["company"].toString();
         qDebug() << "Login:" << obj["login"].toString();
 
-        profileName->setText(obj["name"].toString() + "\n\n" + obj["company"].toString() + "\n\n" + obj["bio"].toString());
+        qDebug() << doc;
+
+        profileInfo->setText(obj["name"].toString() + "\n\n" + obj["company"].toString() + "\n\n"
+                             + obj["bio"].toString()
+                             + "\nPublic repos: " + QString::number(obj["public_repos"].toInt())
+                             + "\n\nFollowing: " + QString::number(obj["following"].toInt())
+                             + "\n\nFollowers: " + QString::number(obj["followers"].toInt()));
 
         setImageFromUrl(obj["avatar_url"].toString(), profilePicture);
         reply->deleteLater();
