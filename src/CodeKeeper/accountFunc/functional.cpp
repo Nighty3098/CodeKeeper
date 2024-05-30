@@ -22,7 +22,7 @@ void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
 
         label->setPixmap(pixmap.scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         label->setStyleSheet("border-radius: 150px;");
-        
+
         reply->deleteLater();
     });
 }
@@ -121,6 +121,7 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
     });
 }
 
-void AccountWindow::onOpenRepoClicked() {
+void AccountWindow::onOpenRepoClicked()
+{
     QDesktopServices::openUrl(QUrl("https://github.com/" + git_user + "/"));
 }

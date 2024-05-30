@@ -98,43 +98,42 @@ void MainWindow::setConnectionStatus()
         isConnected->setIcon(QPixmap(":/connected.png")
                                      .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                              Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isConnected->setToolTip("<p style='color: #dCD7BA;'>Connected</p>");
+        isConnected->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: "
+                                "5px; background-color: "
+                                "#0D1117'>Connected</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
         isConnected->setIcon(QPixmap(":/disconnected.png")
                                      .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                              Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isConnected->setToolTip("<p style='color: #dCD7BA;'>Disconnected</p>");
+        isConnected->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: "
+                                "5px; background-color: "
+                                "#0D1117;'>Disconnected</p>");
     }
 
     if (isAutoSyncing) {
         isAutoSync->setIcon(QPixmap(":/auto_sync_on.png")
                                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                             Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isAutoSync->setToolTip("<p style='color: #dCD7BA;'>Auto sync on</p>");
+        isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: 5px; "
+                               "background-color: "
+                               "#0D1117;'>Auto sync on</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
         isAutoSync->setIcon(QPixmap(":/auto_sync_off.png")
                                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                             Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isAutoSync->setToolTip("<p style='color: #dCD7BA;'>Auto sync off</p>");
+        isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: 5px; "
+                               "background-color: "
+                               "#0D1117;'>Auto sync off</p>");
     }
 }
 
 void MainWindow::createCustomTitlebar()
 {
-    QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QSpacerItem *headerSp2 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
     closeBtn->setFixedSize(15, 15);
     minimizeBtn->setFixedSize(15, 15);
     maximizeBtn->setFixedSize(15, 15);
-
-    QLabel *windowTitle = new QLabel();
-    windowTitle->setAlignment(Qt::AlignCenter);
-    windowTitle->setText("CodeKeeper");
-    windowTitle->setStyleSheet("font-size: " + font_size + "pt;");
-    windowTitle->setFont(selectedFont);
 
     closeBtn->setStyleSheet("QPushButton {"
                             "    border-color: rgba(0, 0, 0, 0);"
@@ -178,20 +177,12 @@ void MainWindow::createCustomTitlebar()
                                "    background-repeat: no-repeat;"
                                "}");
 
-    openAccountWindow->setStyleSheet("QPushButton {background-color: transparent; color: #ffffff;} "
-                                     "QPushButton:hover{text-decoration: none; background-color: "
-                                     "transparent; color: #37d442;}");
-
     if (isCustomTitlebar) {
         this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
         winControlL->addWidget(closeBtn);
         winControlL->addWidget(minimizeBtn);
         winControlL->addWidget(maximizeBtn);
-        winControlL->addItem(headerSp);
-        // winControlL->addWidget(windowTitle);
-        winControlL->addItem(headerSp2);
-        winControlL->addWidget(openAccountWindow);
     }
 }
 
@@ -321,10 +312,20 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
     openSettingsBtn->setFont(*selectedFont);
-    openSettingsBtn->setStyleSheet("font-size: " + font_size + "pt;");
+    openSettingsBtn->setStyleSheet(
+            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size
+            + "pt;} "
+              "QPushButton:hover{text-decoration: none; background-color: transparent; color: "
+              "#37d442; font-size: "
+            + font_size + "pt;}");
 
     syncDataBtn->setFont(*selectedFont);
-    syncDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
+    syncDataBtn->setStyleSheet(
+            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size
+            + "pt;} "
+              "QPushButton:hover{text-decoration: none; background-color: transparent; color: "
+              "#37d442; font-size: "
+            + font_size + "pt;}");
 
     notesList->setFont(*selectedFont);
     notesList->setStyleSheet("font-size: " + font_size
@@ -525,8 +526,6 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     projectsMenu->setFont(*selectedFont);
     projectsMenu->setStyleSheet("font-size: " + font_size + "pt;");
-
-    openAccountWindow->setText(git_user);
 
     openAccountWindow->setFont(*selectedFont);
     openAccountWindow->setStyleSheet(
