@@ -38,12 +38,14 @@ private:
     QLabel *codeKeeperStats;
 
     QPushButton *closeWindow;
+    QPushButton *openRepo;
 
 private slots:
     void setUserData(const QString& username, QLabel* label);
     void closeWindowSlot();
     void getSettingsData();
     void setImageFromUrl(const QString& url, QLabel* label);
+    void onOpenRepoClicked();
 };
 
 #endif // ACCOUNTWINDOW_H

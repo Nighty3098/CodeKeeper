@@ -39,6 +39,9 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     userName->setAlignment(Qt::AlignHCenter);
     userName->setStyleSheet("font-size: 36pt;");
 
+    openRepo = new QPushButton("Open Git");
+    openRepo->setFixedSize(100, 25);
+
     closeWindow = new QPushButton("");
     closeWindow->setFixedSize(15, 15);
 
@@ -50,8 +53,10 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     mainLayout->addWidget(userName, 5, 0, 1, 3, Qt::AlignCenter);
     mainLayout->addWidget(profileInfo, 6, 0, 1, 3, Qt::AlignCenter);
     mainLayout->addWidget(codeKeeperStats, 7, 0, 1, 3, Qt::AlignCenter);
+    mainLayout->addWidget(openRepo, 8, 0, 1, 3, Qt::AlignCenter);
 
     connect(closeWindow, SIGNAL(clicked()), this, SLOT(closeWindowSlot()));
+    connect(openRepo, SIGNAL(clicked()), this, SLOT(onOpenRepoClicked()));
 }
 
 AccountWindow::~AccountWindow(){};

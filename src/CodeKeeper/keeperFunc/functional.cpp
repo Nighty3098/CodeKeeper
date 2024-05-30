@@ -8,18 +8,20 @@
 #include <QSqlError>
 #include <QThread>
 
-QString MainWindow::getKeeperStats() {
+QString MainWindow::getKeeperStats()
+{
     int incompleteTasksCount = incompleteTasks->count();
     int completeTasksCount = completeTasks->count();
     int inprocessTasksCount = inprocessTasks->count();
 
     int tasks_count = incompleteTasksCount + completeTasksCount + inprocessTasksCount;
 
-    QString tasksStats = "Complete tasks: " + QString::number(completeTasksCount) + "/" + QString::number(tasks_count);
-    QString projectsStats = "Not started projects: " + QString::number(notStartedProjects->count()) + "\n\n"
-    + "Started projects: " + QString::number(startedProjects->count()) + "\n\n"
-    + "Projects on review: " + QString::number(finishlineProjects->count()) + "\n\n"
-    + "Finished projects: " + QString::number(finishedProjects->count());
+    QString tasksStats = "Complete tasks: " + QString::number(completeTasksCount) + "/"
+            + QString::number(tasks_count);
+    QString projectsStats = "Not started projects: " + QString::number(notStartedProjects->count())
+            + "\n\n" + "Started projects: " + QString::number(startedProjects->count()) + "\n\n"
+            + "Projects on review: " + QString::number(finishlineProjects->count()) + "\n\n"
+            + "Finished projects: " + QString::number(finishedProjects->count());
 
     QString stats = tasksStats + "\n\n" + projectsStats;
 

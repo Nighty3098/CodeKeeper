@@ -48,11 +48,13 @@ void AccountWindow::getSettingsData()
 
 void AccountWindow::setFontStyle()
 {
-
     userName->setFont(selectedFont);
 
     profilePicture->setFont(selectedFont);
     profilePicture->setStyleSheet("font-size: " + font_size + "pt;");
+
+    openRepo->setFont(selectedFont);
+    openRepo->setStyleSheet("font-size: " + font_size + "pt;");
 
     codeKeeperStats->setFont(selectedFont);
     codeKeeperStats->setStyleSheet("font-size: " + font_size + "pt;");
@@ -119,4 +121,6 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
     });
 }
 
-
+void AccountWindow::onOpenRepoClicked() {
+    QDesktopServices::openUrl(QUrl("https://github.com/" + git_user + "/"));
+}
