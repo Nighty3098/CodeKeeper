@@ -55,8 +55,8 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
-"C_Cpp_Runner.msvcSecureNoWarnings": false,
-"files.associations": {
+  "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  "files.associations": {
     "chrono": "cpp",
     "optional": "cpp",
     "format": "cpp",
@@ -91,6 +91,9 @@
     "functional": "cpp",
     "utility": "cpp",
     "variant": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "algorithm": "cpp",
+    "hash_map": "cpp",
+    "hash_set": "cpp"
 }
 }

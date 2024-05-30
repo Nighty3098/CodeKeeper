@@ -21,7 +21,8 @@ void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
         pixmap.loadFromData(reply->readAll());
 
         label->setPixmap(pixmap.scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-
+        label->setStyleSheet("border-radius: 150px;");
+        
         reply->deleteLater();
     });
 }
@@ -48,8 +49,13 @@ void AccountWindow::getSettingsData()
 void AccountWindow::setFontStyle()
 {
 
+    userName->setFont(selectedFont);
+
     profilePicture->setFont(selectedFont);
     profilePicture->setStyleSheet("font-size: " + font_size + "pt;");
+
+    codeKeeperStats->setFont(selectedFont);
+    codeKeeperStats->setStyleSheet("font-size: " + font_size + "pt;");
 
     profileInfo->setFont(selectedFont);
     profileInfo->setStyleSheet("font-size: " + font_size + "pt;");
@@ -104,9 +110,7 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
 
         qDebug() << doc;
 
-        profileInfo->setText(obj["name"].toString() + "\n\n" + obj["company"].toString() + "\n\n"
-                             + obj["bio"].toString()
-                             + "\nPublic repos: " + QString::number(obj["public_repos"].toInt())
+        profileInfo->setText("Public repos: " + QString::number(obj["public_repos"].toInt())
                              + "\n\nFollowing: " + QString::number(obj["following"].toInt())
                              + "\n\nFollowers: " + QString::number(obj["followers"].toInt()));
 
@@ -114,3 +118,5 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
         reply->deleteLater();
     });
 }
+
+

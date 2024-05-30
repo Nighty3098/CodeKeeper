@@ -127,6 +127,8 @@ public:
 
     bool createConnection(QString path);
 
+    QString getKeeperStats();
+
     QMarkdownTextEdit *note;
 
     MainWindow(QWidget *parent = nullptr);
