@@ -149,6 +149,8 @@ public:
     bool isRepoSize;
     
 private slots:
+    QString getRepositoryData(QString git_url);
+
     void openSettingsWindow();
     void fOpenAccountWindow();
 
