@@ -120,7 +120,12 @@ QString MainWindow::getRepositoryData(QString git_url) {
     query.addQueryItem("login", git_user);
     url.setQuery(query);
 
-    QNetworkReply *reply = manager->get(QNetworkRequest(url));
+    QNetworkRequest request(url);
+    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    request.setRawHeader("X-GitHub-Api-Version",  "2022-11-28");
+    request.setRawHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0");
+
+    QNetworkReply *reply = manager->get(request);
     QObject::connect(reply, &QNetworkReply::finished, [=,&repoData]() { // Capture repoData by reference
         if (reply->error()) {
             qDebug() << "Error:" << reply->errorString();
