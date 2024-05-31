@@ -1,6 +1,12 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QWebEngineView>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QPixmap>
 
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
 {
@@ -101,6 +107,68 @@ void MainWindow::openDocumentation(QString fileName)
 }
 
 void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName) { }
+
+QString MainWindow::getRepositoryData(QString git_url) {
+    QString prefix = "https://github.com/";
+    QString repo = git_url.replace(prefix, "");
+    QString repoData; // Declare repoData as a non-const QString
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://api.github.com/repos/" + repo);
+
+    QUrlQuery query;
+    query.addQueryItem("login", git_user);
+    url.setQuery(query);
+
+    QNetworkRequest request(url);
+    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    request.setRawHeader("X-GitHub-Api-Version",  "2022-11-28");
+    request.setRawHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0");
+
+    QNetworkReply *reply = manager->get(request);
+    QObject::connect(reply, &QNetworkReply::finished, [=,&repoData]() { // Capture repoData by reference
+        if (reply->error()) {
+            qDebug() << "Error:" << reply->errorString();
+            reply->deleteLater();
+            return;
+        }
+
+        QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+        QJsonObject obj = doc.object();
+
+        repoData = "Name: " + obj["name"].toString();
+        repoData += " \n Created at: " + obj["created_at"].toString();
+        repoData += " \n Open issues: " + QString::number(obj["open_issues"].toInt());
+        repoData += " \n Watchers: " + QString::number(obj["watchers"].toInt());
+        repoData += " \n Forks: " + QString::number(obj["forks"].toInt());
+        repoData += " \n Lang: " + obj["language"].toString();
+        repoData += " \n Stars: " + QString::number(obj["stargazers_count"].toInt());
+
+        // Release info
+        QUrl releasesUrl("https://api.github.com/repos/" + repo + "/releases/latest");
+        QNetworkReply *releasesReply = manager->get(QNetworkRequest(releasesUrl));
+        QObject::connect(releasesReply, &QNetworkReply::finished, [=,&repoData]() { // Capture repoData by reference
+            if (releasesReply->error()) {
+                qDebug() << "Error:" << releasesReply->errorString();
+                releasesReply->deleteLater();
+                return;
+            }
+
+            QJsonDocument releasesDoc = QJsonDocument::fromJson(releasesReply->readAll());
+            QJsonObject releasesObj = releasesDoc.object();
+
+            repoData += " \n Last release: " + releasesObj["name"].toString();
+            repoData += " \n Released at: " + releasesObj["published_at"].toString();
+
+            qDebug() << repoData;
+            releasesReply->deleteLater();
+        });
+
+        reply->deleteLater();
+    });
+
+    return repoData;
+}
 
 void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
 {
@@ -277,6 +345,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(saveDataBtn, 4, 0);
         mainLayout.addWidget(cancelBtn, 4, 1);
 
+        getRepositoryData(projectData[1]);
+
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
             QString projectTitle = title->text();
             QString projectLink = linkToGit->text();
@@ -307,6 +377,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             QString repo = projectLink.replace(prefix, "");
 
             createGitBadges(repo, git_stats);
+            getRepositoryData(repo);
         });
 
         dialog.exec();

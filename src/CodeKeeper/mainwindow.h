@@ -18,6 +18,7 @@
 #include <QThread>
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
+#include "accountwindow.h"
 #include "settingswindow.h"
 #include "syncwindow.h"
 
@@ -126,6 +127,8 @@ public:
 
     bool createConnection(QString path);
 
+    QString getKeeperStats();
+
     QMarkdownTextEdit *note;
 
     MainWindow(QWidget *parent = nullptr);
@@ -146,7 +149,11 @@ public:
     bool isRepoSize;
     
 private slots:
+    QString getRepositoryData(QString git_url);
+
     void openSettingsWindow();
+    void fOpenAccountWindow();
+
     void openSyncWindow();
     void openFolder();
     void openDocumentation(QString fileName);
@@ -279,6 +286,7 @@ private:
     // main tab
     QPushButton *syncDataBtn;
     QPushButton *openSettingsBtn;
+    QPushButton *openAccountWindow;
 
     // ========================================================
     // notes tab
@@ -366,6 +374,7 @@ private:
     QMenu *tasksMenu;
     QMenu *projectsMenu;
 
+    AccountWindow *accountWindow;
     SettingsWindow *settingsWindow;
     SyncWindow *syncWindow;
 };

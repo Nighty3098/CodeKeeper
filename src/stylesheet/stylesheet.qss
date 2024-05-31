@@ -518,3 +518,10 @@ QScrollBar::sub-line:horizontal {
 QScrollBar::add-page, QScrollBar::sub-page {
     background: #0D1117;
 }
+
+QToolTip {
+    color: #ffffff;
+    border: 10px #171b22;
+    border-radius: 5px;
+    background-color: #171b22;
+}

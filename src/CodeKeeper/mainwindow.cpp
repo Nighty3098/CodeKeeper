@@ -39,6 +39,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     minimizeBtn = new QPushButton();
     maximizeBtn = new QPushButton();
 
+    openAccountWindow =
+            new QPushButton(QPixmap(":/user.png")
+                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                            Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                            "");
+    openAccountWindow->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                                  "#0D1117;'>Account</p>");
+    openAccountWindow->setFixedSize(15, 15);
+
     winControlL = new QHBoxLayout;
     winControlL->setSpacing(7);
 
@@ -86,15 +95,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             new QPushButton(QPixmap(":/settings.png")
                                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                             Qt::KeepAspectRatio, Qt::SmoothTransformation),
-                            " Settings");
-    openSettingsBtn->setFixedSize(100, 25);
+                            "");
+    openSettingsBtn->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                                "#0D1117;'>Settings</p>");
+    openSettingsBtn->setFixedSize(15, 15);
 
     // sync btn
     syncDataBtn = new QPushButton(QPixmap(":/retry.png")
                                           .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                                   Qt::KeepAspectRatio, Qt::SmoothTransformation),
-                                  " Sync data");
-    syncDataBtn->setFixedSize(100, 25);
+                                  "");
+    syncDataBtn->setToolTip(
+            "<p style='color: #ffffff; border-radius: 5px; background-color: #0D1117;'>Sync</p>");
+    syncDataBtn->setFixedSize(15, 15);
 
     // ========================================================
     QHBoxLayout *menuLayout = new QHBoxLayout;
@@ -373,20 +386,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setTableB->setFixedSize(20, 20);
     setQuoteB->setFixedSize(20, 20);
 
-    setH1B->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Set heading 1</p>");
-    setH2B->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Set heading 2</p>");
-    setH3B->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Set heading 3</p>");
-    setListB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>List</p>");
-    setLinkB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Link</p>");
-    setBoldB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Bold text</p>");
-    setItalicB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Italic text</p>");
-    setStrikeB->setToolTip(
-            "<p style='color: #ffffff; background-color: #0D1117;'>Strikethrough text</p>");
-    setTaskB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Task</p>");
-    setNumListB->setToolTip(
-            "<p style='color: #ffffff; background-color: #0D1117;'>Numbered list</p>");
-    setTableB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Insert table</p>");
-    setQuoteB->setToolTip("<p style='color: #ffffff; background-color: #0D1117;'>Set quote</p>");
+    setH1B->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                       "#0D1117;'>Set heading 1</p>");
+    setH2B->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                       "#0D1117;'>Set heading 2</p>");
+    setH3B->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                       "#0D1117;'>Set heading 3</p>");
+    setListB->setToolTip(
+            "<p style='color: #ffffff; border-radius: 5px; background-color: #0D1117;'>List</p>");
+    setLinkB->setToolTip(
+            "<p style='color: #ffffff; border-radius: 5px; background-color: #0D1117;'>Link</p>");
+    setBoldB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                         "#0D1117;'>Bold text</p>");
+    setItalicB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                           "#0D1117;'>Italic text</p>");
+    setStrikeB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                           "#0D1117;'>Strikethrough text</p>");
+    setTaskB->setToolTip(
+            "<p style='color: #ffffff; border-radius: 5px; background-color: #0D1117;'>Task</p>");
+    setNumListB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                            "#0D1117;'>Numbered list</p>");
+    setTableB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                          "#0D1117;'>Insert table</p>");
+    setQuoteB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                          "#0D1117;'>Set quote</p>");
 
     menuLayout->addWidget(menuButton);
     menuLayout->addWidget(setH1B);
@@ -626,13 +649,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     infoLayout->setAlignment(Qt::AlignCenter);
     infoLayout->addWidget(appIcon);
 
-    QVBoxLayout *buttonsLayout = new QVBoxLayout();
-    buttonsLayout->setAlignment(Qt::AlignHCenter);
-    buttonsLayout->addWidget(openSettingsBtn);
-    buttonsLayout->addWidget(syncDataBtn);
-
     firstLayout->addLayout(infoLayout);
-    firstLayout->addLayout(buttonsLayout);
 
     tabs->addTab(mainTab, "Homepage");
 
@@ -696,18 +713,27 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     isAutoSync->setStyleSheet("border: 0px; background-color: transparent;");
     isAutoSync->setFixedSize(15, 15);
 
+    QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QSpacerItem *headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    winControlL->addWidget(openAccountWindow);
+    winControlL->addWidget(openSettingsBtn);
+    winControlL->addWidget(syncDataBtn);
+
+    winControlL->addItem(headerSp);
+
     winControlL->addWidget(isConnected);
     winControlL->addWidget(isAutoSync);
     winControlL->addWidget(sizeGrip2);
-
-    QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QSpacerItem *headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     mainLayout->addWidget(tabs, 1, 0);
 
     // ===================================================================================
     // connects
     connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));
+    connect(openAccountWindow, SIGNAL(clicked()), this, SLOT(fOpenAccountWindow()));
+    connect(syncDataBtn, SIGNAL(clicked()), this, SLOT(openSyncWindow()));
 
     connect(notStartedProjects, &QListWidget::itemClicked, this,
             &MainWindow::on_listWidget_itemClicked);
@@ -861,8 +887,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                                        "}");
         }
     });
-
-    connect(syncDataBtn, SIGNAL(clicked()), this, SLOT(openSyncWindow()));
 
     QShortcut *openSettingsWindowQS =
             new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S), this);

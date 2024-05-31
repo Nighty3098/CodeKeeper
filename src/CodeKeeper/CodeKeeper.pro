@@ -11,6 +11,7 @@ win32: LIBS +=  -L$$OUT_PWD/release -L$$OUT_PWD/debug
 LIBS += -lmd4c-html
 
 SOURCES += \
+    accountwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     settingswindow.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
     sql_db/tasksDB.cpp \
 
 HEADERS += \
+    accountwindow.h \
     mainwindow.h \
     settingswindow.h \
     syncwindow.h

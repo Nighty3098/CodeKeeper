@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>user.png</file>
         <file>copy.png</file>
         <file>delete.png</file>
         <file>icon.png</file>

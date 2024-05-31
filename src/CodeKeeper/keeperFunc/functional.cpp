@@ -8,6 +8,27 @@
 #include <QSqlError>
 #include <QThread>
 
+QString MainWindow::getKeeperStats()
+{
+    int incompleteTasksCount = incompleteTasks->count();
+    int completeTasksCount = completeTasks->count();
+    int inprocessTasksCount = inprocessTasks->count();
+
+    int tasks_count = incompleteTasksCount + completeTasksCount + inprocessTasksCount;
+
+    QString tasksStats = "Complete tasks: " + QString::number(completeTasksCount) + "/"
+            + QString::number(tasks_count);
+    QString projectsStats = "Not started projects: " + QString::number(notStartedProjects->count())
+            + "\n\n" + "Started projects: " + QString::number(startedProjects->count()) + "\n\n"
+            + "Projects on review: " + QString::number(finishlineProjects->count()) + "\n\n"
+            + "Finished projects: " + QString::number(finishedProjects->count());
+
+    QString stats = tasksStats + "\n\n" + projectsStats;
+
+    qDebug() << stats;
+    return stats;
+}
+
 bool MainWindow::createConnection(QString path)
 {
     qDebug() << "🔸DB path: " << (path) + QStringLiteral("/data.db");
@@ -77,43 +98,42 @@ void MainWindow::setConnectionStatus()
         isConnected->setIcon(QPixmap(":/connected.png")
                                      .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                              Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isConnected->setToolTip("<p style='color: #dCD7BA;'>Connected</p>");
+        isConnected->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: "
+                                "5px; background-color: "
+                                "#0D1117'>Connected</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
         isConnected->setIcon(QPixmap(":/disconnected.png")
                                      .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                              Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isConnected->setToolTip("<p style='color: #dCD7BA;'>Disconnected</p>");
+        isConnected->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: "
+                                "5px; background-color: "
+                                "#0D1117;'>Disconnected</p>");
     }
 
     if (isAutoSyncing) {
         isAutoSync->setIcon(QPixmap(":/auto_sync_on.png")
                                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                             Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isAutoSync->setToolTip("<p style='color: #dCD7BA;'>Auto sync on</p>");
+        isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: 5px; "
+                               "background-color: "
+                               "#0D1117;'>Auto sync on</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
         isAutoSync->setIcon(QPixmap(":/auto_sync_off.png")
                                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                             Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isAutoSync->setToolTip("<p style='color: #dCD7BA;'>Auto sync off</p>");
+        isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: 5px; "
+                               "background-color: "
+                               "#0D1117;'>Auto sync off</p>");
     }
 }
 
 void MainWindow::createCustomTitlebar()
 {
-    QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QSpacerItem *headerSp2 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
     closeBtn->setFixedSize(15, 15);
     minimizeBtn->setFixedSize(15, 15);
     maximizeBtn->setFixedSize(15, 15);
-
-    QLabel *windowTitle = new QLabel();
-    windowTitle->setAlignment(Qt::AlignCenter);
-    windowTitle->setText("CodeKeeper");
-    windowTitle->setStyleSheet("font-size: " + font_size + "pt;");
-    windowTitle->setFont(selectedFont);
 
     closeBtn->setStyleSheet("QPushButton {"
                             "    border-color: rgba(0, 0, 0, 0);"
@@ -163,10 +183,30 @@ void MainWindow::createCustomTitlebar()
         winControlL->addWidget(closeBtn);
         winControlL->addWidget(minimizeBtn);
         winControlL->addWidget(maximizeBtn);
-        winControlL->addItem(headerSp);
-        winControlL->addWidget(windowTitle);
-        winControlL->addItem(headerSp2);
     }
+}
+
+void MainWindow::fOpenAccountWindow()
+{
+    QRect geo = this->geometry();
+    int x = geo.x();
+    int y = geo.y();
+    int width = geo.width();
+    int height = geo.height();
+
+    accountWindow = new AccountWindow(this);
+
+    QRect geo2 = accountWindow->geometry();
+
+    int width2 = geo2.width();
+    int height2 = geo2.height();
+
+    int new_x = x + (width - width2) / 2;
+    int new_y = y + (height - height2) / 2;
+
+    accountWindow->show();
+
+    accountWindow->move(new_x, new_y);
 }
 
 void MainWindow::openSettingsWindow()
@@ -272,10 +312,20 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
     openSettingsBtn->setFont(*selectedFont);
-    openSettingsBtn->setStyleSheet("font-size: " + font_size + "pt;");
+    openSettingsBtn->setStyleSheet(
+            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size
+            + "pt;} "
+              "QPushButton:hover{text-decoration: none; background-color: transparent; color: "
+              "#37d442; font-size: "
+            + font_size + "pt;}");
 
     syncDataBtn->setFont(*selectedFont);
-    syncDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
+    syncDataBtn->setStyleSheet(
+            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size
+            + "pt;} "
+              "QPushButton:hover{text-decoration: none; background-color: transparent; color: "
+              "#37d442; font-size: "
+            + font_size + "pt;}");
 
     notesList->setFont(*selectedFont);
     notesList->setStyleSheet("font-size: " + font_size
@@ -476,4 +526,12 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     projectsMenu->setFont(*selectedFont);
     projectsMenu->setStyleSheet("font-size: " + font_size + "pt;");
+
+    openAccountWindow->setFont(*selectedFont);
+    openAccountWindow->setStyleSheet(
+            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size
+            + "pt;} "
+              "QPushButton:hover{text-decoration: none; background-color: transparent; color: "
+              "#37d442; font-size: "
+            + font_size + "pt;}");
 }
