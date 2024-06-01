@@ -86,9 +86,10 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
     url.setQuery(query);
 
     QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
     request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
-    request.setRawHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0");
+    request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
     QNetworkReply *reply = manager->get(request);
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
