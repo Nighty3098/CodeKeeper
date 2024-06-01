@@ -113,6 +113,7 @@ QString MainWindow::getRepositoryData(QString git_url)
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
     QString repoData; // Declare repoData as a non-const QString
+    QString releaseData;
 
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/repos/" + repo);
@@ -146,14 +147,19 @@ QString MainWindow::getRepositoryData(QString git_url)
                 repoData += " \n Forks: " + QString::number(obj["forks"].toInt());
                 repoData += " \n Lang: " + obj["language"].toString();
                 repoData += " \n Stars: " + QString::number(obj["stargazers_count"].toInt());
+                
+                qDebug() << repoData;
 
                 // Release info
                 QUrl releasesUrl("https://api.github.com/repos/" + repo + "/releases/latest");
                 QNetworkReply *releasesReply = manager->get(QNetworkRequest(releasesUrl));
                 QObject::connect(releasesReply, &QNetworkReply::finished,
-                                 [=, &repoData]() { // Capture repoData by reference
+                                 [=, &releaseData]() { // Capture repoData by reference
                                      if (releasesReply->error()) {
                                          qDebug() << "Error:" << releasesReply->errorString();
+                                         
+                                         releaseData = ""
+
                                          releasesReply->deleteLater();
                                          return;
                                      }
@@ -162,12 +168,10 @@ QString MainWindow::getRepositoryData(QString git_url)
                                              QJsonDocument::fromJson(releasesReply->readAll());
                                      QJsonObject releasesObj = releasesDoc.object();
 
-                                     repoData +=
-                                             " \n Last release: " + releasesObj["name"].toString();
-                                     repoData += " \n Released at: "
-                                             + releasesObj["published_at"].toString();
+                                     qDebug() << " \n Last release: " + releasesObj["name"].toString();
+                                     qDebug() << " \n Released at: " + releasesObj["published_at"].toString();
 
-                                     qDebug() << repoData;
+                                     // qDebug() << releaseData;
                                      releasesReply->deleteLater();
                                  });
 
