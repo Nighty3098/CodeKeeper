@@ -492,7 +492,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             QString projectLink = linkToGit->text();
             QString repo = projectLink.replace(prefix, "");
 
-            createGitBadges(projectData[1], git_stats);
+            createGitBadges(repo, git_stats);
             getRepositoryData(repo);
         });
 
