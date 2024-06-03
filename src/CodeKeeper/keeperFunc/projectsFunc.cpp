@@ -221,7 +221,7 @@ QString MainWindow::getRepositoryData(QString git_url)
     QDateTime lastCommitDate = QDateTime::fromString(dateStr, Qt::ISODate);
 
     if (isLastCommit) {
-        repoData += " \n Last commit: " + lastCommitDate.toString("yyyy-MM-dd hh:mm") + " ";
+        repoData += " \n Last commit: " + lastCommitDate.toString() + " ";
     }
 
     QUrl releaseUrl("https://api.github.com/repos/" + repo + "/releases");
@@ -270,7 +270,7 @@ QString MainWindow::getRepositoryData(QString git_url)
     }
 
     if (isReleaseDate) {
-        repoData += " \n Released at: " + releasesObj["published_at"].toString("yyyy-MM-dd hh:mm")
+        repoData += " \n Released at: " + releasesObj["published_at"].toString()
                 + " ";
     }
 
@@ -407,10 +407,14 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         lastMod->setAlignment(Qt::AlignCenter);
         lastMod->setFont(selectedFont);
 
-        QLabel *git_stats = new QLabel(getRepositoryData(projectData[1]));
+        /*QLabel *git_stats = new QLabel(getRepositoryData(projectData[1]));
         git_stats->setAlignment(Qt::AlignCenter);
         git_stats->setStyleSheet("QLabel {border-radius: 10px; border: "
-                                 "0px; color: #ffffff; font-size: 13px;}");
+                                 "0px; color: #ffffff; font-size: 13px;}");*/
+
+        QWebEngineView *git_stats = new QWebEngineView();
+        git_stats->page()->setBackgroundColor(Qt::transparent);
+        createGitBadges(projectData[1], git_stats);
 
         QPushButton *saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
@@ -488,6 +492,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             QString projectLink = linkToGit->text();
             QString repo = projectLink.replace(prefix, "");
 
+            createGitBadges(projectData[1], git_stats);
             getRepositoryData(repo);
         });
 
