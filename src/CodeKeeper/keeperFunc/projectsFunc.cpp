@@ -115,9 +115,6 @@ QString MainWindow::getRepositoryData(QString git_url)
     QString repoData; // Declare repoData as a non-const QString
 
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    
-    
-    
 
     QUrl url("https://api.github.com/repos/" + repo);
 
@@ -140,31 +137,62 @@ QString MainWindow::getRepositoryData(QString git_url)
     if (reply->error()) {
         qWarning() << "Error:" << reply->errorString();
         reply->deleteLater();
-        return QString();
     }
 
     QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
     QJsonObject obj = doc.object();
 
     repoData = "Name: " + obj["name"].toString();
-    repoData += " \n Created at: " + obj["created_at"].toString() + " ";
-    repoData += " \n Open issues: " + QString::number(obj["open_issues"].toInt()) + " ";
-    repoData += " \n Watchers: " + QString::number(obj["watchers"].toInt()) + " ";
-    repoData += " \n Forks: " + QString::number(obj["forks"].toInt()) + " ";
-    repoData += " \n Lang: " + obj["language"].toString() + " ";
-    repoData += " \n Stars: " + QString::number(obj["stargazers_count"].toInt()) + " ";
+
+    if (isCreated) {
+        repoData += " \n Created at: " + obj["created_at"].toString() + " ";
+    }
+    if (isIssue) {
+        repoData += " \n Open issues: " + QString::number(obj["open_issues"].toInt()) + " ";
+    }
+    // repoData += " \n Watchers: " + QString::number(obj["watchers"].toInt()) + " ";
+    if (isForks) {
+        repoData += " \n Forks: " + QString::number(obj["forks"].toInt()) + " ";
+    }
+    if (isLang) {
+        repoData += " \n Lang: " + obj["language"].toString() + " ";
+    }
+    if (isStars) {
+        repoData += " \n Stars: " + QString::number(obj["stargazers_count"].toInt()) + " ";
+    }
+    if (isRepoSize) {
+        qint64 size = obj["size"].toDouble();
+
+        QString sizeString;
+        if (size >= 1024 * 1024 * 1024) { // GB
+            sizeString = QString::number(qRound(size / (1024 * 1024 * 1024.0) * 10) / 10.0) + " PB";
+        } else if (size >= 1024 * 1024) { // MB
+            sizeString = QString::number(qRound(size / (1024 * 1024.0) * 10) / 10.0) + " GB";
+        } else if (size >= 1024) { // KB
+            sizeString = QString::number(qRound(size / 1024.0 * 10) / 10.0) + " MB";
+        } else { // B
+            sizeString = QString::number(size) + " B";
+        }
+
+        repoData += " \n Repo size: " + sizeString + " ";
+    }
 
     if (obj.contains("license")) {
         QJsonObject licenseObj = obj["license"].toObject();
         if (licenseObj.contains("name")) {
-            repoData += "\n License: " + licenseObj["name"].toString() + " ";
+            if (isLicense) {
+                repoData += "\n License: " + licenseObj["name"].toString() + " ";
+            }
         } else {
-            repoData += QString("\n License not found") + " ";
+            if (isLicense) {
+                repoData += QString(" \n License not found") + " ";
+            }
         }
     } else {
-        repoData += QString("\n License not found") + " ";
+        if (isLicense) {
+            repoData += QString(" \n License not found") + " ";
+        }
     }
-
 
     QUrl commitUrl("https://api.github.com/repos/" + repo + "/commits");
     QNetworkReply *commitReply = manager->get(QNetworkRequest(commitUrl));
@@ -175,7 +203,6 @@ QString MainWindow::getRepositoryData(QString git_url)
     if (commitReply->error()) {
         qWarning() << "Error:" << commitReply->errorString();
         commitReply->deleteLater();
-        return repoData;
     }
 
     QJsonDocument commitDoc = QJsonDocument::fromJson(commitReply->readAll());
@@ -183,7 +210,9 @@ QString MainWindow::getRepositoryData(QString git_url)
     QJsonArray commits = commitDoc.array();
 
     if (commits.isEmpty()) {
-        repoData += QString(" \n Last commit: not found ");
+        if (isLastCommit) {
+            repoData += QString(" \n Last commit: not found ");
+        }
     }
 
     QJsonObject lastCommit = commits.first().toObject();
@@ -191,9 +220,34 @@ QString MainWindow::getRepositoryData(QString git_url)
 
     QDateTime lastCommitDate = QDateTime::fromString(dateStr, Qt::ISODate);
 
-    repoData += "\n Last commit: " + lastCommitDate.toString("yyyy-MM-dd hh:mm:ss") + " ";
+    if (isLastCommit) {
+        repoData += " \n Last commit: " + lastCommitDate.toString() + " ";
+    }
 
+    QUrl releaseUrl("https://api.github.com/repos/" + repo + "/releases");
+    QNetworkReply *releaseReply = manager->get(QNetworkRequest(releaseUrl));
+    QObject::connect(releaseReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
+    loop.exec();
+
+    if (releaseReply->error()) {
+        qWarning() << "Error:" << releaseReply->errorString();
+        releaseReply->deleteLater();
+    }
+
+    QJsonDocument releaseDoc = QJsonDocument::fromJson(releaseReply->readAll());
+    QJsonArray releases = releaseDoc.array();
+
+    int totalDownloads = 0;
+    for (const QJsonValue &release : releases) {
+        QJsonObject releaseObj = release.toObject();
+        int downloads = releaseObj["assets"].toArray().at(0).toObject()["download_count"].toInt();
+        totalDownloads += downloads;
+    }
+
+    if (isDownloads) {
+        repoData += "\n Total downloads: " + QString::number(totalDownloads) + " ";
+    }
 
     // Release info
     QUrl releasesUrl("https://api.github.com/repos/" + repo + "/releases/latest");
@@ -205,15 +259,20 @@ QString MainWindow::getRepositoryData(QString git_url)
     if (releasesReply->error()) {
         qWarning() << "Error:" << releasesReply->errorString();
         releasesReply->deleteLater();
-        return repoData;
     }
 
     QJsonDocument releasesDoc = QJsonDocument::fromJson(releasesReply->readAll());
     QJsonObject releasesObj = releasesDoc.object();
 
-    repoData += QString(" \n Release:") + " ";
-    repoData += " \n " + releasesObj["name"].toString() + " ";
-    repoData += " \n Released at: " + releasesObj["published_at"].toString() + " ";
+    if (isRelease) {
+        repoData += QString(" \n Release: ") + " ";
+        repoData += "" + releasesObj["name"].toString() + " ";
+    }
+
+    if (isReleaseDate) {
+        repoData += " \n Released at: " + releasesObj["published_at"].toString()
+                + " ";
+    }
 
     releasesReply->deleteLater();
     reply->deleteLater();
@@ -348,6 +407,11 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         lastMod->setAlignment(Qt::AlignCenter);
         lastMod->setFont(selectedFont);
 
+        /*QLabel *git_stats = new QLabel(getRepositoryData(projectData[1]));
+        git_stats->setAlignment(Qt::AlignCenter);
+        git_stats->setStyleSheet("QLabel {border-radius: 10px; border: "
+                                 "0px; color: #ffffff; font-size: 13px;}");*/
+
         QWebEngineView *git_stats = new QWebEngineView();
         git_stats->page()->setBackgroundColor(Qt::transparent);
         createGitBadges(projectData[1], git_stats);
@@ -428,7 +492,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             QString projectLink = linkToGit->text();
             QString repo = projectLink.replace(prefix, "");
 
-            createGitBadges(repo, git_stats);
+            createGitBadges(projectData[1], git_stats);
             getRepositoryData(repo);
         });
 
