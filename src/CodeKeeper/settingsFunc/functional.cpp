@@ -73,9 +73,6 @@ void SettingsWindow::checkUpdates() {
         QString fileName = fileInfo.fileName();
 
         qDebug() << "File path: " << dir;
-
-        GitApiDownloader downloader;
-        downloader.downloadAndReplaceFile(git_user, "CodeKeeper", "CodeKeeper");
      });
 
     dialog.exec();
