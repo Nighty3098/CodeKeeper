@@ -86,18 +86,22 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStart
                                   QListWidget *finishlineProjects)
 {
     QThread *totalProjectsThread = new QThread;
-    QObject::connect(totalProjectsThread, &QThread::started, this, [this, projectsTab, notStartedProjects, startedProjects, finishedProjects, finishlineProjects]() {
-        if (projectsTab->currentIndex() == 3) {
-            QTimer *timer3 = new QTimer(this);
-            connect(timer3, &QTimer::timeout, [=]() {
-                int totalProjects = notStartedProjects->count() + finishlineProjects->count()
-                        + startedProjects->count() + finishedProjects->count();
+    QObject::connect(totalProjectsThread, &QThread::started, this,
+                     [this, projectsTab, notStartedProjects, startedProjects, finishedProjects,
+                      finishlineProjects]() {
+                         if (projectsTab->currentIndex() == 3) {
+                             QTimer *timer3 = new QTimer(this);
+                             connect(timer3, &QTimer::timeout, [=]() {
+                                 int totalProjects = notStartedProjects->count()
+                                         + finishlineProjects->count() + startedProjects->count()
+                                         + finishedProjects->count();
 
-                totalProjectsL->setText("Total projects: " + QString::number(totalProjects) + " ");
-            });
-            timer3->start(500);
-        }
-    });
+                                 totalProjectsL->setText(
+                                         "Total projects: " + QString::number(totalProjects) + " ");
+                             });
+                             timer3->start(500);
+                         }
+                     });
     totalProjectsThread->start();
 }
 
@@ -131,7 +135,6 @@ QString MainWindow::getRepositoryData(QString git_url)
     request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
-
 
     QNetworkReply *reply = manager->get(request);
     QEventLoop loop; // Create a QEventLoop
@@ -275,8 +278,7 @@ QString MainWindow::getRepositoryData(QString git_url)
     }
 
     if (isReleaseDate) {
-        repoData += " \n Released at: " + releasesObj["published_at"].toString()
-                + " ";
+        repoData += " \n Released at: " + releasesObj["published_at"].toString() + " ";
     }
 
     releasesReply->deleteLater();
@@ -467,9 +469,9 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(cancelBtn, 4, 1);
 
         QThread *thread = new QThread;
-        QObject::connect(thread, &QThread::started, this, [this, projectData]() { getRepositoryData(projectData[1]); });
+        QObject::connect(thread, &QThread::started, this,
+                         [this, projectData]() { getRepositoryData(projectData[1]); });
         thread->start();
-
 
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
             QString projectTitle = title->text();
@@ -503,7 +505,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             createGitBadges(repo, git_stats);
 
             QThread *thread = new QThread;
-            QObject::connect(thread, &QThread::started, this, [this, projectData, repo]() { getRepositoryData(repo); });
+            QObject::connect(thread, &QThread::started, this,
+                             [this, projectData, repo]() { getRepositoryData(repo); });
             thread->start();
         });
 
