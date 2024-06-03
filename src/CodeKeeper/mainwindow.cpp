@@ -892,17 +892,32 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S), this);
     connect(openSettingsWindowQS, &QShortcut::activated, this, [this]() { openSettingsWindow(); });
 
-    createConnection(dir);
 
-    create_tasks_connection();
-    create_projects_connection();
 
-    loadNotes();
-    loadTasks();
-    loadProjects();
+    QThread *dbThread = new QThread;
+    QObject::connect(dbThread, &QThread::started, this, [this]() {
+        createConnection(dir);
 
-    int font_size_int = font_size.toInt();
-    setFontPr1(&selectedFont, &font_size_int);
+        create_tasks_connection();
+        create_projects_connection();
+
+        loadNotes();
+        loadTasks();
+        loadProjects();
+
+        qDebug() << "🟢 dbThread started";
+    });
+    dbThread->start();
+
+
+    QThread *styleThread = new QThread;
+    QObject::connect(styleThread, &QThread::started, this, [this]() {
+        int font_size_int = font_size.toInt();
+        setFontPr1(&selectedFont, &font_size_int);
+        
+        qDebug() << "🟢 styleThread started";
+    });
+    styleThread->start();
 
     qDebug() << "🔸 " << dir;
     qDebug() << "🔸 Load time:" << startup.elapsed() << "ms";

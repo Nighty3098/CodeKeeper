@@ -45,8 +45,26 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     closeWindow = new QPushButton("");
     closeWindow->setFixedSize(15, 15);
 
-    setFontStyle();
-    setUserData(git_user, profilePicture);
+
+
+    QThread *styleThread = new QThread;
+    QObject::connect(styleThread, &QThread::started, this, [this]() {
+        setFontStyle();
+        
+        qDebug() << "🟢 styleThread started";
+    });
+    styleThread->start();
+
+
+    QThread *setUserDataThread = new QThread;
+    QObject::connect(setUserDataThread, &QThread::started, this, [this]() {
+        setUserData(git_user, profilePicture);
+        
+        qDebug() << "🟢 setUserDataThread started";
+    });
+    setUserDataThread->start();
+
+    
 
     mainLayout->addWidget(closeWindow, 0, 0, 1, 3, Qt::AlignLeft);
     mainLayout->addWidget(profilePicture, 1, 0, 3, 3, Qt::AlignCenter);
