@@ -97,7 +97,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     versionInfo = new QLabel();
-    versionInfo->setText("Version: 0.1.5");
+    versionInfo->setText("");
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn =
@@ -373,6 +373,14 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
         qDebug() << "🟢 styleThread started";
     });
     styleThread->start();
+
+    QThread *versionThread = new QThread;
+    QObject::connect(versionThread, &QThread::started, this, [this]() {
+        getAppVersion();
+        
+        qDebug() << "🟢 versionThread started";
+    });
+    versionThread->start();
 }
 
 SettingsWindow::~SettingsWindow() { }

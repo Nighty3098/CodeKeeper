@@ -50,6 +50,7 @@ private slots:
 
     void setFontPr2(QFont *selectedFont, int *font_size_int);
     void checkRepo();
+    void getAppVersion();
 
 private:
     QWidget *centralWidget;

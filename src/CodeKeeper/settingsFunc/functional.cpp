@@ -158,6 +158,36 @@ void SettingsWindow::fopenFolder()
     }
 }
 
+void SettingsWindow::getAppVersion() {
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases/latest");
+
+    QUrlQuery query;
+    query.addQueryItem("login", git_user);
+    url.setQuery(query);
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QNetworkReply *reply = manager->get(request);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+
+    loop.exec();
+
+    QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+    QJsonObject obj = doc.object();
+
+    QString version = obj["name"].toString();
+
+    reply->deleteLater();
+    
+    versionInfo->setText(version);
+}
+
 void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
 {
     qDebug() << "🟢 Applying preferences";
