@@ -15,7 +15,71 @@ void SettingsWindow::closeEvent(QCloseEvent *event)
     saveData();
 }
 
-void SettingsWindow::checkUpdates() { }
+void SettingsWindow::checkUpdates() {
+    QFile file(":/stylesheet/stylesheet.qss");
+    file.open(QFile::ReadOnly);
+
+    QDialog dialog(this);
+    dialog.setFixedSize(400, 300);
+    dialog.setWindowTitle(tr("Edit project"));
+    dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    dialog.setStyleSheet(file.readAll());
+
+    QString newAppVersion = getNewAppVersion();
+    QString currentAppVersion = versionInfo->text();
+
+    QGridLayout *layout = new QGridLayout(&dialog);
+
+    QPushButton *closeWindow = new QPushButton("");
+    closeWindow->setFixedSize(15, 15);
+
+    closeWindow->setStyleSheet("QPushButton {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/red.png');"
+                               "    background-repeat: no-repeat;"
+                               "}"
+                               "QPushButton:hover {"
+                               "    border-color: rgba(0, 0, 0, 0);"
+                               "    background-image: url(':/redHovered.png');"
+                               "    background-repeat: no-repeat;"
+                               "    background-color: rgba(0, 0, 0, 0);"
+                               "}");
+
+
+    QLabel *verInfoLabel = new QLabel();
+    verInfoLabel->setStyleSheet("font-size: " + font_size + "pt;");
+    verInfoLabel->setFont(selectedFont);
+
+    QPushButton *downloadUpdate = new QPushButton(QPixmap(":/download.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), " Update");
+    downloadUpdate->setFixedSize(100, 25);
+
+    if(newAppVersion == currentAppVersion) {
+        verInfoLabel->setText("You are running the latest version of the app");
+    }
+    else {
+        verInfoLabel->setText("A new version of the application is available.");
+        layout->addWidget(downloadUpdate, 3, 0, 1, 2, Qt::AlignCenter);
+
+    }
+
+    layout->addWidget(closeWindow, 0, 0, 1, 2, Qt::AlignLeft);
+    layout->addWidget(verInfoLabel, 1, 0, 2, 2, Qt::AlignCenter);
+
+    connect(closeWindow, &QPushButton::clicked,[&]() { dialog.close(); });
+    connect(downloadUpdate, &QPushButton::clicked,[&]() { 
+        QFileInfo fileInfo(QCoreApplication::applicationFilePath());
+        QString dir = fileInfo.absoluteDir().path();
+        QString fileName = fileInfo.fileName();
+
+        qDebug() << "File path: " << dir;
+
+        GitApiDownloader downloader;
+        downloader.downloadAndReplaceFile(git_user, "CodeKeeper", "CodeKeeper");
+     });
+
+    dialog.exec();
+}
 
 void SettingsWindow::checkRepo()
 {
@@ -158,7 +222,7 @@ void SettingsWindow::fopenFolder()
     }
 }
 
-void SettingsWindow::getAppVersion()
+QString SettingsWindow::getNewAppVersion()
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases/latest");
@@ -182,11 +246,11 @@ void SettingsWindow::getAppVersion()
     QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
     QJsonObject obj = doc.object();
 
-    QString version = obj["name"].toString();
+    QString version = obj["tag_name"].toString();
 
     reply->deleteLater();
-
-    versionInfo->setText(version);
+    
+    return version;
 }
 
 void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)

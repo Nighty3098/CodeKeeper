@@ -97,7 +97,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     versionInfo = new QLabel();
-    versionInfo->setText("");
+    versionInfo->setText("0.1.6");
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn =
@@ -111,6 +111,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     subAppInfoL->addWidget(appName);
     subAppInfoL->addWidget(urlToRepo);
     subAppInfoL->addWidget(versionInfo);
+    subAppInfoL->addLayout(checkUpdatesBtnL);
 
     appInfoL->addLayout(subAppInfoL);
 
@@ -348,7 +349,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     // connects
     connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveData()));
     connect(quitBtn, SIGNAL(clicked()), this, SLOT(QuitW()));
-    connect(checkUpdatesBtnL, SIGNAL(clicked()), this, SLOT(checkUpdates()));
+    connect(checkUpdatesBtn, SIGNAL(clicked()), this, SLOT(checkUpdates()));
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
 
     QTimer *repoTimer = new QTimer(this);
@@ -371,14 +372,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
         qDebug() << "🟢 styleThread started";
     });
     styleThread->start();
-
-    QThread *versionThread = new QThread;
-    QObject::connect(versionThread, &QThread::started, this, [this]() {
-        getAppVersion();
-
-        qDebug() << "🟢 versionThread started";
-    });
-    versionThread->start();
 }
 
 SettingsWindow::~SettingsWindow() { }
