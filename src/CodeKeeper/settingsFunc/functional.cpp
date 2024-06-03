@@ -158,7 +158,8 @@ void SettingsWindow::fopenFolder()
     }
 }
 
-void SettingsWindow::getAppVersion() {
+void SettingsWindow::getAppVersion()
+{
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases/latest");
 
@@ -184,7 +185,7 @@ void SettingsWindow::getAppVersion() {
     QString version = obj["name"].toString();
 
     reply->deleteLater();
-    
+
     versionInfo->setText(version);
 }
 

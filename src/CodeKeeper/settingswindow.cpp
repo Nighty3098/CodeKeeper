@@ -358,18 +358,16 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     QObject::connect(repoTimerThread, &QThread::started, this, [this, repoTimer]() {
         connect(repoTimer, &QTimer::timeout, [=]() { checkRepo(); });
         repoTimer->start(100);
-        
+
         qDebug() << "🟢 repoTimerThread started";
     });
     repoTimerThread->start();
-
-
 
     QThread *styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {
         int font_size_int = font_size.toInt();
         setFontPr2(&selectedFont, &font_size_int);
-        
+
         qDebug() << "🟢 styleThread started";
     });
     styleThread->start();
@@ -377,7 +375,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     QThread *versionThread = new QThread;
     QObject::connect(versionThread, &QThread::started, this, [this]() {
         getAppVersion();
-        
+
         qDebug() << "🟢 versionThread started";
     });
     versionThread->start();

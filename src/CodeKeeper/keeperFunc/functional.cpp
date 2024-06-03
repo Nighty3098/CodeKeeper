@@ -210,7 +210,7 @@ void MainWindow::fOpenAccountWindow()
         accountWindow->show();
 
         accountWindow->move(new_x, new_y);
-        
+
         qDebug() << "🟢 accountWindowThread started";
     });
     accountWindowThread->start();
@@ -240,7 +240,7 @@ void MainWindow::openSettingsWindow()
         settingsWindow->show();
 
         settingsWindow->move(new_x, new_y);
-        
+
         qDebug() << "🟢 settingsWindowThread started";
     });
     settingsWindowThread->start();
