@@ -188,48 +188,62 @@ void MainWindow::createCustomTitlebar()
 
 void MainWindow::fOpenAccountWindow()
 {
-    QRect geo = this->geometry();
-    int x = geo.x();
-    int y = geo.y();
-    int width = geo.width();
-    int height = geo.height();
 
-    accountWindow = new AccountWindow(this);
+    QThread *accountWindowThread = new QThread;
+    QObject::connect(accountWindowThread, &QThread::started, this, [this]() {
+        QRect geo = this->geometry();
+        int x = geo.x();
+        int y = geo.y();
+        int width = geo.width();
+        int height = geo.height();
 
-    QRect geo2 = accountWindow->geometry();
+        accountWindow = new AccountWindow(this);
 
-    int width2 = geo2.width();
-    int height2 = geo2.height();
+        QRect geo2 = accountWindow->geometry();
 
-    int new_x = x + (width - width2) / 2;
-    int new_y = y + (height - height2) / 2;
+        int width2 = geo2.width();
+        int height2 = geo2.height();
 
-    accountWindow->show();
+        int new_x = x + (width - width2) / 2;
+        int new_y = y + (height - height2) / 2;
 
-    accountWindow->move(new_x, new_y);
+        accountWindow->show();
+
+        accountWindow->move(new_x, new_y);
+        
+        qDebug() << "🟢 accountWindowThread started";
+    });
+    accountWindowThread->start();
 }
 
 void MainWindow::openSettingsWindow()
 {
-    QRect geo = this->geometry();
-    int x = geo.x();
-    int y = geo.y();
-    int width = geo.width();
-    int height = geo.height();
 
-    settingsWindow = new SettingsWindow(this);
+    QThread *settingsWindowThread = new QThread;
+    QObject::connect(settingsWindowThread, &QThread::started, this, [this]() {
+        QRect geo = this->geometry();
+        int x = geo.x();
+        int y = geo.y();
+        int width = geo.width();
+        int height = geo.height();
 
-    QRect geo2 = settingsWindow->geometry();
+        settingsWindow = new SettingsWindow(this);
 
-    int width2 = geo2.width();
-    int height2 = geo2.height();
+        QRect geo2 = settingsWindow->geometry();
 
-    int new_x = x + (width - width2) / 2;
-    int new_y = y + (height - height2) / 2;
+        int width2 = geo2.width();
+        int height2 = geo2.height();
 
-    settingsWindow->show();
+        int new_x = x + (width - width2) / 2;
+        int new_y = y + (height - height2) / 2;
 
-    settingsWindow->move(new_x, new_y);
+        settingsWindow->show();
+
+        settingsWindow->move(new_x, new_y);
+        
+        qDebug() << "🟢 settingsWindowThread started";
+    });
+    settingsWindowThread->start();
 }
 
 void MainWindow::setSettingsData() { }
@@ -257,24 +271,31 @@ bool MainWindow::checkConnection()
 
 void MainWindow::openSyncWindow()
 {
-    QRect geo = this->geometry();
-    int x = geo.x();
-    int y = geo.y();
-    int width = geo.width();
-    int height = geo.height();
 
-    syncWindow = new SyncWindow(this);
+    QThread *syncWindowThread = new QThread;
+    QObject::connect(syncWindowThread, &QThread::started, this, [this]() {
+        QRect geo = this->geometry();
+        int x = geo.x();
+        int y = geo.y();
+        int width = geo.width();
+        int height = geo.height();
 
-    QRect geo2 = syncWindow->geometry();
+        syncWindow = new SyncWindow(this);
 
-    int width2 = geo2.width();
-    int height2 = geo2.height();
+        QRect geo2 = syncWindow->geometry();
 
-    int new_x = x + (width - width2) / 2;
-    int new_y = y + (height - height2) / 2;
+        int width2 = geo2.width();
+        int height2 = geo2.height();
 
-    syncWindow->show();
-    syncWindow->move(new_x, new_y);
+        int new_x = x + (width - width2) / 2;
+        int new_y = y + (height - height2) / 2;
+
+        syncWindow->show();
+        syncWindow->move(new_x, new_y);
+
+        qDebug() << "🟢 syncWindowThread started";
+    });
+    syncWindowThread->start();
 }
 
 void MainWindow::openFolder()
