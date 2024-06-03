@@ -409,7 +409,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QLabel *git_stats = new QLabel(getRepositoryData(projectData[1]));
         git_stats->setAlignment(Qt::AlignCenter);
-        git_stats->setStyleSheet("QLabel {background-color: #031626; border-radius: 10px; border: "
+        git_stats->setStyleSheet("QLabel {border-radius: 10px; border: "
                                  "0px; color: #ffffff; font-size: 13px;}");
 
         QPushButton *saveDataBtn = new QPushButton();
