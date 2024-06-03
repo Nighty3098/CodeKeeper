@@ -113,9 +113,12 @@ QString MainWindow::getRepositoryData(QString git_url)
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
     QString repoData; // Declare repoData as a non-const QString
-    QString releaseData;
 
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    
+    
+    
+
     QUrl url("https://api.github.com/repos/" + repo);
 
     QUrlQuery query;
@@ -129,54 +132,91 @@ QString MainWindow::getRepositoryData(QString git_url)
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
     QNetworkReply *reply = manager->get(request);
-    QObject::connect(
-            reply, &QNetworkReply::finished, [=, &repoData]() { // Capture repoData by reference
-                if (reply->error()) {
-                    qDebug() << "Error:" << reply->errorString();
-                    reply->deleteLater();
-                    return;
-                }
+    QEventLoop loop; // Create a QEventLoop
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
-                QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-                QJsonObject obj = doc.object();
+    loop.exec(); // Block until the lambda function has finished
 
-                repoData = "Name: " + obj["name"].toString();
-                repoData += " \n Created at: " + obj["created_at"].toString();
-                repoData += " \n Open issues: " + QString::number(obj["open_issues"].toInt());
-                repoData += " \n Watchers: " + QString::number(obj["watchers"].toInt());
-                repoData += " \n Forks: " + QString::number(obj["forks"].toInt());
-                repoData += " \n Lang: " + obj["language"].toString();
-                repoData += " \n Stars: " + QString::number(obj["stargazers_count"].toInt());
-                
-                qDebug() << repoData;
+    if (reply->error()) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        return QString();
+    }
 
-                // Release info
-                QUrl releasesUrl("https://api.github.com/repos/" + repo + "/releases/latest");
-                QNetworkReply *releasesReply = manager->get(QNetworkRequest(releasesUrl));
-                QObject::connect(releasesReply, &QNetworkReply::finished,
-                                 [=, &releaseData]() { // Capture repoData by reference
-                                     if (releasesReply->error()) {
-                                         qDebug() << "Error:" << releasesReply->errorString();
-                                         
-                                         releaseData = ""
+    QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+    QJsonObject obj = doc.object();
 
-                                         releasesReply->deleteLater();
-                                         return;
-                                     }
+    repoData = "Name: " + obj["name"].toString();
+    repoData += " \n Created at: " + obj["created_at"].toString() + " ";
+    repoData += " \n Open issues: " + QString::number(obj["open_issues"].toInt()) + " ";
+    repoData += " \n Watchers: " + QString::number(obj["watchers"].toInt()) + " ";
+    repoData += " \n Forks: " + QString::number(obj["forks"].toInt()) + " ";
+    repoData += " \n Lang: " + obj["language"].toString() + " ";
+    repoData += " \n Stars: " + QString::number(obj["stargazers_count"].toInt()) + " ";
 
-                                     QJsonDocument releasesDoc =
-                                             QJsonDocument::fromJson(releasesReply->readAll());
-                                     QJsonObject releasesObj = releasesDoc.object();
+    if (obj.contains("license")) {
+        QJsonObject licenseObj = obj["license"].toObject();
+        if (licenseObj.contains("name")) {
+            repoData += "\n License: " + licenseObj["name"].toString() + " ";
+        } else {
+            repoData += QString("\n License not found") + " ";
+        }
+    } else {
+        repoData += QString("\n License not found") + " ";
+    }
 
-                                     qDebug() << " \n Last release: " + releasesObj["name"].toString();
-                                     qDebug() << " \n Released at: " + releasesObj["published_at"].toString();
 
-                                     // qDebug() << releaseData;
-                                     releasesReply->deleteLater();
-                                 });
+    QUrl commitUrl("https://api.github.com/repos/" + repo + "/commits");
+    QNetworkReply *commitReply = manager->get(QNetworkRequest(commitUrl));
+    QObject::connect(commitReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
-                reply->deleteLater();
-            });
+    loop.exec();
+
+    if (commitReply->error()) {
+        qWarning() << "Error:" << commitReply->errorString();
+        commitReply->deleteLater();
+        return repoData;
+    }
+
+    QJsonDocument commitDoc = QJsonDocument::fromJson(commitReply->readAll());
+    QJsonObject commitObj = commitDoc.object();
+    QJsonArray commits = commitDoc.array();
+
+    if (commits.isEmpty()) {
+        repoData += QString(" \n Last commit: not found ");
+    }
+
+    QJsonObject lastCommit = commits.first().toObject();
+    QString dateStr = lastCommit["commit"].toObject()["author"].toObject()["date"].toString();
+
+    QDateTime lastCommitDate = QDateTime::fromString(dateStr, Qt::ISODate);
+
+    repoData += "\n Last commit: " + lastCommitDate.toString("yyyy-MM-dd hh:mm:ss") + " ";
+
+
+
+    // Release info
+    QUrl releasesUrl("https://api.github.com/repos/" + repo + "/releases/latest");
+    QNetworkReply *releasesReply = manager->get(QNetworkRequest(releasesUrl));
+    QObject::connect(releasesReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+
+    loop.exec(); // Block until the lambda function has finished
+
+    if (releasesReply->error()) {
+        qWarning() << "Error:" << releasesReply->errorString();
+        releasesReply->deleteLater();
+        return repoData;
+    }
+
+    QJsonDocument releasesDoc = QJsonDocument::fromJson(releasesReply->readAll());
+    QJsonObject releasesObj = releasesDoc.object();
+
+    repoData += QString(" \n Release:") + " ";
+    repoData += " \n " + releasesObj["name"].toString() + " ";
+    repoData += " \n Released at: " + releasesObj["published_at"].toString() + " ";
+
+    releasesReply->deleteLater();
+    reply->deleteLater();
 
     return repoData;
 }
@@ -356,7 +396,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(saveDataBtn, 4, 0);
         mainLayout.addWidget(cancelBtn, 4, 1);
 
-        getRepositoryData(projectData[1]);
+        QString sgit_stats = getRepositoryData(projectData[1]);
+        qDebug() << "🟠 " << sgit_stats;
 
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
             QString projectTitle = title->text();
