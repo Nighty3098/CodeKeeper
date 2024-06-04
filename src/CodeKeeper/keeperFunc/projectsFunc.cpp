@@ -116,8 +116,9 @@ void MainWindow::openDocumentation(QString fileName)
 
 void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName) { }
 
-QString formatFileSize(qint64 bytes) {
-    static const char* suffixes[] = {"KB", "MB", "GB", "TB", "PB", "..."};
+QString formatFileSize(qint64 bytes)
+{
+    static const char *suffixes[] = { "KB", "MB", "GB", "TB", "PB", "..." };
     int index = 0;
     double size = bytes;
 
