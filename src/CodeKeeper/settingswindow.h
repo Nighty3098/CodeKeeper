@@ -117,7 +117,6 @@ private:
     QCheckBox *CisStars;
     QCheckBox *CisForks;
     QCheckBox *CisRepoSize;
-
 };
 
 #endif // SETTINGSWINDOW_H

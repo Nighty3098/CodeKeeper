@@ -147,7 +147,7 @@ public:
     bool isStars;
     bool isForks;
     bool isRepoSize;
-    
+
 private slots:
     QString getRepositoryData(QString git_url);
 
@@ -232,8 +232,8 @@ private slots:
     void updateProjectStatus(QString *status, QString *createdTime, QString *oldTime);
     void removeProjectFromDB(QString *git_url, QString *status, QString *createdTime);
     void saveProjectToDB(QString *title, QString *git_url, QString *status, QString *createdTime);
-    void updateProjectData(QString *title, QString *git_url, QString *doc, 
-                           QString *createdTime, QString *oldTime, QString *oldGit);
+    void updateProjectData(QString *title, QString *git_url, QString *doc, QString *createdTime,
+                           QString *oldTime, QString *oldGit);
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
