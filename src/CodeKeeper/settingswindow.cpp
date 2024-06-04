@@ -257,7 +257,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     CisRelease->setChecked(isRelease);
     CisIssue = new QCheckBox("Issues");
     CisIssue->setChecked(isIssue);
-    CisDownloads = new QCheckBox("downloads");
+    CisDownloads = new QCheckBox("Downloads");
     CisDownloads->setChecked(isDownloads);
     CisCommit = new QCheckBox("Commits");
     CisCommit->setChecked(isCommit);
