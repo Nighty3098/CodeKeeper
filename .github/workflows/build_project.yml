@@ -7,4 +7,4 @@ jobs:
 
     steps:
       - name: building
-        run: bash build.sh
+        run: cd CodeKeeper && bash build.sh
