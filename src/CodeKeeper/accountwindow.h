@@ -21,7 +21,7 @@ public:
     QString font_size;
     QString theme;
     QString path;
-    
+
     QString git_repo;
     QString git_user;
     QString git_token;
@@ -41,10 +41,10 @@ private:
     QPushButton *openRepo;
 
 private slots:
-    void setUserData(const QString& username, QLabel* label);
+    void setUserData(const QString &username, QLabel *label);
     void closeWindowSlot();
     void getSettingsData();
-    void setImageFromUrl(const QString& url, QLabel* label);
+    void setImageFromUrl(const QString &url, QLabel *label);
     void onOpenRepoClicked();
 };
 

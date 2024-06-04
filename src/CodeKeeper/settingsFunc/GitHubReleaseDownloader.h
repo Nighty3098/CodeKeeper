@@ -9,13 +9,15 @@
 #include <QEventLoop>
 #include <QTimer>
 
-void downloadFileFromLatestRelease(const QString &owner, const QString &repo, const QString &fileName, QLabel *label, QString git_user, QString git_token) {
+void downloadFileFromLatestRelease(const QString &owner, const QString &repo,
+                                   const QString &fileName, QLabel *label, QString git_user,
+                                   QString git_token)
+{
     QString savePath = QCoreApplication::applicationDirPath() + "/CodeKeeper";
     QString browserDownloadUrl;
 
     QString oldFilePath = QCoreApplication::applicationDirPath() + "/CodeKeeper";
     QString newFilePath = QCoreApplication::applicationDirPath() + "/CodeKeeper.old";
-
 
     if (QFile::exists(oldFilePath)) {
         if (QFile::rename(oldFilePath, newFilePath)) {
@@ -26,9 +28,9 @@ void downloadFileFromLatestRelease(const QString &owner, const QString &repo, co
     } else {
         qDebug() << "The file doesn't exist";
     }
-    
+
     qDebug() << savePath;
-    
+
     QNetworkAccessManager manager;
     QNetworkRequest request;
     request.setUrl(QUrl("https://api.github.com/repos/Nighty3098/CodeKeeper/releases/latest"));
@@ -37,7 +39,7 @@ void downloadFileFromLatestRelease(const QString &owner, const QString &repo, co
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply* reply = manager.get(request);
+    QNetworkReply *reply = manager.get(request);
 
     QEventLoop loop;
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
@@ -53,7 +55,7 @@ void downloadFileFromLatestRelease(const QString &owner, const QString &repo, co
     QJsonObject jsonObject = json.object();
 
     QJsonArray assets = jsonObject["assets"].toArray();
-    foreach (const QJsonValue& asset, assets) {
+    foreach (const QJsonValue &asset, assets) {
         QJsonObject assetObject = asset.toObject();
         browserDownloadUrl = assetObject["browser_download_url"].toString();
         // Use the browser_download_url here
@@ -66,12 +68,12 @@ void downloadFileFromLatestRelease(const QString &owner, const QString &repo, co
     QNetworkRequest downloadRequest;
     downloadRequest.setUrl(QUrl(browserDownloadUrl));
 
-    QNetworkReply* downloadReply = manager.get(downloadRequest);
+    QNetworkReply *downloadReply = manager.get(downloadRequest);
 
     QObject::connect(downloadReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
-    if (downloadReply->error()!= QNetworkReply::NoError) {
+    if (downloadReply->error() != QNetworkReply::NoError) {
         label->setText("File download error:" + downloadReply->errorString());
         qDebug() << "File download error:" << downloadReply->errorString();
         delete downloadReply;
