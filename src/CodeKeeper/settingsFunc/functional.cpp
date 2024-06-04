@@ -15,7 +15,8 @@ void SettingsWindow::closeEvent(QCloseEvent *event)
     saveData();
 }
 
-void SettingsWindow::checkUpdates() {
+void SettingsWindow::checkUpdates()
+{
     QFile file(":/stylesheet/stylesheet.qss");
     file.open(QFile::ReadOnly);
 
@@ -46,34 +47,35 @@ void SettingsWindow::checkUpdates() {
                                "    background-color: rgba(0, 0, 0, 0);"
                                "}");
 
-
     QLabel *verInfoLabel = new QLabel();
     verInfoLabel->setStyleSheet("font-size: " + font_size + "pt;");
     verInfoLabel->setFont(selectedFont);
 
-    QPushButton *downloadUpdate = new QPushButton(QPixmap(":/download.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), " Update");
+    QPushButton *downloadUpdate =
+            new QPushButton(QPixmap(":/download.png")
+                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                            Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                            " Update");
     downloadUpdate->setFixedSize(100, 25);
 
-    if(newAppVersion == currentAppVersion) {
+    if (newAppVersion == currentAppVersion) {
         verInfoLabel->setText("You are running the latest version of the app");
-    }
-    else {
+    } else {
         verInfoLabel->setText("A new version of the application is available.");
         layout->addWidget(downloadUpdate, 3, 0, 1, 2, Qt::AlignCenter);
-
     }
 
     layout->addWidget(closeWindow, 0, 0, 1, 2, Qt::AlignLeft);
     layout->addWidget(verInfoLabel, 1, 0, 2, 2, Qt::AlignCenter);
 
-    connect(closeWindow, &QPushButton::clicked,[&]() { dialog.close(); });
-    connect(downloadUpdate, &QPushButton::clicked,[&]() { 
+    connect(closeWindow, &QPushButton::clicked, [&]() { dialog.close(); });
+    connect(downloadUpdate, &QPushButton::clicked, [&]() {
         QFileInfo fileInfo(QCoreApplication::applicationFilePath());
         QString dir = fileInfo.absoluteDir().path();
         QString fileName = fileInfo.fileName();
 
         qDebug() << "File path: " << dir;
-     });
+    });
 
     dialog.exec();
 }
@@ -246,7 +248,7 @@ QString SettingsWindow::getNewAppVersion()
     QString version = obj["tag_name"].toString();
 
     reply->deleteLater();
-    
+
     return version;
 }
 
