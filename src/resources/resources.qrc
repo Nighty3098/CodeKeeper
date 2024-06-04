@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
     	<file>download.png</file>
+        <file>sync.png</file>
         <file>user.png</file>
         <file>copy.png</file>
         <file>delete.png</file>

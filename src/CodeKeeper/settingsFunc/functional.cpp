@@ -49,7 +49,8 @@ void SettingsWindow::checkUpdates()
                                "}");
 
     QLabel *iconLabel = new QLabel();
-    iconLabel->setPixmap(QPixmap(":/refresh.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    iconLabel->setPixmap(QPixmap(":/refresh.png")
+                                 .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     QLabel *updateInfoLabel = new QLabel();
     updateInfoLabel->setStyleSheet("font-size: " + font_size + "pt;");
@@ -73,7 +74,8 @@ void SettingsWindow::checkUpdates()
         verInfoLabel->setText("Current version: " + currentAppVersion);
     } else {
         updateInfoLabel->setText("A new version of the application is available.");
-        verInfoLabel->setText("Current version: " + currentAppVersion + "\nNew version: " + newAppVersion);
+        verInfoLabel->setText("Current version: " + currentAppVersion
+                              + "\nNew version: " + newAppVersion);
         layout->addWidget(downloadUpdate, 6, 0, 1, 2, Qt::AlignCenter);
     }
 
@@ -90,7 +92,8 @@ void SettingsWindow::checkUpdates()
 
         qDebug() << "File path: " << dir;
 
-        downloadFileFromLatestRelease("Nighty3098", "CodeKeeper", "CodeKeeper", updateInfoLabel, git_user, git_token);
+        downloadFileFromLatestRelease("Nighty3098", "CodeKeeper", "CodeKeeper", updateInfoLabel,
+                                      git_user, git_token);
 
         verInfoLabel->hide();
         downloadUpdate->hide();

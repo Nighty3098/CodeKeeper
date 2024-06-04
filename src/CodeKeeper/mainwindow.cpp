@@ -101,7 +101,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     openSettingsBtn->setFixedSize(15, 15);
 
     // sync btn
-    syncDataBtn = new QPushButton(QPixmap(":/retry.png")
+    syncDataBtn = new QPushButton(QPixmap(":/sync.png")
                                           .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
                                                   Qt::KeepAspectRatio, Qt::SmoothTransformation),
                                   "");
