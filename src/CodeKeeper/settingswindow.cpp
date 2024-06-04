@@ -329,7 +329,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     QIcon projectsIco;
 
     aboutIco.addFile(":/about.png");
-    syncIco.addFile(":/refresh.png");
+    syncIco.addFile(":/sync.png");
     storageIco.addFile(":/storage.png");
     paletteIco.addFile(":/palette.png");
     projectsIco.addFile(":/project.png");
