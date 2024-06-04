@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "settingsFunc/GitHubReleaseDownloader.h"
 #include <QNetworkAccessManager>
 #include <QNetworkConfigurationManager>
 
@@ -15,12 +16,13 @@ void SettingsWindow::closeEvent(QCloseEvent *event)
     saveData();
 }
 
-void SettingsWindow::checkUpdates() {
+void SettingsWindow::checkUpdates()
+{
     QFile file(":/stylesheet/stylesheet.qss");
     file.open(QFile::ReadOnly);
 
     QDialog dialog(this);
-    dialog.setFixedSize(400, 300);
+    dialog.setFixedSize(400, 400);
     dialog.setWindowTitle(tr("Edit project"));
     dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     dialog.setStyleSheet(file.readAll());
@@ -46,34 +48,53 @@ void SettingsWindow::checkUpdates() {
                                "    background-color: rgba(0, 0, 0, 0);"
                                "}");
 
+    QLabel *iconLabel = new QLabel();
+    iconLabel->setPixmap(QPixmap(":/refresh.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+    QLabel *updateInfoLabel = new QLabel();
+    updateInfoLabel->setStyleSheet("font-size: " + font_size + "pt;");
+    updateInfoLabel->setFont(selectedFont);
+    updateInfoLabel->setAlignment(Qt::AlignCenter);
 
     QLabel *verInfoLabel = new QLabel();
     verInfoLabel->setStyleSheet("font-size: " + font_size + "pt;");
     verInfoLabel->setFont(selectedFont);
+    verInfoLabel->setAlignment(Qt::AlignCenter);
 
-    QPushButton *downloadUpdate = new QPushButton(QPixmap(":/download.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), " Update");
+    QPushButton *downloadUpdate =
+            new QPushButton(QPixmap(":/download.png")
+                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                            Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                            " Update");
     downloadUpdate->setFixedSize(100, 25);
 
-    if(newAppVersion == currentAppVersion) {
-        verInfoLabel->setText("You are running the latest version of the app");
-    }
-    else {
-        verInfoLabel->setText("A new version of the application is available.");
-        layout->addWidget(downloadUpdate, 3, 0, 1, 2, Qt::AlignCenter);
-
+    if (newAppVersion == currentAppVersion) {
+        updateInfoLabel->setText("You are running the latest version of the app.");
+        verInfoLabel->setText("Current version: " + currentAppVersion);
+    } else {
+        updateInfoLabel->setText("A new version of the application is available.");
+        verInfoLabel->setText("Current version: " + currentAppVersion + "\nNew version: " + newAppVersion);
+        layout->addWidget(downloadUpdate, 6, 0, 1, 2, Qt::AlignCenter);
     }
 
     layout->addWidget(closeWindow, 0, 0, 1, 2, Qt::AlignLeft);
-    layout->addWidget(verInfoLabel, 1, 0, 2, 2, Qt::AlignCenter);
+    layout->addWidget(iconLabel, 1, 0, 3, 2, Qt::AlignCenter);
+    layout->addWidget(updateInfoLabel, 4, 0, 1, 2, Qt::AlignCenter);
+    layout->addWidget(verInfoLabel, 5, 0, 1, 2, Qt::AlignCenter);
 
-    connect(closeWindow, &QPushButton::clicked,[&]() { dialog.close(); });
-    connect(downloadUpdate, &QPushButton::clicked,[&]() { 
+    connect(closeWindow, &QPushButton::clicked, [&]() { dialog.close(); });
+    connect(downloadUpdate, &QPushButton::clicked, [&]() {
         QFileInfo fileInfo(QCoreApplication::applicationFilePath());
         QString dir = fileInfo.absoluteDir().path();
         QString fileName = fileInfo.fileName();
 
         qDebug() << "File path: " << dir;
-     });
+
+        downloadFileFromLatestRelease("Nighty3098", "CodeKeeper", "CodeKeeper", updateInfoLabel, git_user, git_token);
+
+        verInfoLabel->hide();
+        downloadUpdate->hide();
+    });
 
     dialog.exec();
 }
@@ -246,7 +267,7 @@ QString SettingsWindow::getNewAppVersion()
     QString version = obj["tag_name"].toString();
 
     reply->deleteLater();
-    
+
     return version;
 }
 

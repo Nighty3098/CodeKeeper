@@ -116,6 +116,20 @@ void MainWindow::openDocumentation(QString fileName)
 
 void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName) { }
 
+QString formatFileSize(qint64 bytes)
+{
+    static const char *suffixes[] = { "KB", "MB", "GB", "TB", "PB", "..." };
+    int index = 0;
+    double size = bytes;
+
+    while (size >= 1024 && index < 5) {
+        size /= 1024;
+        index++;
+    }
+
+    return QString::number(size, 'f', 2) + " " + suffixes[index];
+}
+
 QString MainWindow::getRepositoryData(QString git_url)
 {
     QString prefix = "https://github.com/";
@@ -153,7 +167,9 @@ QString MainWindow::getRepositoryData(QString git_url)
     repoData = "Name: " + obj["name"].toString();
 
     if (isCreated) {
-        repoData += " \n Created at: " + obj["created_at"].toString() + " ";
+        QString createdAt = obj["created_at"].toString();
+        QDateTime createdDate = QDateTime::fromString(createdAt, Qt::ISODate);
+        repoData += " \n Created at: " + createdDate.toString("dd MMM yyyy hh:mm") + " ";
     }
     if (isIssue) {
         repoData += " \n Open issues: " + QString::number(obj["open_issues"].toInt()) + " ";
@@ -171,18 +187,7 @@ QString MainWindow::getRepositoryData(QString git_url)
     if (isRepoSize) {
         qint64 size = obj["size"].toDouble();
 
-        QString sizeString;
-        if (size >= 1024 * 1024 * 1024) { // GB
-            sizeString = QString::number(qRound(size / (1024 * 1024 * 1024.0) * 10) / 10.0) + " PB";
-        } else if (size >= 1024 * 1024) { // MB
-            sizeString = QString::number(qRound(size / (1024 * 1024.0) * 10) / 10.0) + " GB";
-        } else if (size >= 1024) { // KB
-            sizeString = QString::number(qRound(size / 1024.0 * 10) / 10.0) + " MB";
-        } else { // B
-            sizeString = QString::number(size) + " B";
-        }
-
-        repoData += " \n Repo size: " + sizeString + " ";
+        repoData += " \n Repo size: " + formatFileSize(size) + " ";
     }
 
     if (obj.contains("license")) {
@@ -229,7 +234,7 @@ QString MainWindow::getRepositoryData(QString git_url)
     QDateTime lastCommitDate = QDateTime::fromString(dateStr, Qt::ISODate);
 
     if (isLastCommit) {
-        repoData += " \n Last commit: " + lastCommitDate.toString() + " ";
+        repoData += " \n Last commit: " + lastCommitDate.toString("dd MMM yyyy hh:mm") + " ";
     }
 
     QUrl releaseUrl("https://api.github.com/repos/" + repo + "/releases");
@@ -278,7 +283,10 @@ QString MainWindow::getRepositoryData(QString git_url)
     }
 
     if (isReleaseDate) {
-        repoData += " \n Released at: " + releasesObj["published_at"].toString() + " ";
+        QString dateStr = releasesObj["published_at"].toString();
+
+        QDateTime releaseDate = QDateTime::fromString(dateStr, Qt::ISODate);
+        repoData += " \n Released at: " + releaseDate.toString("dd MMM yyyy hh:mm") + " ";
     }
 
     releasesReply->deleteLater();
@@ -415,7 +423,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         lastMod->setAlignment(Qt::AlignCenter);
         lastMod->setFont(selectedFont);
 
-        /*QLabel *git_stats = new QLabel(getRepositoryData(projectData[1]));
+        /*QLabel *git_stats = new QLabel();
         git_stats->setAlignment(Qt::AlignCenter);
         git_stats->setStyleSheet("QLabel {border-radius: 10px; border: "
                                  "0px; color: #ffffff; font-size: 13px;}");*/
@@ -470,7 +478,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QThread *thread = new QThread;
         QObject::connect(thread, &QThread::started, this,
-                         [this, projectData]() { getRepositoryData(projectData[1]); });
+                         [this, projectData, git_stats]() { getRepositoryData(projectData[1]); });
         thread->start();
 
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
@@ -506,7 +514,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
             QThread *thread = new QThread;
             QObject::connect(thread, &QThread::started, this,
-                             [this, projectData, repo]() { getRepositoryData(repo); });
+                             [this, projectData, repo, git_stats]() { getRepositoryData(repo); });
             thread->start();
         });
 
