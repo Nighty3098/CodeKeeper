@@ -2,6 +2,7 @@
 #include "accountFunc/functional.cpp"
 #include <QtWidgets>
 #include "mainwindow.h"
+#include <git2.h>
 
 AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
 {

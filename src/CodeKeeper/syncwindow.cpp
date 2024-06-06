@@ -1,6 +1,10 @@
 #include "syncwindow.h"
 #include "syncFunc/functional.cpp"
 
+#include "gitFunc/cloneRepo.cpp"
+#include "gitFunc/getUpdates.cpp"
+#include "gitFunc/pushUpdates.cpp"
+
 #include <QtWidgets>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
