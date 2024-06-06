@@ -24,6 +24,9 @@ SOURCES += \
     syncFunc/functional.cpp \
     sql_db/projectsDB.cpp \
     sql_db/tasksDB.cpp \
+    gitFunc/cloneRepo.cpp \
+    gitFunc/getUpdates.cpp \
+    gitFunc/pushUpdates.cpp
 
 HEADERS += \
     accountwindow.h \
