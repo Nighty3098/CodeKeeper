@@ -8,6 +8,7 @@
 #include <QJsonArray>
 #include <QEventLoop>
 #include <QTimer>
+#include <QSysInfo>
 
 void downloadFileFromLatestRelease(const QString &owner, const QString &repo,
                                    const QString &fileName, QLabel *label, QString git_user,
@@ -29,11 +30,12 @@ void downloadFileFromLatestRelease(const QString &owner, const QString &repo,
         qDebug() << "The file doesn't exist";
     }
 
+
     qDebug() << savePath;
 
     QNetworkAccessManager manager;
     QNetworkRequest request;
-    request.setUrl(QUrl("https://api.github.com/repos/Nighty3098/CodeKeeper/releases/latest"));
+    request.setUrl(QUrl("https://api.github.com/repos/DXS-SQUAD/CodeKeeper/releases/latest"));
     request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
     request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
@@ -59,37 +61,6 @@ void downloadFileFromLatestRelease(const QString &owner, const QString &repo,
         QJsonObject assetObject = asset.toObject();
         browserDownloadUrl = assetObject["browser_download_url"].toString();
         // Use the browser_download_url here
-        label->setText("Browser download URL:" + browserDownloadUrl);
         qDebug() << "Browser download URL:" << browserDownloadUrl;
     }
-
-    delete reply;
-
-    QNetworkRequest downloadRequest;
-    downloadRequest.setUrl(QUrl(browserDownloadUrl));
-
-    QNetworkReply *downloadReply = manager.get(downloadRequest);
-
-    QObject::connect(downloadReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec();
-
-    if (downloadReply->error() != QNetworkReply::NoError) {
-        label->setText("File download error:" + downloadReply->errorString());
-        qDebug() << "File download error:" << downloadReply->errorString();
-        delete downloadReply;
-    }
-
-    QFile file(savePath);
-    if (!file.open(QFile::WriteOnly)) {
-        label->setText("Error opening a file for writing:" + file.errorString());
-        qDebug() << "Error opening a file for writing:" << file.errorString();
-        delete downloadReply;
-    }
-
-    file.write(downloadReply->readAll());
-    file.close();
-
-    delete downloadReply;
-    label->setText("The file has been downloaded and saved to: " + savePath);
-    qDebug() << "The file has been downloaded and saved to: " << savePath;
 }

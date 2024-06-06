@@ -85,18 +85,22 @@ void SettingsWindow::checkUpdates()
     layout->addWidget(verInfoLabel, 5, 0, 1, 2, Qt::AlignCenter);
 
     connect(closeWindow, &QPushButton::clicked, [&]() { dialog.close(); });
-    connect(downloadUpdate, &QPushButton::clicked, [&]() {
+    /*connect(downloadUpdate, &QPushButton::clicked, [&]() {
         QFileInfo fileInfo(QCoreApplication::applicationFilePath());
         QString dir = fileInfo.absoluteDir().path();
         QString fileName = fileInfo.fileName();
 
         qDebug() << "File path: " << dir;
 
-        downloadFileFromLatestRelease("Nighty3098", "CodeKeeper", "CodeKeeper", updateInfoLabel,
+        downloadFileFromLatestRelease("DXS-SQUAD", "CodeKeeper", "CodeKeeper", updateInfoLabel,
                                       git_user, git_token);
 
         verInfoLabel->hide();
         downloadUpdate->hide();
+    });*/
+
+    connect(downloadUpdate, &QPushButton::clicked, [&]() {
+        QDesktopServices::openUrl(QUrl("https://github.com/DXS-SQUAD/CodeKeeper/releases/latest"));
     });
 
     dialog.exec();
@@ -246,7 +250,7 @@ void SettingsWindow::fopenFolder()
 QString SettingsWindow::getNewAppVersion()
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases/latest");
+    QUrl url("https://api.github.com/repos/DXS-SQUAD/CodeKeeper/releases/latest");
 
     QUrlQuery query;
     query.addQueryItem("login", git_user);
