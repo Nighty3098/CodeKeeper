@@ -19,7 +19,7 @@ void MainWindow::create_projects_connection()
     if (!query.exec(str)) {
         qWarning() << query.lastError();
     } else {
-        qDebug() << "🟢 Projects db was created";
+        qDebug() << "\033[0m\033[32mProjects db was created";
     }
 }
 
@@ -36,10 +36,10 @@ QStringList MainWindow::GetProjectData(QString *title, QString *status, QString 
             projectData << query.value("projectDoc").toString();
             projectData << query.value("status").toString();
             projectData << query.value("createdTime").toString();
-            qDebug() << "🟢 Load project: " << projectData;
+            qDebug() << "\033[0m\033[32mLoad project: " << projectData;
         }
     } else {
-        qWarning() << "🔴 Error querying projects database:" << query.lastError();
+        qWarning() << "\033[0m\033[31mError querying projects database:" << query.lastError();
     }
     return projectData;
 }
@@ -52,9 +52,9 @@ void MainWindow::updateProjectData(QString *title, QString *git_url, QString *do
     if (!query.exec("UPDATE projects SET title = '" + *title + "', git_url = '" + *git_url
                     + "', projectDoc = '" + *doc + "', createdTime = '" + *createdTime
                     + "' WHERE createdTime = '" + *oldTime + "' AND git_url = '" + oldGit + "'")) {
-        qWarning() << "🔴 " << query.lastError();
+        qWarning() << "\033[0m\033[31m" << query.lastError();
     } else {
-        qDebug() << "🟢 Sucsessfull updated";
+        qDebug() << "\033[0m\033[32mSucsessfull updated";
     }
 }
 
@@ -67,9 +67,9 @@ void MainWindow::saveProjectToDB(QString *title, QString *git_url, QString *stat
                     "VALUES('"
                     + *title + "', '" + *git_url + "', ' ', '" + *status + "', '" + *createdTime
                     + "')")) {
-        qWarning() << "🔴 " << query.lastError();
+        qWarning() << "\033[0m\033[31m" << query.lastError();
     } else {
-        qDebug() << "🟢 Sucsessfull saved";
+        qDebug() << "\033[0m\033[32mSucsessfull saved";
     }
 }
 
@@ -79,9 +79,9 @@ void MainWindow::updateProjectStatus(QString *status, QString *createdTime, QStr
 
     if (!query.exec("UPDATE projects SET status = '" + *status + "' WHERE createdTime = '"
                     + *oldTime + "'")) {
-        qWarning() << "🔴 " << query.lastError();
+        qWarning() << "\033[0m\033[31m" << query.lastError();
     } else {
-        qDebug() << "🟢 Sucsessfull updated";
+        qDebug() << "\033[0m\033[32mSucsessfull updated";
     }
 }
 
@@ -90,9 +90,9 @@ void MainWindow::removeProjectFromDB(QString *git_url, QString *status, QString 
     QSqlQuery query;
 
     if (!query.exec("DELETE FROM projects WHERE git_url = '" + *git_url + "'")) {
-        qWarning() << "🔴 " << query.lastError();
+        qWarning() << "\033[0m\033[31m" << query.lastError();
     } else {
-        qDebug() << "🟢 Sucsessfull removed";
+        qDebug() << "\033[0m\033[32mSucsessfull removed";
     }
 }
 
@@ -131,8 +131,8 @@ void MainWindow::loadProjects()
         if (status == "FinishedProjects") {
             finishedProjects->addItem(item);
         } else {
-            qWarning() << "🟠 Unknown status: " << status;
+            qWarning() << "\033[0m\033[33mUnknown status: " << status;
         }
     }
-    qDebug() << "🟢 Projects was loaded";
+    qDebug() << "\033[0m\033[32mProjects was loaded";
 }

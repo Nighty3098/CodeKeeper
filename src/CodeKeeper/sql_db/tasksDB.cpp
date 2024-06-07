@@ -15,9 +15,9 @@ void MainWindow::create_tasks_connection()
                   ");";
 
     if (!query.exec(str)) {
-        qDebug() << "🔴 " << query.lastError();
+        qDebug() << "\033[0m\033[31m" << query.lastError();
     } else {
-        qDebug() << "🟢 Tasks db was created";
+        qDebug() << "\033[0m\033[32mTasks db was created";
     }
 }
 
@@ -29,7 +29,7 @@ void MainWindow::updateTaskData(QString *task, QString *status, QString *cT)
 
     if (!query.exec("UPDATE tasks SET task = '" + taskText[0] + "' WHERE createdTime = '" + cT
                     + "' AND status = '" + *status + "'")) {
-        qDebug() << "🔴 " << query.lastError();
+        qDebug() << "\033[0m\033[31m" << query.lastError();
     }
 }
 
@@ -53,9 +53,9 @@ void MainWindow::saveTaskToDB(QString *task, QString *status)
 
     if (!query.exec("INSERT INTO tasks (task, status, createdTime) VALUES('" + taskText[0] + "', '"
                     + *status + "', '" + taskText[1] + "');")) {
-        qDebug() << "🔴 " << query.lastError();
+        qDebug() << "\033[0m\033[31m" << query.lastError();
     } else {
-        qDebug() << "🟢 " << taskText[0] << " was saved";
+        qDebug() << "\033[0m\033[32m" << taskText[0] << " was saved";
     }
 }
 
@@ -67,9 +67,9 @@ void MainWindow::removeTaskFromDB(QString *task, QString *status)
 
     if (!query.exec("DELETE FROM tasks WHERE task = '" + taskText[0] + "' AND status = '" + *status
                     + "' AND createdTime = '" + taskText[1] + "'")) {
-        qDebug() << "🔴 " << query.lastError();
+        qDebug() << "\033[0m\033[31m" << query.lastError();
     } else {
-        qDebug() << "🟢 Sucsessfull removed";
+        qDebug() << "\033[0m\033[32mSucsessfull removed";
     }
 }
 
@@ -107,5 +107,5 @@ void MainWindow::loadTasks()
         }
     }
 
-    qDebug() << "🟢 Tasks loaded";
+    qDebug() << "\033[0m\033[32mTasks loaded";
 }

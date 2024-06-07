@@ -19,14 +19,14 @@ void SyncWindow::setFontStyle()
 
 void SyncWindow::startSyncingFunc()
 {
-    qDebug() << "🟢 Starting syncing...";
+    qDebug() << "\033[0m\033[32mStarting syncing...";
 
     syncingProgress->setValue(90);
 }
 
 void SyncWindow::cancelSyncingFunc()
 {
-    qDebug() << "🔴 Canceling syncing...";
+    qDebug() << "\033[0m\033[31mCanceling syncing...";
 
     this->close();
 }
@@ -41,10 +41,10 @@ bool SyncWindow::checkConnection()
 
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if (reply->error() == QNetworkReply::NoError) {
-            qDebug() << "Internet connection is available";
+            qDebug() << "\033[0m\033[32mInternet connection is available";
             return true;
         } else {
-            qDebug() << "No internet connection found";
+            qDebug() << "\033[0m\033[31mNo internet connection found";
             return false;
         }
     });

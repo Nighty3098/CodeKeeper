@@ -31,7 +31,7 @@ QString MainWindow::getKeeperStats()
 
 bool MainWindow::createConnection(QString path)
 {
-    qDebug() << "🔸DB path: " << (path) + QStringLiteral("/data.db");
+    qDebug() << "\033[0m\033[32mDB path: " << (path) + QStringLiteral("/data.db");
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName((path) + QStringLiteral("/data.db"));
@@ -41,7 +41,7 @@ bool MainWindow::createConnection(QString path)
     db.setPassword("password");
 
     if (!db.open()) {
-        qCritical() << "🔴 " << db.lastError();
+        qCritical() << "\033[0m\033[31m" << db.lastError();
         return false;
     }
 
@@ -87,7 +87,7 @@ void MainWindow::getSettingsData()
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
-    qDebug() << "🔸 " << dir << selectedFont << font_size << theme << isCustomTitlebar
+    qDebug() << "\033[0m\033[32m " << dir << selectedFont << font_size << theme << isCustomTitlebar
              << sortNotesRole << isAutoSyncing << isVisibleNotesList << isVisibleFolders
              << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB;
 }
@@ -211,7 +211,7 @@ void MainWindow::fOpenAccountWindow()
 
         accountWindow->move(new_x, new_y);
 
-        qDebug() << "🟢 accountWindowThread started";
+        qDebug() << "\033[0m\033[32maccountWindowThread started";
     });
     accountWindowThread->start();
 }
@@ -241,7 +241,7 @@ void MainWindow::openSettingsWindow()
 
         settingsWindow->move(new_x, new_y);
 
-        qDebug() << "🟢 settingsWindowThread started";
+        qDebug() << "\033[0m\033[32msettingsWindowThread started";
     });
     settingsWindowThread->start();
 }
@@ -263,7 +263,7 @@ bool MainWindow::checkConnection()
             // qDebug() << "You are connected to the internet :)";
             return true;
         } else {
-            qWarning() << "🔴 You have an net error:" << reply->errorString();
+            qWarning() << "\033[0m\033[31mYou have an net error:" << reply->errorString();
             return false;
         }
     }
@@ -293,7 +293,7 @@ void MainWindow::openSyncWindow()
         syncWindow->show();
         syncWindow->move(new_x, new_y);
 
-        qDebug() << "🟢 syncWindowThread started";
+        qDebug() << "\033[0m\033[32msyncWindowThread started";
     });
     syncWindowThread->start();
 }
@@ -303,7 +303,7 @@ void MainWindow::openFolder()
     QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
     if (!str.isEmpty()) {
         globalSettings->setValue("path", str);
-        qDebug() << "🟢 " << str;
+        qDebug() << "\033[0m\033[32m" << str;
     }
 }
 
@@ -325,7 +325,7 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 
 void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 {
-    qDebug() << "🟢 Applying preferences";
+    qDebug() << "\033[0m\033[32mApplying preferences";
 
     QString font_size = QString::number(*font_size_int);
 
