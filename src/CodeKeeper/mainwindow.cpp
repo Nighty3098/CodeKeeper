@@ -88,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     appIcon = new QLabel();
     appIcon->setAlignment(Qt::AlignCenter);
     appIcon->setPixmap(
-            QPixmap(":/icon.png").scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            QPixmap(":/icon.png").scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     // settings btn
     openSettingsBtn =
