@@ -10,7 +10,8 @@
 
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "\033[0m\033[32mMoving project: " << item->text() << " from: " << list->objectName();
+    qDebug() << "\033[0m\033[32mMoving project: " << item->text()
+             << " from: " << list->objectName();
 }
 
 void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
@@ -397,8 +398,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QString PStatus = listWidget->objectName();
 
         QStringList projectData = GetProjectData(&PTitle, &PStatus, &PGit);
-        qDebug() << "\033[0m\033[32mOpen project: " << projectData[0] << " " << projectData[1] << " "
-                 << projectData[2] << " " << projectData[3] << " " << projectData[4];
+        qDebug() << "\033[0m\033[32mOpen project: " << projectData[0] << " " << projectData[1]
+                 << " " << projectData[2] << " " << projectData[3] << " " << projectData[4];
 
         QGridLayout mainLayout(&dialog);
 

@@ -18,7 +18,8 @@ bool createFile(const QString &path)
         qDebug() << "\033[0m\033[32mFile created successfully at" << path;
         return true;
     } else {
-        qWarning() << "\033[0m\033[33mFailed to create file at" << path << ": " << file.errorString();
+        qWarning() << "\033[0m\033[33mFailed to create file at" << path << ": "
+                   << file.errorString();
         return false;
     }
 }
