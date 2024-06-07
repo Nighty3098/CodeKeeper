@@ -12,7 +12,7 @@ void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
     QNetworkReply *reply = manager->get(QNetworkRequest(QUrl(url)));
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if (reply->error()) {
-            qDebug() << "Error:" << reply->errorString();
+            qWarning() << "\033[0m\033[33mError:" << reply->errorString();
             reply->deleteLater();
             return;
         }
@@ -94,7 +94,7 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
     QNetworkReply *reply = manager->get(request);
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if (reply->error()) {
-            qDebug() << "Error:" << reply->errorString();
+            qWarning() << "\033[0m\033[33mError:" << reply->errorString();
             reply->deleteLater();
             return;
         }
@@ -116,7 +116,7 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
         qDebug() << "Company:" << obj["company"].toString();
         qDebug() << "Login:" << obj["login"].toString();
 
-        qDebug() << doc;
+        qDebug() << "\033[0m\033[32m" << doc;
 
         profileInfo->setText("Public repos: " + QString::number(obj["public_repos"].toInt())
                              + "\n\nFollowing: " + QString::number(obj["following"].toInt())

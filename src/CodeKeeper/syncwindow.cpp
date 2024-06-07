@@ -69,7 +69,7 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
 
     setFontStyle();
 
-    qDebug() << "🟢 Opening Sync Window";
+    qDebug() << "\033[0m\033[32mOpening Sync Window";
 
     centralWidget->setLayout(mainLayout);
 

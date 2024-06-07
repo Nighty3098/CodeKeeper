@@ -50,7 +50,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     QObject::connect(styleThread, &QThread::started, this, [this]() {
         setFontStyle();
 
-        qDebug() << "🟢 styleThread started";
+        qDebug() << "\033[0m\033[32mstyleThread started";
     });
     styleThread->start();
 
@@ -58,7 +58,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     QObject::connect(setUserDataThread, &QThread::started, this, [this]() {
         setUserData(git_user, profilePicture);
 
-        qDebug() << "🟢 setUserDataThread started";
+        qDebug() << "\033[0m\033[32msetUserDataThread started";
     });
     setUserDataThread->start();
 

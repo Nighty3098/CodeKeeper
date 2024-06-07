@@ -16,10 +16,10 @@ bool loadApp(QSplashScreen *psplash)
     if (!reply->isFinished()) {
         loop.exec();
         if (reply->error() == QNetworkReply::NoError) {
-            qDebug() << "Connected";
+            qDebug() << "\033[0m\033[32mConnected";
             return true;
         } else {
-            qDebug() << "Error: " << reply->errorString();
+            qDebug() << "\033[0m\033[31mError: " << reply->errorString();
             return false;
         }
     }

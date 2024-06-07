@@ -360,7 +360,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
         connect(repoTimer, &QTimer::timeout, [=]() { checkRepo(); });
         repoTimer->start(100);
 
-        qDebug() << "🟢 repoTimerThread started";
+        qDebug() << "\033[0m\033[32mrepoTimerThread started";
     });
     repoTimerThread->start();
 
@@ -369,7 +369,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
         int font_size_int = font_size.toInt();
         setFontPr2(&selectedFont, &font_size_int);
 
-        qDebug() << "🟢 styleThread started";
+        qDebug() << "\033[0m\033[32mstyleThread started";
     });
     styleThread->start();
 }

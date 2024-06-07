@@ -22,12 +22,12 @@ void downloadFileFromLatestRelease(const QString &owner, const QString &repo,
 
     if (QFile::exists(oldFilePath)) {
         if (QFile::rename(oldFilePath, newFilePath)) {
-            qDebug() << "File renamed successfully";
+            qDebug() << "\033[0m\033[32mFile renamed successfully";
         } else {
-            qDebug() << "Error when renaming a file";
+            qDebug() << "\033[0m\033[33mError when renaming a file";
         }
     } else {
-        qDebug() << "The file doesn't exist";
+        qDebug() << "\033[0m\033[33mThe file doesn't exist";
     }
 
 
@@ -48,8 +48,8 @@ void downloadFileFromLatestRelease(const QString &owner, const QString &repo,
     loop.exec();
 
     if (reply->error() != QNetworkReply::NoError) {
-        label->setText("Error fetching release information:" + reply->errorString());
-        qDebug() << "Error fetching release information:" << reply->errorString();
+        label->setText("\033[0m\033[33mError fetching release information:" + reply->errorString());
+        qDebug() << "\033[0m\033[33mError fetching release information:" << reply->errorString();
         delete reply;
     }
 
@@ -61,6 +61,6 @@ void downloadFileFromLatestRelease(const QString &owner, const QString &repo,
         QJsonObject assetObject = asset.toObject();
         browserDownloadUrl = assetObject["browser_download_url"].toString();
         // Use the browser_download_url here
-        qDebug() << "Browser download URL:" << browserDownloadUrl;
+        qDebug() << "\033[0m\033[32mBrowser download URL:" << browserDownloadUrl;
     }
 }

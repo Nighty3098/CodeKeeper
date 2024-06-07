@@ -10,12 +10,12 @@
 
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "🟢 Moving project: " << item->text() << " from: " << list->objectName();
+    qDebug() << "\033[0m\033[32mMoving project: " << item->text() << " from: " << list->objectName();
 }
 
 void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "🟢 Moved project: " << item->text() << " to: " << list->objectName();
+    qDebug() << "\033[0m\033[32mMoved project: " << item->text() << " to: " << list->objectName();
     QStringList data = item->text().split("\n");
     QString status = list->objectName();
     QString date = getCurrentDateTimeString();
@@ -52,7 +52,7 @@ void MainWindow::createProject()
     QString git = "https://github.com/";
     QString newProjectTeamplate = title + "\n" + git + "\n" + date;
 
-    qDebug() << "🟢 New project: " << newProjectTeamplate;
+    qDebug() << "\033[0m\033[32mNew project: " << newProjectTeamplate;
 
     notStartedProjects->addItem(newProjectTeamplate);
 
@@ -74,7 +74,7 @@ void MainWindow::removeProject()
 
             removeProjectFromDB(&data[1], &status, &data[2]);
 
-            qDebug() << "🟢 Removed project: " << item->text();
+            qDebug() << "\033[0m\033[32mRemoved project: " << item->text();
             delete item;
             break;
         }
@@ -215,7 +215,7 @@ QString MainWindow::getRepositoryData(QString git_url)
     loop.exec();
 
     if (commitReply->error()) {
-        qWarning() << "Error:" << commitReply->errorString();
+        qWarning() << "\033[0m\033[31mError:" << commitReply->errorString();
         commitReply->deleteLater();
     }
 
@@ -246,7 +246,7 @@ QString MainWindow::getRepositoryData(QString git_url)
     loop.exec();
 
     if (releaseReply->error()) {
-        qWarning() << "Error:" << releaseReply->errorString();
+        qWarning() << "\033[0m\033[31mError:" << releaseReply->errorString();
         releaseReply->deleteLater();
     }
 
@@ -296,7 +296,7 @@ QString MainWindow::getRepositoryData(QString git_url)
     releasesReply->deleteLater();
     reply->deleteLater();
 
-    qDebug() << repoData;
+    qDebug() << "\033[0m\033[32m" << repoData;
     return repoData;
 }
 
@@ -397,7 +397,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QString PStatus = listWidget->objectName();
 
         QStringList projectData = GetProjectData(&PTitle, &PStatus, &PGit);
-        qDebug() << "Open project: " << projectData[0] << " " << projectData[1] << " "
+        qDebug() << "\033[0m\033[32mOpen project: " << projectData[0] << " " << projectData[1] << " "
                  << projectData[2] << " " << projectData[3] << " " << projectData[4];
 
         QGridLayout mainLayout(&dialog);
@@ -524,6 +524,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         dialog.exec();
     } else {
-        qWarning() << "🔴 Error";
+        qWarning() << "\033[0m\033[33mError";
     }
 }
