@@ -163,6 +163,7 @@ QString MainWindow::getRepositoryData(QString git_url)
 
     QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
     QJsonObject obj = doc.object();
+    // qDebug() << doc;
 
     repoData = "Name: " + obj["name"].toString();
 
@@ -221,6 +222,7 @@ QString MainWindow::getRepositoryData(QString git_url)
     QJsonDocument commitDoc = QJsonDocument::fromJson(commitReply->readAll());
     QJsonObject commitObj = commitDoc.object();
     QJsonArray commits = commitDoc.array();
+    // qDebug() << commitDoc;
 
     if (commits.isEmpty()) {
         if (isLastCommit) {
@@ -250,6 +252,7 @@ QString MainWindow::getRepositoryData(QString git_url)
 
     QJsonDocument releaseDoc = QJsonDocument::fromJson(releaseReply->readAll());
     QJsonArray releases = releaseDoc.array();
+    // qDebug() << releaseDoc;
 
     int totalDownloads = 0;
     for (const QJsonValue &release : releases) {
@@ -276,6 +279,7 @@ QString MainWindow::getRepositoryData(QString git_url)
 
     QJsonDocument releasesDoc = QJsonDocument::fromJson(releasesReply->readAll());
     QJsonObject releasesObj = releasesDoc.object();
+    // qDebug() << releasesDoc;
 
     if (isRelease) {
         repoData += QString(" \n Release: ") + " ";
@@ -413,7 +417,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         linkToGit->setFont(selectedFont);
 
         QComboBox *documentation = new QComboBox();
-        documentation->setFixedSize(190, 25);
+        documentation->setFixedSize(190, 20);
         documentation->setFont(selectedFont);
 
         QLabel *lastMod = new QLabel();
