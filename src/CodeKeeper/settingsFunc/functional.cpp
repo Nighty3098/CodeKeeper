@@ -118,11 +118,11 @@ void SettingsWindow::checkRepo()
 
     if (reply->error() == QNetworkReply::NoError) {
         // qDebug() << repo;
-        // qDebug() << "\033[0m\033[32mRepository is available";
+        // qDebug() << "Repository is available";
         repoAvailability->setText("Repository is available");
     } else {
         qDebug() << repo;
-        qWarning() << "\033[0m\033[31mThe repository isn't available";
+        qWarning() << "The repository isn't available";
         repoAvailability->setText("The repository isn't available");
     }
 
@@ -131,7 +131,7 @@ void SettingsWindow::checkRepo()
 
 void SettingsWindow::saveData()
 {
-    qDebug() << "\033[0m\033[32mSaving data";
+    qDebug() << "Saving data";
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     QMessageBox *messageBox = new QMessageBox();
@@ -280,7 +280,7 @@ QString SettingsWindow::getNewAppVersion()
 
 void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
 {
-    qDebug() << "\033[0m\033[32mApplying preferences";
+    qDebug() << "Applying preferences";
 
     QString font_size = QString::number(*font_size_int);
 
