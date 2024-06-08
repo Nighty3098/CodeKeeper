@@ -454,7 +454,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(400, 550);
+        dialog.setFixedSize(400, 650);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -511,7 +511,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QPushButton *saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
         saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        saveDataBtn->setFixedHeight(25);
+        saveDataBtn->setFixedSize(100, 25);
         saveDataBtn->setIcon(QPixmap(":/save.png"));
         saveDataBtn->setIconSize(QSize(10, 10));
         saveDataBtn->setFont(selectedFont);
@@ -519,7 +519,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QPushButton *cancelBtn = new QPushButton();
         cancelBtn->setText("Cancel");
         cancelBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        cancelBtn->setFixedHeight(25);
+        cancelBtn->setFixedSize(100, 25);
         cancelBtn->setIcon(QPixmap(":/quit.png")
                                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3,
                                            Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -547,10 +547,10 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
         mainLayout.addWidget(documentation, 2, 0);
         mainLayout.addWidget(openButton, 2, 1);
-        mainLayout.addWidget(git_stats, 3, 0, 1, 2);
-        mainLayout.addWidget(lastMod, 5, 0, 1, 2);
-        mainLayout.addWidget(saveDataBtn, 4, 0);
-        mainLayout.addWidget(cancelBtn, 4, 1);
+        mainLayout.addWidget(git_stats, 4, 0, 1, 2);
+        mainLayout.addWidget(lastMod, 7, 0, 1, 2);
+        mainLayout.addWidget(saveDataBtn, 5, 0, 1, 2, Qt::AlignCenter);
+        mainLayout.addWidget(cancelBtn, 6, 0, 1, 2, Qt::AlignCenter);
 
         QThread *thread = new QThread;
         QObject::connect(thread, &QThread::started, this, [this, projectData, git_stats]() {
