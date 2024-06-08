@@ -15,11 +15,10 @@ bool createFile(const QString &path)
         QTextStream stream(&file);
         stream << "Just start typing...";
         file.close();
-        qDebug() << File created successfully at" << path;
+        qDebug() << "File created successfully at " << path;
         return true;
     } else {
-        qWarning() << Failed to create file at" << path << ": "
-                   << file.errorString();
+        qWarning() << "Failed to create file at " << path << " : " << file.errorString();
         return false;
     }
 }
@@ -40,7 +39,7 @@ void MainWindow::exportNoteToPdf()
     QModelIndex selectedIndex = notesList->currentIndex();
     QFileSystemModel *fileSystemModel = static_cast<QFileSystemModel *>(notesList->model());
     QString filePath = fileSystemModel->filePath(selectedIndex);
-    qDebug() << File Path: " << filePath;
+    qDebug() << "File Path : " << filePath;
 
     QString str = QFileDialog::getSaveFileName(0, "Enter filename");
     QString pdf_file = str + ".pdf";
@@ -65,7 +64,7 @@ void MainWindow::exportNoteToHtml()
     QModelIndex selectedIndex = notesList->currentIndex();
     QFileSystemModel *fileSystemModel = static_cast<QFileSystemModel *>(notesList->model());
     QString filePath = fileSystemModel->filePath(selectedIndex);
-    qDebug() << File Path: " << filePath;
+    qDebug() << "File Path : " << filePath;
 
     QString str = QFileDialog::getSaveFileName(0, "Enter filename");
     QString html_file = str + ".html";
@@ -87,9 +86,9 @@ void MainWindow::exportNoteToHtml()
         QTextStream stream(&file);
         stream << html;
         file.close();
-        qDebug() << File saved successfully at" << filePath;
+        qDebug() << "File saved successfully at " << filePath;
     } else {
-        qWarning() << Error, Failed to open file for writing.";
+        qWarning() << "Error, Failed to open file for writing.";
     }
 }
 
@@ -139,12 +138,12 @@ void MainWindow::saveNote()
             QTextStream stream(&file);
             stream << text;
             file.close();
-            // qDebug() << "Success", "Text written to file successfully.";
+            // qDebug() << "Success, Text written to file successfully.";
         } else {
-            qWarning() << Error", "Failed to open file for writing.";
+            qWarning() << "Error, Failed to open file for writing.";
         }
     } else {
-        qWarning() << Error", "Please select a valid file.";
+        qWarning() << "Error,  Please select a valid file.";
     }
 }
 
@@ -166,7 +165,7 @@ void MainWindow::onNoteDoubleClicked()
             }
         } else {
             noteEdit->setPlainText("### File format not supported.");
-            qWarning() << File format not supported";
+            qWarning() << "File format not supported";
         }
     }
 }
@@ -255,10 +254,10 @@ void MainWindow::removeNote()
     QModelIndex index = notesList->currentIndex();
     if (index.isValid()) {
         if (notesDirModel->fileInfo(index).isDir()) {
-            qDebug() << Folder deleted successfully";
+            qDebug() << "Folder deleted successfully ";
             notesDirModel->rmdir(index);
         } else {
-            qDebug() << Note deleted successfully";
+            qDebug() << "Note deleted successfully ";
             notesDirModel->remove(index);
         }
     }
