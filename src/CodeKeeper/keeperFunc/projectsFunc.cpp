@@ -122,7 +122,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(400, 650);
+        dialog.setFixedSize(400, 550);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -170,7 +170,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         git_stats->setStyleSheet(
                 "QTableWidget{ background-color: #0d1117; alternate-background-color: #171b22; "
                 "selection-background-color: #336fc9; show-decoration-selected: 1; font-size: "
-                + font_size + "pt; }");
+                + font_size + "pt; border: 0px;}");
 
         /*QWebEngineView *git_stats = new QWebEngineView();
         git_stats->page()->setBackgroundColor(Qt::transparent);
@@ -216,9 +216,9 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(documentation, 2, 0);
         mainLayout.addWidget(openButton, 2, 1);
         mainLayout.addWidget(git_stats, 4, 0, 1, 2);
-        mainLayout.addWidget(lastMod, 7, 0, 1, 2);
-        mainLayout.addWidget(saveDataBtn, 5, 0, 1, 2, Qt::AlignCenter);
-        mainLayout.addWidget(cancelBtn, 6, 0, 1, 2, Qt::AlignCenter);
+        mainLayout.addWidget(saveDataBtn, 6, 0, 1, 2, Qt::AlignCenter);
+        mainLayout.addWidget(cancelBtn, 7, 0, 1, 2, Qt::AlignCenter);
+        mainLayout.addWidget(lastMod, 5, 0, 1, 2, Qt::AlignCenter);
 
         QThread *thread = new QThread;
         QObject::connect(thread, &QThread::started, this, [this, projectData, git_stats]() {

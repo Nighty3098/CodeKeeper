@@ -132,49 +132,44 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
 
     name = obj["name"].toString();
 
-    if (isCreated) {
-        createdAt = obj["created_at"].toString();
-        QDateTime createdDate = QDateTime::fromString(createdAt, Qt::ISODate);
-        createdAt = createdDate.toString("dd MMM yyyy hh:mm");
-    }
-    if (isIssue) {
-        openIssues = QString::number(obj["open_issues"].toInt());
-    }
-    // repoData += " \n Watchers: " + QString::number(obj["watchers"].toInt()) + " ";
-    if (isForks) {
-        forks = QString::number(obj["forks"].toInt());
-    }
-    if (isLang) {
-        lang = obj["language"].toString();
-    }
-    if (isStars) {
-        stars = QString::number(obj["stargazers_count"].toInt());
-    }
-    if (isRepoSize) {
-        qint64 size = obj["size"].toDouble();
+    createdAt = obj["created_at"].toString();
+    QDateTime createdDate = QDateTime::fromString(createdAt, Qt::ISODate);
+    createdAt = createdDate.toString("dd MMM yyyy hh:mm");
+    
+    openIssues = QString::number(obj["open_issues"].toInt());
 
-        repoSize = formatFileSize(size);
-    }
+    // repoData += " \n Watchers: " + QString::number(obj["watchers"].toInt()) + " ";
+    forks = QString::number(obj["forks"].toInt());
+    lang = obj["language"].toString();
+    
+    
+    stars = QString::number(obj["stargazers_count"].toInt());
+    
+    qint64 size = obj["size"].toDouble();
+    repoSize = formatFileSize(size);
+
 
     if (obj.contains("license")) {
         QJsonObject licenseObj = obj["license"].toObject();
         if (licenseObj.contains("name")) {
-            if (isLicense) {
                 license = licenseObj["name"].toString() + " ";
-            }
         } else {
-            if (isLicense) {
                 qDebug() << "License not found";
-            }
         }
     } else {
-        if (isLicense) {
             qDebug() << "License not found";
-        }
     }
 
     QUrl commitUrl("https://api.github.com/repos/" + repo + "/commits");
-    QNetworkReply *commitReply = manager->get(QNetworkRequest(commitUrl));
+    commitUrl.setQuery(query);
+
+    QNetworkRequest commitUrlRequest(commitUrl);
+    commitUrlRequest.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    commitUrlRequest.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    commitUrlRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    commitUrlRequest.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QNetworkReply *commitReply = manager->get(commitUrlRequest);
     QObject::connect(commitReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
     loop.exec();
@@ -190,9 +185,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     qDebug() << commitDoc;
 
     if (commits.isEmpty()) {
-        if (isLastCommit) {
-            qDebug() << "No commits found";
-        }
+        qDebug() << "No commits found";
     }
 
     QJsonObject lastCommit = commits.first().toObject();
@@ -200,12 +193,18 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
 
     QDateTime lastCommitDate = QDateTime::fromString(dateStr, Qt::ISODate);
 
-    if (isLastCommit) {
-        QString lastCommitS = lastCommitDate.toString("dd MMM yyyy hh:mm");
-    }
+    lastCommitS = lastCommitDate.toString("dd MMM yyyy hh:mm");
 
     QUrl releaseUrl("https://api.github.com/repos/" + repo + "/releases");
-    QNetworkReply *releaseReply = manager->get(QNetworkRequest(releaseUrl));
+    releaseUrl.setQuery(query);
+
+    QNetworkRequest releaseUrlRequest(releaseUrl);
+    releaseUrlRequest.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    releaseUrlRequest.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    releaseUrlRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    releaseUrlRequest.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QNetworkReply *releaseReply = manager->get(releaseUrlRequest);
     QObject::connect(releaseReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
     loop.exec();
@@ -226,13 +225,20 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
         iTotalDownloads += downloads;
     }
 
-    if (isDownloads) {
-        totalDownloads = QString::number(iTotalDownloads);
-    }
+    totalDownloads = QString::number(iTotalDownloads);
+
 
     // Release info
     QUrl releasesUrl("https://api.github.com/repos/" + repo + "/releases/latest");
-    QNetworkReply *releasesReply = manager->get(QNetworkRequest(releasesUrl));
+    releasesUrl.setQuery(query);
+
+    QNetworkRequest releasesRequest(releasesUrl);
+    releasesRequest.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    releasesRequest.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    releasesRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    releasesRequest.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QNetworkReply *releasesReply = manager->get(releasesRequest);
     QObject::connect(releasesReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
     loop.exec(); // Block until the lambda function has finished
@@ -246,16 +252,13 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     QJsonObject releasesObj = releasesDoc.object();
     qDebug() << releasesDoc;
 
-    if (isRelease) {
-        release = releasesObj["name"].toString();
-    }
+    
+    release = releasesObj["name"].toString();
 
-    if (isReleaseDate) {
-        QString dateStr = releasesObj["published_at"].toString();
+    dateStr = releasesObj["published_at"].toString();
 
-        QDateTime releaseDateT = QDateTime::fromString(dateStr, Qt::ISODate);
-        releaseDate = releaseDateT.toString("dd MMM yyyy hh:mm");
-    }
+    QDateTime releaseDateT = QDateTime::fromString(dateStr, Qt::ISODate);
+    releaseDate = releaseDateT.toString("dd MMM yyyy hh:mm");
 
     releasesReply->deleteLater();
     reply->deleteLater();
@@ -284,39 +287,75 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
 
     table->setItem(0, 0, new QTableWidgetItem("Repo"));
     table->setItem(0, 1, new QTableWidgetItem(name));
+    table->item(0, 0)->setTextAlignment(Qt::AlignCenter);
 
-    table->setItem(1, 0, new QTableWidgetItem("Created at"));
-    table->setItem(1, 1, new QTableWidgetItem(createdAt));
+    QStringList dataList, textList;
 
-    table->setItem(2, 0, new QTableWidgetItem("Open issues"));
-    table->setItem(2, 1, new QTableWidgetItem(openIssues));
+    dataList << name;
+    textList << "Repo";
 
-    table->setItem(3, 0, new QTableWidgetItem("Forks"));
-    table->setItem(3, 1, new QTableWidgetItem(forks));
+    if (isCreated) {
+        textList << "Created at";
+        dataList << createdAt;
+    }
 
-    table->setItem(4, 0, new QTableWidgetItem("Lang"));
-    table->setItem(4, 1, new QTableWidgetItem(lang));
+    if (isIssue) {
+        dataList << openIssues;
+        textList << "Open issues";
+    }
 
-    table->setItem(5, 0, new QTableWidgetItem("Stars"));
-    table->setItem(5, 1, new QTableWidgetItem(stars));
+    if (isForks) {
+        dataList << forks;
+        textList << "Forks";
+    }
 
-    table->setItem(6, 0, new QTableWidgetItem("Repo size"));
-    table->setItem(6, 1, new QTableWidgetItem(repoSize));
+    if (isLang) {
+        dataList << lang;
+        textList << "Lang";
+    }
 
-    table->setItem(7, 0, new QTableWidgetItem("License"));
-    table->setItem(7, 1, new QTableWidgetItem(license));
+    if (isStars) {
+        dataList << stars;
+        textList << "Stars";
+    }
 
-    table->setItem(8, 0, new QTableWidgetItem("Last commit"));
-    table->setItem(8, 1, new QTableWidgetItem(lastCommitS));
+    if (isRepoSize) {
+        dataList << repoSize;
+        textList << "Repo size";
+    }
 
-    table->setItem(9, 0, new QTableWidgetItem("Downloads"));
-    table->setItem(9, 1, new QTableWidgetItem(totalDownloads));
+    if (isLicense) {
+        dataList << license;
+        textList << "License";
+    }
 
-    table->setItem(10, 0, new QTableWidgetItem("Release"));
-    table->setItem(10, 1, new QTableWidgetItem(release));
+    if (isLastCommit) {
+        dataList << lastCommitS;
+        textList << "Last commit";
+    }
 
-    table->setItem(11, 0, new QTableWidgetItem("Release at"));
-    table->setItem(11, 1, new QTableWidgetItem(releaseDate));
+    if (isDownloads) {
+        dataList << totalDownloads;
+        textList << "Downloads";
+    }
+
+    if (isRelease) {
+        dataList << release;
+        textList << "Release";
+    }
+
+    if (isReleaseDate) {
+        dataList << releaseDate;
+        textList << "Release at";
+    }
+
+    for (int i = 0; i < dataList.count(); i++) {
+        table->setItem(i, 0, new QTableWidgetItem(textList[i]));
+        table->setItem(i, 1, new QTableWidgetItem(dataList[i]));
+        table->item(i, 0)->setTextAlignment(Qt::AlignCenter);
+    }
+
+
 
     for (int row = 0; row < table->rowCount(); ++row) {
         for (int col = 0; col < table->columnCount(); ++col) {
