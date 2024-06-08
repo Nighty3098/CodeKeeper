@@ -132,12 +132,12 @@
   - [X] - Custom window decorations
   - [X] - Update project editor window
   - [X] - Update view mode for markdown
+  - [X] - Add threads
   - [ ] - Context menu for notes
   - [ ] - Context menu for tasks
   - [ ] - Context menu for projects
   - [ ] - Light theme
   - [ ] - Theme swither
-  - [ ] - Add threads
 ******
   - [X] - Saving notes to MD files
   - [X] - Saving a list of tasks in the DB
@@ -152,19 +152,22 @@
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
   - [X] - Update markdown render ( migrate to QWebEngineView )
-  - [ ] - Functionality of moving notes
   - [X] - Fix visual bugs
   - [X] - Fix notes path bug
-  - [ ] - Using marked js
+  - [X] - Using marked js
   - [X] - Markdown to HTML converter
   - [X] - Markdown to PDF converter
+  - [ ] - Functionality of moving notes
+  - [ ] - Fix markdown rendering
 ******
+  - [X] - Update shortcuts
   - [ ] - Multilang
   - [ ] - Migrate to CMake
-  - [X] - Update shortcuts
 ******
-  - [ ] - Git Api
+  - [X] - Git Api
   - [ ] - Git Sync
+  - [ ] - Add issues page
+  - [ ] - Add wiki page
 
 </details>
 
