@@ -24,6 +24,8 @@
     <a href="https://discord.gg/KK4Xdcqb"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/></a>
 </div>
 
+<img src="https://repobeats.axiom.co/api/embed/84bb3c292d2256a4d52ec4cdfca3da36b9e981cb.svg" />
+
 <details open>
   <summary align="center">Install CodeKeeper:</summary>
   
