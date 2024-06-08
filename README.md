@@ -1,6 +1,10 @@
-<h1 align="center">CodeKeeper</h1>
-<h3 align="center">Projects manager for developers</h3>
-<img src="imgs/markdown.png" align="center"/>
+<div class="header" align="center">
+    <h1 align="center">CodeKeeper</h1>
+    <h3 align="center">Notes and projects manager for developers</h3>
+    <br><br>    
+    <img align="center" src="imgs/logo.png" align="center" width="50%" />
+    <br><br>
+</div>
 
 <br><br>
     <div align="center">
@@ -21,8 +25,11 @@
     <img src="https://img.shields.io/badge/markdown-%231c1c29.svg?style=for-the-badge&logo=markdown&logoColor=white" style="border-radius: 5px;"/>
     <img src="https://img.shields.io/badge/github-%231c1c29.svg?style=for-the-badge&logo=github&logoColor=white" style="border-radius: 5px;"/>
     <br><br>
-    <a href="https://discord.gg/KK4Xdcqb"><img src="https://img.shields.io/discord/1238858182403559505.svg?label=Discord&logo=Discord&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/></a>
 </div>
+
+<img src="https://repobeats.axiom.co/api/embed/84bb3c292d2256a4d52ec4cdfca3da36b9e981cb.svg" />
+
+<br><br>
 
 <details open>
   <summary align="center">Install CodeKeeper:</summary>
@@ -47,8 +54,9 @@
   <img src="imgs/5.png" />
   <br>
   <img src="imgs/6.png" />
-
 </details>
+
+<br>
 
 <details align="center">
 <summary align="center">Shortcuts:</summary>
@@ -114,8 +122,9 @@
     <td>Open settings</td>
   </tr>
 </table>
-
 </details>
+
+<br>
 
 <details align="center">
 <summary align="center">Tasks:</summary>
@@ -123,12 +132,12 @@
   - [X] - Custom window decorations
   - [X] - Update project editor window
   - [X] - Update view mode for markdown
+  - [X] - Add threads
   - [ ] - Context menu for notes
   - [ ] - Context menu for tasks
   - [ ] - Context menu for projects
   - [ ] - Light theme
   - [ ] - Theme swither
-  - [ ] - Add threads
 ******
   - [X] - Saving notes to MD files
   - [X] - Saving a list of tasks in the DB
@@ -143,20 +152,29 @@
   - [X] - Note-taking functionality
   - [X] - Task creation functionality
   - [X] - Update markdown render ( migrate to QWebEngineView )
-  - [ ] - Functionality of moving notes
   - [X] - Fix visual bugs
   - [X] - Fix notes path bug
-  - [ ] - Using marked js
+  - [X] - Using marked js
   - [X] - Markdown to HTML converter
   - [X] - Markdown to PDF converter
+  - [ ] - Functionality of moving notes
+  - [ ] - Fix markdown rendering
 ******
+  - [X] - Update shortcuts
   - [ ] - Multilang
   - [ ] - Migrate to CMake
-  - [X] - Update shortcuts
 ******
-  - [ ] - Git Api
+  - [X] - Git Api
   - [ ] - Git Sync
+  - [ ] - Add issues page
+  - [ ] - Add wiki page
 
 </details>
 
-<div align="center"><img src="https://wakatime.com/badge/user/018e8f78-65a7-4aa8-8c67-51796499853b/project/018e8f7e-5c5a-471e-ba73-04384fbc3cda.svg?&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/></div>
+<br>
+
+<div align="center">
+    <br><br><br>
+    <img src="https://wakatime.com/badge/user/018e8f78-65a7-4aa8-8c67-51796499853b/project/018e8f7e-5c5a-471e-ba73-04384fbc3cda.svg?&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/>
+    <br><br><br>
+</div>

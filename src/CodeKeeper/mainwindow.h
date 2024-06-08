@@ -58,7 +58,7 @@ protected:
         QFileInfo fileInfo(filePath);
         QString fileSuffix = fileInfo.suffix();
 
-        qDebug() << "\033[0m\033[32m[Dropped file]:" << filePath;
+        qDebug() << "[Dropped file]:" << filePath;
 
         if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md") {
             QString newLine = "[Dropped file](" + filePath + ")";
@@ -149,7 +149,7 @@ public:
     bool isRepoSize;
 
 private slots:
-    QString getRepositoryData(QString git_url);
+    QString getRepositoryData(QString git_url, QTableWidget *table);
 
     void openSettingsWindow();
     void fOpenAccountWindow();

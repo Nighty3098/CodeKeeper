@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QTime startup;
     startup.start();
 
-    qDebug() << "\033[0m\033[32mStarting CodeKeeper";
+    qDebug() << "Starting CodeKeeper";
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
@@ -903,7 +903,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         loadTasks();
         loadProjects();
 
-        qDebug() << "\033[0m\033[32mdbThread started";
+        qDebug() << "dbThread started";
     });
     dbThread->start();
 
@@ -912,12 +912,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         int font_size_int = font_size.toInt();
         setFontPr1(&selectedFont, &font_size_int);
 
-        qDebug() << "\033[0m\033[32mstyleThread started";
+        qDebug() << "styleThread started";
     });
     styleThread->start();
 
-    qDebug() << "\033[0m\033[32m" << dir;
-    qDebug() << "\033[0m\033[32mLoad time:" << startup.elapsed() << "ms";
+    qDebug() << "" << dir;
+    qDebug() << "Load time:" << startup.elapsed() << "ms";
 }
 
 MainWindow::~MainWindow()
