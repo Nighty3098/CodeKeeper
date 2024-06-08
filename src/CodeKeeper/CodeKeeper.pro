@@ -21,6 +21,7 @@ SOURCES += \
     keeperFunc/tasksFunc.cpp \
     keeperFunc/projectsFunc.cpp \
     keeperFunc/notesFunc.cpp \
+    keeperFunc/getProjectInfo.cpp \
     syncFunc/functional.cpp \
     sql_db/projectsDB.cpp \
     sql_db/tasksDB.cpp \

@@ -805,7 +805,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             if (lastModified.isValid()) {
                 QString toolTip = "Last modified: " + lastModified.toString();
                 notesList->setToolTip(toolTip);
-                qDebug() << "🔸 " << toolTip;
+                qDebug() << toolTip;
             }
         }
     });
