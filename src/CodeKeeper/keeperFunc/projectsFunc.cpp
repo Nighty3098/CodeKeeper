@@ -130,7 +130,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QTabWidget *tabs = new QTabWidget();
         tabs->setMovable(true);
-        tabs->setTabPosition(QTabWidget::South);
+        // tabs->setTabPosition(QTabWidget::South);
 
         QWidget *projectTab = new QWidget();
         QGridLayout mainLayout(projectTab);
@@ -227,10 +227,31 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(cancelBtn, 7, 0, 1, 2, Qt::AlignCenter);
         mainLayout.addWidget(lastMod, 5, 0, 1, 2, Qt::AlignCenter);
 
+        QWidget *issuesTab = new QWidget();
+        QGridLayout issuesLayout(issuesTab);
+
+        QLabel *issuesLabel = new QLabel();
+        issuesLabel->setWordWrap(true);
+        issuesLabel->setTextFormat(Qt::RichText);
+        issuesLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+        issuesLabel->setText("Issues");
+        issuesLabel->setOpenExternalLinks(true);
+        issuesLabel->setFont(selectedFont);
+        issuesLabel->setStyleSheet("font-size: " + font_size + "pt;");
+        issuesLabel->setAlignment(Qt::AlignCenter);
+        issuesLayout.addWidget(issuesLabel, 0, 0, 1, 3);
+
+        tabs->addTab(projectTab, "Project");
+        tabs->addTab(issuesTab, "Issues");
+
+        centralLayout->addWidget(tabs);
+
         QThread *thread = new QThread;
-        QObject::connect(thread, &QThread::started, this, [this, projectData, git_stats]() {
-            getRepositoryData(projectData[1], git_stats);
-        });
+        QObject::connect(thread, &QThread::started, this,
+                         [this, projectData, git_stats, issuesLabel]() {
+                             getRepositoryData(projectData[1], git_stats);
+                             issuesLabel->setText(getProjectIssues(projectData[1]));
+                         });
         thread->start();
 
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
@@ -265,22 +286,13 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             // createGitBadges(repo, git_stats);
 
             QThread *thread = new QThread;
-            QObject::connect(
-                    thread, &QThread::started, this,
-                    [this, projectData, repo, git_stats]() { getRepositoryData(repo, git_stats); });
+            QObject::connect(thread, &QThread::started, this,
+                             [this, projectData, repo, git_stats, issuesLabel]() {
+                                 getRepositoryData(repo, git_stats);
+                                 issuesLabel->setText(getProjectIssues(repo));
+                             });
             thread->start();
         });
-
-
-
-
-        QWidget *issuesTab = new QWidget();
-        QGridLayout issuesLayout(issuesTab);
-
-        tabs->addTab(projectTab, "Project");
-        tabs->addTab(issuesTab, "Issues");
-
-        centralLayout->addWidget(tabs);
 
         dialog.exec();
     } else {
