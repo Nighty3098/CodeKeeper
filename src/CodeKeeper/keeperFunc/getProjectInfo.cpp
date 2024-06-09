@@ -135,29 +135,27 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     createdAt = obj["created_at"].toString();
     QDateTime createdDate = QDateTime::fromString(createdAt, Qt::ISODate);
     createdAt = createdDate.toString("dd MMM yyyy hh:mm");
-    
+
     openIssues = QString::number(obj["open_issues"].toInt());
 
     // repoData += " \n Watchers: " + QString::number(obj["watchers"].toInt()) + " ";
     forks = QString::number(obj["forks"].toInt());
     lang = obj["language"].toString();
-    
-    
+
     stars = QString::number(obj["stargazers_count"].toInt());
-    
+
     qint64 size = obj["size"].toDouble();
     repoSize = formatFileSize(size);
-
 
     if (obj.contains("license")) {
         QJsonObject licenseObj = obj["license"].toObject();
         if (licenseObj.contains("name")) {
-                license = licenseObj["name"].toString() + " ";
+            license = licenseObj["name"].toString() + " ";
         } else {
-                qDebug() << "License not found";
+            qDebug() << "License not found";
         }
     } else {
-            qDebug() << "License not found";
+        qDebug() << "License not found";
     }
 
     QUrl commitUrl("https://api.github.com/repos/" + repo + "/commits");
@@ -227,7 +225,6 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
 
     totalDownloads = QString::number(iTotalDownloads);
 
-
     // Release info
     QUrl releasesUrl("https://api.github.com/repos/" + repo + "/releases/latest");
     releasesUrl.setQuery(query);
@@ -252,7 +249,6 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     QJsonObject releasesObj = releasesDoc.object();
     qDebug() << releasesDoc;
 
-    
     release = releasesObj["name"].toString();
 
     dateStr = releasesObj["published_at"].toString();
@@ -355,8 +351,6 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
         table->item(i, 0)->setTextAlignment(Qt::AlignCenter);
     }
 
-
-
     for (int row = 0; row < table->rowCount(); ++row) {
         for (int col = 0; col < table->columnCount(); ++col) {
             QTableWidgetItem *item = table->item(row, col);
@@ -367,4 +361,52 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     }
 
     return repoData;
+}
+
+QString MainWindow::getProjectIssues(QString git_url)
+{
+    int maxLength = 120;
+    QString prefix = "https://github.com/";
+    QString repo = git_url.replace(prefix, "");
+    QString issuesData;
+
+    QUrl url("https://api.github.com/repos/" + repo + "/issues");
+    QNetworkRequest request(url);
+
+    QNetworkAccessManager manager;
+    QNetworkReply *reply = manager.get(request);
+
+    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+
+    loop.exec();
+
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray data = reply->readAll();
+        QJsonDocument json = QJsonDocument::fromJson(data);
+        QJsonArray issues = json.array();
+
+        qDebug() << json;
+
+        foreach (const QJsonValue &issue, issues) {
+            QJsonObject issueObject = issue.toObject();
+            QString title = issueObject["title"].toString();
+            QString body = issueObject["body"].toString();
+            QString shortBody = body.left(maxLength);
+            QString link = issueObject["html_url"].toString();
+
+            issuesData += "<br><br><h2>" + title + "</h2>" + shortBody + "<br><br><a style='color: #84a0bf; text-decoration: none;' href=\"" + link + "\">Open</a><br>";
+        }
+    } else {
+        qWarning() << "Error: " << reply->errorString();
+    }
+    reply->deleteLater();
+
+    qDebug() << issuesData;
+    return issuesData;
 }

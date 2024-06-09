@@ -122,9 +122,18 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(400, 550);
+        dialog.setFixedSize(420, 550);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+
+        QVBoxLayout *centralLayout = new QVBoxLayout(&dialog);
+
+        QTabWidget *tabs = new QTabWidget();
+        tabs->setMovable(true);
+        // tabs->setTabPosition(QTabWidget::South);
+
+        QWidget *projectTab = new QWidget();
+        QGridLayout mainLayout(projectTab);
 
         QString data = item->text();
         QStringList splitData = data.split("\n");
@@ -137,8 +146,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QStringList projectData = GetProjectData(&PTitle, &PStatus, &PGit);
         qDebug() << "Open project: " << projectData[0] << " " << projectData[1] << " "
                  << projectData[2] << " " << projectData[3] << " " << projectData[4];
-
-        QGridLayout mainLayout(&dialog);
 
         QLineEdit *title = new QLineEdit();
         title->setAlignment(Qt::AlignCenter);
@@ -155,7 +162,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         linkToGit->setFont(selectedFont);
 
         QComboBox *documentation = new QComboBox();
-        documentation->setFixedSize(190, 20);
+        documentation->setFixedSize(200, 20);
         documentation->setFont(selectedFont);
 
         QLabel *lastMod = new QLabel();
@@ -220,10 +227,31 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(cancelBtn, 7, 0, 1, 2, Qt::AlignCenter);
         mainLayout.addWidget(lastMod, 5, 0, 1, 2, Qt::AlignCenter);
 
+        QWidget *issuesTab = new QWidget();
+        QGridLayout issuesLayout(issuesTab);
+
+        QLabel *issuesLabel = new QLabel();
+        issuesLabel->setWordWrap(true);
+        issuesLabel->setTextFormat(Qt::RichText);
+        issuesLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+        issuesLabel->setText("Issues");
+        issuesLabel->setOpenExternalLinks(true);
+        issuesLabel->setFont(selectedFont);
+        issuesLabel->setStyleSheet("font-size: " + font_size + "pt;");
+        issuesLabel->setAlignment(Qt::AlignCenter);
+        issuesLayout.addWidget(issuesLabel, 0, 0, 1, 3);
+
+        tabs->addTab(projectTab, "Project");
+        tabs->addTab(issuesTab, "Issues");
+
+        centralLayout->addWidget(tabs);
+
         QThread *thread = new QThread;
-        QObject::connect(thread, &QThread::started, this, [this, projectData, git_stats]() {
-            getRepositoryData(projectData[1], git_stats);
-        });
+        QObject::connect(thread, &QThread::started, this,
+                         [this, projectData, git_stats, issuesLabel]() {
+                             getRepositoryData(projectData[1], git_stats);
+                             issuesLabel->setText(getProjectIssues(projectData[1]));
+                         });
         thread->start();
 
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
@@ -258,9 +286,11 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             // createGitBadges(repo, git_stats);
 
             QThread *thread = new QThread;
-            QObject::connect(
-                    thread, &QThread::started, this,
-                    [this, projectData, repo, git_stats]() { getRepositoryData(repo, git_stats); });
+            QObject::connect(thread, &QThread::started, this,
+                             [this, projectData, repo, git_stats, issuesLabel]() {
+                                 getRepositoryData(repo, git_stats);
+                                 issuesLabel->setText(getProjectIssues(repo));
+                             });
             thread->start();
         });
 

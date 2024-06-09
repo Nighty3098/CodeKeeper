@@ -150,6 +150,7 @@ public:
 
 private slots:
     QString getRepositoryData(QString git_url, QTableWidget *table);
+    QString getProjectIssues(QString git_url);
     
     void openSettingsWindow();
     void fOpenAccountWindow();
