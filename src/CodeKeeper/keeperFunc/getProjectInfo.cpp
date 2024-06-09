@@ -397,10 +397,16 @@ QString MainWindow::getProjectIssues(QString git_url)
             QJsonObject issueObject = issue.toObject();
             QString title = issueObject["title"].toString();
             QString body = issueObject["body"].toString();
+            QString creator = issueObject["user"].toObject()["login"].toString();
+            QString creatorUrl = issueObject["user"].toObject()["html_url"].toString();
             QString shortBody = body.left(maxLength);
             QString link = issueObject["html_url"].toString();
 
-            issuesData += "<br><br><h2>" + title + "</h2>" + shortBody + "<br><br><a style='color: #84a0bf; text-decoration: none;' href=\"" + link + "\">Open</a><br>";
+            issuesData += "<h2 align='center'> - </h2><h2>" + title
+                    + "</h2><br><a style='color: #84a0bf; text-decoration: none;' href=\""
+                    + creatorUrl + "\">Created by " + creator + " </a><br><br>" + shortBody
+                    + "<br><br><a style='color: #84a0bf; text-decoration: none;' href=\"" + link
+                    + "\">Open</a><br>";
         }
     } else {
         qWarning() << "Error: " << reply->errorString();
