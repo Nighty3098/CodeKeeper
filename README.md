@@ -24,10 +24,11 @@
     <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=black&color=7dc4e4" style="border-radius: 5px;"/>
     <img src="https://img.shields.io/badge/markdown-%231c1c29.svg?style=for-the-badge&logo=markdown&logoColor=white" style="border-radius: 5px;"/>
     <img src="https://img.shields.io/badge/github-%231c1c29.svg?style=for-the-badge&logo=github&logoColor=white" style="border-radius: 5px;"/>
-    <br><br>
+    <br><br><br>
+    <img src="https://invidget.switchblade.xyz/r8jWX8ugDd" style="border-radius: 15px;"/>
+    <br><br><br>
+    <img src="https://repobeats.axiom.co/api/embed/84bb3c292d2256a4d52ec4cdfca3da36b9e981cb.svg" />
 </div>
-
-<img src="https://repobeats.axiom.co/api/embed/84bb3c292d2256a4d52ec4cdfca3da36b9e981cb.svg" />
 
 <br><br>
 

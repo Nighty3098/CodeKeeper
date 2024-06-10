@@ -263,8 +263,8 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     table->setColumnCount(2);
     table->setShowGrid(false);
 
-    table->setColumnWidth(0, 190);
-    table->setColumnWidth(1, 190);
+    table->setColumnWidth(0, 255);
+    table->setColumnWidth(1, 255);
 
     table->setRowHeight(0, 25);
     table->setRowHeight(1, 25);
@@ -397,10 +397,21 @@ QString MainWindow::getProjectIssues(QString git_url)
             QJsonObject issueObject = issue.toObject();
             QString title = issueObject["title"].toString();
             QString body = issueObject["body"].toString();
+            QString creator = issueObject["user"].toObject()["login"].toString();
+            QString creatorUrl = issueObject["user"].toObject()["html_url"].toString();
             QString shortBody = body.left(maxLength);
             QString link = issueObject["html_url"].toString();
 
-            issuesData += "<br><br><h2>" + title + "</h2>" + shortBody + "<br><br><a style='color: #84a0bf; text-decoration: none;' href=\"" + link + "\">Open</a><br>";
+            QString dateStr = issueObject["created_at"].toString();
+            QDateTime createDate = QDateTime::fromString(dateStr, Qt::ISODate);
+            QString date = createDate.toString("dd MMM yyyy hh:mm");
+
+            issuesData += "<div align='center' style='content'><h2 align='center'> - </h2><h2>"
+                    + title + "</h2><br><a style='color: #84a0bf; text-decoration: none;' href=\""
+                    + creatorUrl + "\">Created by " + creator + " </a>at " + date + "<br><br>"
+                    + shortBody
+                    + "<br><br><a style='color: #84a0bf; text-decoration: none;' href=\"" + link
+                    + "\">Open</a><br></div>";
         }
     } else {
         qWarning() << "Error: " << reply->errorString();
