@@ -122,7 +122,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(420, 550);
+        dialog.setFixedWidth(550);
+        dialog.setMinimumHeight(550);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -162,7 +163,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         linkToGit->setFont(selectedFont);
 
         QComboBox *documentation = new QComboBox();
-        documentation->setFixedSize(200, 20);
+        documentation->setMinimumSize(170, 20);
         documentation->setFont(selectedFont);
 
         QLabel *lastMod = new QLabel();
@@ -179,9 +180,13 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
                 "selection-background-color: #336fc9; show-decoration-selected: 1; font-size: "
                 + font_size + "pt; border: 0px;}");
 
-        /*QWebEngineView *git_stats = new QWebEngineView();
-        git_stats->page()->setBackgroundColor(Qt::transparent);
-        createGitBadges(projectData[1], git_stats);*/
+        git_stats->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
+        git_stats->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
+        git_stats->setContentsMargins(0, 0, 0, 0);
+
+        QVBoxLayout *layout = new QVBoxLayout;
+        layout->addWidget(git_stats);
+        layout->setAlignment(Qt::AlignCenter);
 
         QPushButton *saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
@@ -222,13 +227,13 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
         mainLayout.addWidget(documentation, 2, 0);
         mainLayout.addWidget(openButton, 2, 1);
-        mainLayout.addWidget(git_stats, 4, 0, 1, 2);
+        mainLayout.addLayout(layout, 4, 0, 1, 2);
         mainLayout.addWidget(saveDataBtn, 6, 0, 1, 2, Qt::AlignCenter);
         mainLayout.addWidget(cancelBtn, 7, 0, 1, 2, Qt::AlignCenter);
         mainLayout.addWidget(lastMod, 5, 0, 1, 2, Qt::AlignCenter);
 
         QWidget *issuesTab = new QWidget();
-        QGridLayout issuesLayout(issuesTab);
+        QVBoxLayout issuesLayout(issuesTab);
 
         QLabel *issuesLabel = new QLabel();
         issuesLabel->setWordWrap(true);
@@ -239,7 +244,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         issuesLabel->setFont(selectedFont);
         issuesLabel->setStyleSheet("font-size: " + font_size + "pt;");
         issuesLabel->setAlignment(Qt::AlignCenter);
-        issuesLayout.addWidget(issuesLabel, 0, 0, 1, 3);
+        issuesLayout.addWidget(issuesLabel);
 
         tabs->addTab(projectTab, "Project");
         tabs->addTab(issuesTab, "Issues");

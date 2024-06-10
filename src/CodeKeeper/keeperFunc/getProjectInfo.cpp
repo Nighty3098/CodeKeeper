@@ -263,8 +263,8 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     table->setColumnCount(2);
     table->setShowGrid(false);
 
-    table->setColumnWidth(0, 190);
-    table->setColumnWidth(1, 190);
+    table->setColumnWidth(0, 255);
+    table->setColumnWidth(1, 255);
 
     table->setRowHeight(0, 25);
     table->setRowHeight(1, 25);
@@ -406,11 +406,12 @@ QString MainWindow::getProjectIssues(QString git_url)
             QDateTime createDate = QDateTime::fromString(dateStr, Qt::ISODate);
             QString date = createDate.toString("dd MMM yyyy hh:mm");
 
-            issuesData += "<h2 align='center'> - </h2><h2>" + title
-                    + "</h2><br><a style='color: #84a0bf; text-decoration: none;' href=\""
-                    + creatorUrl + "\">Created by " + creator + " </a>at "+date+"<br><br>" + shortBody
+            issuesData += "<div align='center' style='content'><h2 align='center'> - </h2><h2>"
+                    + title + "</h2><br><a style='color: #84a0bf; text-decoration: none;' href=\""
+                    + creatorUrl + "\">Created by " + creator + " </a>at " + date + "<br><br>"
+                    + shortBody
                     + "<br><br><a style='color: #84a0bf; text-decoration: none;' href=\"" + link
-                    + "\">Open</a><br>";
+                    + "\">Open</a><br></div>";
         }
     } else {
         qWarning() << "Error: " << reply->errorString();
