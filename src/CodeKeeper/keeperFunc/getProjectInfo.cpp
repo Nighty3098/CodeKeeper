@@ -402,9 +402,13 @@ QString MainWindow::getProjectIssues(QString git_url)
             QString shortBody = body.left(maxLength);
             QString link = issueObject["html_url"].toString();
 
+            QString dateStr = issueObject["created_at"].toString();
+            QDateTime createDate = QDateTime::fromString(dateStr, Qt::ISODate);
+            QString date = createDate.toString("dd MMM yyyy hh:mm");
+
             issuesData += "<h2 align='center'> - </h2><h2>" + title
                     + "</h2><br><a style='color: #84a0bf; text-decoration: none;' href=\""
-                    + creatorUrl + "\">Created by " + creator + " </a><br><br>" + shortBody
+                    + creatorUrl + "\">Created by " + creator + " </a>at "+date+"<br><br>" + shortBody
                     + "<br><br><a style='color: #84a0bf; text-decoration: none;' href=\"" + link
                     + "\">Open</a><br>";
         }
