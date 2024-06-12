@@ -21,13 +21,14 @@
     <img src="https://img.shields.io/github/languages/count/Nighty3098/CodeKeeper?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22" style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29" style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/forks/Nighty3098/CodeKeeper?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=1c1c29"  style="border-radius: 5px;"/>
-    <br><br>
-    <img src="https://img.shields.io/badge/c  ++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=black&color=7dc4e4" style="border-radius: 5px;"/>
-    <img src="https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=black&color=a6e0b8" style="border-radius: 5px;"/>
-    <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=black&color=7dc4e4" style="border-radius: 5px;"/>
-    <img src="https://img.shields.io/badge/markdown-%231c1c29.svg?style=for-the-badge&logo=markdown&logoColor=white" style="border-radius: 5px;"/>
-    <img src="https://img.shields.io/badge/github-%231c1c29.svg?style=for-the-badge&logo=github&logoColor=white" style="border-radius: 5px;"/>
-    <br><br><br>
+    <br><br><hr><br><br>
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_C++.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_C.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_QT.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_SQL.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_GIT.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_API.png?raw=true" height="50px" />
+    <br><br><hr><br><br>
     <a href="https://discord.gg/tnHSEc2cZv"><img src="https://invidget.switchblade.xyz/r8jWX8ugDd" style="border-radius: 15px;"/></a><br>
     <br><br><br>
     <img src="https://repobeats.axiom.co/api/embed/84bb3c292d2256a4d52ec4cdfca3da36b9e981cb.svg" />

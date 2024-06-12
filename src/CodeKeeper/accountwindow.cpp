@@ -22,6 +22,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     getSettingsData();
 
     profilePicture = new QLabel();
+    profilePicture->setText("Loading...");
     profilePicture->setStyleSheet("border-radius: 145px;");
 
     profileInfo = new QLabel();
