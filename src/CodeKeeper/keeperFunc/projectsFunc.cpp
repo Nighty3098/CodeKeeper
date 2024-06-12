@@ -122,8 +122,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedWidth(550);
-        dialog.setMinimumHeight(550);
+        dialog.setFixedSize(550, 550);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -255,7 +254,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QObject::connect(thread, &QThread::started, this,
                          [this, projectData, git_stats, issuesLabel]() {
                              getRepositoryData(projectData[1], git_stats);
-                             issuesLabel->setText(getProjectIssues(projectData[1]));
+                             issuesLabel->setHtml(getProjectIssues(projectData[1]));
                          });
         thread->start();
 
@@ -294,7 +293,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             QObject::connect(thread, &QThread::started, this,
                              [this, projectData, repo, git_stats, issuesLabel]() {
                                  getRepositoryData(repo, git_stats);
-                                 issuesLabel->setText(getProjectIssues(repo));
+                                 issuesLabel->setHtml(getProjectIssues(repo));
                              });
             thread->start();
         });

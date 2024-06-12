@@ -368,7 +368,7 @@ QString MainWindow::getProjectIssues(QString git_url)
     int maxLength = 150;
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
-    QString issuesData;
+    QString issuesData = "<html style='display: flex; align-items: center; flex-direction: column; vertical-align: middle; justify-content: center;'>";
 
     QUrl url("https://api.github.com/repos/" + repo + "/issues");
     QNetworkRequest request(url);
@@ -417,6 +417,8 @@ QString MainWindow::getProjectIssues(QString git_url)
         qWarning() << "Error: " << reply->errorString();
     }
     reply->deleteLater();
+
+    issuesData += "</html>";
 
     qDebug() << issuesData;
     return issuesData;
