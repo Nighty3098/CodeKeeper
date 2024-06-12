@@ -28,7 +28,7 @@
     <img src="https://img.shields.io/badge/markdown-%231c1c29.svg?style=for-the-badge&logo=markdown&logoColor=white" style="border-radius: 5px;"/>
     <img src="https://img.shields.io/badge/github-%231c1c29.svg?style=for-the-badge&logo=github&logoColor=white" style="border-radius: 5px;"/>
     <br><br><br>
-    <img src="https://invidget.switchblade.xyz/r8jWX8ugDd" style="border-radius: 15px;"/>
+    <a href="https://discord.gg/tnHSEc2cZv"><img src="https://invidget.switchblade.xyz/r8jWX8ugDd" style="border-radius: 15px;"/></a><br>
     <br><br><br>
     <img src="https://repobeats.axiom.co/api/embed/84bb3c292d2256a4d52ec4cdfca3da36b9e981cb.svg" />
 </div>
