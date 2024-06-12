@@ -46,6 +46,7 @@ private slots:
     void getSettingsData();
     void setImageFromUrl(const QString &url, QLabel *label);
     void onOpenRepoClicked();
+    int getStarsCount(const QString &username);
 };
 
 #endif // ACCOUNTWINDOW_H

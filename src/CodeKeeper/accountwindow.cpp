@@ -15,7 +15,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     setCentralWidget(centralWidget);
 
     mainLayout = new QGridLayout(centralWidget);
-    setFixedSize(400, 660);
+    setFixedSize(400, 700);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -25,9 +25,9 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     profilePicture->setStyleSheet("border-radius: 145px;");
 
     profileInfo = new QLabel();
-    profileInfo->setText(git_user);
+    profileInfo->setText("Loading...");
     profileInfo->setAlignment(Qt::AlignHCenter);
-
+    
     codeKeeperStats = new QLabel();
 
     MainWindow *mainWindow = static_cast<MainWindow *>(parent);
