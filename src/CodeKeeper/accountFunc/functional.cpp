@@ -76,6 +76,59 @@ void AccountWindow::setFontStyle()
                                "}");
 }
 
+int AccountWindow::getStarsCount(const QString &username) {
+    QNetworkAccessManager manager;
+    QUrl url("https://api.github.com/users/" + username + "/repos");
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QNetworkReply *reply = manager.get(request);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    if (reply->error()) {
+        qDebug() << "Error:" << reply->errorString();
+        return 0;
+    }
+
+    QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
+    QJsonArray repos = json.array();
+
+    int totalStars = 0;
+    for (const QJsonValue &repo : repos) {
+        QJsonObject repoObject = repo.toObject();
+        QString repoUrl = repoObject["url"].toString();
+
+        QNetworkRequest repoRequest(repoUrl);
+        repoRequest.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+        repoRequest.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+        repoRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+        repoRequest.setRawHeader("Accept", "application/vnd.github.v3+json");;
+
+        QNetworkReply *repoReply = manager.get(repoRequest);
+        QEventLoop repoLoop;
+        QObject::connect(repoReply, &QNetworkReply::finished, &repoLoop, &QEventLoop::quit);
+        repoLoop.exec();
+
+        if (repoReply->error()) {
+            qDebug() << "Error:" << repoReply->errorString();
+            continue;
+        }
+
+        QJsonDocument repoJson = QJsonDocument::fromJson(repoReply->readAll());
+        QJsonObject repoJsonObject = repoJson.object();
+        int stars = repoJsonObject["stargazers_count"].toInt();
+
+        totalStars += stars;
+    }
+
+    return totalStars;
+}
+
 void AccountWindow::setUserData(const QString &username, QLabel *label)
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
@@ -118,9 +171,11 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
 
         qDebug() << "" << doc;
 
-        profileInfo->setText("Public repos: " + QString::number(obj["public_repos"].toInt())
+        profileInfo->setText( obj["bio"].toString() + "\nPublic repos: " + QString::number(obj["public_repos"].toInt())
                              + "\n\nFollowing: " + QString::number(obj["following"].toInt())
-                             + "\n\nFollowers: " + QString::number(obj["followers"].toInt()));
+                             + "\n\nFollowers: " + QString::number(obj["followers"].toInt())
+                             + "\n\nStars: " + QString::number(getStarsCount(git_user))
+                             + "\n____________________");
 
         setImageFromUrl(obj["avatar_url"].toString(), profilePicture);
         reply->deleteLater();
