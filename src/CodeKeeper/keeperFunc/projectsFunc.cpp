@@ -235,9 +235,9 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QWidget *issuesTab = new QWidget();
         QVBoxLayout issuesLayout(issuesTab);
 
-        QLabel *issuesLabel = new QLabel();
-        issuesLabel->setWordWrap(true);
-        issuesLabel->setTextFormat(Qt::RichText);
+        QTextBrowser *issuesLabel = new QTextBrowser();
+        // issuesLabel->setWordWrap(true);
+        // issuesLabel->setTextFormat(Qt::RichText);
         issuesLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
         issuesLabel->setText("Issues");
         issuesLabel->setOpenExternalLinks(true);
