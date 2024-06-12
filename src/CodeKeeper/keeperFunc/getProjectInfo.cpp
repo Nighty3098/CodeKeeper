@@ -365,7 +365,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
 
 QString MainWindow::getProjectIssues(QString git_url)
 {
-    int maxLength = 120;
+    int maxLength = 150;
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
     QString issuesData;
