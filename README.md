@@ -22,12 +22,12 @@
     <img class="badge" src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29" style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/forks/Nighty3098/CodeKeeper?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=1c1c29"  style="border-radius: 5px;"/>
     <br><br><hr><br><br>
-    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_C++.png?raw=true" height="50px" />
-    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_C.png?raw=true" height="50px" />
-    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_QT.png?raw=true" height="50px" />
-    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_SQL.png?raw=true" height="50px" />
-    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_GIT.png?raw=true" height="50px" />
-    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges_API.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_C++.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_C.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_QT.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_SQL.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_GIT.png?raw=true" height="50px" />
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_API.png?raw=true" height="50px" />
     <br><br><hr><br><br>
     <a href="https://discord.gg/tnHSEc2cZv"><img src="https://invidget.switchblade.xyz/r8jWX8ugDd" style="border-radius: 15px;"/></a><br>
     <br><br><br>
