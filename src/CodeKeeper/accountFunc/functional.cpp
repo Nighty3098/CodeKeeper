@@ -76,7 +76,8 @@ void AccountWindow::setFontStyle()
                                "}");
 }
 
-int AccountWindow::getStarsCount(const QString &username) {
+int AccountWindow::getStarsCount(const QString &username)
+{
     QNetworkAccessManager manager;
     QUrl url("https://api.github.com/users/" + username + "/repos");
     QNetworkRequest request(url);
@@ -107,7 +108,8 @@ int AccountWindow::getStarsCount(const QString &username) {
         repoRequest.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
         repoRequest.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
         repoRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
-        repoRequest.setRawHeader("Accept", "application/vnd.github.v3+json");;
+        repoRequest.setRawHeader("Accept", "application/vnd.github.v3+json");
+        ;
 
         QNetworkReply *repoReply = manager.get(repoRequest);
         QEventLoop repoLoop;
@@ -171,11 +173,11 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
 
         qDebug() << "" << doc;
 
-        profileInfo->setText( obj["bio"].toString() + "\nPublic repos: " + QString::number(obj["public_repos"].toInt())
-                             + "\n\nFollowing: " + QString::number(obj["following"].toInt())
-                             + "\n\nFollowers: " + QString::number(obj["followers"].toInt())
-                             + "\n\nStars: " + QString::number(getStarsCount(git_user))
-                             + "\n____________________");
+        profileInfo->setText(obj["bio"].toString() + "\nPublic repos: "
+                             + QString::number(obj["public_repos"].toInt()) + "\n\nFollowing: "
+                             + QString::number(obj["following"].toInt()) + "\n\nFollowers: "
+                             + QString::number(obj["followers"].toInt()) + "\n\nStars: "
+                             + QString::number(getStarsCount(git_user)) + "\n____________________");
 
         setImageFromUrl(obj["avatar_url"].toString(), profilePicture);
         reply->deleteLater();

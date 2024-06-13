@@ -28,7 +28,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     profileInfo = new QLabel();
     profileInfo->setText("Loading...");
     profileInfo->setAlignment(Qt::AlignHCenter);
-    
+
     codeKeeperStats = new QLabel();
 
     MainWindow *mainWindow = static_cast<MainWindow *>(parent);
