@@ -263,8 +263,8 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     table->setColumnCount(2);
     table->setShowGrid(false);
 
-    table->setColumnWidth(0, 255);
-    table->setColumnWidth(1, 255);
+    table->setColumnWidth(0, 230);
+    table->setColumnWidth(1, 230);
 
     table->setRowHeight(0, 25);
     table->setRowHeight(1, 25);
@@ -284,6 +284,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     table->setItem(0, 0, new QTableWidgetItem("Repo"));
     table->setItem(0, 1, new QTableWidgetItem(name));
     table->item(0, 0)->setTextAlignment(Qt::AlignCenter);
+    table->item(0, 1)->setTextAlignment(Qt::AlignCenter);
 
     QStringList dataList, textList;
 
@@ -356,6 +357,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
             QTableWidgetItem *item = table->item(row, col);
             if (item) {
                 item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                item->setTextAlignment(Qt::AlignCenter);
             }
         }
     }
