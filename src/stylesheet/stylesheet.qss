@@ -3,6 +3,17 @@ QDialog {
     border-width: 2px;
 }
 
+QTableWidget {
+    background-color: #0d1117;
+    alternate-background-color: #171b22;
+    show-decoration-selected: 0;
+    border: 0px;
+    border-radius: 5px;
+}
+QTableWidget::item {
+    border-radius: 5px;
+}
+
 QWidget {
     background-color: #0D1117;
     border-width: 2px;

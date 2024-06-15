@@ -122,7 +122,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(550, 550);
+        dialog.setFixedSize(500, 550);
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -157,6 +157,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QHBoxLayout *controlButtons = new QHBoxLayout();
 
         QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
         controlButtons->addWidget(cancelBtn);
         controlButtons->addItem(spacer);
         controlButtons->addWidget(saveDataBtn);
@@ -165,7 +166,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QTabWidget *tabs = new QTabWidget();
         tabs->setMovable(true);
-        // tabs->setTabPosition(QTabWidget::South);
+        tabs->setTabPosition(QTabWidget::South);
 
         QWidget *projectTab = new QWidget();
         QGridLayout mainLayout(projectTab);
@@ -209,18 +210,12 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QTableWidget *git_stats = new QTableWidget();
         git_stats->setFont(selectedFont);
-        git_stats->setStyleSheet(
-                "QTableWidget{ background-color: #0d1117; alternate-background-color: #171b22; "
-                "selection-background-color: #336fc9; show-decoration-selected: 1; font-size: "
-                + font_size + "pt; border: 0px;}");
+        git_stats->setStyleSheet("QTableWidget{font-size:" + font_size + "pt;}");
 
         git_stats->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
         git_stats->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
         git_stats->setContentsMargins(0, 0, 0, 0);
-
-        QVBoxLayout *layout = new QVBoxLayout;
-        layout->addWidget(git_stats);
-        layout->setAlignment(Qt::AlignCenter);
+        git_stats->setAlternatingRowColors(true);
 
         QPushButton *openButton = new QPushButton();
         openButton->setText("Open");
@@ -243,15 +238,13 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(linkToGit, 3, 0, 1, 2);
         mainLayout.addWidget(documentation, 4, 0);
         mainLayout.addWidget(openButton, 4, 1);
-        mainLayout.addLayout(layout, 5, 0, 1, 2, Qt::AlignCenter);
-        mainLayout.addWidget(lastMod, 7, 0, 1, 1, Qt::AlignRight);
+        mainLayout.addWidget(git_stats, 5, 0, 5, 2);
+        mainLayout.addWidget(lastMod, 10, 0, 1, 2, Qt::AlignCenter);
 
         QWidget *issuesTab = new QWidget();
         QVBoxLayout issuesLayout(issuesTab);
 
         QTextBrowser *issuesLabel = new QTextBrowser();
-        // issuesLabel->setWordWrap(true);
-        // issuesLabel->setTextFormat(Qt::RichText);
         issuesLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
         issuesLabel->setText("Issues");
         issuesLabel->setOpenExternalLinks(true);
@@ -286,7 +279,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             updateProjectData(&projectTitle, &projectLink, &projectDocumentation,
                               &projectCreatedTime, &PCreatedTime, &PGit);
 
-            dialog.close();
+            // dialog.close();
         });
 
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
