@@ -126,7 +126,42 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
+
+        QPushButton *saveDataBtn = new QPushButton();
+        saveDataBtn->setText("Save");
+        saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
+        saveDataBtn->setFixedSize(100, 25);
+        saveDataBtn->setIcon(QPixmap(":/save.png"));
+        saveDataBtn->setIconSize(QSize(10, 10));
+        saveDataBtn->setFont(selectedFont);
+
+        QPushButton *cancelBtn = new QPushButton("");
+        cancelBtn->setFixedSize(15, 15);
+        cancelBtn->setStyleSheet("QPushButton {"
+                                 "    border-color: rgba(0, 0, 0, 0);"
+                                 "    background-color: rgba(0, 0, 0, 0);"
+                                 "    background-image: url(':/red.png');"
+                                 "    background-repeat: no-repeat;"
+                                 "}"
+                                 "QPushButton:hover {"
+                                 "    border-color: rgba(0, 0, 0, 0);"
+                                 "    background-image: url(':/redHovered.png');"
+                                 "    background-repeat: no-repeat;"
+                                 "    background-color: rgba(0, 0, 0, 0);"
+                                 "}");
+
+
+
         QVBoxLayout *centralLayout = new QVBoxLayout(&dialog);
+
+        QHBoxLayout *controlButtons = new QHBoxLayout();
+
+        QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        controlButtons->addWidget(cancelBtn);
+        controlButtons->addItem(spacer);
+        controlButtons->addWidget(saveDataBtn);
+
+        centralLayout->addLayout(controlButtons);
 
         QTabWidget *tabs = new QTabWidget();
         tabs->setMovable(true);
@@ -187,24 +222,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         layout->addWidget(git_stats);
         layout->setAlignment(Qt::AlignCenter);
 
-        QPushButton *saveDataBtn = new QPushButton();
-        saveDataBtn->setText("Save");
-        saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        saveDataBtn->setFixedSize(100, 25);
-        saveDataBtn->setIcon(QPixmap(":/save.png"));
-        saveDataBtn->setIconSize(QSize(10, 10));
-        saveDataBtn->setFont(selectedFont);
-
-        QPushButton *cancelBtn = new QPushButton();
-        cancelBtn->setText("Cancel");
-        cancelBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        cancelBtn->setFixedSize(100, 25);
-        cancelBtn->setIcon(QPixmap(":/quit.png")
-                                   .scaled(font_size.toInt() + 3, font_size.toInt() + 3,
-                                           Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        cancelBtn->setIconSize(QSize(10, 10));
-        cancelBtn->setFont(selectedFont);
-
         QPushButton *openButton = new QPushButton();
         openButton->setText("Open");
         openButton->setStyleSheet("font-size: " + font_size + "pt;");
@@ -222,14 +239,12 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         loadDocumentations(dir, *documentation);
         documentation->setCurrentText(projectData[2]);
 
-        mainLayout.addWidget(title, 0, 0, 1, 2);
-        mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
-        mainLayout.addWidget(documentation, 2, 0);
-        mainLayout.addWidget(openButton, 2, 1);
-        mainLayout.addLayout(layout, 4, 0, 1, 2);
-        mainLayout.addWidget(saveDataBtn, 6, 0, 1, 2, Qt::AlignCenter);
-        mainLayout.addWidget(cancelBtn, 7, 0, 1, 2, Qt::AlignCenter);
-        mainLayout.addWidget(lastMod, 5, 0, 1, 2, Qt::AlignCenter);
+        mainLayout.addWidget(title, 2, 0, 1, 2);
+        mainLayout.addWidget(linkToGit, 3, 0, 1, 2);
+        mainLayout.addWidget(documentation, 4, 0);
+        mainLayout.addWidget(openButton, 4, 1);
+        mainLayout.addLayout(layout, 5, 0, 1, 2, Qt::AlignCenter);
+        mainLayout.addWidget(lastMod, 7, 0, 1, 1, Qt::AlignRight);
 
         QWidget *issuesTab = new QWidget();
         QVBoxLayout issuesLayout(issuesTab);
