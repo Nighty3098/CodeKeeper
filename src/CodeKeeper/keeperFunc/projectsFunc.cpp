@@ -126,7 +126,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         dialog.setWindowTitle(tr("Edit project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
-
         QPushButton *saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
         saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
@@ -149,8 +148,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
                                  "    background-repeat: no-repeat;"
                                  "    background-color: rgba(0, 0, 0, 0);"
                                  "}");
-
-
 
         QVBoxLayout *centralLayout = new QVBoxLayout(&dialog);
 
