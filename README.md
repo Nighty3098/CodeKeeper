@@ -22,7 +22,6 @@
     <img class="badge" src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29" style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/forks/Nighty3098/CodeKeeper?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=1c1c29"  style="border-radius: 5px;"/>
     <br><br>
-    <br>
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_cpp.png?raw=true" height="50px" />
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_c.png?raw=true" height="50px" />
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_qt.png?raw=true" height="50px" />
@@ -30,8 +29,6 @@
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_git.png?raw=true" height="50px" />
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_api.png?raw=true" height="50px" />
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_codekeeper.png?raw=true" height="50px" />
-    <br><br><hr><br><br>   
-    <a href="https://discord.gg/tnHSEc2cZv"><img src="https://invidget.switchblade.xyz/r8jWX8ugDd" style="border-radius: 15px;"/></a><br>
     <br><br>
     <p align="center">
         <a href = "https://github.com/iinsertNameHere/catnap/graphs/contributors">
@@ -39,7 +36,7 @@
         </a>
     </p>
     <br>
-    <img src="https://api.lucabubi.me/chart?username=Nighty3098&repository=CodeKeeper&color=yellow" />
+    <img src="https://api.lucabubi.me/chart?username=Nighty3098&repository=CodeKeeper&color=orange" />
     <img src="https://repobeats.axiom.co/api/embed/84bb3c292d2256a4d52ec4cdfca3da36b9e981cb.svg" />
 </div>
 
@@ -188,7 +185,7 @@
 <br>
 
 <div align="center">
-    <br><br><br>
+    <br><br>
     <img src="https://wakatime.com/badge/user/018e8f78-65a7-4aa8-8c67-51796499853b/project/018e8f7e-5c5a-471e-ba73-04384fbc3cda.svg?&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/>
     <br><br><br>
 </div>
