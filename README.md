@@ -39,6 +39,7 @@
         </a>
     </p>
     <br>
+    <img src="https://api.lucabubi.me/chart?username=Nighty3098&repository=CodeKeeper&color=yellow" />
     <img src="https://repobeats.axiom.co/api/embed/84bb3c292d2256a4d52ec4cdfca3da36b9e981cb.svg" />
 </div>
 
