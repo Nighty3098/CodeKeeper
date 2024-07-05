@@ -35,8 +35,12 @@
             <img src = "https://contrib.rocks/image?repo=Nighty3098/CodeKeeper">
         </a>
     </p>
+    <br><br>
+    <h3>If you have found bugs in our product or have suggestions, please write about them:</h3>
+    <a href="https://t.me/DXS_TechSupport_bot"><img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/techSupport.png?raw=true" height="35px" /></a>
     <br>
-    <img src="https://api.lucabubi.me/chart?username=Nighty3098&repository=CodeKeeper&color=orange" />
+    <a href="https://t.me/Night3098" target="blank"><img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/buttons_Telegram_2.png?raw=true" height="35px" /></a>
+    <br><br><br>
     <img src="https://repobeats.axiom.co/api/embed/84bb3c292d2256a4d52ec4cdfca3da36b9e981cb.svg" />
 </div>
 
