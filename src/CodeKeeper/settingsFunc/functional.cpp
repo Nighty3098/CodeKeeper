@@ -69,6 +69,8 @@ void SettingsWindow::checkUpdates()
                             " Update");
     downloadUpdate->setFixedSize(100, 25);
 
+    qDebug() << newAppVersion << "  " << currentAppVersion;
+
     if (newAppVersion == currentAppVersion) {
         updateInfoLabel->setText("You are running the latest version of the app.");
         verInfoLabel->setText("Current version: " + currentAppVersion);
@@ -92,7 +94,7 @@ void SettingsWindow::checkUpdates()
 
         qDebug() << "File path: " << dir;
 
-        downloadFileFromLatestRelease("DXS-SQUAD", "CodeKeeper", "CodeKeeper", updateInfoLabel,
+        downloadFileFromLatestRelease("DXS-GROUP", "CodeKeeper", "CodeKeeper", updateInfoLabel,
                                       git_user, git_token);
 
         verInfoLabel->hide();
@@ -100,7 +102,7 @@ void SettingsWindow::checkUpdates()
     });*/
 
     connect(downloadUpdate, &QPushButton::clicked, [&]() {
-        QDesktopServices::openUrl(QUrl("https://github.com/DXS-SQUAD/CodeKeeper/releases/latest"));
+        QDesktopServices::openUrl(QUrl("https://github.com/DXS-GROUP/CodeKeeper/releases/latest"));
     });
 
     dialog.exec();
@@ -250,10 +252,9 @@ void SettingsWindow::fopenFolder()
 QString SettingsWindow::getNewAppVersion()
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("https://api.github.com/repos/DXS-SQUAD/CodeKeeper/releases/latest");
+    QUrl url("https://api.github.com/repos/DXS-GROUP/CodeKeeper/releases/latest");
 
     QUrlQuery query;
-    query.addQueryItem("login", git_user);
     url.setQuery(query);
 
     QNetworkRequest request(url);
@@ -272,6 +273,7 @@ QString SettingsWindow::getNewAppVersion()
     QJsonObject obj = doc.object();
 
     QString version = obj["tag_name"].toString();
+    qDebug() << version;
 
     reply->deleteLater();
 
