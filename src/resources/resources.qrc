@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>check-mark.png</file>
         <file>logo.png</file>
     	<file>download.png</file>
         <file>sync.png</file>
