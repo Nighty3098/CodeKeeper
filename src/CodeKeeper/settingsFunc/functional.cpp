@@ -72,13 +72,15 @@ void SettingsWindow::checkUpdates()
     qDebug() << newAppVersion << "  " << currentAppVersion;
 
     if (newAppVersion == currentAppVersion) {
-        iconLabel->setPixmap(QPixmap(":/check-mark.png")
-                                    .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        iconLabel->setPixmap(
+                QPixmap(":/check-mark.png")
+                        .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         updateInfoLabel->setText("You are running the latest version of the app.");
         verInfoLabel->setText("Current version: " + currentAppVersion);
     } else {
-        iconLabel->setPixmap(QPixmap(":/refresh.png")
-                                    .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        iconLabel->setPixmap(
+                QPixmap(":/refresh.png")
+                        .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         updateInfoLabel->setText("A new version of the application is available.");
         verInfoLabel->setText("Current version: " + currentAppVersion
                               + "\nNew version: " + newAppVersion);
@@ -91,19 +93,6 @@ void SettingsWindow::checkUpdates()
     layout->addWidget(verInfoLabel, 5, 0, 1, 2, Qt::AlignCenter);
 
     connect(closeWindow, &QPushButton::clicked, [&]() { dialog.close(); });
-    /*connect(downloadUpdate, &QPushButton::clicked, [&]() {
-        QFileInfo fileInfo(QCoreApplication::applicationFilePath());
-        QString dir = fileInfo.absoluteDir().path();
-        QString fileName = fileInfo.fileName();
-
-        qDebug() << "File path: " << dir;
-
-        downloadFileFromLatestRelease("DXS-GROUP", "CodeKeeper", "CodeKeeper", updateInfoLabel,
-                                      git_user, git_token);
-
-        verInfoLabel->hide();
-        downloadUpdate->hide();
-    });*/
 
     connect(downloadUpdate, &QPushButton::clicked, [&]() {
         QDesktopServices::openUrl(QUrl("https://github.com/DXS-GROUP/CodeKeeper/releases/latest"));
@@ -284,7 +273,10 @@ void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
                         + "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
 
     saveBtn->setFont(*selectedFont);
-    saveBtn->setStyleSheet("QPushButton {background-color: transparent; color: #fff; font-size: " + font_size + "pt;} QPushButton:hover {background-color: transparent; color: #7289DA; font-size: " + font_size + "pt;}");
+    saveBtn->setStyleSheet(
+            "QPushButton {background-color: transparent; color: #fff; font-size: " + font_size
+            + "pt;} QPushButton:hover {background-color: transparent; color: #7289DA; font-size: "
+            + font_size + "pt;}");
 
     appName->setFont(*selectedFont);
 
