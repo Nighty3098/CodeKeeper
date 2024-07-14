@@ -67,17 +67,17 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     quitBtn = new QPushButton();
     quitBtn->setStyleSheet("QPushButton {"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/red.png');"
-                               "    background-repeat: no-repeat;"
-                               "}"
-                               "QPushButton:hover {"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/redHovered.png');"
-                               "    background-repeat: no-repeat;"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "}");
+                           "    border-color: rgba(0, 0, 0, 0);"
+                           "    background-color: rgba(0, 0, 0, 0);"
+                           "    background-image: url(':/red.png');"
+                           "    background-repeat: no-repeat;"
+                           "}"
+                           "QPushButton:hover {"
+                           "    border-color: rgba(0, 0, 0, 0);"
+                           "    background-image: url(':/redHovered.png');"
+                           "    background-repeat: no-repeat;"
+                           "    background-color: rgba(0, 0, 0, 0);"
+                           "}");
     quitBtn->setFixedSize(15, 15);
 
     QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
