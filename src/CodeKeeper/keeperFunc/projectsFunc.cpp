@@ -122,8 +122,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(500, 550);
-        dialog.setWindowTitle(tr("Edit project"));
+        dialog.setMinimumSize(500, 550);
+        dialog.setWindowTitle(tr("Project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
         QPushButton *saveDataBtn = new QPushButton();
@@ -275,8 +275,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
             updateProjectData(&projectTitle, &projectLink, &projectDocumentation,
                               &projectCreatedTime, &PCreatedTime, &PGit);
-
-            // dialog.close();
         });
 
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
@@ -291,8 +289,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             QString prefix = "https://github.com/";
             QString projectLink = linkToGit->text();
             QString repo = projectLink.replace(prefix, "");
-
-            // createGitBadges(repo, git_stats);
 
             QThread *thread = new QThread;
             QObject::connect(thread, &QThread::started, this,

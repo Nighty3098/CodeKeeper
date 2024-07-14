@@ -48,27 +48,27 @@ QCheckBox::indicator:unchecked:pressed {
 
 QCheckBox::indicator:checked {
     border-radius: 7px;
-    background-color: #37d342;
+    background-color: #c3e88d;
 }
 
 QCheckBox::indicator:checked:hover {
     border-radius: 7px;
-    background-color: #37d342;
+    background-color: #c3e88d;
 }
 
 QCheckBox::indicator:checked:pressed {
     border-radius: 7px;
-    background-color: #37d342;
+    background-color: #c3e88d;
 }
 
 QCheckBox::indicator:indeterminate:hover {
     border-radius: 7px;
-    background-color: #37d342;
+    background-color: #c3e88d;
 }
 
 QCheckBox::indicator:indeterminate:pressed {
     border-radius: 7px;
-    background-color: #37d342;
+    background-color: #c3e88d;
 }
 
 QStatusBar {
@@ -232,23 +232,23 @@ QMenu::indicator:unchecked:pressed {
 }
 QMenu::indicator:checked {
     border-radius: 5px;
-    background-color: #37d342;
+    background-color: #c3e88d;
 }
 QMenu::indicator:checked:hover {
     border-radius: 5px;
-    background-color: #37d342;
+    background-color: #c3e88d;
 }
 QMenu::indicator:checked:pressed {
     border-radius: 5px;
-    background-color: #37d342;
+    background-color: #c3e88d;
 }
 QMenu::indicator:indeterminate:hover {
     border-radius: 5px;
-    background-color: #37d342;
+    background-color: #c3e88d;
 }
 QMenu::indicator:indeterminate:pressed {
     border-radius: 5px;
-    background-color: #37d342;
+    background-color: #c3e88d;
 }
 
 
@@ -456,7 +456,7 @@ QProgressBar {
 
 QProgressBar::chunk {
     color: #0D1117;
-    background-color: #37d342;
+    background-color: #c3e88d;
     border-radius: 5px;
 }
 

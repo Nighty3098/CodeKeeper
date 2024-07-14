@@ -218,7 +218,6 @@ void MainWindow::fOpenAccountWindow()
 
 void MainWindow::openSettingsWindow()
 {
-
     QThread *settingsWindowThread = new QThread;
     QObject::connect(settingsWindowThread, &QThread::started, this, [this]() {
         QRect geo = this->geometry();
