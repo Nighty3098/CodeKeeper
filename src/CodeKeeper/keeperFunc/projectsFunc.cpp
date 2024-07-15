@@ -122,7 +122,8 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setMinimumSize(500, 550);
+        dialog.setFixedWidth(550);
+        dialog.setMinimumHeight(500);
         dialog.setWindowTitle(tr("Project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -214,6 +215,17 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         git_stats->setContentsMargins(0, 0, 0, 0);
         git_stats->setAlternatingRowColors(true);
 
+        QHBoxLayout *statsLayout = new QHBoxLayout();
+
+        QSpacerItem *leftSpacer =
+                new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        QSpacerItem *rightSpacer =
+                new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        // statsLayout->addItem(leftSpacer);
+        statsLayout->addWidget(git_stats);
+        // statsLayout->addItem(rightSpacer);
+
         QPushButton *openButton = new QPushButton();
         openButton->setText("Open");
         openButton->setStyleSheet("font-size: " + font_size + "pt;");
@@ -235,7 +247,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addWidget(linkToGit, 3, 0, 1, 2);
         mainLayout.addWidget(documentation, 4, 0);
         mainLayout.addWidget(openButton, 4, 1);
-        mainLayout.addWidget(git_stats, 5, 0, 5, 2);
+        mainLayout.addLayout(statsLayout, 5, 0, 5, 2);
         mainLayout.addWidget(lastMod, 10, 0, 1, 2, Qt::AlignCenter);
 
         QWidget *issuesTab = new QWidget();
