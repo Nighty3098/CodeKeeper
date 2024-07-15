@@ -262,8 +262,8 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     table->setColumnCount(2);
     table->setShowGrid(false);
 
-    table->setColumnWidth(0, 230);
-    table->setColumnWidth(1, 230);
+    table->setColumnWidth(0, 255);
+    table->setColumnWidth(1, 255);
 
     table->setRowHeight(0, 25);
     table->setRowHeight(1, 25);
