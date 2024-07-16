@@ -1,6 +1,6 @@
 <div class="header" align="center">
     <h1 align="center">CodeKeeper</h1>
-    <h3 align="center">Notes and projects manager for developers</h3>
+    <h3 align="center">Projects manager for developers</h3>
     <br><br>    
     <img align="center" src="imgs/logo.png" align="center" width="50%" />
     <br><br>
