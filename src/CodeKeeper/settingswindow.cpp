@@ -46,14 +46,14 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
-    this->setStyleSheet(file.readAll());
+    // this->setStyleSheet(file.readAll());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
     mainLayout = new QVBoxLayout(centralWidget);
-    setFixedSize(600, 600);
+    setMinimumSize(600, 600);
 
     // tabs
     tabs = new QTabWidget();

@@ -41,12 +41,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     openAccountWindow =
             new QPushButton(QPixmap(":/user.png")
-                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                    .scaled(font_size.toInt() + 10, font_size.toInt() + 10,
                                             Qt::KeepAspectRatio, Qt::SmoothTransformation),
                             "");
     openAccountWindow->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
                                   "#0D1117;'>Account</p>");
-    openAccountWindow->setFixedSize(15, 15);
+    openAccountWindow->setFixedSize(35, 35);
 
     winControlL = new QHBoxLayout;
     winControlL->setSpacing(7);
@@ -93,12 +93,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // settings btn
     openSettingsBtn =
             new QPushButton(QPixmap(":/settings.png")
-                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                    .scaled(font_size.toInt() + 10, font_size.toInt() + 10,
                                             Qt::KeepAspectRatio, Qt::SmoothTransformation),
                             "");
     openSettingsBtn->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
                                 "#0D1117;'>Settings</p>");
-    openSettingsBtn->setFixedSize(15, 15);
+    openSettingsBtn->setFixedSize(35, 35);
 
     // sync btn
     syncDataBtn = new QPushButton(QPixmap(":/sync.png")
@@ -687,6 +687,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     noteIco.addFile(":/edit.png");
     tasksIco.addFile(":/task.png");
 
+    
     tabs->setTabIcon(tabs->indexOf(mainTab), mainIco);
     tabs->setTabIcon(tabs->indexOf(notesTab), noteIco);
     tabs->setTabIcon(tabs->indexOf(tasksTab), tasksIco);
@@ -694,6 +695,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tabs->setIconSize(QSize(font_size.toInt(), font_size.toInt()));
     tabs->setTabBarAutoHide(true);
+    tabs->setTabVisible(0, false);
+    tabs->setTabVisible(1, false);
+    tabs->setTabVisible(2, false);
+    tabs->setTabVisible(3, false);
 
     if (isCustomTitlebar) {
         mainLayout->addLayout(winControlL, 0, 0, 1, 2);
@@ -717,8 +722,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    winControlL->addWidget(openAccountWindow);
-    winControlL->addWidget(openSettingsBtn);
     winControlL->addWidget(syncDataBtn);
 
     winControlL->addItem(headerSp);
@@ -727,7 +730,66 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     winControlL->addWidget(isAutoSync);
     winControlL->addWidget(sizeGrip2);
 
-    mainLayout->addWidget(tabs, 1, 0);
+
+    QVBoxLayout *tabButtons = new QVBoxLayout();
+
+    mainTabButton = new QPushButton(QPixmap(":/main.png").scaled(font_size.toInt() + 10, font_size.toInt() + 10,
+                                                    Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
+    mainTabButton->setFixedSize(35, 35);
+
+
+    tasksTabButton = new QPushButton(QPixmap(":/task.png").scaled(font_size.toInt() + 10, font_size.toInt() + 10,
+                                                                 Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
+    tasksTabButton->setFixedSize(35, 35);
+
+
+    notesTabButton = new QPushButton(QPixmap(":/note.png").scaled(font_size.toInt() + 10, font_size.toInt() + 10,
+                                                                 Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
+    notesTabButton->setFixedSize(35, 35);
+
+
+    projectsTabButton = new QPushButton(QPixmap(":/project.png").scaled(font_size.toInt() + 10, font_size.toInt() + 10,
+                                                                 Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
+    projectsTabButton->setFixedSize(35, 35);
+
+    QSpacerItem* headerSp5 = new QSpacerItem(10, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem* headerSp6 = new QSpacerItem(100, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+    tabButtons->addItem(headerSp5);
+    tabButtons->addWidget(mainTabButton);
+    tabButtons->addWidget(tasksTabButton);
+    tabButtons->addWidget(notesTabButton);
+    tabButtons->addWidget(projectsTabButton);
+    tabButtons->addItem(headerSp6);
+    tabButtons->addWidget(openAccountWindow);
+    tabButtons->addWidget(openSettingsBtn);
+
+
+    connect(mainTabButton, &QPushButton::clicked, [=]() {
+        tabs->setCurrentIndex(0);
+    });
+    connect(tasksTabButton, &QPushButton::clicked, [=]() {
+        tabs->setCurrentIndex(1);
+    });
+    connect(notesTabButton, &QPushButton::clicked, [=]() {
+        tabs->setCurrentIndex(2);
+    });
+    connect(projectsTabButton, &QPushButton::clicked, [=]() {
+        tabs->setCurrentIndex(3);
+    });
+
+
+    mainLayout->addLayout(tabButtons, 1, 0);
+    mainLayout->addWidget(tabs, 1, 1);
+
+    QThread *calculateThread = new QThread;
+    QObject::connect(calculateThread, &QThread::started, this, [this]() {
+        qDebug() << "calculateThread started";
+        getTotalTasks(tabs, incompleteTasks, inprocessTasks, completeTasks);
+        getTotalProjects(tabs, notStartedProjects, startedProjects, finishedProjects, finishlineProjects);
+        updateTasksProgress(tabs, incompleteTasks, inprocessTasks, completeTasks, tasksProgress);
+    });
+    calculateThread->start();
 
     // ===================================================================================
     // connects
@@ -751,18 +813,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(completeTasks, &QListWidget::itemClicked, this, &MainWindow::on_listWidget_itemClicked);
 
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::updateMDPreview);
-
-    connect(tabs, &QTabWidget::currentChanged, this, [=]() {
-        updateTasksProgress(tabs, incompleteTasks, inprocessTasks, completeTasks, tasksProgress);
-    });
-
-    connect(tabs, &QTabWidget::currentChanged, this,
-            [=]() { getTotalTasks(tabs, incompleteTasks, inprocessTasks, completeTasks); });
-
-    connect(tabs, &QTabWidget::currentChanged, this, [=]() {
-        getTotalProjects(tabs, notStartedProjects, startedProjects, finishedProjects,
-                         finishlineProjects);
-    });
 
     connect(completeTasks, &QListWidget::itemDoubleClicked, this,
             [=](QListWidgetItem *item) { renameItemOnDoubleClick(completeTasks, item); });

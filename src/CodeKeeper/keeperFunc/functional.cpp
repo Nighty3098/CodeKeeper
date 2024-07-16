@@ -333,17 +333,14 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     openSettingsBtn->setFont(*selectedFont);
     openSettingsBtn->setStyleSheet(
-            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size
-            + "pt;} "
-              "QPushButton:hover{text-decoration: none; background-color: transparent; color: "
-              "#37d442; font-size: "
-            + font_size + "pt;}");
+            "QPushButton {border: none; background-color: transparent; font-size: " + font_size
+            + "pt;} ");
 
     syncDataBtn->setFont(*selectedFont);
     syncDataBtn->setStyleSheet(
-            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size
+            "QPushButton {background-color: transparent; border: none; color: #ffffff; font-size: " + font_size
             + "pt;} "
-              "QPushButton:hover{text-decoration: none; background-color: transparent; color: "
+              "QPushButton:hover{text-decoration: none; border: none; background-color: transparent; color: "
               "#37d442; font-size: "
             + font_size + "pt;}");
 
@@ -549,9 +546,11 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     openAccountWindow->setFont(*selectedFont);
     openAccountWindow->setStyleSheet(
-            "QPushButton {background-color: transparent; color: #ffffff; font-size: " + font_size
-            + "pt;} "
-              "QPushButton:hover{text-decoration: none; background-color: transparent; color: "
-              "#37d442; font-size: "
-            + font_size + "pt;}");
+            "QPushButton {border: none; background-color: transparent; font-size: " + font_size
+            + "pt;} ");
+
+    mainTabButton->setStyleSheet("background-color: transparent; border: none;");
+    tasksTabButton->setStyleSheet("background-color: transparent; border: none;");
+    notesTabButton->setStyleSheet("background-color: transparent; border: none;");
+    projectsTabButton->setStyleSheet("background-color: transparent; border: none;");
 }

@@ -327,6 +327,13 @@ private:
     QLineEdit *taskText;
 
     // ========================================================
+
+    QPushButton *mainTabButton;
+    QPushButton *tasksTabButton;
+    QPushButton *notesTabButton;
+    QPushButton *projectsTabButton;
+
+    // ========================================================
     // projects tab
     QLabel *projectsMainLabel;
     QToolButton *projectsMenuButton;
