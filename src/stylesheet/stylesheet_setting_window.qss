@@ -38,46 +38,46 @@ QCheckBox {
     color: #fff;
 }
 QCheckBox::indicator {
-    border-radius: 4px;
+    border-radius: 5px;
     width: 10px;
     height: 10px;
 }
 QCheckBox::indicator:unchecked {
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: #0d1117;
 }
 QCheckBox::indicator:unchecked:hover {
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: #0d1117;
 }
 
 QCheckBox::indicator:unchecked:pressed {
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: #0d1117;
 }
 
 QCheckBox::indicator:checked {
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: #c3e88d;
 }
 
 QCheckBox::indicator:checked:hover {
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: #c3e88d;
 }
 
 QCheckBox::indicator:checked:pressed {
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: #c3e88d;
 }
 
 QCheckBox::indicator:indeterminate:hover {
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: #c3e88d;
 }
 
 QCheckBox::indicator:indeterminate:pressed {
-    border-radius: 4px;
+    border-radius: 5px;
     background-color: #c3e88d;
 }
 

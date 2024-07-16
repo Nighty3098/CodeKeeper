@@ -10,7 +10,6 @@
     <div align="center">
     <a href="./LICENSE.md"><img  class="badge" src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=a6e0b8&logoColor=ffffff&labelColor=1c1c29"  style="border-radius: 5px;"/></a><br>
     <img src="https://img.shields.io/github/created-at/Nighty3098/CodeKeeper?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29" style="border-radius: 5px;">
-    <img src="https://img.shields.io/github/release-date/Nighty3098/CodeKeeper?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=171b22" style="border-radius: 5px;" />
     <img class="badge" src="https://img.shields.io/github/last-commit/Nighty3098/CodeKeeper?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29" style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/issues-pr/Nighty3098/CodeKeeper?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29" style="border-radius: 5px;" />
     <img class="badge" src="https://img.shields.io/github/repo-size/Nighty3098/CodeKeeper?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22" style="border-radius: 5px;"/>
@@ -21,17 +20,26 @@
     <img src="https://img.shields.io/github/languages/count/Nighty3098/CodeKeeper?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22" style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29" style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/forks/Nighty3098/CodeKeeper?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=1c1c29"  style="border-radius: 5px;"/>
-    <br><br><hr><br><br>
+    <br><br><br>
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_cpp.png?raw=true" height="50px" />
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_c.png?raw=true" height="50px" />
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_qt.png?raw=true" height="50px" />
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_sqlite.png?raw=true" height="50px" />
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_git.png?raw=true" height="50px" />
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_api.png?raw=true" height="50px" />
-    <br><br><hr><br><br>
-    <a href="https://discord.gg/tnHSEc2cZv"><img src="https://invidget.switchblade.xyz/r8jWX8ugDd" style="border-radius: 15px;"/></a><br>
+    <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_codekeeper.png?raw=true" height="50px" />
+    <br><br>
+    <h3>Developers:</h3>
+    <p align="center">
+        <a href = "https://github.com/iinsertNameHere/catnap/graphs/contributors">
+            <img src = "https://contrib.rocks/image?repo=Nighty3098/CodeKeeper">
+        </a>
+    </p>
+    <br><br>
+    <h3>If you have found bugs in our product or have suggestions, please write about them:</h3>
+    <a href="https://t.me/DXS_TechSupport_bot"><img src="https://github.com/Nighty3098/Nighty3098/blob/main/TechSupport.png?raw=true" width="65%" /></a>
     <br><br><br>
-    <img src="https://repobeats.axiom.co/api/embed/84bb3c292d2256a4d52ec4cdfca3da36b9e981cb.svg" />
+    <img src="https://repobeats.axiom.co/api/embed/0d75989e77c487901abc8abe41e46589905ee8af.svg" />
 </div>
 
 <br><br>
@@ -179,7 +187,7 @@
 <br>
 
 <div align="center">
-    <br><br><br>
+    <br><br>
     <img src="https://wakatime.com/badge/user/018e8f78-65a7-4aa8-8c67-51796499853b/project/018e8f7e-5c5a-471e-ba73-04384fbc3cda.svg?&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/>
     <br><br><br>
 </div>

@@ -58,23 +58,33 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     // tabs
     tabs = new QTabWidget();
     tabs->setMovable(true);
+    tabs->setTabPosition(QTabWidget::South);
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
-    saveBtn = new QPushButton(QPixmap(":/save.png")
-                                      .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                              Qt::KeepAspectRatio, Qt::SmoothTransformation),
-                              " Apply");
+    saveBtn = new QPushButton("Apply");
     saveBtn->setFixedSize(100, 25);
 
-    quitBtn = new QPushButton(QPixmap(":/quit.png")
-                                      .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                              Qt::KeepAspectRatio, Qt::SmoothTransformation),
-                              " Quit");
-    quitBtn->setFixedSize(100, 25);
+    quitBtn = new QPushButton();
+    quitBtn->setStyleSheet("QPushButton {"
+                           "    border-color: rgba(0, 0, 0, 0);"
+                           "    background-color: rgba(0, 0, 0, 0);"
+                           "    background-image: url(':/red.png');"
+                           "    background-repeat: no-repeat;"
+                           "}"
+                           "QPushButton:hover {"
+                           "    border-color: rgba(0, 0, 0, 0);"
+                           "    background-image: url(':/redHovered.png');"
+                           "    background-repeat: no-repeat;"
+                           "    background-color: rgba(0, 0, 0, 0);"
+                           "}");
+    quitBtn->setFixedSize(15, 15);
 
-    BtnsL->addWidget(saveBtn);
+    QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
     BtnsL->addWidget(quitBtn);
+    BtnsL->addItem(spacer);
+    BtnsL->addWidget(saveBtn);
 
     // control buttons
 
@@ -90,14 +100,14 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     urlToRepo = new QLabel();
     urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size
                        + "' "
-                         "href=\"https://github.com/Nighty3098/CodeKeeper\">Source</a>");
+                         "href=\"https://github.com/DXS-GROUP/CodeKeeper\">Source</a>");
     urlToRepo->setTextFormat(Qt::RichText);
     urlToRepo->setTextInteractionFlags(Qt::TextBrowserInteraction);
     urlToRepo->setOpenExternalLinks(true);
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     versionInfo = new QLabel();
-    versionInfo->setText("0.1.7.1");
+    versionInfo->setText("0.1.8");
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn =
@@ -343,8 +353,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     tabs->setIconSize(QSize(font_size.toInt(), font_size.toInt()));
     tabs->setTabBarAutoHide(true);
 
-    mainLayout->addWidget(tabs);
     mainLayout->addLayout(BtnsL);
+    mainLayout->addWidget(tabs);
 
     // connects
     connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveData()));

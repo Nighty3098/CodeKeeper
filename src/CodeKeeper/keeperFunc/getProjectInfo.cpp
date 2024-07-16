@@ -96,7 +96,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
 {
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
-    QString repoData; // Declare repoData as a non-const QString
+    QString repoData;
 
     QString name, createdAt, openIssues, forks, lang, stars, repoSize, license, totalDownloads,
             release, releaseDate, lastCommitS;
@@ -116,10 +116,10 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
     QNetworkReply *reply = manager->get(request);
-    QEventLoop loop; // Create a QEventLoop
+    QEventLoop loop;
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
-    loop.exec(); // Block until the lambda function has finished
+    loop.exec();
 
     if (reply->error()) {
         qWarning() << "Error:" << reply->errorString();
@@ -138,7 +138,6 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
 
     openIssues = QString::number(obj["open_issues"].toInt());
 
-    // repoData += " \n Watchers: " + QString::number(obj["watchers"].toInt()) + " ";
     forks = QString::number(obj["forks"].toInt());
     lang = obj["language"].toString();
 
@@ -238,7 +237,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     QNetworkReply *releasesReply = manager->get(releasesRequest);
     QObject::connect(releasesReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
-    loop.exec(); // Block until the lambda function has finished
+    loop.exec();
 
     if (releasesReply->error()) {
         qWarning() << "Error:" << releasesReply->errorString();
@@ -284,6 +283,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     table->setItem(0, 0, new QTableWidgetItem("Repo"));
     table->setItem(0, 1, new QTableWidgetItem(name));
     table->item(0, 0)->setTextAlignment(Qt::AlignCenter);
+    table->item(0, 1)->setTextAlignment(Qt::AlignCenter);
 
     QStringList dataList, textList;
 
@@ -356,6 +356,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
             QTableWidgetItem *item = table->item(row, col);
             if (item) {
                 item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+                item->setTextAlignment(Qt::AlignCenter);
             }
         }
     }

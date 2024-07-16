@@ -35,7 +35,7 @@ void downloadFileFromLatestRelease(const QString &owner, const QString &repo,
 
     QNetworkAccessManager manager;
     QNetworkRequest request;
-    request.setUrl(QUrl("https://api.github.com/repos/DXS-SQUAD/CodeKeeper/releases/latest"));
+    request.setUrl(QUrl("https://api.github.com/repos/DXS-GROUP/CodeKeeper/releases/latest"));
     request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
     request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");

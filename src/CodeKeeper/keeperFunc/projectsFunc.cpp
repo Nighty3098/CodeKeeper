@@ -122,15 +122,49 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedSize(550, 550);
-        dialog.setWindowTitle(tr("Edit project"));
+        dialog.setFixedWidth(550);
+        dialog.setMinimumHeight(500);
+        dialog.setWindowTitle(tr("Project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+
+        QPushButton *saveDataBtn = new QPushButton();
+        saveDataBtn->setText("Save");
+        saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
+        saveDataBtn->setFixedSize(100, 25);
+        saveDataBtn->setIcon(QPixmap(":/save.png"));
+        saveDataBtn->setIconSize(QSize(10, 10));
+        saveDataBtn->setFont(selectedFont);
+
+        QPushButton *cancelBtn = new QPushButton("");
+        cancelBtn->setFixedSize(15, 15);
+        cancelBtn->setStyleSheet("QPushButton {"
+                                 "    border-color: rgba(0, 0, 0, 0);"
+                                 "    background-color: rgba(0, 0, 0, 0);"
+                                 "    background-image: url(':/red.png');"
+                                 "    background-repeat: no-repeat;"
+                                 "}"
+                                 "QPushButton:hover {"
+                                 "    border-color: rgba(0, 0, 0, 0);"
+                                 "    background-image: url(':/redHovered.png');"
+                                 "    background-repeat: no-repeat;"
+                                 "    background-color: rgba(0, 0, 0, 0);"
+                                 "}");
 
         QVBoxLayout *centralLayout = new QVBoxLayout(&dialog);
 
+        QHBoxLayout *controlButtons = new QHBoxLayout();
+
+        QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        controlButtons->addWidget(cancelBtn);
+        controlButtons->addItem(spacer);
+        controlButtons->addWidget(saveDataBtn);
+
+        centralLayout->addLayout(controlButtons);
+
         QTabWidget *tabs = new QTabWidget();
         tabs->setMovable(true);
-        // tabs->setTabPosition(QTabWidget::South);
+        tabs->setTabPosition(QTabWidget::South);
 
         QWidget *projectTab = new QWidget();
         QGridLayout mainLayout(projectTab);
@@ -174,36 +208,23 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         QTableWidget *git_stats = new QTableWidget();
         git_stats->setFont(selectedFont);
-        git_stats->setStyleSheet(
-                "QTableWidget{ background-color: #0d1117; alternate-background-color: #171b22; "
-                "selection-background-color: #336fc9; show-decoration-selected: 1; font-size: "
-                + font_size + "pt; border: 0px;}");
+        git_stats->setStyleSheet("QTableWidget{font-size:" + font_size + "pt;}");
 
         git_stats->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
         git_stats->verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
         git_stats->setContentsMargins(0, 0, 0, 0);
+        git_stats->setAlternatingRowColors(true);
 
-        QVBoxLayout *layout = new QVBoxLayout;
-        layout->addWidget(git_stats);
-        layout->setAlignment(Qt::AlignCenter);
+        QHBoxLayout *statsLayout = new QHBoxLayout();
 
-        QPushButton *saveDataBtn = new QPushButton();
-        saveDataBtn->setText("Save");
-        saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        saveDataBtn->setFixedSize(100, 25);
-        saveDataBtn->setIcon(QPixmap(":/save.png"));
-        saveDataBtn->setIconSize(QSize(10, 10));
-        saveDataBtn->setFont(selectedFont);
+        QSpacerItem *leftSpacer =
+                new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        QSpacerItem *rightSpacer =
+                new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        QPushButton *cancelBtn = new QPushButton();
-        cancelBtn->setText("Cancel");
-        cancelBtn->setStyleSheet("font-size: " + font_size + "pt;");
-        cancelBtn->setFixedSize(100, 25);
-        cancelBtn->setIcon(QPixmap(":/quit.png")
-                                   .scaled(font_size.toInt() + 3, font_size.toInt() + 3,
-                                           Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        cancelBtn->setIconSize(QSize(10, 10));
-        cancelBtn->setFont(selectedFont);
+        // statsLayout->addItem(leftSpacer);
+        statsLayout->addWidget(git_stats);
+        // statsLayout->addItem(rightSpacer);
 
         QPushButton *openButton = new QPushButton();
         openButton->setText("Open");
@@ -222,21 +243,17 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         loadDocumentations(dir, *documentation);
         documentation->setCurrentText(projectData[2]);
 
-        mainLayout.addWidget(title, 0, 0, 1, 2);
-        mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
-        mainLayout.addWidget(documentation, 2, 0);
-        mainLayout.addWidget(openButton, 2, 1);
-        mainLayout.addLayout(layout, 4, 0, 1, 2);
-        mainLayout.addWidget(saveDataBtn, 6, 0, 1, 2, Qt::AlignCenter);
-        mainLayout.addWidget(cancelBtn, 7, 0, 1, 2, Qt::AlignCenter);
-        mainLayout.addWidget(lastMod, 5, 0, 1, 2, Qt::AlignCenter);
+        mainLayout.addWidget(title, 2, 0, 1, 2);
+        mainLayout.addWidget(linkToGit, 3, 0, 1, 2);
+        mainLayout.addWidget(documentation, 4, 0);
+        mainLayout.addWidget(openButton, 4, 1);
+        mainLayout.addLayout(statsLayout, 5, 0, 5, 2);
+        mainLayout.addWidget(lastMod, 10, 0, 1, 2, Qt::AlignCenter);
 
         QWidget *issuesTab = new QWidget();
         QVBoxLayout issuesLayout(issuesTab);
 
         QTextBrowser *issuesLabel = new QTextBrowser();
-        // issuesLabel->setWordWrap(true);
-        // issuesLabel->setTextFormat(Qt::RichText);
         issuesLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
         issuesLabel->setText("Issues");
         issuesLabel->setOpenExternalLinks(true);
@@ -270,8 +287,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
             updateProjectData(&projectTitle, &projectLink, &projectDocumentation,
                               &projectCreatedTime, &PCreatedTime, &PGit);
-
-            dialog.close();
         });
 
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
@@ -286,8 +301,6 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             QString prefix = "https://github.com/";
             QString projectLink = linkToGit->text();
             QString repo = projectLink.replace(prefix, "");
-
-            // createGitBadges(repo, git_stats);
 
             QThread *thread = new QThread;
             QObject::connect(thread, &QThread::started, this,
