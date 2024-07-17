@@ -35,21 +35,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     getSettingsData();
 
-    if(isCustomTheme == true) {
+    if (isCustomTheme) {
         QFile custom_theme(":/stylesheet/custom_stylesheet.qss");
-        custom_theme.open(QFile::ReadOnly);
-
-        qDebug() << "Loading custom stylesheet..." << custom_theme.readAll();
-
-        setStyleSheet(custom_theme.readAll());
-    }
-    else {
+        if (custom_theme.open(QFile::ReadOnly)) {
+            QString customStyleSheet = custom_theme.readAll();
+            qDebug() << "Loading custom stylesheet:" << customStyleSheet;
+            setStyleSheet(customStyleSheet);
+            custom_theme.close();
+        } else {
+            qDebug() << "Failed to open custom stylesheet file";
+        }
+    } else {
         QFile theme_file(":/stylesheet/stylesheet.qss");
-        theme_file.open(QFile::ReadOnly);
-
-        qDebug() << "Loading default stylesheet..." << theme_file.readAll();
-
-        setStyleSheet(theme_file.readAll());
+        if (theme_file.open(QFile::ReadOnly)) {
+            QString defaultStyleSheet = theme_file.readAll();
+            qDebug() << "Loading default stylesheet:" << defaultStyleSheet;
+            setStyleSheet(defaultStyleSheet);
+            theme_file.close();
+        } else {
+            qDebug() << "Failed to open default stylesheet file";
+        }
     }
 
     closeBtn = new QPushButton();
