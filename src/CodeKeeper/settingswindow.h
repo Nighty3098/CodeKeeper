@@ -49,7 +49,7 @@ private slots:
     void saveData();
     void fopenFolder();
 
-    void setFontPr2(QFont *selectedFont, int *font_size_int);
+    void setStyle2(QFont *selectedFont, int *font_size_int);
     void checkRepo();
     QString getNewAppVersion();
 

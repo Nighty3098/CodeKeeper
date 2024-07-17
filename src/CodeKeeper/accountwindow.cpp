@@ -4,11 +4,8 @@
 #include "mainwindow.h"
 #include <git2.h>
 
-AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
+AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
 {
-    QFile file(":/stylesheet/stylesheet_setting_window.qss");
-    file.open(QFile::ReadOnly);
-    // this->setStyleSheet(file.readAll());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     centralWidget = new QWidget(this);
@@ -31,7 +28,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
 
     codeKeeperStats = new QLabel();
 
-    MainWindow *mainWindow = static_cast<MainWindow *>(parent);
+    MainWindow* mainWindow = static_cast<MainWindow*>(parent);
     QString stats = mainWindow->getKeeperStats();
     codeKeeperStats->setText(stats);
     codeKeeperStats->setAlignment(Qt::AlignHCenter);
@@ -51,7 +48,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     closeWindow = new QPushButton("");
     closeWindow->setFixedSize(15, 15);
 
-    QThread *styleThread = new QThread;
+    QThread* styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {
         setFontStyle();
 
@@ -59,7 +56,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     });
     styleThread->start();
 
-    QThread *setUserDataThread = new QThread;
+    QThread* setUserDataThread = new QThread;
     QObject::connect(setUserDataThread, &QThread::started, this, [this]() {
         setUserData(git_user, profilePicture);
         setTasksProgress();
@@ -67,7 +64,6 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
         qDebug() << "setUserDataThread started";
     });
     setUserDataThread->start();
-
 
     mainLayout->addWidget(closeWindow, 0, 0, 1, 3, Qt::AlignLeft);
     mainLayout->addWidget(profilePicture, 1, 0, 3, 3, Qt::AlignCenter);

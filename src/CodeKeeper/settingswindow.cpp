@@ -9,12 +9,8 @@
 #include "mainwindow.h"
 #include "settingsFunc/functional.cpp"
 
-SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
+SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
 {
-    // visual
-    QFile file(":/stylesheet/stylesheet_setting_window.qss");
-    file.open(QFile::ReadOnly);
-
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
@@ -47,7 +43,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
-    // this->setStyleSheet(file.readAll());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     centralWidget = new QWidget(this);
@@ -61,38 +56,24 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     tabs->setMovable(true);
     tabs->setTabPosition(QTabWidget::South);
 
-    QHBoxLayout *BtnsL = new QHBoxLayout();
+    QHBoxLayout* BtnsL = new QHBoxLayout();
 
     saveBtn = new QPushButton("Apply");
     saveBtn->setFixedSize(100, 25);
 
     quitBtn = new QPushButton();
-    quitBtn->setStyleSheet("QPushButton {"
-                           "    border-color: rgba(0, 0, 0, 0);"
-                           "    background-color: rgba(0, 0, 0, 0);"
-                           "    background-image: url(':/red.png');"
-                           "    background-repeat: no-repeat;"
-                           "}"
-                           "QPushButton:hover {"
-                           "    border-color: rgba(0, 0, 0, 0);"
-                           "    background-image: url(':/redHovered.png');"
-                           "    background-repeat: no-repeat;"
-                           "    background-color: rgba(0, 0, 0, 0);"
-                           "}");
     quitBtn->setFixedSize(15, 15);
 
-    QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QSpacerItem* spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     BtnsL->addWidget(quitBtn);
     BtnsL->addItem(spacer);
     BtnsL->addWidget(saveBtn);
 
-    // control buttons
-
     // main
-    QVBoxLayout *appInfoL = new QVBoxLayout();
-    QVBoxLayout *subAppInfoL = new QVBoxLayout();
-    QHBoxLayout *checkUpdatesBtnL = new QHBoxLayout();
+    QVBoxLayout* appInfoL = new QVBoxLayout();
+    QVBoxLayout* subAppInfoL = new QVBoxLayout();
+    QHBoxLayout* checkUpdatesBtnL = new QHBoxLayout();
 
     appName = new QLabel("CodeKeeper");
     appName->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
@@ -111,11 +92,9 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     versionInfo->setText("0.1.8");
     versionInfo->setAlignment(Qt::AlignCenter);
 
-    checkUpdatesBtn =
-            new QPushButton(QPixmap(":/retry.png")
-                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                            Qt::KeepAspectRatio, Qt::SmoothTransformation),
-                            " Chech for updates");
+    checkUpdatesBtn = new QPushButton(
+            QPixmap(":/retry.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            " Chech for updates");
     checkUpdatesBtn->setFixedSize(200, 25);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
@@ -127,7 +106,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     appInfoL->addLayout(subAppInfoL);
 
     // sync
-    QGridLayout *mainSyncLayout = new QGridLayout();
+    QGridLayout* mainSyncLayout = new QGridLayout();
 
     gitLabel = new QLabel("Sync settings");
     gitLabel->setStyleSheet("font-size: 24px;");
@@ -182,7 +161,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     mainSyncLayout->addWidget(isHost, 9, 2, 1, 1, Qt::AlignHCenter);
 
     // appereance
-    QGridLayout *layout1 = new QGridLayout();
+    QGridLayout* layout1 = new QGridLayout();
 
     mainTitle = new QLabel("App settings");
     mainTitle->setAlignment(Qt::AlignCenter);
@@ -206,7 +185,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     customTitleBar->setText("Use custom titlebar");
     customTitleBar->setChecked(isCustomTitlebar);
 
-    qDebug() << "isCustomTheme: " <<  isCustomTheme;
+    qDebug() << "isCustomTheme: " << isCustomTheme;
 
     customTheme = new QCheckBox();
     customTheme->setText("Use custom theme");
@@ -226,7 +205,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     layout1->addWidget(themeSelector, 5, 4);
 
     // storage tab
-    QGridLayout *storageL = new QGridLayout;
+    QGridLayout* storageL = new QGridLayout;
     storageL->setSpacing(25);
 
     storageLabel = new QLabel();
@@ -240,10 +219,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     pathToFolder->setMaximumHeight(25);
     pathToFolder->setText(path);
 
-    openFolder = new QPushButton(QPixmap(":/open.png")
-                                         .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                                 Qt::KeepAspectRatio, Qt::SmoothTransformation),
-                                 " Browse");
+    openFolder = new QPushButton(
+            QPixmap(":/open.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), " Browse");
     openFolder->setMaximumHeight(25);
 
     storageL->setSpacing(25);
@@ -252,7 +229,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     storageL->addWidget(openFolder, 2, 3);
 
     // projects content tab
-    QGridLayout *projectsContentL = new QGridLayout;
+    QGridLayout* projectsContentL = new QGridLayout;
     projectsContentL->setSpacing(10);
     projectsContentL->setAlignment(Qt::AlignCenter);
 
@@ -288,10 +265,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     CisRepoSize = new QCheckBox("Repo size");
     CisRepoSize->setChecked(isRepoSize);
 
-    QSpacerItem *checkBoxSpacer1 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QSpacerItem *checkBoxSpacer2 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem* checkBoxSpacer1 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem* checkBoxSpacer2 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-    QVBoxLayout *checkboxLayout = new QVBoxLayout();
+    QVBoxLayout* checkboxLayout = new QVBoxLayout();
     checkboxLayout->setAlignment(Qt::AlignCenter);
 
     checkboxLayout->addItem(checkBoxSpacer1);
@@ -314,39 +291,39 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     projectsContentL->addLayout(checkboxLayout, 2, 0, 1, 1, Qt::AlignCenter);
 
     // info tab
-    QWidget *aboutTab = new QWidget();
-    QVBoxLayout *aboutTabLayout = new QVBoxLayout(aboutTab);
+    QWidget* aboutTab = new QWidget();
+    QVBoxLayout* aboutTabLayout = new QVBoxLayout(aboutTab);
 
     aboutTabLayout->addLayout(appInfoL);
 
     tabs->addTab(aboutTab, "About");
 
     // sync tab
-    QWidget *syncTab = new QWidget();
-    QVBoxLayout *syncTabLayout = new QVBoxLayout(syncTab);
+    QWidget* syncTab = new QWidget();
+    QVBoxLayout* syncTabLayout = new QVBoxLayout(syncTab);
 
     syncTabLayout->addLayout(mainSyncLayout);
 
     tabs->addTab(syncTab, "Sync");
 
     // storage tab
-    QWidget *storageTab = new QWidget();
-    QVBoxLayout *storageTabLayout = new QVBoxLayout(storageTab);
+    QWidget* storageTab = new QWidget();
+    QVBoxLayout* storageTabLayout = new QVBoxLayout(storageTab);
 
     storageTabLayout->addLayout(storageL);
 
     tabs->addTab(storageTab, "Storage");
 
     // main tab
-    QWidget *appereanceTab = new QWidget();
-    QVBoxLayout *appereanceTabLayout = new QVBoxLayout(appereanceTab);
+    QWidget* appereanceTab = new QWidget();
+    QVBoxLayout* appereanceTabLayout = new QVBoxLayout(appereanceTab);
 
     appereanceTabLayout->addLayout(layout1);
 
     tabs->addTab(appereanceTab, "Appereance");
 
     // projects content
-    QWidget *projectsContentTab = new QWidget();
+    QWidget* projectsContentTab = new QWidget();
     projectsContentTab->setLayout(projectsContentL);
     tabs->addTab(projectsContentTab, "Projects");
 
@@ -380,10 +357,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     connect(checkUpdatesBtn, SIGNAL(clicked()), this, SLOT(checkUpdates()));
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
 
-    QTimer *repoTimer = new QTimer(this);
+    QTimer* repoTimer = new QTimer(this);
     qDebug() << "checking";
 
-    QThread *repoTimerThread = new QThread;
+    QThread* repoTimerThread = new QThread;
     QObject::connect(repoTimerThread, &QThread::started, this, [this, repoTimer]() {
         connect(repoTimer, &QTimer::timeout, [=]() { checkRepo(); });
         repoTimer->start(100);
@@ -392,10 +369,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     });
     repoTimerThread->start();
 
-    QThread *styleThread = new QThread;
+    QThread* styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {
         int font_size_int = font_size.toInt();
-        setFontPr2(&selectedFont, &font_size_int);
+        setStyle2(&selectedFont, &font_size_int);
 
         qDebug() << "styleThread started";
     });

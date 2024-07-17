@@ -1,4 +1,4 @@
-void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list)
+void MainWindow::onMovingTaskFrom(QListWidgetItem* item, QListWidget* list)
 {
     qDebug() << "Moving task: " << item->text() << " from: " << list->objectName();
 
@@ -6,7 +6,7 @@ void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list)
     QString status = list->objectName();
 }
 
-void MainWindow::onMovingTaskTo(QListWidgetItem *item, QListWidget *list)
+void MainWindow::onMovingTaskTo(QListWidgetItem* item, QListWidget* list)
 {
     qDebug() << "Moved task: " << item->text() << " to: " << list->objectName();
 
@@ -35,10 +35,10 @@ void MainWindow::addNewTask()
 
 void MainWindow::removeTask()
 {
-    QListWidget *listWidgets[] = { incompleteTasks, inprocessTasks, completeTasks };
+    QListWidget* listWidgets[] = { incompleteTasks, inprocessTasks, completeTasks };
 
-    for (QListWidget *listWidget : listWidgets) {
-        QListWidgetItem *item = listWidget->currentItem();
+    for (QListWidget* listWidget : listWidgets) {
+        QListWidgetItem* item = listWidget->currentItem();
         if (item) {
             listWidget->takeItem(listWidget->row(item));
             qDebug() << "Removed task: " << item->text();
@@ -54,14 +54,12 @@ void MainWindow::removeTask()
     }
 }
 
-void MainWindow::getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks,
-                               QListWidget *inprocessTasks, QListWidget *completeTasks)
+void MainWindow::getTotalTasks(QTabWidget* tasksTab, QListWidget* incompleteTasks, QListWidget* inprocessTasks, QListWidget* completeTasks)
 {
     if (tasksTab->currentIndex() == 2) {
-        QTimer *timer3 = new QTimer(this);
+        QTimer* timer3 = new QTimer(this);
         connect(timer3, &QTimer::timeout, [=]() {
-            int totalTasks =
-                    incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
+            int totalTasks = incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
 
             tasksProgress->setFormat("Total tasks: " + QString::number(totalTasks) + " ");
         });
@@ -69,22 +67,19 @@ void MainWindow::getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTask
     }
 }
 
-void MainWindow::updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks,
-                                     QListWidget *inprocessTasks, QListWidget *completeTasks,
-                                     QProgressBar *tasksProgress)
+void MainWindow::updateTasksProgress(QTabWidget* tasksTab, QListWidget* incompleteTasks, QListWidget* inprocessTasks, QListWidget* completeTasks,
+                                     QProgressBar* tasksProgress)
 {
     if (tasksTab->currentIndex() == 2) {
-        QTimer *timer2 = new QTimer(this);
+        QTimer* timer2 = new QTimer(this);
         connect(timer2, &QTimer::timeout, [=]() {
-            int totalTasks =
-                    incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
+            int totalTasks = incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
             int completedTasks = completeTasks->count();
 
             if (totalTasks == 0) {
                 tasksProgress->setValue(0);
             } else {
-                double percentage = static_cast<double>(completedTasks)
-                        / static_cast<double>(totalTasks) * 100.0;
+                double percentage = static_cast<double>(completedTasks) / static_cast<double>(totalTasks) * 100.0;
                 tasksProgress->setValue(percentage);
             }
         });
@@ -92,7 +87,7 @@ void MainWindow::updateTasksProgress(QTabWidget *tasksTab, QListWidget *incomple
     }
 }
 
-void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item)
+void MainWindow::renameItemOnDoubleClick(QListWidget* listWidget, QListWidgetItem* item)
 {
     if (item) {
         qDebug() << font_size;
@@ -110,8 +105,7 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetIte
         lineEdit.setFont(selectedFont);
         lineEdit.setFixedSize(200, 100);
         lineEdit.setAlignment(Qt::AlignCenter);
-        lineEdit.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: "
-                               + font_size + "pt; border-radius: 10px;");
+        lineEdit.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: " + font_size + "pt; border-radius: 10px;");
 
         layout.addWidget(&lineEdit);
 
@@ -120,13 +114,11 @@ void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetIte
         QPushButton okButton(tr("Save"), &dialog);
         okButton.setFont(selectedFont);
         okButton.setFixedSize(200, 25);
-        okButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: "
-                               + font_size + "pt; border-radius: 10px;");
+        okButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: " + font_size + "pt; border-radius: 10px;");
         QPushButton cancelButton(tr("Cancel"), &dialog);
         cancelButton.setFont(selectedFont);
         cancelButton.setFixedSize(200, 25);
-        cancelButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: "
-                                   + font_size + "pt; border-radius: 10px;");
+        cancelButton.setStyleSheet("background-color: #2D4F67; border-color: #2D4F67; font-size: " + font_size + "pt; border-radius: 10px;");
         layout.addWidget(&okButton);
         layout.addWidget(&cancelButton);
 

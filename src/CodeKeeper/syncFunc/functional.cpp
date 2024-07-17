@@ -33,8 +33,8 @@ void SyncWindow::cancelSyncingFunc()
 
 bool SyncWindow::checkConnection()
 {
-    QNetworkAccessManager *manager;
-    QNetworkReply *reply;
+    QNetworkAccessManager* manager;
+    QNetworkReply* reply;
 
     manager = new QNetworkAccessManager();
     reply = manager->get(QNetworkRequest(QUrl("http://www.google.com")));

@@ -1,6 +1,6 @@
 QString formatFileSize(qint64 bytes)
 {
-    static const char *suffixes[] = { "KB", "MB", "GB", "TB", "PB", "..." };
+    static const char* suffixes[] = { "KB", "MB", "GB", "TB", "PB", "..." };
     int index = 0;
     double size = bytes;
 
@@ -12,7 +12,7 @@ QString formatFileSize(qint64 bytes)
     return QString::number(size, 'f', 2) + " " + suffixes[index];
 }
 
-void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
+void MainWindow::createGitBadges(QString git_url, QWebEngineView* page)
 {
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
@@ -31,20 +31,20 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
                    "flex; vertical-align: middle; flex-direction: column;'>";
 
     if (isCreated) {
-        html += "            <img class='badge' src='https://img.shields.io/github/created-at/"
-                + repo + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29' />";
+        html += "            <img class='badge' src='https://img.shields.io/github/created-at/" + repo
+                + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
     if (isReleaseDate) {
-        html += "            <img class='badge' src='https://img.shields.io/github/release-date/"
-                + repo + "?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=171b22' />";
+        html += "            <img class='badge' src='https://img.shields.io/github/release-date/" + repo
+                + "?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=171b22' />";
     }
     if (isLastCommit) {
-        html += "            <img class='badge' src='https://img.shields.io/github/last-commit/"
-                + repo + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29'/>";
+        html += "            <img class='badge' src='https://img.shields.io/github/last-commit/" + repo
+                + "?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29'/>";
     }
     if (isPullReq) {
-        html += "            <img class='badge' src='https://img.shields.io/github/issues-pr/"
-                + repo + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29' />";
+        html += "            <img class='badge' src='https://img.shields.io/github/issues-pr/" + repo
+                + "?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29' />";
     }
     if (isLicense) {
         html += "            <img class='badge' src='https://img.shields.io/github/license/" + repo
@@ -59,8 +59,7 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
                 + "?style=for-the-badge&color=dbb6ed&logoColor=ffffff&labelColor=1c1c29' />";
     }
     if (isDownloads) {
-        html += "            <img class='badge' src='https://img.shields.io/github/downloads/"
-                + repo
+        html += "            <img class='badge' src='https://img.shields.io/github/downloads/" + repo
                 + "/total?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
     if (isCommit) {
@@ -69,8 +68,8 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
                 + repo + "?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
     if (isLang) {
-        html += "            <img class='badge' src='https://img.shields.io/github/languages/count/"
-                + repo + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=1c1c29' />";
+        html += "            <img class='badge' src='https://img.shields.io/github/languages/count/" + repo
+                + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
     if (isStars) {
         html += "            <img class='badge' src='https://img.shields.io/github/stars/" + repo
@@ -81,8 +80,8 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
                 + "?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=1c1c29' />";
     }
     if (isRepoSize) {
-        html += "            <img class='badge' src='https://img.shields.io/github/repo-size/"
-                + repo + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22'/>";
+        html += "            <img class='badge' src='https://img.shields.io/github/repo-size/" + repo
+                + "?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22'/>";
     }
 
     html += "        </div>"
@@ -92,16 +91,15 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView *page)
     page->setHtml(html);
 }
 
-QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
+QString MainWindow::getRepositoryData(QString git_url, QTableWidget* table)
 {
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
     QString repoData;
 
-    QString name, createdAt, openIssues, forks, lang, stars, repoSize, license, totalDownloads,
-            release, releaseDate, lastCommitS;
+    QString name, createdAt, openIssues, forks, lang, stars, repoSize, license, totalDownloads, release, releaseDate, lastCommitS;
 
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
 
     QUrl url("https://api.github.com/repos/" + repo);
 
@@ -115,7 +113,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply *reply = manager->get(request);
+    QNetworkReply* reply = manager->get(request);
     QEventLoop loop;
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
@@ -166,7 +164,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     commitUrlRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     commitUrlRequest.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply *commitReply = manager->get(commitUrlRequest);
+    QNetworkReply* commitReply = manager->get(commitUrlRequest);
     QObject::connect(commitReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
     loop.exec();
@@ -201,7 +199,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     releaseUrlRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     releaseUrlRequest.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply *releaseReply = manager->get(releaseUrlRequest);
+    QNetworkReply* releaseReply = manager->get(releaseUrlRequest);
     QObject::connect(releaseReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
     loop.exec();
@@ -216,7 +214,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     qDebug() << releaseDoc;
 
     int iTotalDownloads = 0;
-    for (const QJsonValue &release : releases) {
+    for (const QJsonValue& release : releases) {
         QJsonObject releaseObj = release.toObject();
         int downloads = releaseObj["assets"].toArray().at(0).toObject()["download_count"].toInt();
         iTotalDownloads += downloads;
@@ -234,7 +232,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
     releasesRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     releasesRequest.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply *releasesReply = manager->get(releasesRequest);
+    QNetworkReply* releasesReply = manager->get(releasesRequest);
     QObject::connect(releasesReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
     loop.exec();
@@ -353,7 +351,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table)
 
     for (int row = 0; row < table->rowCount(); ++row) {
         for (int col = 0; col < table->columnCount(); ++col) {
-            QTableWidgetItem *item = table->item(row, col);
+            QTableWidgetItem* item = table->item(row, col);
             if (item) {
                 item->setFlags(item->flags() & ~Qt::ItemIsEditable);
                 item->setTextAlignment(Qt::AlignCenter);
@@ -376,7 +374,7 @@ QString MainWindow::getProjectIssues(QString git_url)
     QNetworkRequest request(url);
 
     QNetworkAccessManager manager;
-    QNetworkReply *reply = manager.get(request);
+    QNetworkReply* reply = manager.get(request);
 
     request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
     request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
@@ -395,7 +393,7 @@ QString MainWindow::getProjectIssues(QString git_url)
 
         qDebug() << json;
 
-        foreach (const QJsonValue &issue, issues) {
+        foreach (const QJsonValue& issue, issues) {
             QJsonObject issueObject = issue.toObject();
             QString title = issueObject["title"].toString();
             QString body = issueObject["body"].toString();
@@ -408,11 +406,9 @@ QString MainWindow::getProjectIssues(QString git_url)
             QDateTime createDate = QDateTime::fromString(dateStr, Qt::ISODate);
             QString date = createDate.toString("dd MMM yyyy hh:mm");
 
-            issuesData += "<div align='center' style='content'><h2 align='center'> - </h2><h2>"
-                    + title + "</h2><br><a style='color: #84a0bf; text-decoration: none;' href=\""
-                    + creatorUrl + "\">Created by " + creator + " </a>at " + date + "<br><br>"
-                    + shortBody
-                    + "<br><br><a style='color: #84a0bf; text-decoration: none;' href=\"" + link
+            issuesData += "<div align='center' style='content'><h2 align='center'> - </h2><h2>" + title
+                    + "</h2><br><a style='color: #84a0bf; text-decoration: none;' href=\"" + creatorUrl + "\">Created by " + creator + " </a>at "
+                    + date + "<br><br>" + shortBody + "<br><br><a style='color: #84a0bf; text-decoration: none;' href=\"" + link
                     + "\">Open</a><br></div>";
         }
     } else {

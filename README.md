@@ -146,6 +146,7 @@
   - [X] - Update project editor window
   - [X] - Update view mode for markdown
   - [X] - Add threads
+  - [X] - Added style selection functionality
   - [ ] - Context menu for notes
   - [ ] - Context menu for tasks
   - [ ] - Context menu for projects
@@ -178,8 +179,8 @@
   - [ ] - Migrate to CMake
 ******
   - [X] - Git Api
+  - [X] - Add issues page
   - [ ] - Git Sync
-  - [ ] - Add issues page
   - [ ] - Add wiki page
 
 </details>

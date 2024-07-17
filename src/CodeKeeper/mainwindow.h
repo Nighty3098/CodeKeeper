@@ -120,12 +120,15 @@ public:
     void createCustomTitlebar();
     void setConnectionStatus();
 
-    void setFontPr1(QFont *selectedFont, int *font_size_int);
+    void setStyle(QFont *selectedFont, int *font_size_int);
     void loadNotes();
     void loadProjects();
     void loadTasks();
 
     bool createConnection(QString path);
+
+    void createConnects();
+    void createShortcuts();
 
     QString getKeeperStats();
 
@@ -245,6 +248,10 @@ private slots:
 
     bool checkConnection();
 
+    void createNotesMenu(QMenu *menu, QString font_size);
+    void createProjectMenu(QMenu *menu, QString font_size);
+    void createTaskMenu(QMenu *menu, QString font_size);
+
 protected:
     void mousePressEvent(QMouseEvent *event) override
     {
@@ -267,6 +274,14 @@ protected:
     }
 
 private:
+    // shortcuts
+    QShortcut* toFirstTab;
+    QShortcut* toSecondTab;
+    QShortcut* toThirdTab;
+    QShortcut* toFourthTab;
+    QShortcut* openSettingsWindowQS;
+
+    // other
     QLabel *appIcon;
     QLabel *windowTitle;
     QWidget *centralWidget;

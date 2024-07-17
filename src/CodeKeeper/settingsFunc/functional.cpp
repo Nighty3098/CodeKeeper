@@ -8,9 +8,9 @@ void SettingsWindow::QuitW()
     this->close();
 }
 
-void SettingsWindow::closeEvent(QCloseEvent *event)
+void SettingsWindow::closeEvent(QCloseEvent* event)
 {
-    MainWindow *mainWindow = static_cast<MainWindow *>(parent());
+    MainWindow* mainWindow = static_cast<MainWindow*>(parent());
     mainWindow->setGraphicsEffect(nullptr);
     QMainWindow::closeEvent(event);
     saveData();
@@ -30,9 +30,9 @@ void SettingsWindow::checkUpdates()
     QString newAppVersion = getNewAppVersion();
     QString currentAppVersion = versionInfo->text();
 
-    QGridLayout *layout = new QGridLayout(&dialog);
+    QGridLayout* layout = new QGridLayout(&dialog);
 
-    QPushButton *closeWindow = new QPushButton("");
+    QPushButton* closeWindow = new QPushButton("");
     closeWindow->setFixedSize(15, 15);
 
     closeWindow->setStyleSheet("QPushButton {"
@@ -48,42 +48,33 @@ void SettingsWindow::checkUpdates()
                                "    background-color: rgba(0, 0, 0, 0);"
                                "}");
 
-    QLabel *iconLabel = new QLabel();
-    iconLabel->setPixmap(QPixmap(":/refresh.png")
-                                 .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    QLabel* iconLabel = new QLabel();
+    iconLabel->setPixmap(QPixmap(":/refresh.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-    QLabel *updateInfoLabel = new QLabel();
+    QLabel* updateInfoLabel = new QLabel();
     updateInfoLabel->setStyleSheet("font-size: " + font_size + "pt;");
     updateInfoLabel->setFont(selectedFont);
     updateInfoLabel->setAlignment(Qt::AlignCenter);
 
-    QLabel *verInfoLabel = new QLabel();
+    QLabel* verInfoLabel = new QLabel();
     verInfoLabel->setStyleSheet("font-size: " + font_size + "pt;");
     verInfoLabel->setFont(selectedFont);
     verInfoLabel->setAlignment(Qt::AlignCenter);
 
-    QPushButton *downloadUpdate =
-            new QPushButton(QPixmap(":/download.png")
-                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                            Qt::KeepAspectRatio, Qt::SmoothTransformation),
-                            " Update");
+    QPushButton* downloadUpdate = new QPushButton(
+            QPixmap(":/download.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), " Update");
     downloadUpdate->setFixedSize(100, 25);
 
     qDebug() << newAppVersion << "  " << currentAppVersion;
 
     if (newAppVersion == currentAppVersion) {
-        iconLabel->setPixmap(
-                QPixmap(":/check-mark.png")
-                        .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        iconLabel->setPixmap(QPixmap(":/check-mark.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         updateInfoLabel->setText("You are running the latest version of the app.");
         verInfoLabel->setText("Current version: " + currentAppVersion);
     } else {
-        iconLabel->setPixmap(
-                QPixmap(":/refresh.png")
-                        .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        iconLabel->setPixmap(QPixmap(":/refresh.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         updateInfoLabel->setText("A new version of the application is available.");
-        verInfoLabel->setText("Current version: " + currentAppVersion
-                              + "\nNew version: " + newAppVersion);
+        verInfoLabel->setText("Current version: " + currentAppVersion + "\nNew version: " + newAppVersion);
         layout->addWidget(downloadUpdate, 6, 0, 1, 2, Qt::AlignCenter);
     }
 
@@ -94,9 +85,8 @@ void SettingsWindow::checkUpdates()
 
     connect(closeWindow, &QPushButton::clicked, [&]() { dialog.close(); });
 
-    connect(downloadUpdate, &QPushButton::clicked, [&]() {
-        QDesktopServices::openUrl(QUrl("https://github.com/DXS-GROUP/CodeKeeper/releases/latest"));
-    });
+    connect(downloadUpdate, &QPushButton::clicked,
+            [&]() { QDesktopServices::openUrl(QUrl("https://github.com/DXS-GROUP/CodeKeeper/releases/latest")); });
 
     dialog.exec();
 }
@@ -106,7 +96,7 @@ void SettingsWindow::checkRepo()
     QString repo = "https://github.com/" + gitUser->text() + "/" + gitRepo->text();
 
     QNetworkAccessManager nam;
-    QNetworkReply *reply = nam.get(QNetworkRequest(QUrl(repo)));
+    QNetworkReply* reply = nam.get(QNetworkRequest(QUrl(repo)));
     QEventLoop loop;
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
@@ -127,7 +117,7 @@ void SettingsWindow::saveData()
     qDebug() << "Saving data";
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
-    QMessageBox *messageBox = new QMessageBox();
+    QMessageBox* messageBox = new QMessageBox();
 
     QFont selectedFont = fontSelector->currentFont();
     globalSettings->setValue("font", selectedFont);
@@ -195,9 +185,9 @@ void SettingsWindow::saveData()
     isRepoSize = CisRepoSize->isChecked();
     globalSettings->setValue("isRepoSize", isRepoSize);
 
-    MainWindow *mainWindow = static_cast<MainWindow *>(parent());
-    setFontPr2(&selectedFont, &font_size);
-    mainWindow->setFontPr1(&selectedFont, &font_size);
+    MainWindow* mainWindow = static_cast<MainWindow*>(parent());
+    setStyle2(&selectedFont, &font_size);
+    mainWindow->setStyle(&selectedFont, &font_size);
     mainWindow->getSettingsData();
 
     mainWindow->setConnectionStatus();
@@ -206,9 +196,9 @@ void SettingsWindow::saveData()
     mainWindow->loadTasks();
     mainWindow->loadProjects();
 
-    SyncWindow *syncWindow = static_cast<SyncWindow *>(parent());
+    SyncWindow* syncWindow = static_cast<SyncWindow*>(parent());
 
-    AccountWindow *accountWindow = static_cast<AccountWindow *>(parent());
+    AccountWindow* accountWindow = static_cast<AccountWindow*>(parent());
 }
 
 void SettingsWindow::fopenFolder()
@@ -220,7 +210,7 @@ void SettingsWindow::fopenFolder()
 
         pathToFolder->setText(str);
 
-        QMessageBox *messageBox = new QMessageBox();
+        QMessageBox* messageBox = new QMessageBox();
 
         messageBox->setIcon(QMessageBox::Information);
         messageBox->setWindowTitle("CodeKeeper - Settings");
@@ -228,14 +218,14 @@ void SettingsWindow::fopenFolder()
 
         messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
         messageBox->exec();
-        MainWindow *mainWindow = static_cast<MainWindow *>(parent());
+        MainWindow* mainWindow = static_cast<MainWindow*>(parent());
         mainWindow->loadNotes();
     }
 }
 
 QString SettingsWindow::getNewAppVersion()
 {
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/repos/DXS-GROUP/CodeKeeper/releases/latest");
 
     QUrlQuery query;
@@ -247,7 +237,7 @@ QString SettingsWindow::getNewAppVersion()
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply *reply = manager->get(request);
+    QNetworkReply* reply = manager->get(request);
     QEventLoop loop;
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 
@@ -264,7 +254,7 @@ QString SettingsWindow::getNewAppVersion()
     return version;
 }
 
-void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
+void SettingsWindow::setStyle2(QFont* selectedFont, int* font_size_int)
 {
     qDebug() << "Applying preferences";
 
@@ -272,14 +262,13 @@ void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
 
     // set font
     tabs->setFont(*selectedFont);
-    tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size
-                        + "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
+    tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size + "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
 
     saveBtn->setFont(*selectedFont);
-    saveBtn->setStyleSheet(
-            "QPushButton {border: none; background-color: transparent; color: #fff; font-size: " + font_size
-            + "pt;} QPushButton:hover {border: none; background-color: transparent; color: #7289DA; font-size: "
-            + font_size + "pt;}");
+    saveBtn->setStyleSheet("QPushButton {border: none; background-color: transparent; color: #fff; font-size: " + font_size
+                           + "pt;} QPushButton:hover {border: none; background-color: transparent; color: "
+                             "#7289DA; font-size: "
+                           + font_size + "pt;}");
 
     appName->setFont(*selectedFont);
 
@@ -382,8 +371,20 @@ void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
     CisStars->setStyleSheet("font-size: " + font_size + "pt;");
     CisForks->setStyleSheet("font-size: " + font_size + "pt;");
 
-    // set Data
     fontSelector->setCurrentFont(*selectedFont);
     fontSize->setValue(font_size.toInt());
     themeSelector->setCurrentText(theme);
+
+    quitBtn->setStyleSheet("QPushButton {"
+                           "    border-color: rgba(0, 0, 0, 0);"
+                           "    background-color: rgba(0, 0, 0, 0);"
+                           "    background-image: url(':/red.png');"
+                           "    background-repeat: no-repeat;"
+                           "}"
+                           "QPushButton:hover {"
+                           "    border-color: rgba(0, 0, 0, 0);"
+                           "    background-image: url(':/redHovered.png');"
+                           "    background-repeat: no-repeat;"
+                           "    background-color: rgba(0, 0, 0, 0);"
+                           "}");
 }

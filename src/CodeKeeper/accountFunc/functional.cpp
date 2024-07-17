@@ -8,10 +8,10 @@
 
 #include "mainwindow.h"
 
-void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
+void AccountWindow::setImageFromUrl(const QString& url, QLabel* label)
 {
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QNetworkReply *reply = manager->get(QNetworkRequest(QUrl(url)));
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+    QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(url)));
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if (reply->error()) {
             qWarning() << "Error:" << reply->errorString();
@@ -78,7 +78,7 @@ void AccountWindow::setFontStyle()
                                "}");
 }
 
-int AccountWindow::getStarsCount(const QString &username)
+int AccountWindow::getStarsCount(const QString& username)
 {
     QNetworkAccessManager manager;
     QUrl url("https://api.github.com/users/" + username + "/repos");
@@ -88,7 +88,7 @@ int AccountWindow::getStarsCount(const QString &username)
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply *reply = manager.get(request);
+    QNetworkReply* reply = manager.get(request);
     QEventLoop loop;
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
@@ -102,7 +102,7 @@ int AccountWindow::getStarsCount(const QString &username)
     QJsonArray repos = json.array();
 
     int totalStars = 0;
-    for (const QJsonValue &repo : repos) {
+    for (const QJsonValue& repo : repos) {
         QJsonObject repoObject = repo.toObject();
         QString repoUrl = repoObject["url"].toString();
 
@@ -113,7 +113,7 @@ int AccountWindow::getStarsCount(const QString &username)
         repoRequest.setRawHeader("Accept", "application/vnd.github.v3+json");
         ;
 
-        QNetworkReply *repoReply = manager.get(repoRequest);
+        QNetworkReply* repoReply = manager.get(repoRequest);
         QEventLoop repoLoop;
         QObject::connect(repoReply, &QNetworkReply::finished, &repoLoop, &QEventLoop::quit);
         repoLoop.exec();
@@ -133,9 +133,9 @@ int AccountWindow::getStarsCount(const QString &username)
     return totalStars;
 }
 
-void AccountWindow::setUserData(const QString &username, QLabel *label)
+void AccountWindow::setUserData(const QString& username, QLabel* label)
 {
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/users/" + git_user);
 
     QUrlQuery query;
@@ -148,7 +148,7 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply *reply = manager->get(request);
+    QNetworkReply* reply = manager->get(request);
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if (reply->error()) {
             qWarning() << "Error:" << reply->errorString();
@@ -175,11 +175,9 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
 
         qDebug() << "" << doc;
 
-        profileInfo->setText("\n\n" + obj["bio"].toString() + "\nPublic repos: "
-                             + QString::number(obj["public_repos"].toInt()) + "\n\nFollowing: "
-                             + QString::number(obj["following"].toInt()) + "\n\nFollowers: "
-                             + QString::number(obj["followers"].toInt()) + "\n\nStars: "
-                             + QString::number(getStarsCount(git_user)) + "\n");
+        profileInfo->setText("\n\n" + obj["bio"].toString() + "\nPublic repos: " + QString::number(obj["public_repos"].toInt()) + "\n\nFollowing: "
+                             + QString::number(obj["following"].toInt()) + "\n\nFollowers: " + QString::number(obj["followers"].toInt())
+                             + "\n\nStars: " + QString::number(getStarsCount(git_user)) + "\n");
 
         setImageFromUrl(obj["avatar_url"].toString(), profilePicture);
         reply->deleteLater();
@@ -191,8 +189,9 @@ void AccountWindow::onOpenRepoClicked()
     QDesktopServices::openUrl(QUrl("https://github.com/" + git_user + "/"));
 }
 
-void AccountWindow::setTasksProgress() {
-    MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
+void AccountWindow::setTasksProgress()
+{
+    MainWindow* mainWindow = qobject_cast<MainWindow*>(this->parent());
     QString stats = mainWindow->getKeeperStats();
 
     int incompleteTasksCount = mainWindow->incompleteTasks->count();
