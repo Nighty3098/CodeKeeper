@@ -371,8 +371,20 @@ void SettingsWindow::setStyle2(QFont* selectedFont, int* font_size_int)
     CisStars->setStyleSheet("font-size: " + font_size + "pt;");
     CisForks->setStyleSheet("font-size: " + font_size + "pt;");
 
-    // set Data
     fontSelector->setCurrentFont(*selectedFont);
     fontSize->setValue(font_size.toInt());
     themeSelector->setCurrentText(theme);
+
+    quitBtn->setStyleSheet("QPushButton {"
+                           "    border-color: rgba(0, 0, 0, 0);"
+                           "    background-color: rgba(0, 0, 0, 0);"
+                           "    background-image: url(':/red.png');"
+                           "    background-repeat: no-repeat;"
+                           "}"
+                           "QPushButton:hover {"
+                           "    border-color: rgba(0, 0, 0, 0);"
+                           "    background-image: url(':/redHovered.png');"
+                           "    background-repeat: no-repeat;"
+                           "    background-color: rgba(0, 0, 0, 0);"
+                           "}");
 }

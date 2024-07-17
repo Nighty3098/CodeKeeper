@@ -11,10 +11,6 @@
 
 SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
 {
-    // visual
-    QFile file(":/stylesheet/stylesheet_setting_window.qss");
-    file.open(QFile::ReadOnly);
-
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
@@ -47,7 +43,6 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
-    // this->setStyleSheet(file.readAll());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     centralWidget = new QWidget(this);
@@ -67,18 +62,6 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     saveBtn->setFixedSize(100, 25);
 
     quitBtn = new QPushButton();
-    quitBtn->setStyleSheet("QPushButton {"
-                           "    border-color: rgba(0, 0, 0, 0);"
-                           "    background-color: rgba(0, 0, 0, 0);"
-                           "    background-image: url(':/red.png');"
-                           "    background-repeat: no-repeat;"
-                           "}"
-                           "QPushButton:hover {"
-                           "    border-color: rgba(0, 0, 0, 0);"
-                           "    background-image: url(':/redHovered.png');"
-                           "    background-repeat: no-repeat;"
-                           "    background-color: rgba(0, 0, 0, 0);"
-                           "}");
     quitBtn->setFixedSize(15, 15);
 
     QSpacerItem* spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -86,8 +69,6 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     BtnsL->addWidget(quitBtn);
     BtnsL->addItem(spacer);
     BtnsL->addWidget(saveBtn);
-
-    // control buttons
 
     // main
     QVBoxLayout* appInfoL = new QVBoxLayout();

@@ -28,7 +28,8 @@ SOURCES += \
     gitFunc/cloneRepo.cpp \
     gitFunc/getUpdates.cpp \
     gitFunc/pushUpdates.cpp \
-    keeperFunc/createMenu.cpp
+    keeperFunc/createMenu.cpp \
+    keeperFunc/addConnects.cpp
 
 HEADERS += \
     accountwindow.h \

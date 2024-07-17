@@ -127,6 +127,9 @@ public:
 
     bool createConnection(QString path);
 
+    void createConnects();
+    void createShortcuts();
+
     QString getKeeperStats();
 
     QMarkdownTextEdit *note;
@@ -271,6 +274,14 @@ protected:
     }
 
 private:
+    // shortcuts
+    QShortcut* toFirstTab;
+    QShortcut* toSecondTab;
+    QShortcut* toThirdTab;
+    QShortcut* toFourthTab;
+    QShortcut* openSettingsWindowQS;
+
+    // other
     QLabel *appIcon;
     QLabel *windowTitle;
     QWidget *centralWidget;

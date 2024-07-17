@@ -6,9 +6,6 @@
 
 AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
 {
-    QFile file(":/stylesheet/stylesheet_setting_window.qss");
-    file.open(QFile::ReadOnly);
-    // this->setStyleSheet(file.readAll());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     centralWidget = new QWidget(this);

@@ -11,14 +11,10 @@
 
 SyncWindow::SyncWindow(QWidget* parent) : QMainWindow(parent)
 {
-    QFile file(":/stylesheet/stylesheet_setting_window.qss");
-    file.open(QFile::ReadOnly);
-
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
     this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     this->setFixedSize(300, 500);
-    // this->setStyleSheet(file.readAll());
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     selectedFont = globalSettings->value("font").value<QFont>();
@@ -53,7 +49,6 @@ SyncWindow::SyncWindow(QWidget* parent) : QMainWindow(parent)
 
     QVBoxLayout* infoLayout = new QVBoxLayout();
     infoLayout->setAlignment(Qt::AlignHCenter);
-    // infoLayout->addWidget(appIcon);
     infoLayout->addWidget(appName);
     infoLayout->addWidget(infoLabel);
 
