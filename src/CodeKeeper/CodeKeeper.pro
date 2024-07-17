@@ -38,7 +38,8 @@ HEADERS += \
 RESOURCES += \
     ../resources/resources.qrc \
     ../stylesheet/stylesheet.qss \
-    ../stylesheet/stylesheet_setting_window.qss
+    ../stylesheet/stylesheet_setting_window.qss \
+    ../stylesheet/custom_stylesheet.qss
 
 include(3rdParty/qmarkdowntextedit/qmarkdowntextedit.pri)
 

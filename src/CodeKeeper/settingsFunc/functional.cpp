@@ -165,6 +165,9 @@ void SettingsWindow::saveData()
     isCustomTitlebar = customTitleBar->isChecked();
     globalSettings->setValue("isCustomTitlebar", isCustomTitlebar);
 
+    isCustomTheme = customTheme->isChecked();
+    globalSettings->setValue("isCustomTheme", isCustomTheme);
+
     isCreated = CisCreated->isChecked();
     globalSettings->setValue("isCreated", isCreated);
     isReleaseDate = CisReleaseDate->isChecked();
@@ -274,8 +277,8 @@ void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
 
     saveBtn->setFont(*selectedFont);
     saveBtn->setStyleSheet(
-            "QPushButton {background-color: transparent; color: #fff; font-size: " + font_size
-            + "pt;} QPushButton:hover {background-color: transparent; color: #7289DA; font-size: "
+            "QPushButton {border: none; background-color: transparent; color: #fff; font-size: " + font_size
+            + "pt;} QPushButton:hover {border: none; background-color: transparent; color: #7289DA; font-size: "
             + font_size + "pt;}");
 
     appName->setFont(*selectedFont);
@@ -344,6 +347,9 @@ void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
 
     customTitleBar->setFont(*selectedFont);
     customTitleBar->setStyleSheet("font-size: " + font_size + "pt;");
+
+    customTheme->setFont(*selectedFont);
+    customTheme->setStyleSheet("font-size: " + font_size + "pt;");
 
     repoAvailability->setFont(*selectedFont);
     repoAvailability->setStyleSheet("font-size: " + font_size + "pt;");

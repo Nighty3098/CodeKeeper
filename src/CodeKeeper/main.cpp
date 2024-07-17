@@ -27,7 +27,7 @@ bool loadApp(QSplashScreen *psplash)
 
 int main(int argc, char *argv[])
 {
-    QFile file(":/stylesheet/stylesheet.qss");
+    QFile file(":/stylesheet/custom_stylesheet.qss");
     file.open(QFile::ReadOnly);
 
     QApplication a(argc, argv);

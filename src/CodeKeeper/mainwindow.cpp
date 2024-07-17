@@ -35,6 +35,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     getSettingsData();
 
+    if(isCustomTheme == true) {
+        QFile custom_theme(":/stylesheet/custom_stylesheet.qss");
+        custom_theme.open(QFile::ReadOnly);
+
+        qDebug() << "Loading custom stylesheet..." << custom_theme.readAll();
+
+        setStyleSheet(custom_theme.readAll());
+    }
+    else {
+        QFile theme_file(":/stylesheet/stylesheet.qss");
+        theme_file.open(QFile::ReadOnly);
+
+        qDebug() << "Loading default stylesheet..." << theme_file.readAll();
+
+        setStyleSheet(theme_file.readAll());
+    }
+
     closeBtn = new QPushButton();
     minimizeBtn = new QPushButton();
     maximizeBtn = new QPushButton();
@@ -102,12 +119,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // sync btn
     syncDataBtn = new QPushButton(QPixmap(":/sync.png")
-                                          .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
+                                          .scaled(font_size.toInt() + 10, font_size.toInt() + 10,
                                                   Qt::KeepAspectRatio, Qt::SmoothTransformation),
                                   "");
     syncDataBtn->setToolTip(
             "<p style='color: #ffffff; border-radius: 5px; background-color: #0D1117;'>Sync</p>");
-    syncDataBtn->setFixedSize(15, 15);
+    syncDataBtn->setFixedSize(35, 35);
 
     // ========================================================
     QHBoxLayout *menuLayout = new QHBoxLayout;
@@ -178,8 +195,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                                         Qt::KeepAspectRatio, Qt::SmoothTransformation));
     menuButton->setIconSize(QSize(10, 10));
     menuButton->setPopupMode(QToolButton::InstantPopup);
-    menuButton->setStyleSheet(
-            "background-color: #0D1117; border-color: #0D1117; border-width: 4px;");
+    menuButton->setStyleSheet("background-color: transparent; border: none;");
 
     menu = new QMenu(menuButton);
 
@@ -357,21 +373,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                                                 Qt::KeepAspectRatio, Qt::SmoothTransformation),
                                 "");
 
-    setH1B->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
-    setH2B->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
-    setH3B->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
-    setListB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
-    setLinkB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
-    setBoldB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+    setH1B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setH2B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setH3B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setListB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setLinkB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setBoldB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
     setItalicB->setStyleSheet(
-            "background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+            "background-color: transparent; border: none; margin-left: 4px;");
     setStrikeB->setStyleSheet(
-            "background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
-    setTaskB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+            "background-color: transparent; border: none; margin-left: 4px;");
+    setTaskB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
     setNumListB->setStyleSheet(
-            "background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
-    setTableB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
-    setQuoteB->setStyleSheet("background-color: #0D1117; border-color: #0D1117; margin-left: 4px;");
+            "background-color: transparent; border: none; margin-left: 4px;");
+    setTableB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setQuoteB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
 
     setH1B->setFixedSize(20, 20);
     setH2B->setFixedSize(20, 20);
@@ -451,7 +467,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksMenuBtn->setFixedSize(30, 30);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
     tasksMenuBtn->setStyleSheet(
-            "background-color: #0D1117; border-color: #0D1117; border-width: 0px;");
+            "background-color: transparent; border: none; border-width: 0px;");
 
     tasksMenu = new QMenu(tasksMenuBtn);
 
@@ -550,7 +566,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsMenuButton->setFixedSize(30, 25);
     projectsMenuButton->setIconSize(QSize(40, 40));
     projectsMenuButton->setStyleSheet(
-            "background-color: #0D1117; border-color: #0D1117; border-width: 0px;");
+            "background-color: transparent; border: none; border-width: 0px;");
 
     projectsMenu = new QMenu(projectsMenuButton);
 
@@ -687,7 +703,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     noteIco.addFile(":/edit.png");
     tasksIco.addFile(":/task.png");
 
-    
     tabs->setTabIcon(tabs->indexOf(mainTab), mainIco);
     tabs->setTabIcon(tabs->indexOf(notesTab), noteIco);
     tabs->setTabIcon(tabs->indexOf(tasksTab), tasksIco);
@@ -722,38 +737,41 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    winControlL->addWidget(syncDataBtn);
-
     winControlL->addItem(headerSp);
 
     winControlL->addWidget(isConnected);
     winControlL->addWidget(isAutoSync);
     winControlL->addWidget(sizeGrip2);
 
-
     QVBoxLayout *tabButtons = new QVBoxLayout();
 
-    mainTabButton = new QPushButton(QPixmap(":/main.png").scaled(font_size.toInt() + 10, font_size.toInt() + 10,
-                                                    Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
+    mainTabButton = new QPushButton(QPixmap(":/main.png")
+                                            .scaled(font_size.toInt() + 10, font_size.toInt() + 10,
+                                                    Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                                    "");
     mainTabButton->setFixedSize(35, 35);
 
-
-    tasksTabButton = new QPushButton(QPixmap(":/task.png").scaled(font_size.toInt() + 10, font_size.toInt() + 10,
-                                                                 Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
+    tasksTabButton = new QPushButton(QPixmap(":/task.png")
+                                             .scaled(font_size.toInt() + 10, font_size.toInt() + 10,
+                                                     Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                                     "");
     tasksTabButton->setFixedSize(35, 35);
 
-
-    notesTabButton = new QPushButton(QPixmap(":/note.png").scaled(font_size.toInt() + 10, font_size.toInt() + 10,
-                                                                 Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
+    notesTabButton = new QPushButton(QPixmap(":/note.png")
+                                             .scaled(font_size.toInt() + 10, font_size.toInt() + 10,
+                                                     Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                                     "");
     notesTabButton->setFixedSize(35, 35);
 
-
-    projectsTabButton = new QPushButton(QPixmap(":/project.png").scaled(font_size.toInt() + 10, font_size.toInt() + 10,
-                                                                 Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
+    projectsTabButton =
+            new QPushButton(QPixmap(":/project.png")
+                                    .scaled(font_size.toInt() + 10, font_size.toInt() + 10,
+                                            Qt::KeepAspectRatio, Qt::SmoothTransformation),
+                            "");
     projectsTabButton->setFixedSize(35, 35);
 
-    QSpacerItem* headerSp5 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QSpacerItem* headerSp6 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem *headerSp5 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem *headerSp6 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     tabButtons->addItem(headerSp5);
     tabButtons->addWidget(mainTabButton);
@@ -762,37 +780,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tabButtons->addWidget(projectsTabButton);
     tabButtons->addItem(headerSp6);
     tabButtons->addWidget(openAccountWindow);
+    tabButtons->addWidget(syncDataBtn);
     tabButtons->addWidget(openSettingsBtn);
 
-
-    connect(mainTabButton, &QPushButton::clicked, [=]() {
-        tabs->setCurrentIndex(0);
-    });
-    connect(tasksTabButton, &QPushButton::clicked, [=]() {
-        tabs->setCurrentIndex(1);
-    });
-    connect(notesTabButton, &QPushButton::clicked, [=]() {
-        tabs->setCurrentIndex(2);
-    });
-    connect(projectsTabButton, &QPushButton::clicked, [=]() {
-        tabs->setCurrentIndex(3);
-    });
-
+    connect(mainTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(0); });
+    connect(tasksTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(1); });
+    connect(notesTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(2); });
+    connect(projectsTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(3); });
 
     // open homepage
     tabs->setCurrentIndex(0);
 
     mainLayout->addLayout(tabButtons, 1, 0);
     mainLayout->addWidget(tabs, 1, 1);
-
-    QThread *calculateThread = new QThread;
-    QObject::connect(calculateThread, &QThread::started, this, [this]() {
-        qDebug() << "calculateThread started";
-        getTotalTasks(tabs, incompleteTasks, inprocessTasks, completeTasks);
-        getTotalProjects(tabs, notStartedProjects, startedProjects, finishedProjects, finishlineProjects);
-        updateTasksProgress(tabs, incompleteTasks, inprocessTasks, completeTasks, tasksProgress);
-    });
-    calculateThread->start();
 
     // ===================================================================================
     // connects
@@ -939,6 +939,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                                        "    background-repeat: no-repeat;"
                                        "}");
         }
+    });
+
+    connect(tabs, &QTabWidget::currentChanged, this, [=]() {
+        updateTasksProgress(tabs, incompleteTasks, inprocessTasks, completeTasks, tasksProgress);
+    });
+
+    connect(tabs, &QTabWidget::currentChanged, this,
+            [=]() { getTotalTasks(tabs, incompleteTasks, inprocessTasks, completeTasks); });
+
+    connect(tabs, &QTabWidget::currentChanged, this, [=]() {
+        getTotalProjects(tabs, notStartedProjects, startedProjects, finishedProjects,
+                         finishlineProjects);
     });
 
     QShortcut *openSettingsWindowQS =

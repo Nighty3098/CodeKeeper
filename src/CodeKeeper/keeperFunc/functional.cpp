@@ -16,14 +16,12 @@ QString MainWindow::getKeeperStats()
 
     int tasks_count = incompleteTasksCount + completeTasksCount + inprocessTasksCount;
 
-    QString tasksStats = "Complete tasks: " + QString::number(completeTasksCount) + "/"
-            + QString::number(tasks_count);
     QString projectsStats = "Not started projects: " + QString::number(notStartedProjects->count())
             + "\n\n" + "Started projects: " + QString::number(startedProjects->count()) + "\n\n"
             + "Projects on review: " + QString::number(finishlineProjects->count()) + "\n\n"
             + "Finished projects: " + QString::number(finishedProjects->count());
 
-    QString stats = tasksStats + "\n\n" + projectsStats;
+    QString stats = "\n" + projectsStats;
 
     qDebug() << stats;
     return stats;
@@ -62,6 +60,7 @@ void MainWindow::getSettingsData()
     font_size = globalSettings->value("fontSize").value<QString>();
     theme = globalSettings->value("theme").value<QString>();
     isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
+    isCustomTheme = globalSettings->value("isCustomTheme").value<bool>();
     sortNotesRole = globalSettings->value("sortRole", Qt::DisplayRole).value<int>();
     isAutoSyncing = globalSettings->value("isAutoSync").value<bool>();
     isVisibleNotesList = globalSettings->value("isVisibleNotesList", true).toBool();
@@ -89,7 +88,7 @@ void MainWindow::getSettingsData()
 
     qDebug() << " " << dir << selectedFont << font_size << theme << isCustomTitlebar
              << sortNotesRole << isAutoSyncing << isVisibleNotesList << isVisibleFolders
-             << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB;
+             << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB << isCustomTheme;
 }
 
 void MainWindow::setConnectionStatus()
@@ -338,9 +337,11 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
 
     syncDataBtn->setFont(*selectedFont);
     syncDataBtn->setStyleSheet(
-            "QPushButton {background-color: transparent; border: none; color: #ffffff; font-size: " + font_size
+            "QPushButton {background-color: transparent; border: none; color: #ffffff; font-size: "
+            + font_size
             + "pt;} "
-              "QPushButton:hover{text-decoration: none; border: none; background-color: transparent; color: "
+              "QPushButton:hover{text-decoration: none; border: none; background-color: "
+              "transparent; color: "
               "#37d442; font-size: "
             + font_size + "pt;}");
 

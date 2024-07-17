@@ -6,6 +6,8 @@
 #include <QPixmap>
 #include <QLabel>
 
+#include "mainwindow.h"
+
 void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
@@ -173,11 +175,11 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
 
         qDebug() << "" << doc;
 
-        profileInfo->setText(obj["bio"].toString() + "\nPublic repos: "
+        profileInfo->setText("\n\n" + obj["bio"].toString() + "\nPublic repos: "
                              + QString::number(obj["public_repos"].toInt()) + "\n\nFollowing: "
                              + QString::number(obj["following"].toInt()) + "\n\nFollowers: "
                              + QString::number(obj["followers"].toInt()) + "\n\nStars: "
-                             + QString::number(getStarsCount(git_user)) + "\n____________________");
+                             + QString::number(getStarsCount(git_user)) + "\n");
 
         setImageFromUrl(obj["avatar_url"].toString(), profilePicture);
         reply->deleteLater();
@@ -187,4 +189,23 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
 void AccountWindow::onOpenRepoClicked()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/" + git_user + "/"));
+}
+
+void AccountWindow::setTasksProgress() {
+    MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
+    QString stats = mainWindow->getKeeperStats();
+
+    int incompleteTasksCount = mainWindow->incompleteTasks->count();
+    int completeTasksCount = mainWindow->completeTasks->count();
+    int inprocessTasksCount = mainWindow->inprocessTasks->count();
+
+    int totalTasks = incompleteTasksCount + completeTasksCount + inprocessTasksCount;
+
+    double percentage = static_cast<double>(completeTasksCount) / static_cast<double>(totalTasks) * 100.0;
+
+    qDebug() << completeTasksCount << "/" << totalTasks;
+
+    tasksStatsProgress->setMaximum(100);
+    tasksStatsProgress->setValue(percentage);
+    tasksStatsProgress->setFormat("Completed tasks: " + QString::number(completeTasksCount) + "/" + QString::number(totalTasks));
 }

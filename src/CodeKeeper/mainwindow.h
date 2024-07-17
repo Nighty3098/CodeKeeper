@@ -131,9 +131,14 @@ public:
 
     QMarkdownTextEdit *note;
 
+    QListWidget *incompleteTasks;
+    QListWidget *inprocessTasks;
+    QListWidget *completeTasks;
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    bool isCustomTheme;
     bool isCreated;
     bool isReleaseDate;
     bool isLastCommit;
@@ -313,9 +318,6 @@ private:
 
     // ========================================================
     // tasks tab
-    QListWidget *incompleteTasks;
-    QListWidget *inprocessTasks;
-    QListWidget *completeTasks;
 
     QProgressBar *tasksProgress;
     QToolButton *tasksMenuBtn;
