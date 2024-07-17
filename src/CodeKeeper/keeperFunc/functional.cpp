@@ -16,9 +16,8 @@ QString MainWindow::getKeeperStats()
 
     int tasks_count = incompleteTasksCount + completeTasksCount + inprocessTasksCount;
 
-    QString projectsStats = "Not started projects: " + QString::number(notStartedProjects->count())
-            + "\n\n" + "Started projects: " + QString::number(startedProjects->count()) + "\n\n"
-            + "Projects on review: " + QString::number(finishlineProjects->count()) + "\n\n"
+    QString projectsStats = "Not started projects: " + QString::number(notStartedProjects->count()) + "\n\n" + "Started projects: "
+            + QString::number(startedProjects->count()) + "\n\n" + "Projects on review: " + QString::number(finishlineProjects->count()) + "\n\n"
             + "Finished projects: " + QString::number(finishedProjects->count());
 
     QString stats = "\n" + projectsStats;
@@ -86,42 +85,37 @@ void MainWindow::getSettingsData()
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
-    qDebug() << " " << dir << selectedFont << font_size << theme << isCustomTitlebar
-             << sortNotesRole << isAutoSyncing << isVisibleNotesList << isVisibleFolders
-             << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB << isCustomTheme;
+    qDebug() << " " << dir << selectedFont << font_size << theme << isCustomTitlebar << sortNotesRole << isAutoSyncing << isVisibleNotesList
+             << isVisibleFolders << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB << isCustomTheme;
 }
 
 void MainWindow::setConnectionStatus()
 {
     if (checkConnection()) {
-        isConnected->setIcon(QPixmap(":/connected.png")
-                                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                             Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isConnected->setIcon(
+                QPixmap(":/connected.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: "
                                 "5px; background-color: "
                                 "#0D1117'>Connected</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
-        isConnected->setIcon(QPixmap(":/disconnected.png")
-                                     .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                             Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isConnected->setIcon(
+                QPixmap(":/disconnected.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: "
                                 "5px; background-color: "
                                 "#0D1117;'>Disconnected</p>");
     }
 
     if (isAutoSyncing) {
-        isAutoSync->setIcon(QPixmap(":/auto_sync_on.png")
-                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                            Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isAutoSync->setIcon(
+                QPixmap(":/auto_sync_on.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: 5px; "
                                "background-color: "
                                "#0D1117;'>Auto sync on</p>");
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     } else {
-        isAutoSync->setIcon(QPixmap(":/auto_sync_off.png")
-                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                            Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isAutoSync->setIcon(
+                QPixmap(":/auto_sync_off.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: 5px; "
                                "background-color: "
                                "#0D1117;'>Auto sync off</p>");
@@ -188,7 +182,7 @@ void MainWindow::createCustomTitlebar()
 void MainWindow::fOpenAccountWindow()
 {
 
-    QThread *accountWindowThread = new QThread;
+    QThread* accountWindowThread = new QThread;
     QObject::connect(accountWindowThread, &QThread::started, this, [this]() {
         QRect geo = this->geometry();
         int x = geo.x();
@@ -217,7 +211,7 @@ void MainWindow::fOpenAccountWindow()
 
 void MainWindow::openSettingsWindow()
 {
-    QThread *settingsWindowThread = new QThread;
+    QThread* settingsWindowThread = new QThread;
     QObject::connect(settingsWindowThread, &QThread::started, this, [this]() {
         QRect geo = this->geometry();
         int x = geo.x();
@@ -250,10 +244,10 @@ bool MainWindow::checkConnection()
 {
     QNetworkAccessManager nam;
     QNetworkRequest req(QUrl("https://google.com/"));
-    QNetworkReply *reply = nam.get(req);
+    QNetworkReply* reply = nam.get(req);
     QEventLoop loop;
     QObject::connect(reply, SIGNAL(readyRead()), &loop, SLOT(quit()));
-    QObject::connect(&nam, SIGNAL(finished(QNetworkReply *)), &loop, SLOT(quit()));
+    QObject::connect(&nam, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
 
     if (!reply->isFinished()) {
         loop.exec();
@@ -270,7 +264,7 @@ bool MainWindow::checkConnection()
 void MainWindow::openSyncWindow()
 {
 
-    QThread *syncWindowThread = new QThread;
+    QThread* syncWindowThread = new QThread;
     QObject::connect(syncWindowThread, &QThread::started, this, [this]() {
         QRect geo = this->geometry();
         int x = geo.x();
@@ -307,21 +301,21 @@ void MainWindow::openFolder()
 
 void MainWindow::updateWindowTitle() { }
 
-void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
+void MainWindow::on_listWidget_itemClicked(QListWidgetItem* item)
 {
-    QListWidget *lists[] = { notStartedProjects, startedProjects, finishlineProjects,
-                             finishedProjects,   incompleteTasks, inprocessTasks,
-                             completeTasks };
+    QListWidget* lists[] = {
+        notStartedProjects, startedProjects, finishlineProjects, finishedProjects, incompleteTasks, inprocessTasks, completeTasks
+    };
 
-    for (QListWidget *list : lists) {
-        QListWidgetItem *selectedItem = list->currentItem();
+    for (QListWidget* list : lists) {
+        QListWidgetItem* selectedItem = list->currentItem();
         if (selectedItem && selectedItem != item) {
             list->setCurrentItem(nullptr);
         }
     }
 }
 
-void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
+void MainWindow::setStyle(QFont* selectedFont, int* font_size_int)
 {
     qDebug() << "Applying preferences";
 
@@ -331,23 +325,18 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
 
     openSettingsBtn->setFont(*selectedFont);
-    openSettingsBtn->setStyleSheet(
-            "QPushButton {border: none; background-color: transparent; font-size: " + font_size
-            + "pt;} ");
+    openSettingsBtn->setStyleSheet("QPushButton {border: none; background-color: transparent; font-size: " + font_size + "pt;} ");
 
     syncDataBtn->setFont(*selectedFont);
-    syncDataBtn->setStyleSheet(
-            "QPushButton {background-color: transparent; border: none; color: #ffffff; font-size: "
-            + font_size
-            + "pt;} "
-              "QPushButton:hover{text-decoration: none; border: none; background-color: "
-              "transparent; color: "
-              "#37d442; font-size: "
-            + font_size + "pt;}");
+    syncDataBtn->setStyleSheet("QPushButton {background-color: transparent; border: none; color: #ffffff; font-size: " + font_size
+                               + "pt;} "
+                                 "QPushButton:hover{text-decoration: none; border: none; background-color: "
+                                 "transparent; color: "
+                                 "#37d442; font-size: "
+                               + font_size + "pt;}");
 
     notesList->setFont(*selectedFont);
-    notesList->setStyleSheet("font-size: " + font_size
-                             + "pt; background-color: rgba(47, 51, 77, 0);");
+    notesList->setStyleSheet("font-size: " + font_size + "pt; background-color: rgba(47, 51, 77, 0);");
 
     menuButton->setFont(*selectedFont);
 
@@ -513,8 +502,7 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     projectsMenu->setFont(*selectedFont);
 
     tabs->setFont(*selectedFont);
-    tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size
-                        + "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
+    tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size + "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
 
     totalProjectsL->setFont(*selectedFont);
     totalProjectsL->setStyleSheet("font-size: " + font_size + "pt;");
@@ -531,10 +519,9 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     label_3->setStyleSheet("font-size: " + font_size + "pt;");
 
     tasksProgress->setFont(*selectedFont);
-    tasksProgress->setStyleSheet(
-            "background-color: rgb(211, 102, 107); selection-background-color: "
-            "rgb(118, 148, 106); color: #222436; font-size: "
-            + font_size + "pt;");
+    tasksProgress->setStyleSheet("background-color: rgb(211, 102, 107); selection-background-color: "
+                                 "rgb(118, 148, 106); color: #222436; font-size: "
+                                 + font_size + "pt;");
 
     menu->setStyleSheet("font-size: " + font_size + "pt;");
     menu->setFont(*selectedFont);
@@ -546,12 +533,69 @@ void MainWindow::setFontPr1(QFont *selectedFont, int *font_size_int)
     projectsMenu->setStyleSheet("font-size: " + font_size + "pt;");
 
     openAccountWindow->setFont(*selectedFont);
-    openAccountWindow->setStyleSheet(
-            "QPushButton {border: none; background-color: transparent; font-size: " + font_size
-            + "pt;} ");
+    openAccountWindow->setStyleSheet("QPushButton {border: none; background-color: transparent; font-size: " + font_size + "pt;} ");
 
     mainTabButton->setStyleSheet("background-color: transparent; border: none;");
     tasksTabButton->setStyleSheet("background-color: transparent; border: none;");
     notesTabButton->setStyleSheet("background-color: transparent; border: none;");
     projectsTabButton->setStyleSheet("background-color: transparent; border: none;");
+
+    setH1B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setH2B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setH3B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setListB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setLinkB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setBoldB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setItalicB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setStrikeB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setTaskB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setNumListB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setTableB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+    setQuoteB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
+
+    setH1B->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                       "#0D1117;'>Set heading 1</p>");
+    setH2B->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                       "#0D1117;'>Set heading 2</p>");
+    setH3B->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                       "#0D1117;'>Set heading 3</p>");
+    setListB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: #0D1117;'>List</p>");
+    setLinkB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: #0D1117;'>Link</p>");
+    setBoldB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                         "#0D1117;'>Bold text</p>");
+    setItalicB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                           "#0D1117;'>Italic text</p>");
+    setStrikeB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                           "#0D1117;'>Strikethrough text</p>");
+    setTaskB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: #0D1117;'>Task</p>");
+    setNumListB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                            "#0D1117;'>Numbered list</p>");
+    setTableB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                          "#0D1117;'>Insert table</p>");
+    setQuoteB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                          "#0D1117;'>Set quote</p>");
+
+    menuButton->setStyleSheet("background-color: transparent; border: none;");
+
+    tasksMenuBtn->setStyleSheet("background-color: transparent; border: none; border-width: 0px;");
+
+    isAutoSync->setStyleSheet("border: 0px; background-color: transparent;");
+
+    isConnected->setStyleSheet("border: 0px; background-color: transparent;");
+
+    fProjects->setStyleSheet("font-size: " + font_size + "px;");
+
+    flProjects->setStyleSheet("font-size: " + font_size + "px;");
+
+    sProjects->setStyleSheet("font-size: " + font_size + "px;");
+
+    nsProjects->setStyleSheet("font-size: " + font_size + "px;");
+
+    projectsMenuButton->setStyleSheet("background-color: transparent; border: none; border-width: 0px;");
+
+    label_3->setStyleSheet("font-size: " + font_size + "px;");
+
+    label_2->setStyleSheet("font-size: " + font_size + "px;");
+
+    label_1->setStyleSheet("font-size: " + font_size + "px;");
 }

@@ -10,12 +10,12 @@
 #include <QTableWidget>
 #include "getProjectInfo.cpp"
 
-void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
+void MainWindow::onMovingProjectFrom(QListWidgetItem* item, QListWidget* list)
 {
     qDebug() << "Moving project: " << item->text() << " from: " << list->objectName();
 }
 
-void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
+void MainWindow::onMovingProjectTo(QListWidgetItem* item, QListWidget* list)
 {
     qDebug() << "Moved project: " << item->text() << " to: " << list->objectName();
     QStringList data = item->text().split("\n");
@@ -25,20 +25,18 @@ void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
     updateProjectStatus(&status, &date, &data[2]);
 }
 
-void loadDocumentations(QDir path, QComboBox &comboBox)
+void loadDocumentations(QDir path, QComboBox& comboBox)
 {
-    QFileInfoList fileInfoList =
-            path.entryInfoList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
-    foreach (const QFileInfo &fileInfo, fileInfoList) {
+    QFileInfoList fileInfoList = path.entryInfoList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+    foreach (const QFileInfo& fileInfo, fileInfoList) {
         if (fileInfo.suffix() == "md") {
             comboBox.addItem(fileInfo.baseName());
         }
     }
 
     QDir subdir;
-    QFileInfoList subdirList =
-            path.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
-    foreach (const QFileInfo &subdirInfo, subdirList) {
+    QFileInfoList subdirList = path.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
+    foreach (const QFileInfo& subdirInfo, subdirList) {
         subdir.setPath(subdirInfo.filePath());
         if (subdir.exists()) {
             loadDocumentations(subdir, comboBox);
@@ -63,11 +61,10 @@ void MainWindow::createProject()
 
 void MainWindow::removeProject()
 {
-    QListWidget *listWidgets[] = { notStartedProjects, startedProjects, finishlineProjects,
-                                   finishedProjects };
+    QListWidget* listWidgets[] = { notStartedProjects, startedProjects, finishlineProjects, finishedProjects };
 
-    for (QListWidget *listWidget : listWidgets) {
-        QListWidgetItem *item = listWidget->currentItem();
+    for (QListWidget* listWidget : listWidgets) {
+        QListWidgetItem* item = listWidget->currentItem();
         if (item) {
             QStringList data = item->text().split("\n");
             QString status = listWidget->objectName();
@@ -83,23 +80,19 @@ void MainWindow::removeProject()
     }
 }
 
-void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStartedProjects,
-                                  QListWidget *startedProjects, QListWidget *finishedProjects,
-                                  QListWidget *finishlineProjects)
+void MainWindow::getTotalProjects(QTabWidget* projectsTab, QListWidget* notStartedProjects, QListWidget* startedProjects,
+                                  QListWidget* finishedProjects, QListWidget* finishlineProjects)
 {
-    QThread *totalProjectsThread = new QThread;
+    QThread* totalProjectsThread = new QThread;
     QObject::connect(totalProjectsThread, &QThread::started, this,
-                     [this, projectsTab, notStartedProjects, startedProjects, finishedProjects,
-                      finishlineProjects]() {
+                     [this, projectsTab, notStartedProjects, startedProjects, finishedProjects, finishlineProjects]() {
                          if (projectsTab->currentIndex() == 3) {
-                             QTimer *timer3 = new QTimer(this);
+                             QTimer* timer3 = new QTimer(this);
                              connect(timer3, &QTimer::timeout, [=]() {
-                                 int totalProjects = notStartedProjects->count()
-                                         + finishlineProjects->count() + startedProjects->count()
+                                 int totalProjects = notStartedProjects->count() + finishlineProjects->count() + startedProjects->count()
                                          + finishedProjects->count();
 
-                                 totalProjectsL->setText(
-                                         "Total projects: " + QString::number(totalProjects) + " ");
+                                 totalProjectsL->setText("Total projects: " + QString::number(totalProjects) + " ");
                              });
                              timer3->start(500);
                          }
@@ -116,9 +109,9 @@ void MainWindow::openDocumentation(QString fileName)
     selectFileInQTreeView(notesList, name);
 }
 
-void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName) { }
+void MainWindow::selectFileInQTreeView(QTreeView* treeView, const QString& fileName) { }
 
-void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
+void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
 {
     if (item) {
         QDialog dialog(this);
@@ -127,7 +120,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         dialog.setWindowTitle(tr("Project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
-        QPushButton *saveDataBtn = new QPushButton();
+        QPushButton* saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
         saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
         saveDataBtn->setFixedSize(100, 25);
@@ -135,7 +128,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         saveDataBtn->setIconSize(QSize(10, 10));
         saveDataBtn->setFont(selectedFont);
 
-        QPushButton *cancelBtn = new QPushButton("");
+        QPushButton* cancelBtn = new QPushButton("");
         cancelBtn->setFixedSize(15, 15);
         cancelBtn->setStyleSheet("QPushButton {"
                                  "    border-color: rgba(0, 0, 0, 0);"
@@ -150,11 +143,11 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
                                  "    background-color: rgba(0, 0, 0, 0);"
                                  "}");
 
-        QVBoxLayout *centralLayout = new QVBoxLayout(&dialog);
+        QVBoxLayout* centralLayout = new QVBoxLayout(&dialog);
 
-        QHBoxLayout *controlButtons = new QHBoxLayout();
+        QHBoxLayout* controlButtons = new QHBoxLayout();
 
-        QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        QSpacerItem* spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         controlButtons->addWidget(cancelBtn);
         controlButtons->addItem(spacer);
@@ -162,11 +155,11 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         centralLayout->addLayout(controlButtons);
 
-        QTabWidget *tabs = new QTabWidget();
+        QTabWidget* tabs = new QTabWidget();
         tabs->setMovable(true);
         tabs->setTabPosition(QTabWidget::South);
 
-        QWidget *projectTab = new QWidget();
+        QWidget* projectTab = new QWidget();
         QGridLayout mainLayout(projectTab);
 
         QString data = item->text();
@@ -178,35 +171,35 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         QString PStatus = listWidget->objectName();
 
         QStringList projectData = GetProjectData(&PTitle, &PStatus, &PGit);
-        qDebug() << "Open project: " << projectData[0] << " " << projectData[1] << " "
-                 << projectData[2] << " " << projectData[3] << " " << projectData[4];
+        qDebug() << "Open project: " << projectData[0] << " " << projectData[1] << " " << projectData[2] << " " << projectData[3] << " "
+                 << projectData[4];
 
-        QLineEdit *title = new QLineEdit();
+        QLineEdit* title = new QLineEdit();
         title->setAlignment(Qt::AlignCenter);
         title->setPlaceholderText(" Project name: ");
         title->setStyleSheet("font-size: " + font_size + "pt;");
         title->setFixedHeight(25);
         title->setFont(selectedFont);
 
-        QLineEdit *linkToGit = new QLineEdit();
+        QLineEdit* linkToGit = new QLineEdit();
         linkToGit->setAlignment(Qt::AlignCenter);
         linkToGit->setPlaceholderText(" Link to GIT");
         linkToGit->setStyleSheet("font-size: " + font_size + "pt;");
         linkToGit->setFixedHeight(25);
         linkToGit->setFont(selectedFont);
 
-        QComboBox *documentation = new QComboBox();
+        QComboBox* documentation = new QComboBox();
         documentation->setMinimumSize(170, 20);
         documentation->setFont(selectedFont);
 
-        QLabel *lastMod = new QLabel();
+        QLabel* lastMod = new QLabel();
         lastMod->setText("Last mod: ");
         lastMod->setStyleSheet("font-size: " + font_size + "pt;");
         lastMod->setFixedHeight(25);
         lastMod->setAlignment(Qt::AlignCenter);
         lastMod->setFont(selectedFont);
 
-        QTableWidget *git_stats = new QTableWidget();
+        QTableWidget* git_stats = new QTableWidget();
         git_stats->setFont(selectedFont);
         git_stats->setStyleSheet("QTableWidget{font-size:" + font_size + "pt;}");
 
@@ -215,24 +208,21 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         git_stats->setContentsMargins(0, 0, 0, 0);
         git_stats->setAlternatingRowColors(true);
 
-        QHBoxLayout *statsLayout = new QHBoxLayout();
+        QHBoxLayout* statsLayout = new QHBoxLayout();
 
-        QSpacerItem *leftSpacer =
-                new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
-        QSpacerItem *rightSpacer =
-                new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        QSpacerItem* leftSpacer = new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        QSpacerItem* rightSpacer = new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         // statsLayout->addItem(leftSpacer);
         statsLayout->addWidget(git_stats);
         // statsLayout->addItem(rightSpacer);
 
-        QPushButton *openButton = new QPushButton();
+        QPushButton* openButton = new QPushButton();
         openButton->setText("Open");
         openButton->setStyleSheet("font-size: " + font_size + "pt;");
         openButton->setFixedHeight(25);
-        openButton->setIcon(QPixmap(":/read.png")
-                                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3,
-                                            Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        openButton->setIcon(
+                QPixmap(":/read.png").scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         openButton->setIconSize(QSize(10, 10));
         openButton->setFont(selectedFont);
 
@@ -250,10 +240,10 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
         mainLayout.addLayout(statsLayout, 5, 0, 5, 2);
         mainLayout.addWidget(lastMod, 10, 0, 1, 2, Qt::AlignCenter);
 
-        QWidget *issuesTab = new QWidget();
+        QWidget* issuesTab = new QWidget();
         QVBoxLayout issuesLayout(issuesTab);
 
-        QTextBrowser *issuesLabel = new QTextBrowser();
+        QTextBrowser* issuesLabel = new QTextBrowser();
         issuesLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
         issuesLabel->setText("Issues");
         issuesLabel->setOpenExternalLinks(true);
@@ -267,12 +257,11 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
 
         centralLayout->addWidget(tabs);
 
-        QThread *thread = new QThread;
-        QObject::connect(thread, &QThread::started, this,
-                         [this, projectData, git_stats, issuesLabel]() {
-                             getRepositoryData(projectData[1], git_stats);
-                             issuesLabel->setHtml(getProjectIssues(projectData[1]));
-                         });
+        QThread* thread = new QThread;
+        QObject::connect(thread, &QThread::started, this, [this, projectData, git_stats, issuesLabel]() {
+            getRepositoryData(projectData[1], git_stats);
+            issuesLabel->setHtml(getProjectIssues(projectData[1]));
+        });
         thread->start();
 
         QObject::connect(saveDataBtn, &QPushButton::clicked, [&]() {
@@ -285,8 +274,7 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             item->setText(itemText);
             qDebug() << itemText;
 
-            updateProjectData(&projectTitle, &projectLink, &projectDocumentation,
-                              &projectCreatedTime, &PCreatedTime, &PGit);
+            updateProjectData(&projectTitle, &projectLink, &projectDocumentation, &projectCreatedTime, &PCreatedTime, &PGit);
         });
 
         QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
@@ -302,12 +290,11 @@ void MainWindow::openProject(QListWidget *listWidget, QListWidgetItem *item)
             QString projectLink = linkToGit->text();
             QString repo = projectLink.replace(prefix, "");
 
-            QThread *thread = new QThread;
-            QObject::connect(thread, &QThread::started, this,
-                             [this, projectData, repo, git_stats, issuesLabel]() {
-                                 getRepositoryData(repo, git_stats);
-                                 issuesLabel->setHtml(getProjectIssues(repo));
-                             });
+            QThread* thread = new QThread;
+            QObject::connect(thread, &QThread::started, this, [this, projectData, repo, git_stats, issuesLabel]() {
+                getRepositoryData(repo, git_stats);
+                issuesLabel->setHtml(getProjectIssues(repo));
+            });
             thread->start();
         });
 

@@ -21,52 +21,48 @@ void MainWindow::create_tasks_connection()
     }
 }
 
-void MainWindow::updateTaskData(QString *task, QString *status, QString *cT)
+void MainWindow::updateTaskData(QString* task, QString* status, QString* cT)
 {
     QSqlQuery query;
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("UPDATE tasks SET task = '" + taskText[0] + "' WHERE createdTime = '" + cT
-                    + "' AND status = '" + *status + "'")) {
+    if (!query.exec("UPDATE tasks SET task = '" + taskText[0] + "' WHERE createdTime = '" + cT + "' AND status = '" + *status + "'")) {
         qDebug() << "" << query.lastError();
     }
 }
 
-void MainWindow::updateTaskStatus(QString *task, QString *status, QString *cT)
+void MainWindow::updateTaskStatus(QString* task, QString* status, QString* cT)
 {
     QSqlQuery query;
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("UPDATE tasks SET status = '" + *status + "' WHERE createdTime = '" + *cT
-                    + "' AND task = '" + taskText[0] + "'")) {
+    if (!query.exec("UPDATE tasks SET status = '" + *status + "' WHERE createdTime = '" + *cT + "' AND task = '" + taskText[0] + "'")) {
         qDebug() << "" << query.lastError();
     }
 }
 
-void MainWindow::saveTaskToDB(QString *task, QString *status)
+void MainWindow::saveTaskToDB(QString* task, QString* status)
 {
     QSqlQuery query;
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("INSERT INTO tasks (task, status, createdTime) VALUES('" + taskText[0] + "', '"
-                    + *status + "', '" + taskText[1] + "');")) {
+    if (!query.exec("INSERT INTO tasks (task, status, createdTime) VALUES('" + taskText[0] + "', '" + *status + "', '" + taskText[1] + "');")) {
         qDebug() << "" << query.lastError();
     } else {
         qDebug() << "" << taskText[0] << " was saved";
     }
 }
 
-void MainWindow::removeTaskFromDB(QString *task, QString *status)
+void MainWindow::removeTaskFromDB(QString* task, QString* status)
 {
     QSqlQuery query;
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("DELETE FROM tasks WHERE task = '" + taskText[0] + "' AND status = '" + *status
-                    + "' AND createdTime = '" + taskText[1] + "'")) {
+    if (!query.exec("DELETE FROM tasks WHERE task = '" + taskText[0] + "' AND status = '" + *status + "' AND createdTime = '" + taskText[1] + "'")) {
         qDebug() << "" << query.lastError();
     } else {
         qDebug() << "Sucsessfull removed";
@@ -90,7 +86,7 @@ void MainWindow::loadTasks()
 
         QString text = task + "\n" + createdTime;
 
-        QListWidgetItem *item = new QListWidgetItem(text);
+        QListWidgetItem* item = new QListWidgetItem(text);
 
         item->setData(Qt::UserRole, id);
 

@@ -6,9 +6,9 @@
 #include <QFile>
 #include <QPrinter>
 
-QModelIndex indexFromItem(QTreeWidgetItem *item, int column) { }
+QModelIndex indexFromItem(QTreeWidgetItem* item, int column) { }
 
-bool createFile(const QString &path)
+bool createFile(const QString& path)
 {
     QFile file(path);
     if (file.open(QIODevice::WriteOnly)) {
@@ -23,7 +23,7 @@ bool createFile(const QString &path)
     }
 }
 
-void MainWindow::toPdf(const QString &html, const QString &outputFile)
+void MainWindow::toPdf(const QString& html, const QString& outputFile)
 {
     QPrinter printer;
     printer.setOutputFormat(QPrinter::PdfFormat);
@@ -37,7 +37,7 @@ void MainWindow::toPdf(const QString &html, const QString &outputFile)
 void MainWindow::exportNoteToPdf()
 {
     QModelIndex selectedIndex = notesList->currentIndex();
-    QFileSystemModel *fileSystemModel = static_cast<QFileSystemModel *>(notesList->model());
+    QFileSystemModel* fileSystemModel = static_cast<QFileSystemModel*>(notesList->model());
     QString filePath = fileSystemModel->filePath(selectedIndex);
     qDebug() << "File Path : " << filePath;
 
@@ -49,9 +49,9 @@ void MainWindow::exportNoteToPdf()
     QString html;
     md_html(
             md.toUtf8().constData(), md.length(),
-            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
-                QString *htmlPtr = static_cast<QString *>(userdata);
-                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
+            [](const MD_CHAR* html, MD_SIZE html_size, void* userdata) {
+                QString* htmlPtr = static_cast<QString*>(userdata);
+                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char*>(html), html_size));
                 *htmlPtr += htmlStr;
             },
             &html, 0, 0);
@@ -62,7 +62,7 @@ void MainWindow::exportNoteToPdf()
 void MainWindow::exportNoteToHtml()
 {
     QModelIndex selectedIndex = notesList->currentIndex();
-    QFileSystemModel *fileSystemModel = static_cast<QFileSystemModel *>(notesList->model());
+    QFileSystemModel* fileSystemModel = static_cast<QFileSystemModel*>(notesList->model());
     QString filePath = fileSystemModel->filePath(selectedIndex);
     qDebug() << "File Path : " << filePath;
 
@@ -74,9 +74,9 @@ void MainWindow::exportNoteToHtml()
     QString html;
     md_html(
             md.toUtf8().constData(), md.length(),
-            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
-                QString *htmlPtr = static_cast<QString *>(userdata);
-                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
+            [](const MD_CHAR* html, MD_SIZE html_size, void* userdata) {
+                QString* htmlPtr = static_cast<QString*>(userdata);
+                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char*>(html), html_size));
                 *htmlPtr += htmlStr;
             },
             &html, 0, 0);
@@ -265,7 +265,7 @@ void MainWindow::removeNote()
 
 void MainWindow::renameItem()
 {
-    QItemSelectionModel *selectionModel = notesList->selectionModel();
+    QItemSelectionModel* selectionModel = notesList->selectionModel();
     QModelIndexList indexes = selectionModel->selectedIndexes();
 
     if (indexes.isEmpty()) {
@@ -279,8 +279,7 @@ void MainWindow::renameItem()
     // Prompt the user to enter a new name
     bool ok;
     QString newName =
-            QInputDialog::getText(notesList, tr("Rename File or Folder"), tr("Enter the new name:"),
-                                  QLineEdit::Normal, fileInfo.baseName(), &ok);
+            QInputDialog::getText(notesList, tr("Rename File or Folder"), tr("Enter the new name:"), QLineEdit::Normal, fileInfo.baseName(), &ok);
 
     if (ok && !newName.isEmpty()) {
         // Get the new file path
@@ -469,26 +468,25 @@ void MainWindow::updateMDPreview()
     QString html;
     md_html(
             md.toUtf8().constData(), md.length(),
-            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
-                QString *htmlPtr = static_cast<QString *>(userdata);
-                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
+            [](const MD_CHAR* html, MD_SIZE html_size, void* userdata) {
+                QString* htmlPtr = static_cast<QString*>(userdata);
+                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char*>(html), html_size));
                 *htmlPtr += htmlStr;
             },
             &html, 0, 0);
     html += "</body></html>";
 
-    QString html_result =
-            "<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
-            "<script id='MathJax-script' async "
-            "src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>"
-            "<script type='module'>"
-            "    import mermaid from "
-            "'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';"
-            "    mermaid.initialize({ startOnLoad: true });"
-            "</script>"
-            "<style>"
-            "body {"
-            "    font-family: "
+    QString html_result = "<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
+                          "<script id='MathJax-script' async "
+                          "src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>"
+                          "<script type='module'>"
+                          "    import mermaid from "
+                          "'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';"
+                          "    mermaid.initialize({ startOnLoad: true });"
+                          "</script>"
+                          "<style>"
+                          "body {"
+                          "    font-family: "
             + selectedFont.toString()
             + ";"
               "    font-size: "

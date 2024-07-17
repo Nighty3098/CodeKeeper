@@ -9,7 +9,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
+SyncWindow::SyncWindow(QWidget* parent) : QMainWindow(parent)
 {
     QFile file(":/stylesheet/stylesheet_setting_window.qss");
     file.open(QFile::ReadOnly);
@@ -51,13 +51,13 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
     stopSyncing = new QPushButton("Cancel && Quit");
     stopSyncing->setFixedSize(100, 25);
 
-    QVBoxLayout *infoLayout = new QVBoxLayout();
+    QVBoxLayout* infoLayout = new QVBoxLayout();
     infoLayout->setAlignment(Qt::AlignHCenter);
     // infoLayout->addWidget(appIcon);
     infoLayout->addWidget(appName);
     infoLayout->addWidget(infoLabel);
 
-    QVBoxLayout *buttonsLayout = new QVBoxLayout();
+    QVBoxLayout* buttonsLayout = new QVBoxLayout();
     buttonsLayout->setAlignment(Qt::AlignHCenter);
     buttonsLayout->addWidget(startSyncing);
     buttonsLayout->addWidget(stopSyncing);

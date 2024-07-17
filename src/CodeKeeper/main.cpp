@@ -4,14 +4,14 @@
 
 #include "mainwindow.h"
 
-bool loadApp(QSplashScreen *psplash)
+bool loadApp(QSplashScreen* psplash)
 {
     QNetworkAccessManager nam;
     QNetworkRequest req(QUrl("https://google.com/"));
-    QNetworkReply *reply = nam.get(req);
+    QNetworkReply* reply = nam.get(req);
     QEventLoop loop;
     QObject::connect(reply, SIGNAL(readyRead()), &loop, SLOT(quit()));
-    QObject::connect(&nam, SIGNAL(finished(QNetworkReply *)), &loop, SLOT(quit()));
+    QObject::connect(&nam, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
 
     if (!reply->isFinished()) {
         loop.exec();
@@ -25,18 +25,14 @@ bool loadApp(QSplashScreen *psplash)
     }
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    // QFile file(":/stylesheet/custom_stylesheet.qss");
-    // file.open(QFile::ReadOnly);
-
     QApplication a(argc, argv);
 
-    // QSplashScreen splash(QPixmap(":/icon.png"));
-    // splash.show();
+    // QSplashScreen splash(QPixmap(":/icon.png").scaled(200, 200, Qt::KeepAspectRatio,
+    // Qt::SmoothTransformation)); splash.show();
 
     MainWindow keeper;
-    // a.setStyleSheet(file.readAll());
 
     keeper.setWindowIcon(QIcon(":/icon.png"));
 

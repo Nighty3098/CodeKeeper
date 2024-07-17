@@ -27,7 +27,8 @@ SOURCES += \
     sql_db/tasksDB.cpp \
     gitFunc/cloneRepo.cpp \
     gitFunc/getUpdates.cpp \
-    gitFunc/pushUpdates.cpp
+    gitFunc/pushUpdates.cpp \
+    keeperFunc/createMenu.cpp
 
 HEADERS += \
     accountwindow.h \

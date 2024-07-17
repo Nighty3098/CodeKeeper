@@ -120,7 +120,7 @@ public:
     void createCustomTitlebar();
     void setConnectionStatus();
 
-    void setFontPr1(QFont *selectedFont, int *font_size_int);
+    void setStyle(QFont *selectedFont, int *font_size_int);
     void loadNotes();
     void loadProjects();
     void loadTasks();
@@ -244,6 +244,10 @@ private slots:
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
     bool checkConnection();
+
+    void createNotesMenu(QMenu *menu, QString font_size);
+    void createProjectMenu(QMenu *menu, QString font_size);
+    void createTaskMenu(QMenu *menu, QString font_size);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override
