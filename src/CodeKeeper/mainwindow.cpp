@@ -752,8 +752,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                                                                  Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
     projectsTabButton->setFixedSize(35, 35);
 
-    QSpacerItem* headerSp5 = new QSpacerItem(10, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QSpacerItem* headerSp6 = new QSpacerItem(100, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem* headerSp5 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem* headerSp6 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     tabButtons->addItem(headerSp5);
     tabButtons->addWidget(mainTabButton);
