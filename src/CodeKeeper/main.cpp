@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     // splash.show();
 
     MainWindow keeper;
-    // a.setStyleSheet(file.readAll());
+    a.setStyleSheet(file.readAll());
 
     keeper.setWindowIcon(QIcon(":/icon.png"));
 

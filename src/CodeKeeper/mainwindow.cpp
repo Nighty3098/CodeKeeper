@@ -779,6 +779,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     });
 
 
+    // open homepage
+    tabs->setCurrentIndex(0);
+
     mainLayout->addLayout(tabButtons, 1, 0);
     mainLayout->addWidget(tabs, 1, 1);
 
