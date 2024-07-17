@@ -31,6 +31,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isAutoSyncB = globalSettings->value("isAutoSync").value<bool>();
 
     isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
+    isCustomTheme = globalSettings->value("isCustomTheme").value<bool>();
 
     isCreated = globalSettings->value("isCreated").value<bool>();
     isReleaseDate = globalSettings->value("isReleaseDate").value<bool>();
@@ -46,14 +47,14 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
-    this->setStyleSheet(file.readAll());
+    // this->setStyleSheet(file.readAll());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
     mainLayout = new QVBoxLayout(centralWidget);
-    setFixedSize(600, 600);
+    setMinimumSize(600, 600);
 
     // tabs
     tabs = new QTabWidget();
@@ -205,17 +206,24 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     customTitleBar->setText("Use custom titlebar");
     customTitleBar->setChecked(isCustomTitlebar);
 
+    qDebug() << "isCustomTheme: " <<  isCustomTheme;
+
+    customTheme = new QCheckBox();
+    customTheme->setText("Use custom theme");
+    customTheme->setChecked(isCustomTheme);
+
     themeSelector->addItem("Dark");
     themeSelector->addItem("Light");
 
     layout1->addWidget(mainTitle, 0, 2, 0, 4);
-    layout1->addWidget(customTitleBar, 1, 2, 1, 4, Qt::AlignHCenter);
-    layout1->addWidget(fontLabel, 2, 3);
-    layout1->addWidget(fontSelector, 2, 4);
-    layout1->addWidget(fontSizeLabel, 3, 3);
-    layout1->addWidget(fontSize, 3, 4);
-    layout1->addWidget(themeLabel, 4, 3);
-    layout1->addWidget(themeSelector, 4, 4);
+    layout1->addWidget(customTheme, 1, 2, 1, 4, Qt::AlignHCenter);
+    layout1->addWidget(customTitleBar, 2, 2, 1, 4, Qt::AlignHCenter);
+    layout1->addWidget(fontLabel, 3, 3);
+    layout1->addWidget(fontSelector, 3, 4);
+    layout1->addWidget(fontSizeLabel, 4, 3);
+    layout1->addWidget(fontSize, 4, 4);
+    layout1->addWidget(themeLabel, 5, 3);
+    layout1->addWidget(themeSelector, 5, 4);
 
     // storage tab
     QGridLayout *storageL = new QGridLayout;
@@ -280,20 +288,30 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     CisRepoSize = new QCheckBox("Repo size");
     CisRepoSize->setChecked(isRepoSize);
 
+    QSpacerItem *checkBoxSpacer1 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem *checkBoxSpacer2 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+    QVBoxLayout *checkboxLayout = new QVBoxLayout();
+    checkboxLayout->setAlignment(Qt::AlignCenter);
+
+    checkboxLayout->addItem(checkBoxSpacer1);
+    checkboxLayout->addWidget(CisCreated);
+    checkboxLayout->addWidget(CisReleaseDate);
+    checkboxLayout->addWidget(CisLastCommit);
+    checkboxLayout->addWidget(CisPullReq);
+    checkboxLayout->addWidget(CisLicense);
+    checkboxLayout->addWidget(CisRelease);
+    checkboxLayout->addWidget(CisIssue);
+    checkboxLayout->addWidget(CisDownloads);
+    checkboxLayout->addWidget(CisCommit);
+    checkboxLayout->addWidget(CisLang);
+    checkboxLayout->addWidget(CisStars);
+    checkboxLayout->addWidget(CisForks);
+    checkboxLayout->addWidget(CisRepoSize);
+    checkboxLayout->addItem(checkBoxSpacer2);
+
     projectsContentL->addWidget(projectsContentLabel, 0, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisCreated, 1, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisReleaseDate, 2, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisLastCommit, 3, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisPullReq, 4, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisLicense, 5, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisRelease, 6, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisIssue, 7, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisDownloads, 8, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisCommit, 9, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisLang, 10, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisStars, 11, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisForks, 12, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisRepoSize, 13, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addLayout(checkboxLayout, 2, 0, 1, 1, Qt::AlignCenter);
 
     // info tab
     QWidget *aboutTab = new QWidget();

@@ -8,14 +8,14 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
 {
     QFile file(":/stylesheet/stylesheet_setting_window.qss");
     file.open(QFile::ReadOnly);
-    this->setStyleSheet(file.readAll());
+    // this->setStyleSheet(file.readAll());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
     mainLayout = new QGridLayout(centralWidget);
-    setFixedSize(400, 700);
+    setFixedSize(400, 750);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -35,6 +35,10 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     QString stats = mainWindow->getKeeperStats();
     codeKeeperStats->setText(stats);
     codeKeeperStats->setAlignment(Qt::AlignHCenter);
+
+    tasksStatsProgress = new QProgressBar();
+    tasksStatsProgress->setFixedHeight(25);
+    tasksStatsProgress->setAlignment(Qt::AlignCenter);
 
     userName = new QLabel();
     userName->setText(git_user);
@@ -58,20 +62,23 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{ parent }
     QThread *setUserDataThread = new QThread;
     QObject::connect(setUserDataThread, &QThread::started, this, [this]() {
         setUserData(git_user, profilePicture);
+        setTasksProgress();
 
         qDebug() << "setUserDataThread started";
     });
     setUserDataThread->start();
 
+
     mainLayout->addWidget(closeWindow, 0, 0, 1, 3, Qt::AlignLeft);
     mainLayout->addWidget(profilePicture, 1, 0, 3, 3, Qt::AlignCenter);
     mainLayout->addWidget(userName, 5, 0, 1, 3, Qt::AlignCenter);
     mainLayout->addWidget(profileInfo, 6, 0, 1, 3, Qt::AlignCenter);
-    mainLayout->addWidget(codeKeeperStats, 7, 0, 1, 3, Qt::AlignCenter);
-    mainLayout->addWidget(openRepo, 8, 0, 1, 3, Qt::AlignCenter);
+    mainLayout->addWidget(tasksStatsProgress, 9, 0, 1, 3, Qt::AlignCenter);
+    mainLayout->addWidget(codeKeeperStats, 10, 0, 1, 3, Qt::AlignCenter);
+    mainLayout->addWidget(openRepo, 13, 0, 1, 3, Qt::AlignCenter);
 
     connect(closeWindow, SIGNAL(clicked()), this, SLOT(closeWindowSlot()));
     connect(openRepo, SIGNAL(clicked()), this, SLOT(onOpenRepoClicked()));
 }
 
-AccountWindow::~AccountWindow(){};
+AccountWindow::~AccountWindow() {};

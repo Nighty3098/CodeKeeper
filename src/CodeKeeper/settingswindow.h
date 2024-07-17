@@ -26,6 +26,7 @@ public:
     bool isHostB;
     bool isAutoSyncB;
     bool isCustomTitlebar;
+    bool isCustomTheme;
 
     bool isCreated;
     bool isReleaseDate;
@@ -94,6 +95,7 @@ private:
     QFontComboBox *fontSelector;
     QComboBox *themeSelector;
 
+    QCheckBox *customTheme;
     QCheckBox *customTitleBar;
 
     // storage

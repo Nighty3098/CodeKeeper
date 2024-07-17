@@ -36,9 +36,12 @@ private:
     QLabel *userName;
     QLabel *profileInfo;
     QLabel *codeKeeperStats;
+    QLabel *tasksStats;
 
     QPushButton *closeWindow;
     QPushButton *openRepo;
+
+    QProgressBar *tasksStatsProgress;
 
 private slots:
     void setUserData(const QString &username, QLabel *label);
@@ -47,6 +50,7 @@ private slots:
     void setImageFromUrl(const QString &url, QLabel *label);
     void onOpenRepoClicked();
     int getStarsCount(const QString &username);
+    void setTasksProgress();
 };
 
 #endif // ACCOUNTWINDOW_H
