@@ -117,7 +117,7 @@ void MainWindow::setConnectionStatus()
         isAutoSync->setIcon(
                 QPixmap(":/auto_sync_off.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: 5px; "
-                               "background-color: "
+                               "background-color: " 
                                "#0D1117;'>Auto sync off</p>");
     }
 }
@@ -172,7 +172,7 @@ void MainWindow::createCustomTitlebar()
 
     if (isCustomTitlebar) {
         this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-        
+
         winControlL->addWidget(closeBtn);
         winControlL->addWidget(minimizeBtn);
         winControlL->addWidget(maximizeBtn);
@@ -535,18 +535,10 @@ void MainWindow::setStyle(QFont* selectedFont, int* font_size_int)
     openAccountWindow->setFont(*selectedFont);
     openAccountWindow->setStyleSheet("QPushButton {border: none; background-color: transparent; font-size: " + font_size + "pt;} ");
 
-    mainTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;} QPushButton:pressed {background-color: transparent; "
-                                 "border: none;} QPushButton:focus{border: none; background-color: transparent; border-right: 5px solid #36bcf7;} "
-                                 "QPushButton:hover{border: none; background-color: transparent; border-right: 5px solid #36bcf7;}");
-    tasksTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;} QPushButton:pressed {background-color: transparent; "
-                                  "border: none;} QPushButton:focus{border: none; background-color: transparent; border-right: 5px solid #36bcf7;} "
-                                  "QPushButton:hover{border: none; background-color: transparent; border-right: 5px solid #36bcf7;}");
-    notesTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;} QPushButton:pressed {background-color: transparent; "
-                                  "border: none;} QPushButton:focus{border: none; background-color: transparent; border-right: 5px solid #36bcf7;} "
-                                  "QPushButton:hover{border: none; background-color: transparent; border-right: 5px solid #36bcf7;}");
-    projectsTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;} QPushButton:pressed {background-color: transparent; "
-                                     "border: none;} QPushButton:focus{border: none; background-color: transparent; border-right: 5px solid "
-                                     "#36bcf7;} QPushButton:hover{border: none; background-color: transparent; border-right: 5px solid #36bcf7;}");
+    mainTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
+    tasksTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
+    notesTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
+    projectsTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
 
     setH1B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
     setH2B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
