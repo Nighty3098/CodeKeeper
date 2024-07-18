@@ -500,6 +500,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
         connectionTimer->start(100); // 1000ms = 1s
 
     } else {
+        sizeGrip2->hide();
     }
 
     isConnected = new QPushButton("");

@@ -172,7 +172,7 @@ void MainWindow::createCustomTitlebar()
 
     if (isCustomTitlebar) {
         this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-
+        
         winControlL->addWidget(closeBtn);
         winControlL->addWidget(minimizeBtn);
         winControlL->addWidget(maximizeBtn);
