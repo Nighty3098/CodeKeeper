@@ -37,7 +37,7 @@
     </p>
     <br><br>
     <h3>If you have found bugs in our product or have suggestions, please write about them:</h3>
-    <a href="https://t.me/DXS_TechSupport_bot"><img src="https://github.com/Nighty3098/Nighty3098/blob/main/TechSupport.png?raw=true" width="65%" /></a>
+    <a href="https://t.me/DXS_TechSupport_bot"><img src="https://github.com/Nighty3098/Nighty3098/blob/main/resources/TechSupport.png?raw=true" width="65%" /></a>
     <br><br><br>
     <img src="https://repobeats.axiom.co/api/embed/0d75989e77c487901abc8abe41e46589905ee8af.svg" />
 </div>
