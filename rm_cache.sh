@@ -41,5 +41,12 @@ rm src/CodeKeeper/moc_accountwindow.cpp
 rm src/CodeKeeper/moc_accountwindow.o
 rm src/CodeKeeper/object_script.CodeKeeper.Debug
 rm src/CodeKeeper/object_script.CodeKeeper.Release
+rm src/CodeKeeper/CircledProgressBar.o
+rm src/CodeKeeper/moc_CircledProgressBar.o
+rm src/CodeKeeper/moc_CircledProgressBar.cpp
+rm src/CodeKeeper/moc_ProgressCircle.cpp
+rm src/CodeKeeper/moc_ProgressCircle.o
+rm src/CodeKeeper/ProgressCircle.o
+
 
 echo "Done!"

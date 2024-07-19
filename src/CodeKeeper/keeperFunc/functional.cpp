@@ -16,8 +16,9 @@ QString MainWindow::getKeeperStats()
 
     int tasks_count = incompleteTasksCount + completeTasksCount + inprocessTasksCount;
 
-    QString projectsStats = "Not started projects: " + QString::number(notStartedProjects->count()) + "\n\n" + "Started projects: "
-            + QString::number(startedProjects->count()) + "\n\n" + "Projects on review: " + QString::number(finishlineProjects->count()) + "\n\n"
+    QString projectsStats = "Tasks: " + QString::number(completeTasksCount) + " / " + QString::number(tasks_count) + "\n\nNot started projects: "
+            + QString::number(notStartedProjects->count()) + "\n\n" + "Started projects: " + QString::number(startedProjects->count()) + "\n\n"
+            + "Projects on review: " + QString::number(finishlineProjects->count()) + "\n\n"
             + "Finished projects: " + QString::number(finishedProjects->count());
 
     QString stats = "\n" + projectsStats;
@@ -117,7 +118,7 @@ void MainWindow::setConnectionStatus()
         isAutoSync->setIcon(
                 QPixmap(":/auto_sync_off.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: 5px; "
-                               "background-color: " 
+                               "background-color: "
                                "#0D1117;'>Auto sync off</p>");
     }
 }

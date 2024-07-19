@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QGridLayout>
 #include <QtWidgets>
-
+#include "custom/circleProgressbar/ProgressCircle.h"
 class AccountWindow : public QMainWindow
 {
     Q_OBJECT
@@ -38,19 +38,28 @@ private:
     QLabel *codeKeeperStats;
     QLabel *tasksStats;
 
+    QLabel *tasksTitle;
+    QLabel *projectTitle;
+
     QPushButton *closeWindow;
     QPushButton *openRepo;
 
-    QProgressBar *tasksStatsProgress;
+    CircleProgressBar *tasksStatsProgress;
+    CircleProgressBar *notStartedProjectsProgress;
+    CircleProgressBar *startedProjectsProgress;
+    CircleProgressBar *reviewProjectsProgress;
+    CircleProgressBar *completedProjectsProgress;
 
 private slots:
-    void setUserData(const QString &username, QLabel *label);
+    void setUserData(const QString &username);
     void closeWindowSlot();
     void getSettingsData();
     void setImageFromUrl(const QString &url, QLabel *label);
     void onOpenRepoClicked();
     int getStarsCount(const QString &username);
     void setTasksProgress();
+    void setProjectsStats();
+    void get_image_url(const QString& username, QLabel *label);
 };
 
 #endif // ACCOUNTWINDOW_H

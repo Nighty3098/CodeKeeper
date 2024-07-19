@@ -22,6 +22,7 @@ SOURCES += \
     keeperFunc/projectsFunc.cpp \
     keeperFunc/notesFunc.cpp \
     keeperFunc/getProjectInfo.cpp \
+    accountFunc/functional.cpp \
     syncFunc/functional.cpp \
     sql_db/projectsDB.cpp \
     sql_db/tasksDB.cpp \
@@ -35,7 +36,8 @@ HEADERS += \
     accountwindow.h \
     mainwindow.h \
     settingswindow.h \
-    syncwindow.h
+    syncwindow.h \
+    custom/circleProgressbar/ProgressCircle.h 
 
 RESOURCES += \
     ../resources/resources.qrc \

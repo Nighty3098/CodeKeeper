@@ -138,7 +138,7 @@ void MainWindow::saveNote()
             QTextStream stream(&file);
             stream << text;
             file.close();
-            // qDebug() << "Success, Text written to file successfully.";
+            // ! qDebug() << "Success, Text written to file successfully.";
         } else {
             qWarning() << "Error, Failed to open file for writing.";
         }
