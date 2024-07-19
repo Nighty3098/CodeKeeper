@@ -4,6 +4,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPixmap>
+#include <QPainter>
+#include <QImage>
 #include <QLabel>
 
 #include "mainwindow.h"
@@ -19,12 +21,27 @@ void AccountWindow::setImageFromUrl(const QString& url, QLabel* label)
             return;
         }
 
+        // Загружаем изображение из данных
         QPixmap pixmap;
         pixmap.loadFromData(reply->readAll());
 
-        label->setPixmap(pixmap.scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        label->setStyleSheet("border-radius: 150px;");
+        // Создаем закругленное изображение
+        QImage image = pixmap.toImage();
+        QImage roundedImage(image.size(), QImage::Format_ARGB32);
+        roundedImage.fill(Qt::transparent); // Заполняем прозрачным цветом
 
+        QPainter painter(&roundedImage);
+        painter.setRenderHint(QPainter::Antialiasing); // Включаем сглаживание
+        painter.setBrush(QBrush(image)); // Устанавливаем кисть с оригинальным изображением
+        painter.setPen(Qt::NoPen); // Убираем обводку
+
+        // Рисуем круг с закругленными углами
+        int radius = qMin(roundedImage.width(), roundedImage.height());
+        painter.drawRoundedRect(0, 0, roundedImage.width(), roundedImage.height(), radius * 0.5, radius * 0.5);
+
+        // Устанавливаем закругленное изображение в QLabel
+        label->setPixmap(QPixmap::fromImage(roundedImage.scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation)));
+        
         reply->deleteLater();
     });
 }
