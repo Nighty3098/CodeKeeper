@@ -12,7 +12,7 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
 {
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     
-    this->setStyleSheet(" QWidget { background-color: #181818; } QPushButton {background-color: #0a070d;}");
+    this->setStyleSheet(" QWidget { background-color: #0a070d; } QPushButton {background-color: #0a070d;}");
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
