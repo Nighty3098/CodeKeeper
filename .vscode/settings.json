@@ -148,6 +148,7 @@
     "typeindex": "cpp",
     "typeinfo": "cpp",
     "valarray": "cpp",
-    "locale": "cpp"
+    "locale": "cpp",
+    "ios": "cpp"
   }
 }

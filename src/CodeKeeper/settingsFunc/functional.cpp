@@ -86,7 +86,7 @@ void SettingsWindow::checkUpdates()
     connect(closeWindow, &QPushButton::clicked, [&]() { dialog.close(); });
 
     connect(downloadUpdate, &QPushButton::clicked,
-            [&]() { QDesktopServices::openUrl(QUrl("https://github.com/DXS-GROUP/CodeKeeper/releases/latest")); });
+            [&]() { QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/releases/latest")); });
 
     dialog.exec();
 }
@@ -226,7 +226,7 @@ void SettingsWindow::fopenFolder()
 QString SettingsWindow::getNewAppVersion()
 {
     QNetworkAccessManager* manager = new QNetworkAccessManager(this);
-    QUrl url("https://api.github.com/repos/DXS-GROUP/CodeKeeper/releases/latest");
+    QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases/latest");
 
     QUrlQuery query;
     url.setQuery(query);

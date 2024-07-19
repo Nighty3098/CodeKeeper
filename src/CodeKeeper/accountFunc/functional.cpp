@@ -29,6 +29,40 @@ void AccountWindow::setImageFromUrl(const QString& url, QLabel* label)
     });
 }
 
+void AccountWindow::get_image_url(const QString& username, QLabel* label)
+{
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+    QUrl url("https://api.github.com/users/" + git_user);
+
+    QUrlQuery query;
+    query.addQueryItem("login", username);
+    url.setQuery(query);
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QNetworkReply* reply = manager->get(request);
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        if (reply->error()) {
+            qWarning() << "Error:" << reply->errorString();
+            reply->deleteLater();
+            return;
+        }
+
+        QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+        QJsonObject obj = doc.object();
+
+        qDebug() << obj["avatar_url"].toString();
+
+        setImageFromUrl(obj["avatar_url"].toString(), label);
+
+        reply->deleteLater();
+    });
+}
+
 void AccountWindow::closeWindowSlot()
 {
     this->close();
@@ -52,6 +86,17 @@ void AccountWindow::setFontStyle()
 {
     userName->setFont(selectedFont);
 
+    int header_size = font_size.toInt() + 5;
+    qDebug() << header_size;
+
+    tasksTitle->setFont(selectedFont);
+    tasksTitle->setStyleSheet("font-size: " + QString(header_size) + "px;");
+
+    projectTitle->setFont(selectedFont);
+    projectTitle->setStyleSheet("font-size: " + QString(header_size) + "px;");
+
+    userName->setStyleSheet("font-size: 36pt;");
+
     profilePicture->setFont(selectedFont);
     profilePicture->setStyleSheet("font-size: " + font_size + "pt;");
 
@@ -63,6 +108,9 @@ void AccountWindow::setFontStyle()
 
     profileInfo->setFont(selectedFont);
     profileInfo->setStyleSheet("font-size: " + font_size + "pt;");
+
+    tasksStatsProgress->setFont(selectedFont);
+    tasksStatsProgress->setStyleSheet("font-size: " + font_size + "pt;");
 
     closeWindow->setStyleSheet("QPushButton {"
                                "    border-color: rgba(0, 0, 0, 0);"
@@ -133,7 +181,7 @@ int AccountWindow::getStarsCount(const QString& username)
     return totalStars;
 }
 
-void AccountWindow::setUserData(const QString& username, QLabel* label)
+void AccountWindow::setUserData(const QString& username)
 {
     QNetworkAccessManager* manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/users/" + git_user);
@@ -179,7 +227,6 @@ void AccountWindow::setUserData(const QString& username, QLabel* label)
                              + QString::number(obj["following"].toInt()) + "\n\nFollowers: " + QString::number(obj["followers"].toInt())
                              + "\n\nStars: " + QString::number(getStarsCount(git_user)) + "\n");
 
-        setImageFromUrl(obj["avatar_url"].toString(), profilePicture);
         reply->deleteLater();
     });
 }
@@ -204,7 +251,53 @@ void AccountWindow::setTasksProgress()
 
     qDebug() << completeTasksCount << "/" << totalTasks;
 
-    tasksStatsProgress->setMaximum(100);
     tasksStatsProgress->setValue(percentage);
-    tasksStatsProgress->setFormat("Completed tasks: " + QString::number(completeTasksCount) + "/" + QString::number(totalTasks));
+    tasksStatsProgress->setMaxValue(100);
+
+    if (percentage < 101) {
+        tasksStatsProgress->setProgressColor(QColor("#51afef"));
+    }
+
+    if (percentage < 51) {
+        tasksStatsProgress->setProgressColor(QColor("#ecbe7b"));
+    }
+
+    if (percentage < 26) {
+        tasksStatsProgress->setProgressColor(QColor("#ec7b85"));
+    }
+}
+
+void AccountWindow::setProjectsStats()
+{
+    MainWindow* mainWindow = qobject_cast<MainWindow*>(this->parent());
+    QString stats = mainWindow->getKeeperStats();
+
+    // Extract the values using regular expressions
+    QRegExp rx("Not started projects: (\\d+)");
+    rx.indexIn(stats);
+    int notStartedProjectsCount = rx.cap(1).toInt();
+
+    rx.setPattern("Started projects: (\\d+)");
+    rx.indexIn(stats);
+    int startedProjectsCount = rx.cap(1).toInt();
+
+    rx.setPattern("Projects on review: (\\d+)");
+    rx.indexIn(stats);
+    int finishlineProjectsCount = rx.cap(1).toInt();
+
+    rx.setPattern("Finished projects: (\\d+)");
+    rx.indexIn(stats);
+    int finishedProjectsCount = rx.cap(1).toInt();
+
+    int totalProjects = notStartedProjectsCount + startedProjectsCount + finishlineProjectsCount + finishedProjectsCount;
+
+    notStartedProjectsProgress->setMaxValue(100);
+    startedProjectsProgress->setMaxValue(100);
+    reviewProjectsProgress->setMaxValue(100);
+    completedProjectsProgress->setMaxValue(100);
+
+    notStartedProjectsProgress->setValue(static_cast<double>(notStartedProjectsCount) / static_cast<double>(totalProjects) * 100.0);
+    startedProjectsProgress->setValue(static_cast<double>(startedProjectsCount) / static_cast<double>(totalProjects) * 100.0);
+    reviewProjectsProgress->setValue(static_cast<double>(finishlineProjectsCount) / static_cast<double>(totalProjects) * 100.0);
+    completedProjectsProgress->setValue(static_cast<double>(finishedProjectsCount) / static_cast<double>(totalProjects) * 100.0);
 }
