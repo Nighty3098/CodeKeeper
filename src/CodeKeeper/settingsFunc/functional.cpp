@@ -259,6 +259,7 @@ void SettingsWindow::setStyle2(QFont* selectedFont, int* font_size_int)
     qDebug() << "Applying preferences";
 
     QString font_size = QString::number(*font_size_int);
+    QString font_size_2 = QString::number(*font_size_int*1.2);
 
     // set font
     tabs->setFont(*selectedFont);
@@ -273,10 +274,10 @@ void SettingsWindow::setStyle2(QFont* selectedFont, int* font_size_int)
     appName->setFont(*selectedFont);
 
     urlToRepo->setFont(*selectedFont);
-    urlToRepo->setStyleSheet("font-size: " + font_size + "pt;");
+    urlToRepo->setStyleSheet("font-size: " + font_size_2 + "pt;");
 
     versionInfo->setFont(*selectedFont);
-    versionInfo->setStyleSheet("font-size: " + font_size + "pt;");
+    versionInfo->setStyleSheet("font-size: " + font_size_2 + "pt;");
 
     checkUpdatesBtn->setFont(*selectedFont);
     checkUpdatesBtn->setStyleSheet("font-size: " + font_size + "pt;");

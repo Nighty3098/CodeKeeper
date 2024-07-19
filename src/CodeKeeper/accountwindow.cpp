@@ -11,6 +11,8 @@
 AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
 {
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    
+    this->setStyleSheet(" QWidget { background-color: #181818; } QPushButton {background-color: #0a070d;}");
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -67,25 +69,25 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     notStartedProjectsProgress = new CircleProgressBar();
     notStartedProjectsProgress->setFixedSize(50, 50);
     notStartedProjectsProgress->setBackgroundColor(QColor(Qt::transparent));
-    notStartedProjectsProgress->setProgressColor(QColor("#ef5a51"));
+    notStartedProjectsProgress->setProgressColor(QColor("#c75d5e"));
     notStartedProjectsProgress->setLineWidth(font_size.toInt() - 3);
 
     startedProjectsProgress = new CircleProgressBar();
     startedProjectsProgress->setFixedSize(50, 50);
     startedProjectsProgress->setBackgroundColor(QColor(Qt::transparent));
-    startedProjectsProgress->setProgressColor(QColor("#d8ef51"));
+    startedProjectsProgress->setProgressColor(QColor("#e09132"));
     startedProjectsProgress->setLineWidth(font_size.toInt() - 3);
 
     reviewProjectsProgress = new CircleProgressBar();
     reviewProjectsProgress->setFixedSize(50, 50);
     reviewProjectsProgress->setBackgroundColor(QColor(Qt::transparent));
-    reviewProjectsProgress->setProgressColor(QColor("#51afef"));
+    reviewProjectsProgress->setProgressColor(QColor("#b1e032"));
     reviewProjectsProgress->setLineWidth(font_size.toInt() - 3);
 
     completedProjectsProgress = new CircleProgressBar();
     completedProjectsProgress->setFixedSize(50, 50);
     completedProjectsProgress->setBackgroundColor(QColor(Qt::transparent));
-    completedProjectsProgress->setProgressColor(QColor("#8cef51"));
+    completedProjectsProgress->setProgressColor(QColor("#78b3ba"));
     completedProjectsProgress->setLineWidth(font_size.toInt() - 3);
 
     projectsStatsLayout->addWidget(notStartedProjectsProgress);

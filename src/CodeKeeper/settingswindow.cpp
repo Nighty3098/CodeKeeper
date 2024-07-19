@@ -59,7 +59,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     QHBoxLayout* BtnsL = new QHBoxLayout();
 
     saveBtn = new QPushButton("Apply");
-    saveBtn->setFixedSize(100, 25);
+    saveBtn->setFixedSize(100, 30);
 
     quitBtn = new QPushButton();
     quitBtn->setFixedSize(15, 15);
@@ -95,7 +95,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     checkUpdatesBtn = new QPushButton(
             QPixmap(":/retry.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
             " Chech for updates");
-    checkUpdatesBtn->setFixedSize(200, 25);
+    checkUpdatesBtn->setFixedSize(200, 30);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
     subAppInfoL->addWidget(appName);
@@ -119,19 +119,19 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     gitToken = new QLineEdit();
     gitToken->setPlaceholderText("GitHub token");
     gitToken->setAlignment(Qt::AlignCenter);
-    gitToken->setFixedSize(200, 25);
+    gitToken->setFixedSize(300, 30);
     gitToken->setText(git_token);
 
     gitUser = new QLineEdit();
     gitUser->setPlaceholderText("GitHub user");
     gitUser->setAlignment(Qt::AlignCenter);
-    gitUser->setFixedSize(200, 25);
+    gitUser->setFixedSize(300, 30);
     gitUser->setText(git_user);
 
     gitRepo = new QLineEdit();
     gitRepo->setPlaceholderText("GitHub repo");
     gitRepo->setAlignment(Qt::AlignCenter);
-    gitRepo->setFixedSize(200, 25);
+    gitRepo->setFixedSize(300, 30);
     gitRepo->setText(git_repo);
 
     autoSyncAfterStart = new QCheckBox("Auto sync after start");
@@ -175,11 +175,11 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     themeLabel->setAlignment(Qt::AlignCenter);
 
     fontSize = new QSpinBox();
-    fontSize->setFixedHeight(25);
+    fontSize->setFixedHeight(30);
     fontSelector = new QFontComboBox();
-    fontSelector->setFixedHeight(25);
+    fontSelector->setFixedHeight(30);
     themeSelector = new QComboBox();
-    themeSelector->setFixedHeight(25);
+    themeSelector->setFixedHeight(30);
 
     customTitleBar = new QCheckBox();
     customTitleBar->setText("Use custom titlebar");
@@ -206,7 +206,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
 
     // storage tab
     QGridLayout* storageL = new QGridLayout;
-    storageL->setSpacing(25);
+    storageL->setSpacing(10);
 
     storageLabel = new QLabel();
     storageLabel->setText("Storage settings");
@@ -216,14 +216,15 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     pathToFolder = new QLineEdit();
     pathToFolder->setText("Directory");
     pathToFolder->setPlaceholderText("Directory");
-    pathToFolder->setMaximumHeight(25);
+    pathToFolder->setMaximumHeight(30);
     pathToFolder->setText(path);
+    pathToFolder->setAlignment(Qt::AlignCenter);
 
     openFolder = new QPushButton(
             QPixmap(":/open.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), " Browse");
-    openFolder->setMaximumHeight(25);
+    openFolder->setMaximumHeight(30);
 
-    storageL->setSpacing(25);
+    storageL->setSpacing(10);
     storageL->addWidget(storageLabel, 0, 1, 0, 4);
     storageL->addWidget(pathToFolder, 1, 3);
     storageL->addWidget(openFolder, 2, 3);
