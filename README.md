@@ -67,6 +67,8 @@
   <img src="imgs/5.png" />
   <br>
   <img src="imgs/6.png" />
+  <img src="imgs/7.png" />
+  <img src="imgs/8.png" />
 </details>
 
 <br>
