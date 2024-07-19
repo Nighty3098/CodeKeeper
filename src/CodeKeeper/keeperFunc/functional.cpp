@@ -117,7 +117,7 @@ void MainWindow::setConnectionStatus()
         isAutoSync->setIcon(
                 QPixmap(":/auto_sync_off.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px #ffffff; border-radius: 5px; "
-                               "background-color: "
+                               "background-color: " 
                                "#0D1117;'>Auto sync off</p>");
     }
 }
@@ -535,10 +535,10 @@ void MainWindow::setStyle(QFont* selectedFont, int* font_size_int)
     openAccountWindow->setFont(*selectedFont);
     openAccountWindow->setStyleSheet("QPushButton {border: none; background-color: transparent; font-size: " + font_size + "pt;} ");
 
-    mainTabButton->setStyleSheet("background-color: transparent; border: none;");
-    tasksTabButton->setStyleSheet("background-color: transparent; border: none;");
-    notesTabButton->setStyleSheet("background-color: transparent; border: none;");
-    projectsTabButton->setStyleSheet("background-color: transparent; border: none;");
+    mainTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
+    tasksTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
+    notesTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
+    projectsTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
 
     setH1B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
     setH2B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
@@ -575,9 +575,11 @@ void MainWindow::setStyle(QFont* selectedFont, int* font_size_int)
     setQuoteB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
                           "#0D1117;'>Set quote</p>");
 
-    menuButton->setStyleSheet("background-color: transparent; border: none;");
+    menuButton->setStyleSheet("border: 5px; border-radius: 10px;");
 
-    tasksMenuBtn->setStyleSheet("background-color: transparent; border: none; border-width: 0px;");
+    tasksMenuBtn->setStyleSheet("border: 5px; border-radius: 10px;");
+
+    projectsMenuButton->setStyleSheet("border: 5px; border-radius: 10px;");
 
     isAutoSync->setStyleSheet("border: 0px; background-color: transparent;");
 
@@ -590,8 +592,6 @@ void MainWindow::setStyle(QFont* selectedFont, int* font_size_int)
     sProjects->setStyleSheet("font-size: " + font_size + "px;");
 
     nsProjects->setStyleSheet("font-size: " + font_size + "px;");
-
-    projectsMenuButton->setStyleSheet("background-color: transparent; border: none; border-width: 0px;");
 
     label_3->setStyleSheet("font-size: " + font_size + "px;");
 

@@ -500,6 +500,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
         connectionTimer->start(100); // 1000ms = 1s
 
     } else {
+        sizeGrip2->hide();
     }
 
     isConnected = new QPushButton("");
@@ -548,11 +549,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     tabButtons->addWidget(openAccountWindow);
     tabButtons->addWidget(syncDataBtn);
     tabButtons->addWidget(openSettingsBtn);
-
-    connect(mainTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(0); });
-    connect(tasksTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(1); });
-    connect(notesTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(2); });
-    connect(projectsTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(3); });
 
     // open homepage
     tabs->setCurrentIndex(0);

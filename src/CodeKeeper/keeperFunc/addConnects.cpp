@@ -124,6 +124,11 @@ void MainWindow::createConnects()
             }
         }
     });
+
+    connect(mainTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(0); });
+    connect(tasksTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(1); });
+    connect(notesTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(2); });
+    connect(projectsTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(3); });
 }
 
 void MainWindow::createShortcuts()

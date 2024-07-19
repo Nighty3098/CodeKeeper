@@ -185,7 +185,16 @@
 
 </details>
 
-<br>
+<div align="center">
+    <h3>Tweaks</h3>
+
+| Default theme | Custom theme |
+|:--------------|:-------------|
+| ![](imgs/default_theme.png) | ![](imgs/custom_theme.png) |
+
+
+
+</div>
 
 <div align="center">
     <br><br>
