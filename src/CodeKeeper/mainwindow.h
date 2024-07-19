@@ -50,7 +50,7 @@ protected:
 class NoteEditor : public QMarkdownTextEdit
 {
 protected:
-    // Bug with cursor - need fixed
+    // ! Bug with cursor - need fixed
 
     void dropEvent(QDropEvent *event)
     {

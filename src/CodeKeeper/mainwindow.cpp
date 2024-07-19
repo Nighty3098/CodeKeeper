@@ -94,6 +94,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     sizeGrip4->setVisible(true);
     sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
+    windowTitle = new QLabel(" ~ CodeKeeper ~ ");
+
     createCustomTitlebar();
 
     this->setMouseTracking(true);
@@ -512,6 +514,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     QSpacerItem* headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem* headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem* headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    winControlL->addWidget(windowTitle);
 
     winControlL->addItem(headerSp);
 

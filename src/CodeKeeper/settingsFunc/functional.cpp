@@ -259,7 +259,7 @@ void SettingsWindow::setStyle2(QFont* selectedFont, int* font_size_int)
     qDebug() << "Applying preferences";
 
     QString font_size = QString::number(*font_size_int);
-    QString font_size_2 = QString::number(*font_size_int*1.2);
+    QString font_size_2 = QString::number(*font_size_int * 1.2);
 
     // set font
     tabs->setFont(*selectedFont);
