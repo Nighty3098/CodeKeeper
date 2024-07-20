@@ -499,7 +499,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
         QTimer* connectionTimer = new QTimer(this);
         connect(connectionTimer, &QTimer::timeout, this, &MainWindow::setConnectionStatus);
-        connectionTimer->start(100); // 1000ms = 1s
+        connectionTimer->start(1000); // 1000ms = 1s
 
     } else {
         sizeGrip2->hide();
