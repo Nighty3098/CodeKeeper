@@ -125,10 +125,26 @@ void MainWindow::createConnects()
         }
     });
 
-    connect(mainTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(0); });
-    connect(tasksTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(1); });
-    connect(notesTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(2); });
-    connect(projectsTabButton, &QPushButton::clicked, [=]() { tabs->setCurrentIndex(3); });
+    connect(mainTabButton, &QPushButton::clicked, [=]() {
+        tabs->setCurrentIndex(0);
+        windowTitle->setText(" ~ CodeKeeper ~ ");
+        setWindowTitle("CodeKeeper");
+    });
+    connect(tasksTabButton, &QPushButton::clicked, [=]() {
+        tabs->setCurrentIndex(1);
+        windowTitle->setText(" ~ Notes ~ ");
+        setWindowTitle("Notes");
+    });
+    connect(notesTabButton, &QPushButton::clicked, [=]() {
+        tabs->setCurrentIndex(2);
+        windowTitle->setText(" ~ Tasks ~ ");
+        setWindowTitle("Tasks");
+    });
+    connect(projectsTabButton, &QPushButton::clicked, [=]() {
+        tabs->setCurrentIndex(3);
+        windowTitle->setText(" ~ Projects ~ ");
+        setWindowTitle("Projects");
+    });
 }
 
 void MainWindow::createShortcuts()

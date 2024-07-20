@@ -41,7 +41,7 @@ void AccountWindow::setImageFromUrl(const QString& url, QLabel* label)
 
         // Устанавливаем закругленное изображение в QLabel
         label->setPixmap(QPixmap::fromImage(roundedImage.scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation)));
-        
+
         reply->deleteLater();
     });
 }
@@ -272,15 +272,15 @@ void AccountWindow::setTasksProgress()
     tasksStatsProgress->setMaxValue(100);
 
     if (percentage < 101) {
-        tasksStatsProgress->setProgressColor(QColor("#51afef"));
+        tasksStatsProgress->setProgressColor(QColor("#78b3ba"));
     }
 
     if (percentage < 51) {
-        tasksStatsProgress->setProgressColor(QColor("#ecbe7b"));
+        tasksStatsProgress->setProgressColor(QColor("#e09132"));
     }
 
     if (percentage < 26) {
-        tasksStatsProgress->setProgressColor(QColor("#ec7b85"));
+        tasksStatsProgress->setProgressColor(QColor("#c75d5e"));
     }
 }
 
