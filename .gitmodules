@@ -1,3 +1,7 @@
 [submodule "src/CodeKeeper/3rdParty/qmarkdowntextedit"]
 	path = src/CodeKeeper/3rdParty/qmarkdowntextedit
 	url = https://github.com/pbek/qmarkdowntextedit
+
+[submodule "src/CodeKeeper/3rdParty/WidgetAnimationFramework"]
+	path = src/CodeKeeper/3rdParty/WidgetAnimationFramework
+	url = https://github.com/dimkanovikov/WidgetAnimationFramework
