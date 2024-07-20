@@ -49,7 +49,7 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     codeKeeperStats->setAlignment(Qt::AlignHCenter);
 
     tasksStatsProgress = new CircleProgressBar();
-    tasksStatsProgress->setFixedSize(50, 50);
+    tasksStatsProgress->setFixedSize(60, 60);
     tasksStatsProgress->setBackgroundColor(QColor(Qt::transparent));
     tasksStatsProgress->setLineWidth(font_size.toInt());
     tasksStatsProgress->setDisplayMode(CircleProgressBar::Percent); // Percent, CustomText, NoPercent, Hidden
@@ -67,28 +67,28 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     QHBoxLayout* projectsStatsLayout = new QHBoxLayout();
 
     notStartedProjectsProgress = new CircleProgressBar();
-    notStartedProjectsProgress->setFixedSize(50, 50);
+    notStartedProjectsProgress->setFixedSize(60, 60);
     notStartedProjectsProgress->setBackgroundColor(QColor(Qt::transparent));
     notStartedProjectsProgress->setProgressColor(QColor("#c75d5e"));
-    notStartedProjectsProgress->setLineWidth(font_size.toInt() - 3);
+    notStartedProjectsProgress->setLineWidth(font_size.toInt());
 
     startedProjectsProgress = new CircleProgressBar();
-    startedProjectsProgress->setFixedSize(50, 50);
+    startedProjectsProgress->setFixedSize(60, 60);
     startedProjectsProgress->setBackgroundColor(QColor(Qt::transparent));
     startedProjectsProgress->setProgressColor(QColor("#e09132"));
-    startedProjectsProgress->setLineWidth(font_size.toInt() - 3);
+    startedProjectsProgress->setLineWidth(font_size.toInt());
 
     reviewProjectsProgress = new CircleProgressBar();
-    reviewProjectsProgress->setFixedSize(50, 50);
+    reviewProjectsProgress->setFixedSize(60, 60);
     reviewProjectsProgress->setBackgroundColor(QColor(Qt::transparent));
     reviewProjectsProgress->setProgressColor(QColor("#b1e032"));
-    reviewProjectsProgress->setLineWidth(font_size.toInt() - 3);
+    reviewProjectsProgress->setLineWidth(font_size.toInt());
 
     completedProjectsProgress = new CircleProgressBar();
-    completedProjectsProgress->setFixedSize(50, 50);
+    completedProjectsProgress->setFixedSize(60, 60);
     completedProjectsProgress->setBackgroundColor(QColor(Qt::transparent));
     completedProjectsProgress->setProgressColor(QColor("#78b3ba"));
-    completedProjectsProgress->setLineWidth(font_size.toInt() - 3);
+    completedProjectsProgress->setLineWidth(font_size.toInt());
 
     projectsStatsLayout->addWidget(notStartedProjectsProgress);
     projectsStatsLayout->addWidget(startedProjectsProgress);
@@ -107,7 +107,7 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     QObject::connect(setUserDataThread, &QThread::started, this, [this]() {
         qDebug() << "setUserDataThread started";
 
-        setUserData(git_user);
+        setUserData(git_user, profileInfo);
         setTasksProgress();
         setProjectsStats();
     });
@@ -122,13 +122,14 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     setUserImageThread->start();
 
     mainLayout->addWidget(closeWindow, 0, 0, 1, 6, Qt::AlignLeft);
-    mainLayout->addWidget(profilePicture, 1, 0, 3, 3, Qt::AlignCenter);
+    mainLayout->addWidget(profilePicture, 2, 0, 3, 3, Qt::AlignCenter);
 
-    mainLayout->addWidget(userName, 1, 3, 1, 3, Qt::AlignCenter);
-    mainLayout->addWidget(tasksTitle, 2, 3, 1, 3, Qt::AlignCenter);
-    mainLayout->addWidget(tasksStatsProgress, 3, 3, 1, 3, Qt::AlignCenter);
-    mainLayout->addWidget(projectTitle, 4, 3, 1, 3, Qt::AlignCenter);
-    mainLayout->addLayout(projectsStatsLayout, 5, 3, 1, 3, Qt::AlignCenter);
+    mainLayout->addWidget(userName, 2, 3, 1, 3, Qt::AlignCenter);
+
+    mainLayout->addWidget(tasksTitle, 3, 3, 1, 3, Qt::AlignCenter);
+    mainLayout->addWidget(tasksStatsProgress, 4, 3, 1, 3, Qt::AlignCenter);
+    mainLayout->addWidget(projectTitle, 5, 3, 1, 3, Qt::AlignCenter);
+    mainLayout->addLayout(projectsStatsLayout, 6, 3, 1, 3, Qt::AlignCenter);
 
     mainLayout->addWidget(profileInfo, 14, 0, 3, 3, Qt::AlignCenter);
     mainLayout->addWidget(codeKeeperStats, 14, 3, 3, 3, Qt::AlignCenter);
