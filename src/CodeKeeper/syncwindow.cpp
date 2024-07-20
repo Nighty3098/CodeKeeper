@@ -13,6 +13,8 @@ SyncWindow::SyncWindow(QWidget* parent) : QMainWindow(parent)
 {
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
+
+    this->setStyleSheet(" QWidget { background-color: #222126; } QPushButton {background-color: #0a070d; } QProgressBar {background-color: #0a070d; }");
     this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     this->setFixedSize(300, 500);
 
