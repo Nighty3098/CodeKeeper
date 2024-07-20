@@ -143,14 +143,13 @@ void AccountWindow::setFontStyle()
                                "}");
 }
 
-int AccountWindow::getStarsCount(const QString& username)
+int AccountWindow::getStarsCount(const QString& username, const QString& token)
 {
     QNetworkAccessManager manager;
     QUrl url("https://api.github.com/users/" + username + "/repos");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
-    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
-    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    request.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
     QNetworkReply* reply = manager.get(request);
@@ -158,47 +157,24 @@ int AccountWindow::getStarsCount(const QString& username)
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
-    if (reply->error()) {
-        qDebug() << "Error:" << reply->errorString();
-        return 0;
-    }
-
-    QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
-    QJsonArray repos = json.array();
-
     int totalStars = 0;
-    for (const QJsonValue& repo : repos) {
-        QJsonObject repoObject = repo.toObject();
-        QString repoUrl = repoObject["url"].toString();
+    if (!reply->error()) {
+        QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
+        QJsonArray repos = json.array();
 
-        QNetworkRequest repoRequest(repoUrl);
-        repoRequest.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
-        repoRequest.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
-        repoRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
-        repoRequest.setRawHeader("Accept", "application/vnd.github.v3+json");
-        ;
-
-        QNetworkReply* repoReply = manager.get(repoRequest);
-        QEventLoop repoLoop;
-        QObject::connect(repoReply, &QNetworkReply::finished, &repoLoop, &QEventLoop::quit);
-        repoLoop.exec();
-
-        if (repoReply->error()) {
-            qDebug() << "Error:" << repoReply->errorString();
-            continue;
+        for (const QJsonValue& repo : repos) {
+            QJsonObject repoObject = repo.toObject();
+            totalStars += repoObject["stargazers_count"].toInt();
         }
-
-        QJsonDocument repoJson = QJsonDocument::fromJson(repoReply->readAll());
-        QJsonObject repoJsonObject = repoJson.object();
-        int stars = repoJsonObject["stargazers_count"].toInt();
-
-        totalStars += stars;
+    } else {
+        qDebug() << "Error:" << reply->errorString();
     }
 
+    reply->deleteLater();
     return totalStars;
 }
 
-void AccountWindow::setUserData(const QString& username)
+void AccountWindow::setUserData(const QString& username, QLabel *label)
 {
     QNetworkAccessManager* manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/users/" + git_user);
@@ -238,11 +214,9 @@ void AccountWindow::setUserData(const QString& username)
         qDebug() << "Company:" << obj["company"].toString();
         qDebug() << "Login:" << obj["login"].toString();
 
-        qDebug() << "" << doc;
-
-        profileInfo->setText("\n\n" + obj["bio"].toString() + "\nPublic repos: " + QString::number(obj["public_repos"].toInt()) + "\n\nFollowing: "
+        label->setText("\n\n" + obj["bio"].toString() + "\nPublic repos: " + QString::number(obj["public_repos"].toInt()) + "\n\nFollowing: "
                              + QString::number(obj["following"].toInt()) + "\n\nFollowers: " + QString::number(obj["followers"].toInt())
-                             + "\n\nStars: " + QString::number(getStarsCount(git_user)) + "\n");
+                             + "\n\nStars: " + QString::number(getStarsCount(git_user, git_token)) + "\n");
 
         reply->deleteLater();
     });

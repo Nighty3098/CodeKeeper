@@ -51,12 +51,12 @@ private:
     CircleProgressBar *completedProjectsProgress;
 
 private slots:
-    void setUserData(const QString &username);
+    void setUserData(const QString &username, QLabel *label);
     void closeWindowSlot();
     void getSettingsData();
     void setImageFromUrl(const QString &url, QLabel *label);
     void onOpenRepoClicked();
-    int getStarsCount(const QString &username);
+    int getStarsCount(const QString& username, const QString& token);
     void setTasksProgress();
     void setProjectsStats();
     void get_image_url(const QString& username, QLabel *label);

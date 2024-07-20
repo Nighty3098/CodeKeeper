@@ -524,7 +524,7 @@ void MainWindow::setStyle(QFont* selectedFont, int* font_size_int)
 
     tasksProgress->setFont(*selectedFont);
     tasksProgress->setStyleSheet("background-color: rgb(211, 102, 107); selection-background-color: "
-                                 "rgb(118, 148, 106); color: #222436; font-size: "
+                                 "#c3e88d; color: #222436; font-size: "
                                  + font_size + "pt;");
 
     menu->setStyleSheet("font-size: " + font_size + "pt;");
