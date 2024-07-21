@@ -6,6 +6,8 @@
 #include <QGridLayout>
 #include <QtWidgets>
 #include "custom/circleProgressbar/ProgressCircle.h"
+#include "custom/circleChart/CircleChart.h"
+#include "custom/ColorValueDisplay/ColorValueDisplay.h"
 class AccountWindow : public QMainWindow
 {
     Q_OBJECT
@@ -45,10 +47,9 @@ private:
     QPushButton *openRepo;
 
     CircleProgressBar *tasksStatsProgress;
-    CircleProgressBar *notStartedProjectsProgress;
-    CircleProgressBar *startedProjectsProgress;
-    CircleProgressBar *reviewProjectsProgress;
-    CircleProgressBar *completedProjectsProgress;
+
+    CircleChart *projectsChart;
+    ColorValueDisplay *chartValuesDisplay;
 
 private slots:
     void setUserData(const QString &username, QLabel *label);

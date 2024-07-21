@@ -106,6 +106,9 @@ void AccountWindow::setFontStyle()
     int header_size = font_size.toInt() + 5;
     qDebug() << header_size;
 
+    chartValuesDisplay->setFont(selectedFont);
+    chartValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
+
     tasksTitle->setFont(selectedFont);
     tasksTitle->setStyleSheet("font-size: " + QString(header_size) + "px;");
 
@@ -282,13 +285,20 @@ void AccountWindow::setProjectsStats()
 
     int totalProjects = notStartedProjectsCount + startedProjectsCount + finishlineProjectsCount + finishedProjectsCount;
 
-    notStartedProjectsProgress->setMaxValue(100);
-    startedProjectsProgress->setMaxValue(100);
-    reviewProjectsProgress->setMaxValue(100);
-    completedProjectsProgress->setMaxValue(100);
+    int ns_p = static_cast<double>(notStartedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    int s_p = static_cast<double>(startedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    int fl_p = static_cast<double>(finishlineProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    int f_p = static_cast<double>(finishedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
 
-    notStartedProjectsProgress->setValue(static_cast<double>(notStartedProjectsCount) / static_cast<double>(totalProjects) * 100.0);
-    startedProjectsProgress->setValue(static_cast<double>(startedProjectsCount) / static_cast<double>(totalProjects) * 100.0);
-    reviewProjectsProgress->setValue(static_cast<double>(finishlineProjectsCount) / static_cast<double>(totalProjects) * 100.0);
-    completedProjectsProgress->setValue(static_cast<double>(finishedProjectsCount) / static_cast<double>(totalProjects) * 100.0);
+    projectsChart->setMaximumValue(100);
+
+    projectsChart->addValue(ns_p, QColor("#c75d5e"));
+    projectsChart->addValue(s_p, QColor("#e09132"));
+    projectsChart->addValue(fl_p, QColor("#b1e032"));
+    projectsChart->addValue(f_p, QColor("#78b3ba"));
+
+    chartValuesDisplay->addValue("Not started", ns_p, QColor("#c75d5e"));
+    chartValuesDisplay->addValue("In Dev", s_p, QColor("#e09132"));
+    chartValuesDisplay->addValue("On Review", fl_p, QColor("#b1e032"));
+    chartValuesDisplay->addValue("Finished", f_p, QColor("#78b3ba"));
 }

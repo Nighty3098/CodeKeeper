@@ -37,7 +37,9 @@ HEADERS += \
     mainwindow.h \
     settingswindow.h \
     syncwindow.h \
-    custom/circleProgressbar/ProgressCircle.h 
+    custom/circleProgressbar/ProgressCircle.h \
+    custom/circleChart/CircleChart.h \
+    custom/ColorValueDisplay/ColorValueDisplay.h
 
 RESOURCES += \
     ../resources/resources.qrc \
