@@ -119,6 +119,7 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         dialog.setMinimumHeight(500);
         dialog.setWindowTitle(tr("Project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+        dialog.setStyleSheet("QWidget { background-color: #222126; } QPushButton {background-color: #0a070d; } QLineEdit {background-color: #0a070d;}");
 
         QPushButton* saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
@@ -158,6 +159,7 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         QTabWidget* tabs = new QTabWidget();
         tabs->setMovable(true);
         tabs->setTabPosition(QTabWidget::South);
+        tabs->setStyleSheet(" QTabBar::tab { height: 15px; width: 100px; background: #222126; } QTabBar::tab:selected { height: 15px; width: 100px; color: #fff; background: #0a070d; }");
 
         QWidget* projectTab = new QWidget();
         QGridLayout mainLayout(projectTab);
@@ -208,6 +210,14 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         git_stats->setContentsMargins(0, 0, 0, 0);
         git_stats->setAlternatingRowColors(true);
 
+        git_stats->setStyleSheet("QTableWidget { background-color: transparent; alternate-background-color: #0a070d; } QTableWidget::item {border-radius: 5px;}");
+
+        QLabel* descriptionL = new QLabel();
+        descriptionL->setFixedHeight(30);
+        descriptionL->setAlignment(Qt::AlignCenter);
+        descriptionL->setFont(selectedFont);
+        descriptionL->setStyleSheet("font-size: " + font_size + "pt;");
+
         QHBoxLayout* statsLayout = new QHBoxLayout();
 
         QSpacerItem* leftSpacer = new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -233,10 +243,11 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         loadDocumentations(dir, *documentation);
         documentation->setCurrentText(projectData[2]);
 
-        mainLayout.addWidget(title, 2, 0, 1, 2);
-        mainLayout.addWidget(linkToGit, 3, 0, 1, 2);
-        mainLayout.addWidget(documentation, 4, 0);
-        mainLayout.addWidget(openButton, 4, 1);
+        mainLayout.addWidget(title, 0, 0, 1, 2);
+        mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
+        // mainLayout.addWidget(documentation, 2, 0);
+        // mainLayout.addWidget(openButton, 2, 1);
+        // mainLayout.addWidget(descriptionL, 3, 0, 1, 2);
         mainLayout.addLayout(statsLayout, 5, 0, 5, 2);
         mainLayout.addWidget(lastMod, 10, 0, 1, 2, Qt::AlignCenter);
 
@@ -255,11 +266,12 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         tabs->addTab(projectTab, "Project");
         tabs->addTab(issuesTab, "Issues");
 
+        centralLayout->addWidget(descriptionL);
         centralLayout->addWidget(tabs);
 
         QThread* thread = new QThread;
-        QObject::connect(thread, &QThread::started, this, [this, projectData, git_stats, issuesLabel]() {
-            getRepositoryData(projectData[1], git_stats);
+        QObject::connect(thread, &QThread::started, this, [this, projectData, git_stats, issuesLabel, descriptionL]() {
+            getRepositoryData(projectData[1], git_stats, descriptionL);
             issuesLabel->setHtml(getProjectIssues(projectData[1]));
         });
         thread->start();
@@ -291,8 +303,8 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
             QString repo = projectLink.replace(prefix, "");
 
             QThread* thread = new QThread;
-            QObject::connect(thread, &QThread::started, this, [this, projectData, repo, git_stats, issuesLabel]() {
-                getRepositoryData(repo, git_stats);
+            QObject::connect(thread, &QThread::started, this, [this, projectData, repo, git_stats, issuesLabel, descriptionL]() {
+                getRepositoryData(repo, git_stats, descriptionL);
                 issuesLabel->setHtml(getProjectIssues(repo));
             });
             thread->start();
