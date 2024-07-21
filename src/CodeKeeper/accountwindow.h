@@ -47,6 +47,7 @@ private:
     QPushButton *openRepo;
 
     CircleProgressBar *tasksStatsProgress;
+    ColorValueDisplay *tasksChartValuesDisplay;
 
     CircleChart *projectsChart;
     ColorValueDisplay *chartValuesDisplay;

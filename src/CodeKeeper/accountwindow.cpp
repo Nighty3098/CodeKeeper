@@ -50,11 +50,19 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     codeKeeperStats->setText(stats);
     codeKeeperStats->setAlignment(Qt::AlignHCenter);
 
+    QHBoxLayout* tasksStatsLayout = new QHBoxLayout();
+
     tasksStatsProgress = new CircleProgressBar();
     tasksStatsProgress->setFixedSize(60, 60);
     tasksStatsProgress->setBackgroundColor(QColor(Qt::transparent));
     tasksStatsProgress->setLineWidth(font_size.toInt());
     tasksStatsProgress->setDisplayMode(CircleProgressBar::Percent); // Percent, CustomText, NoPercent, Hidden
+
+    tasksChartValuesDisplay = new ColorValueDisplay();
+    tasksChartValuesDisplay->setFixedSize(120, 85);
+
+    tasksStatsLayout->addWidget(tasksStatsProgress);
+    tasksStatsLayout->addWidget(tasksChartValuesDisplay);
 
     userName = new QLabel();
     userName->setText(git_user);
@@ -105,14 +113,15 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     setUserImageThread->start();
 
     mainLayout->addWidget(closeWindow, 0, 0, 1, 6, Qt::AlignLeft);
-    mainLayout->addWidget(profilePicture, 2, 0, 3, 3, Qt::AlignCenter);
+    mainLayout->addWidget(profilePicture, 2, 0, 6, 3, Qt::AlignCenter);
 
     mainLayout->addWidget(userName, 2, 3, 1, 3, Qt::AlignCenter);
 
-    mainLayout->addWidget(tasksTitle, 3, 3, 1, 3, Qt::AlignCenter);
-    mainLayout->addWidget(tasksStatsProgress, 4, 3, 1, 3, Qt::AlignCenter);
-    mainLayout->addWidget(projectTitle, 5, 3, 1, 3, Qt::AlignCenter);
-    mainLayout->addLayout(projectsStatsLayout, 6, 3, 1, 3, Qt::AlignCenter);
+    mainLayout->addWidget(tasksTitle, 3, 3, 1, 3, Qt::AlignHCenter);
+    mainLayout->addLayout(tasksStatsLayout, 4, 3, 1, 3, Qt::AlignHCenter);
+
+    mainLayout->addWidget(projectTitle, 5, 3, 1, 3, Qt::AlignHCenter);
+    mainLayout->addLayout(projectsStatsLayout, 6, 3, 1, 3, Qt::AlignHCenter);
 
     mainLayout->addWidget(profileInfo, 14, 0, 3, 3, Qt::AlignCenter);
     mainLayout->addWidget(codeKeeperStats, 14, 3, 3, 3, Qt::AlignCenter);

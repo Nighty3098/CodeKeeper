@@ -243,10 +243,18 @@ void AccountWindow::setTasksProgress()
 
     double percentage = static_cast<double>(completeTasksCount) / static_cast<double>(totalTasks) * 100.0;
 
+    double complete_percentage = static_cast<double>(completeTasksCount) / static_cast<double>(totalTasks) * 100.0;
+    double started_percentage = static_cast<double>(inprocessTasksCount) / static_cast<double>(totalTasks) * 100.0;
+    double ns_percentage = static_cast<double>(incompleteTasksCount) / static_cast<double>(totalTasks) * 100.0;
+
     qDebug() << completeTasksCount << "/" << totalTasks;
 
     tasksStatsProgress->setValue(percentage);
     tasksStatsProgress->setMaxValue(100);
+
+    tasksChartValuesDisplay->addValue("Completed", complete_percentage, QColor("#78b3ba"));
+    tasksChartValuesDisplay->addValue("Started", started_percentage, QColor("#b1e032"));
+    tasksChartValuesDisplay->addValue("Not Started", ns_percentage, QColor("#c75d5e"));
 
     if (percentage < 101) {
         tasksStatsProgress->setProgressColor(QColor("#78b3ba"));
