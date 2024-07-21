@@ -212,9 +212,6 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         git_stats->setContentsMargins(0, 0, 0, 0);
         git_stats->setAlternatingRowColors(true);
 
-        git_stats->setStyleSheet(
-                "QTableWidget { background-color: transparent; alternate-background-color: #0a070d; } QTableWidget::item {border-radius: 5px;}");
-
         QLabel* descriptionL = new QLabel();
         descriptionL->setFixedHeight(30);
         descriptionL->setAlignment(Qt::AlignCenter);
