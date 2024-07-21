@@ -119,7 +119,8 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         dialog.setMinimumHeight(500);
         dialog.setWindowTitle(tr("Project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-        dialog.setStyleSheet("QWidget { background-color: #222126; } QPushButton {background-color: #0a070d; } QLineEdit {background-color: #0a070d;}");
+        dialog.setStyleSheet(
+                "QWidget { background-color: #222126; } QPushButton {background-color: #0a070d; } QLineEdit {background-color: #0a070d;}");
 
         QPushButton* saveDataBtn = new QPushButton();
         saveDataBtn->setText("Save");
@@ -159,7 +160,8 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         QTabWidget* tabs = new QTabWidget();
         tabs->setMovable(true);
         tabs->setTabPosition(QTabWidget::South);
-        tabs->setStyleSheet(" QTabBar::tab { height: 15px; width: 100px; background: #222126; } QTabBar::tab:selected { height: 15px; width: 100px; color: #fff; background: #0a070d; }");
+        tabs->setStyleSheet(" QTabBar::tab { height: 15px; width: 100px; background: #222126; } QTabBar::tab:selected { height: 15px; width: 100px; "
+                            "color: #fff; background: #0a070d; }");
 
         QWidget* projectTab = new QWidget();
         QGridLayout mainLayout(projectTab);
@@ -210,7 +212,8 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         git_stats->setContentsMargins(0, 0, 0, 0);
         git_stats->setAlternatingRowColors(true);
 
-        git_stats->setStyleSheet("QTableWidget { background-color: transparent; alternate-background-color: #0a070d; } QTableWidget::item {border-radius: 5px;}");
+        git_stats->setStyleSheet(
+                "QTableWidget { background-color: transparent; alternate-background-color: #0a070d; } QTableWidget::item {border-radius: 5px;}");
 
         QLabel* descriptionL = new QLabel();
         descriptionL->setFixedHeight(30);
