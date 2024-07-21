@@ -174,7 +174,7 @@ int AccountWindow::getStarsCount(const QString& username, const QString& token)
     return totalStars;
 }
 
-void AccountWindow::setUserData(const QString& username, QLabel *label)
+void AccountWindow::setUserData(const QString& username, QLabel* label)
 {
     QNetworkAccessManager* manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/users/" + git_user);
@@ -214,9 +214,9 @@ void AccountWindow::setUserData(const QString& username, QLabel *label)
         qDebug() << "Company:" << obj["company"].toString();
         qDebug() << "Login:" << obj["login"].toString();
 
-        label->setText("\n\n" + obj["bio"].toString() + "\nPublic repos: " + QString::number(obj["public_repos"].toInt()) + "\n\nFollowing: "
-                             + QString::number(obj["following"].toInt()) + "\n\nFollowers: " + QString::number(obj["followers"].toInt())
-                             + "\n\nStars: " + QString::number(getStarsCount(git_user, git_token)) + "\n");
+        label->setText("\n\n" + obj["bio"].toString() + "\nPublic repos: " + QString::number(obj["public_repos"].toInt())
+                       + "\n\nFollowing: " + QString::number(obj["following"].toInt()) + "\n\nFollowers: " + QString::number(obj["followers"].toInt())
+                       + "\n\nStars: " + QString::number(getStarsCount(git_user, git_token)) + "\n");
 
         reply->deleteLater();
     });

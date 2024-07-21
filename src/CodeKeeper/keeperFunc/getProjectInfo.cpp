@@ -91,13 +91,13 @@ void MainWindow::createGitBadges(QString git_url, QWebEngineView* page)
     page->setHtml(html);
 }
 
-QString MainWindow::getRepositoryData(QString git_url, QTableWidget* table)
+QString MainWindow::getRepositoryData(QString git_url, QTableWidget* table, QLabel* label)
 {
     QString prefix = "https://github.com/";
     QString repo = git_url.replace(prefix, "");
     QString repoData;
 
-    QString name, createdAt, openIssues, forks, lang, stars, repoSize, license, totalDownloads, release, releaseDate, lastCommitS;
+    QString name, description, createdAt, openIssues, forks, lang, stars, repoSize, license, totalDownloads, release, releaseDate, lastCommitS;
 
     QNetworkAccessManager* manager = new QNetworkAccessManager(this);
 
@@ -129,6 +129,8 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget* table)
     qDebug() << doc;
 
     name = obj["name"].toString();
+
+    description = obj["description"].toString();
 
     createdAt = obj["created_at"].toString();
     QDateTime createdDate = QDateTime::fromString(createdAt, Qt::ISODate);
@@ -342,6 +344,8 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget* table)
         dataList << releaseDate;
         textList << "Release at";
     }
+
+    label->setText(name + " - " + description);
 
     for (int i = 0; i < dataList.count(); i++) {
         table->setItem(i, 0, new QTableWidgetItem(textList[i]));
