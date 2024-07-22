@@ -5,7 +5,7 @@ QDialog {
 
 QTableWidget {
     background-color: #0a070d;
-    alternate-background-color: #171b22;
+    alternate-background-color: #0a070d;
     show-decoration-selected: 0;
     border: 0px;
     border-radius: 5px;
@@ -463,14 +463,14 @@ QProgressBar::chunk {
 
 
 QScrollBar:vertical {
-    background: #0a070d;
+    background: transparent;
     border-radius: 3px;
     width: 6px;
     margin: 3px 0px 3px 0px;
 }
 
 QScrollBar:horizontal {
-    background: #0a070d;
+    background: transparent;
     border-radius: 3px;
     height: 6px;
     margin: 0px 0px 0px 0px;
@@ -495,7 +495,7 @@ QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
 
 QScrollBar::add-line, QScrollBar::sub-line {
     border-radius: 2px;
-    background: #0a070d;
+    background: transparent;
 }
 
 QScrollBar::add-line:vertical {
@@ -527,7 +527,7 @@ QScrollBar::sub-line:horizontal {
 }
 
 QScrollBar::add-page, QScrollBar::sub-page {
-    background: #0a070d;
+    background: transparent;
 }
 
 QToolTip {
