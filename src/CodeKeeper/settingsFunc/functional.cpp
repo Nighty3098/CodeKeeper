@@ -8,6 +8,42 @@ void SettingsWindow::QuitW()
     this->close();
 }
 
+QString SettingsWindow::fetchSecondLastRelease() {
+    QString version;
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases");
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+
+    QNetworkReply *reply = manager->get(request);
+    connect(reply, &QNetworkReply::finished, this, [reply, &version]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray response = reply->readAll();
+            QJsonDocument jsonDoc = QJsonDocument::fromJson(response);
+            QJsonArray releases = jsonDoc.array();
+
+            if (releases.size() >= 2) {
+                QJsonObject secondLastRelease = releases[1].toObject();
+                version = secondLastRelease["tag_name"].toString();
+                qDebug() << "Penultimate release:" << version;
+            } else {
+                qDebug() << "Not enough releases to get the penultimate one.";
+            }
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+
+    return version;
+}
+
 void SettingsWindow::closeEvent(QCloseEvent* event)
 {
     MainWindow* mainWindow = static_cast<MainWindow*>(parent());
@@ -18,14 +54,12 @@ void SettingsWindow::closeEvent(QCloseEvent* event)
 
 void SettingsWindow::checkUpdates()
 {
-    QFile file(":/stylesheet/stylesheet.qss");
-    file.open(QFile::ReadOnly);
+    QString secondLastRelease = fetchSecondLastRelease();
 
     QDialog dialog(this);
     dialog.setFixedSize(400, 400);
     dialog.setWindowTitle(tr("Edit project"));
     dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    dialog.setStyleSheet(file.readAll());
 
     QString newAppVersion = getNewAppVersion();
     QString currentAppVersion = versionInfo->text();
@@ -94,7 +128,7 @@ void SettingsWindow::checkUpdates()
     connect(downloadUpdate, &QPushButton::clicked,
             [&]() { QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/releases/latest")); });
 
-    connect(whatsNewButton, &QPushButton::clicked, [&]() { QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/compare/" + currentAppVersion + "...main")); });
+    connect(whatsNewButton, &QPushButton::clicked, [&]() { QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/compare/" + secondLastRelease + "..." + currentAppVersion + "")); });
 
     dialog.exec();
 }
@@ -119,6 +153,62 @@ void SettingsWindow::checkRepo()
 
     reply->deleteLater();
 }
+
+void SettingsWindow::fopenFolder()
+{
+    QString str = QFileDialog::getExistingDirectory(this, "Select Folder");
+    if (!str.isEmpty()) {
+        qDebug() << str;
+        globalSettings->setValue("path", str);
+
+        pathToFolder->setText(str);
+
+        QMessageBox* messageBox = new QMessageBox();
+
+        messageBox->setIcon(QMessageBox::Information);
+        messageBox->setWindowTitle("CodeKeeper - Settings");
+        messageBox->setText("To apply the settings, restart the application.");
+
+        messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+        messageBox->exec();
+        MainWindow* mainWindow = static_cast<MainWindow*>(parent());
+        mainWindow->loadNotes();
+    }
+}
+
+QString SettingsWindow::getNewAppVersion()
+{
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+    QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases/latest");
+
+    QUrlQuery query;
+    url.setQuery(query);
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QNetworkReply* reply = manager->get(request);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+
+    loop.exec();
+
+    QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+    QJsonObject obj = doc.object();
+
+    QString version = obj["tag_name"].toString();
+    qDebug() << version;
+
+    reply->deleteLater();
+
+    return version;
+}
+
+
+
 
 void SettingsWindow::saveData()
 {
@@ -209,58 +299,6 @@ void SettingsWindow::saveData()
     AccountWindow* accountWindow = static_cast<AccountWindow*>(parent());
 }
 
-void SettingsWindow::fopenFolder()
-{
-    QString str = QFileDialog::getExistingDirectory(this, "Select Folder");
-    if (!str.isEmpty()) {
-        qDebug() << str;
-        globalSettings->setValue("path", str);
-
-        pathToFolder->setText(str);
-
-        QMessageBox* messageBox = new QMessageBox();
-
-        messageBox->setIcon(QMessageBox::Information);
-        messageBox->setWindowTitle("CodeKeeper - Settings");
-        messageBox->setText("To apply the settings, restart the application.");
-
-        messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-        messageBox->exec();
-        MainWindow* mainWindow = static_cast<MainWindow*>(parent());
-        mainWindow->loadNotes();
-    }
-}
-
-QString SettingsWindow::getNewAppVersion()
-{
-    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
-    QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases/latest");
-
-    QUrlQuery query;
-    url.setQuery(query);
-
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
-    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
-    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
-    request.setRawHeader("Accept", "application/vnd.github.v3+json");
-
-    QNetworkReply* reply = manager->get(request);
-    QEventLoop loop;
-    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-
-    loop.exec();
-
-    QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-    QJsonObject obj = doc.object();
-
-    QString version = obj["tag_name"].toString();
-    qDebug() << version;
-
-    reply->deleteLater();
-
-    return version;
-}
 
 void SettingsWindow::setStyle2(QFont* selectedFont, int* font_size_int)
 {
