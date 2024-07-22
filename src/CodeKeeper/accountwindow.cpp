@@ -123,8 +123,8 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     mainLayout->addWidget(projectTitle, 5, 3, 1, 3, Qt::AlignHCenter);
     mainLayout->addLayout(projectsStatsLayout, 6, 3, 1, 3, Qt::AlignHCenter);
 
-    mainLayout->addWidget(profileInfo, 14, 0, 3, 3, Qt::AlignCenter);
-    mainLayout->addWidget(codeKeeperStats, 14, 3, 3, 3, Qt::AlignCenter);
+    mainLayout->addWidget(profileInfo, 14, 0, 3, 6, Qt::AlignCenter);
+    // mainLayout->addWidget(codeKeeperStats, 14, 3, 3, 3, Qt::AlignCenter);
     mainLayout->addWidget(openRepo, 17, 0, 1, 6, Qt::AlignCenter);
 
     connect(closeWindow, SIGNAL(clicked()), this, SLOT(closeWindowSlot()));

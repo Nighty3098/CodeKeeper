@@ -22,8 +22,8 @@ public:
         items_ = new QVector<ColorValueItem*>();
     }
 
-    void addValue(const QString &text, int value, QColor color) {
-        ColorValueItem *item = new ColorValueItem(text, value, color);
+    void addValue(const QString &text, int value, QColor color, QFont &font) {
+        ColorValueItem *item = new ColorValueItem(text, value, color, font);
         items_->append(item);
         layout()->addWidget(item);
         update();
@@ -32,23 +32,26 @@ public:
 private:
     class ColorValueItem : public QWidget {
     public:
-        ColorValueItem(const QString &text, int value, QColor color, QWidget *parent = nullptr) : QWidget(parent) {
+        ColorValueItem(const QString &text, int value, QColor color, QFont &font, QWidget *parent = nullptr) : QWidget(parent) {
             QHBoxLayout *layout = new QHBoxLayout(this);
             layout->setSpacing(5);
             layout->setContentsMargins(0, 0, 0, 0);
 
             QLabel *colorLabel = new QLabel(this);
-            colorLabel->setStyleSheet(QString("background-color: %1; border: 1px solid black; border-radius: 7px;").arg(color.name()));
+            colorLabel->setStyleSheet(QString("background-color: %1; border: 0px solid black; border-radius: 7px;").arg(color.name()));
             colorLabel->setFixedSize(15, 15);
             layout->addWidget(colorLabel);
 
             QLabel *dashLabel = new QLabel("-", this);
+            dashLabel->setFont(font);
             layout->addWidget(dashLabel);
 
             QLabel *textLabel = new QLabel(text, this);
+            textLabel->setFont(font);
             layout->addWidget(textLabel);
 
             QLabel *valueLabel = new QLabel(QString::number(value) + "%", this);
+            valueLabel->setFont(font);
             layout->addWidget(valueLabel);
         }
     };
