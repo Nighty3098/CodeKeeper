@@ -8,6 +8,7 @@
 #include "custom/circleProgressbar/ProgressCircle.h"
 #include "custom/circleChart/CircleChart.h"
 #include "custom/ColorValueDisplay/ColorValueDisplay.h"
+
 class AccountWindow : public QMainWindow
 {
     Q_OBJECT
