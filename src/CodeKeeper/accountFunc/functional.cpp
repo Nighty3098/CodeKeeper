@@ -252,9 +252,9 @@ void AccountWindow::setTasksProgress()
     tasksStatsProgress->setValue(percentage);
     tasksStatsProgress->setMaxValue(100);
 
-    tasksChartValuesDisplay->addValue("Completed", complete_percentage, QColor("#78b3ba"));
-    tasksChartValuesDisplay->addValue("Started", started_percentage, QColor("#b1e032"));
-    tasksChartValuesDisplay->addValue("Not Started", ns_percentage, QColor("#c75d5e"));
+    tasksChartValuesDisplay->addValue("Completed", complete_percentage, QColor("#78b3ba"), selectedFont);
+    tasksChartValuesDisplay->addValue("Started", started_percentage, QColor("#b1e032"), selectedFont);
+    tasksChartValuesDisplay->addValue("Not Started", ns_percentage, QColor("#c75d5e"), selectedFont);
 
     if (percentage < 101) {
         tasksStatsProgress->setProgressColor(QColor("#78b3ba"));
@@ -305,8 +305,8 @@ void AccountWindow::setProjectsStats()
     projectsChart->addValue(fl_p, QColor("#b1e032"));
     projectsChart->addValue(f_p, QColor("#78b3ba"));
 
-    chartValuesDisplay->addValue("Not started", ns_p, QColor("#c75d5e"));
-    chartValuesDisplay->addValue("In Dev", s_p, QColor("#e09132"));
-    chartValuesDisplay->addValue("On Review", fl_p, QColor("#b1e032"));
-    chartValuesDisplay->addValue("Finished", f_p, QColor("#78b3ba"));
+    chartValuesDisplay->addValue("Not started", ns_p, QColor("#c75d5e"), selectedFont);
+    chartValuesDisplay->addValue("In Dev", s_p, QColor("#e09132"), selectedFont);
+    chartValuesDisplay->addValue("On Review", fl_p, QColor("#b1e032"), selectedFont);
+    chartValuesDisplay->addValue("Finished", f_p, QColor("#78b3ba"), selectedFont);
 }
