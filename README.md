@@ -2,15 +2,14 @@
     <h1 align="center">CodeKeeper</h1>
     <h3 align="center">Projects manager for developers</h3>
     <br><br>    
-    <img align="center" src="imgs/logo.png" align="center" width="50%" />
+    <img align="center" src="imgs/logo.png" align="center" width="30%" />
     <br><br>
 </div>
 
 <br><br>
     <div align="center">
     <a href="./LICENSE.md"><img  class="badge" src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=a6e0b8&logoColor=ffffff&labelColor=1c1c29"  style="border-radius: 5px;"/></a><br>
-    <img src="https://img.shields.io/github/created-at/Nighty3098/CodeKeeper?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29" style="border-radius: 5px;">
-    <img class="badge" src="https://img.shields.io/github/last-commit/Nighty3098/CodeKeeper?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29" style="border-radius: 5px;"/>
+    <img src="https://wakatime.com/badge/user/018e8f78-65a7-4aa8-8c67-51796499853b/project/018e8f7e-5c5a-471e-ba73-04384fbc3cda.svg?&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/><br>
     <img class="badge" src="https://img.shields.io/github/issues-pr/Nighty3098/CodeKeeper?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29" style="border-radius: 5px;" />
     <img class="badge" src="https://img.shields.io/github/repo-size/Nighty3098/CodeKeeper?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22" style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/release/Nighty3098/CodeKeeper?style=for-the-badge&color=7589d5&logoColor=ffffff&labelColor=1c1c29" style="border-radius: 5px;"/>
@@ -35,27 +34,28 @@
             <img src = "https://contrib.rocks/image?repo=Nighty3098/CodeKeeper">
         </a>
     </p>
-    <br><br>
+    <br>
+    <a href="https://github.com/Nighty3098/CodeKeeper/issues/132"><h3>Official Project Roadmap</h3></a>
+    <br>
     <h3>If you have found bugs in our product or have suggestions, please write about them:</h3>
     <a href="https://t.me/DXS_TechSupport_bot"><img src="https://github.com/Nighty3098/Nighty3098/blob/main/TechSupport.png?raw=true" width="65%" /></a>
-    <br><br><br>
-    <img src="https://repobeats.axiom.co/api/embed/0d75989e77c487901abc8abe41e46589905ee8af.svg" />
 </div>
 
 <br><br>
 
-<details open>
+<details>
   <summary align="center">Install CodeKeeper:</summary>
+  <br>
   
   ```
-  git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
+  git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules 
   cd CodeKeeper/src/CodeKeeper
   qmake CodeKeeper.pro
   make
   ```
 
 </details>
-
+<br>
 
 <details align="center">
   <summary align="center">Screenshots:</summary>
@@ -140,66 +140,31 @@
 </details>
 
 <br>
-
 <details align="center">
-<summary align="center">Tasks:</summary>
-
-  - [X] - Custom window decorations
-  - [X] - Update project editor window
-  - [X] - Update view mode for markdown
-  - [X] - Add threads
-  - [X] - Added style selection functionality
-  - [ ] - Context menu for notes
-  - [ ] - Context menu for tasks
-  - [ ] - Context menu for projects
-  - [ ] - Light theme
-  - [ ] - Theme swither
-******
-  - [X] - Saving notes to MD files
-  - [X] - Saving a list of tasks in the DB
-  - [X] - Saving a projects list  in the DB
-******
-  - [X] - Linux (AppImage)
-  - [ ] - Windows (exe)
-  - [ ] - Mac
- ******
-  - [X] - Task movement functionality
-  - [X] - Project creation functionality
-  - [X] - Note-taking functionality
-  - [X] - Task creation functionality
-  - [X] - Update markdown render ( migrate to QWebEngineView )
-  - [X] - Fix visual bugs
-  - [X] - Fix notes path bug
-  - [X] - Using marked js
-  - [X] - Markdown to HTML converter
-  - [X] - Markdown to PDF converter
-  - [ ] - Functionality of moving notes
-  - [ ] - Fix markdown rendering
-******
-  - [X] - Update shortcuts
-  - [ ] - Multilang
-  - [ ] - Migrate to CMake
-******
-  - [X] - Git Api
-  - [X] - Add issues page
-  - [ ] - Git Sync
-  - [ ] - Add wiki page
-
-</details>
-
-<div align="center">
-    <h3>Tweaks</h3>
+  <summary align="center">Tweaks:</summary>
+  <br>
 
 | Default theme | Custom theme |
 |:--------------|:-------------|
 | ![](imgs/default_theme.png) | ![](imgs/custom_theme.png) |
 
+</details>
+
+<br>
+<details align="center">
+  <summary align="center">Stats:</summary>
+  <br>
+    <img src="https://repobeats.axiom.co/api/embed/0d75989e77c487901abc8abe41e46589905ee8af.svg" />
+</details>
 
 
-</div>
-
+<br><br>
 <div align="center">
-    <br><br>
-    <img src="https://wakatime.com/badge/user/018e8f78-65a7-4aa8-8c67-51796499853b/project/018e8f7e-5c5a-471e-ba73-04384fbc3cda.svg?&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/>
-    <br><br><br>
+    <img src="imgs/toncoin.png" align="center" width="15%"><br>
+    <h3>Support me with TON</h3>
+
+`UQCF-sPDO0QqkNtvy5CKSvYWEsZS6l7vzaytV36oYM0SNhKt`
+
+<br><br><br>
 </div>
+
