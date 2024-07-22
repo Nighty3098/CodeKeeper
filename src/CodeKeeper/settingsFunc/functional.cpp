@@ -65,6 +65,11 @@ void SettingsWindow::checkUpdates()
             QPixmap(":/download.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), " Update");
     downloadUpdate->setFixedSize(100, 25);
 
+    QPushButton* whatsNewButton = new QPushButton("What's new");
+    whatsNewButton->setFixedSize(100, 25);
+    whatsNewButton->setFont(selectedFont);
+    whatsNewButton->setStyleSheet("font-size: " + font_size + "pt; border: none; background-color: transparent; color: #55b27d;");
+
     qDebug() << newAppVersion << "  " << currentAppVersion;
 
     if (newAppVersion == currentAppVersion) {
@@ -82,11 +87,14 @@ void SettingsWindow::checkUpdates()
     layout->addWidget(iconLabel, 1, 0, 3, 2, Qt::AlignCenter);
     layout->addWidget(updateInfoLabel, 4, 0, 1, 2, Qt::AlignCenter);
     layout->addWidget(verInfoLabel, 5, 0, 1, 2, Qt::AlignCenter);
+    layout->addWidget(whatsNewButton, 7, 0, 1, 2, Qt::AlignCenter);
 
     connect(closeWindow, &QPushButton::clicked, [&]() { dialog.close(); });
 
     connect(downloadUpdate, &QPushButton::clicked,
             [&]() { QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/releases/latest")); });
+
+    connect(whatsNewButton, &QPushButton::clicked, [&]() { QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/compare/" + currentAppVersion + "...main")); });
 
     dialog.exec();
 }
