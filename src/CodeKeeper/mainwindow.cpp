@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
             if (currentAppVersion == newAppVersion) {
 
             } else {
-                settingsWindow->checkUpdates(false);
+                settingsWindow->checkUpdates();
             }
         } else {
         }

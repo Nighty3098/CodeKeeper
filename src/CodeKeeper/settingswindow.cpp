@@ -365,7 +365,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     // connects
     connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveData()));
     connect(quitBtn, SIGNAL(clicked()), this, SLOT(QuitW()));
-    connect(checkUpdatesBtn, SIGNAL(clicked()), this, SLOT(checkUpdates(true)));
+    connect(checkUpdatesBtn, &QPushButton::clicked, this, [=]() { checkUpdates(); });
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
 
     QTimer* repoTimer = new QTimer(this);

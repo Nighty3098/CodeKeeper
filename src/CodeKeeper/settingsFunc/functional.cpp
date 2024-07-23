@@ -52,7 +52,7 @@ void SettingsWindow::closeEvent(QCloseEvent* event)
     saveData();
 }
 
-void SettingsWindow::checkUpdates(bool isShow)
+void SettingsWindow::checkUpdates()
 {
     QString secondLastRelease = fetchSecondLastRelease();
 
@@ -135,10 +135,7 @@ void SettingsWindow::checkUpdates(bool isShow)
         QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/compare/" + secondLastRelease + "..." + currentAppVersion + ""));
     });
 
-    if (!isShow && newAppVersion == currentAppVersion) {
-    } else {
-        dialog.exec();
-    }
+    dialog.exec();
 }
 
 void SettingsWindow::checkRepo()
