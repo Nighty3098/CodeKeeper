@@ -156,6 +156,8 @@ public:
     bool isForks;
     bool isRepoSize;
 
+    bool isAutoCheckUpdates;
+
 private slots:
     QString getRepositoryData(QString git_url, QTableWidget *table, QLabel *label);
     QString getProjectIssues(QString git_url);

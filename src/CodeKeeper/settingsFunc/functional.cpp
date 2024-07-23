@@ -8,10 +8,11 @@ void SettingsWindow::QuitW()
     this->close();
 }
 
-QString SettingsWindow::fetchSecondLastRelease() {
+QString SettingsWindow::fetchSecondLastRelease()
+{
     QString version;
 
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases");
 
     QNetworkRequest request(url);
@@ -20,8 +21,7 @@ QString SettingsWindow::fetchSecondLastRelease() {
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-
-    QNetworkReply *reply = manager->get(request);
+    QNetworkReply* reply = manager->get(request);
     connect(reply, &QNetworkReply::finished, this, [reply, &version]() {
         if (reply->error() == QNetworkReply::NoError) {
             QByteArray response = reply->readAll();
@@ -106,7 +106,10 @@ void SettingsWindow::checkUpdates()
 
     qDebug() << newAppVersion << "  " << currentAppVersion;
 
+    whatsNewButton->hide();
+
     if (newAppVersion == currentAppVersion) {
+        whatsNewButton->show();
         iconLabel->setPixmap(QPixmap(":/check-mark.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         updateInfoLabel->setText("You are running the latest version of the app.");
         verInfoLabel->setText("Current version: " + currentAppVersion);
@@ -128,7 +131,9 @@ void SettingsWindow::checkUpdates()
     connect(downloadUpdate, &QPushButton::clicked,
             [&]() { QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/releases/latest")); });
 
-    connect(whatsNewButton, &QPushButton::clicked, [&]() { QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/compare/" + secondLastRelease + "..." + currentAppVersion + "")); });
+    connect(whatsNewButton, &QPushButton::clicked, [&]() {
+        QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/compare/" + secondLastRelease + "..." + currentAppVersion + ""));
+    });
 
     dialog.exec();
 }
@@ -207,9 +212,6 @@ QString SettingsWindow::getNewAppVersion()
     return version;
 }
 
-
-
-
 void SettingsWindow::saveData()
 {
     qDebug() << "Saving data";
@@ -283,6 +285,9 @@ void SettingsWindow::saveData()
     isRepoSize = CisRepoSize->isChecked();
     globalSettings->setValue("isRepoSize", isRepoSize);
 
+    isAutoCheckUpdates = autoUpdates->isChecked();
+    globalSettings->setValue("isAutoCheckUpdates", isAutoCheckUpdates);
+
     MainWindow* mainWindow = static_cast<MainWindow*>(parent());
     setStyle2(&selectedFont, &font_size);
     mainWindow->setStyle(&selectedFont, &font_size);
@@ -298,7 +303,6 @@ void SettingsWindow::saveData()
 
     AccountWindow* accountWindow = static_cast<AccountWindow*>(parent());
 }
-
 
 void SettingsWindow::setStyle2(QFont* selectedFont, int* font_size_int)
 {
@@ -343,6 +347,9 @@ void SettingsWindow::setStyle2(QFont* selectedFont, int* font_size_int)
 
     gitToken->setFont(*selectedFont);
     gitToken->setStyleSheet("font-size: " + font_size + "pt;");
+
+    autoUpdates->setFont(*selectedFont);
+    autoUpdates->setStyleSheet("font-size: " + font_size + "pt;");
 
     gitUser->setFont(*selectedFont);
     gitUser->setStyleSheet("font-size: " + font_size + "pt;");

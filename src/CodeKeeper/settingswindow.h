@@ -13,6 +13,11 @@ public:
     ~SettingsWindow();
     QSettings *globalSettings;
 
+    void checkUpdates();
+    QString getNewAppVersion();
+
+    QLabel *versionInfo;
+
     QFont selectedFont;
     QString font_size;
     QString theme;
@@ -27,6 +32,7 @@ public:
     bool isAutoSyncB;
     bool isCustomTitlebar;
     bool isCustomTheme;
+    bool isAutoCheckUpdates;
 
     bool isCreated;
     bool isReleaseDate;
@@ -45,7 +51,6 @@ public:
 private slots:
     void closeEvent(QCloseEvent *event);
     void QuitW();
-    void checkUpdates();
     void saveData();
     void fopenFolder();
 
@@ -53,7 +58,6 @@ private slots:
 
     void setStyle2(QFont *selectedFont, int *font_size_int);
     void checkRepo();
-    QString getNewAppVersion();
 
 private:
     QWidget *centralWidget;
@@ -66,9 +70,9 @@ private:
     // main tab
     QLabel *appName;
     QLabel *urlToRepo;
-    QLabel *versionInfo;
 
     QPushButton *checkUpdatesBtn;
+    QCheckBox *autoUpdates;
 
     // sync settings
     QLabel *repoAvailability;

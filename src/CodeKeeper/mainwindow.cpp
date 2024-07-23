@@ -59,6 +59,29 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
         }
     }
 
+    QThread* updatesThread = new QThread;
+    QObject::connect(updatesThread, &QThread::started, this, [this]() {
+        qDebug() << "updatesThread started";
+
+        if (isAutoCheckUpdates) {
+            settingsWindow = new SettingsWindow(this);
+
+            QString currentAppVersion = settingsWindow->versionInfo->text();
+            QString newAppVersion = settingsWindow->getNewAppVersion();
+
+            if (currentAppVersion == newAppVersion) {
+
+            } else {
+                settingsWindow->checkUpdates();
+            }
+        }
+        else {
+            
+        }
+
+    });
+    updatesThread->start();
+
     closeBtn = new QPushButton();
     minimizeBtn = new QPushButton();
     maximizeBtn = new QPushButton();
