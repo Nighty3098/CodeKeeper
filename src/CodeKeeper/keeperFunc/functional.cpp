@@ -85,9 +85,10 @@ void MainWindow::getSettingsData()
     isStars = globalSettings->value("isStars").value<bool>();
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
+    isAutoCheckUpdates = globalSettings->value("isAutoCheckUpdates").value<bool>();
 
     qDebug() << " " << dir << selectedFont << font_size << theme << isCustomTitlebar << sortNotesRole << isAutoSyncing << isVisibleNotesList
-             << isVisibleFolders << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB << isCustomTheme;
+             << isVisibleFolders << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB << isCustomTheme << isAutoCheckUpdates;
 }
 
 void MainWindow::setConnectionStatus()

@@ -43,6 +43,8 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
+    isAutoCheckUpdates = globalSettings->value("isAutoCheckUpdates").value<bool>();
+
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     centralWidget = new QWidget(this);
@@ -74,6 +76,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     QVBoxLayout* appInfoL = new QVBoxLayout();
     QVBoxLayout* subAppInfoL = new QVBoxLayout();
     QHBoxLayout* checkUpdatesBtnL = new QHBoxLayout();
+    QHBoxLayout* updatesL = new QHBoxLayout();
 
     appName = new QLabel("CodeKeeper");
     appName->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
@@ -89,7 +92,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     versionInfo = new QLabel();
-    versionInfo->setText("0.1.9");
+    versionInfo->setText("0.1.8");
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn = new QPushButton(
@@ -98,10 +101,17 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     checkUpdatesBtn->setFixedSize(200, 30);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
+    autoUpdates = new QCheckBox("Check for updates automatically");
+    autoUpdates->setChecked(isAutoCheckUpdates);
+
+    updatesL->addWidget(autoUpdates);
+    updatesL->setAlignment(Qt::AlignCenter);
+
     subAppInfoL->addWidget(appName);
     subAppInfoL->addWidget(urlToRepo);
     subAppInfoL->addWidget(versionInfo);
     subAppInfoL->addLayout(checkUpdatesBtnL);
+    subAppInfoL->addLayout(updatesL);
 
     appInfoL->addLayout(subAppInfoL);
 
