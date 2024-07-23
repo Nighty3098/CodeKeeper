@@ -88,7 +88,8 @@ void MainWindow::getSettingsData()
     isAutoCheckUpdates = globalSettings->value("isAutoCheckUpdates").value<bool>();
 
     qDebug() << " " << dir << selectedFont << font_size << theme << isCustomTitlebar << sortNotesRole << isAutoSyncing << isVisibleNotesList
-             << isVisibleFolders << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB << isCustomTheme << isAutoCheckUpdates;
+             << isVisibleFolders << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB << isCustomTheme
+             << isAutoCheckUpdates;
 }
 
 void MainWindow::setConnectionStatus()
