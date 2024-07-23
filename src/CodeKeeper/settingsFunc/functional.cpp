@@ -134,9 +134,9 @@ void SettingsWindow::checkUpdates(bool isShow)
     connect(whatsNewButton, &QPushButton::clicked, [&]() {
         QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/compare/" + secondLastRelease + "..." + currentAppVersion + ""));
     });
-    
-    if (!isShow && newAppVersion == currentAppVersion) { }
-    else {
+
+    if (!isShow && newAppVersion == currentAppVersion) {
+    } else {
         dialog.exec();
     }
 }

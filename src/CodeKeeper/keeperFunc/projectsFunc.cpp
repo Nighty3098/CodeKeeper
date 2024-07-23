@@ -115,7 +115,7 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
 {
     if (item) {
         QDialog dialog(this);
-        dialog.setFixedWidth(570);
+        dialog.setFixedWidth(600);
         dialog.setMinimumHeight(500);
         dialog.setWindowTitle(tr("Project"));
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
