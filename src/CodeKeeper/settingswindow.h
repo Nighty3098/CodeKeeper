@@ -13,7 +13,7 @@ public:
     ~SettingsWindow();
     QSettings *globalSettings;
 
-    void checkUpdates();
+    void checkUpdates(bool isShow);
     QString getNewAppVersion();
 
     QLabel *versionInfo;
