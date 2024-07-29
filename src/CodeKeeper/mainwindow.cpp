@@ -69,6 +69,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
             QString currentAppVersion = settingsWindow->versionInfo->text();
             QString newAppVersion = settingsWindow->getNewAppVersion();
 
+            qDebug() << "Current app version:" << currentAppVersion;
+            qDebug() << "New app version:" << newAppVersion;
+
             if (currentAppVersion == newAppVersion) {
 
             } else {
