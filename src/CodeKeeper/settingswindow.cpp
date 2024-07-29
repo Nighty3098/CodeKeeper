@@ -131,6 +131,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     gitToken->setAlignment(Qt::AlignCenter);
     gitToken->setFixedSize(300, 30);
     gitToken->setText(git_token);
+    gitToken->setEchoMode(QLineEdit::Password);
 
     gitUser = new QLineEdit();
     gitUser->setPlaceholderText("GitHub user");
