@@ -69,7 +69,7 @@ cd ../..
     
     # Push changes to GitHub
     username = "Nighty3098"
-    remote_url = f"https://{username}:{git_token}@github.com/{username}/your-repo.git"  # Replace 'your-repo' with your repository name
+    remote_url = f"https://{username}:{git_token}@github.com/{username}/CodeKeeper.git"  # Replace 'your-repo' with your repository name
     run_command(f"git push {remote_url} main")  # Replace 'main' with your branch name if necessary
 
     print("Changes successfully pushed to GitHub.")
