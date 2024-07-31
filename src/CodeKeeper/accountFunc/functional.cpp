@@ -217,9 +217,9 @@ void AccountWindow::setUserData(const QString& username, QLabel* label)
         qDebug() << "Company:" << obj["company"].toString();
         qDebug() << "Login:" << obj["login"].toString();
 
-        label->setText("\n\n" + obj["bio"].toString() + "\nPublic repos: " + QString::number(obj["public_repos"].toInt())
-                       + "\n\nFollowing: " + QString::number(obj["following"].toInt()) + "\n\nFollowers: " + QString::number(obj["followers"].toInt())
-                       + "\n\nStars: " + QString::number(getStarsCount(git_user, git_token)) + "\n");
+        label->setText("\n\n" + obj["bio"].toString() + tr("\nPublic repos: ") + QString::number(obj["public_repos"].toInt())
+                       + tr("\n\nFollowing: ") + QString::number(obj["following"].toInt()) + tr("\n\nFollowers: ") + QString::number(obj["followers"].toInt())
+                       + tr("\n\nStars: ") + QString::number(getStarsCount(git_user, git_token)) + "\n");
 
         reply->deleteLater();
     });
@@ -252,9 +252,9 @@ void AccountWindow::setTasksProgress()
     tasksStatsProgress->setValue(percentage);
     tasksStatsProgress->setMaxValue(100);
 
-    tasksChartValuesDisplay->addValue("Completed", complete_percentage, QColor("#78b3ba"), selectedFont);
-    tasksChartValuesDisplay->addValue("Started", started_percentage, QColor("#b1e032"), selectedFont);
-    tasksChartValuesDisplay->addValue("Not Started", ns_percentage, QColor("#c75d5e"), selectedFont);
+    tasksChartValuesDisplay->addValue(tr("Completed"), complete_percentage, QColor("#78b3ba"), selectedFont);
+    tasksChartValuesDisplay->addValue(tr("Started"), started_percentage, QColor("#b1e032"), selectedFont);
+    tasksChartValuesDisplay->addValue(tr("Not Started"), ns_percentage, QColor("#c75d5e"), selectedFont);
 
     if (percentage < 101) {
         tasksStatsProgress->setProgressColor(QColor("#78b3ba"));
@@ -275,19 +275,19 @@ void AccountWindow::setProjectsStats()
     QString stats = mainWindow->getKeeperStats();
 
     // Extract the values using regular expressions
-    QRegExp rx("Not started projects: (\\d+)");
+    QRegExp rx(tr("Not started projects: ") + "(\\d+)");
     rx.indexIn(stats);
     int notStartedProjectsCount = rx.cap(1).toInt();
 
-    rx.setPattern("Started projects: (\\d+)");
+    rx.setPattern(tr("Started projects: ") + "(\\d+)");
     rx.indexIn(stats);
     int startedProjectsCount = rx.cap(1).toInt();
 
-    rx.setPattern("Projects on review: (\\d+)");
+    rx.setPattern(tr("Projects on review: ") + "(\\d+)");
     rx.indexIn(stats);
     int finishlineProjectsCount = rx.cap(1).toInt();
 
-    rx.setPattern("Finished projects: (\\d+)");
+    rx.setPattern(tr("Finished projects: ") + "(\\d+)");
     rx.indexIn(stats);
     int finishedProjectsCount = rx.cap(1).toInt();
 
@@ -305,8 +305,8 @@ void AccountWindow::setProjectsStats()
     projectsChart->addValue(fl_p, QColor("#b1e032"));
     projectsChart->addValue(f_p, QColor("#78b3ba"));
 
-    chartValuesDisplay->addValue("Not started", ns_p, QColor("#c75d5e"), selectedFont);
-    chartValuesDisplay->addValue("In Dev", s_p, QColor("#e09132"), selectedFont);
-    chartValuesDisplay->addValue("On Review", fl_p, QColor("#b1e032"), selectedFont);
-    chartValuesDisplay->addValue("Finished", f_p, QColor("#78b3ba"), selectedFont);
+    chartValuesDisplay->addValue(tr("Not started"), ns_p, QColor("#c75d5e"), selectedFont);
+    chartValuesDisplay->addValue(tr("In Dev"), s_p, QColor("#e09132"), selectedFont);
+    chartValuesDisplay->addValue(tr("On Review"), fl_p, QColor("#b1e032"), selectedFont);
+    chartValuesDisplay->addValue(tr("Finished"), f_p, QColor("#78b3ba"), selectedFont);
 }

@@ -99,7 +99,7 @@ void SettingsWindow::checkUpdates()
             QPixmap(":/download.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), " Update");
     downloadUpdate->setFixedSize(100, 25);
 
-    QPushButton* whatsNewButton = new QPushButton("What's new");
+    QPushButton* whatsNewButton = new QPushButton(tr("What's new"));
     whatsNewButton->setFixedSize(100, 25);
     whatsNewButton->setFont(selectedFont);
     whatsNewButton->setStyleSheet("font-size: " + font_size + "pt; border: none; background-color: transparent; color: #55b27d;");
@@ -111,12 +111,12 @@ void SettingsWindow::checkUpdates()
     if (newAppVersion == currentAppVersion) {
         whatsNewButton->show();
         iconLabel->setPixmap(QPixmap(":/check-mark.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        updateInfoLabel->setText("You are running the latest version of the app.");
-        verInfoLabel->setText("Current version: " + currentAppVersion);
+        updateInfoLabel->setText(tr("You are running the latest version of the app."));
+        verInfoLabel->setText(tr("Current version: ") + currentAppVersion);
     } else {
         iconLabel->setPixmap(QPixmap(":/refresh.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        updateInfoLabel->setText("A new version of the application is available.");
-        verInfoLabel->setText("Current version: " + currentAppVersion + "\nNew version: " + newAppVersion);
+        updateInfoLabel->setText(tr("A new version of the application is available."));
+        verInfoLabel->setText(tr("Current version: ") + currentAppVersion + "\n" + tr("New version: ") + newAppVersion);
         layout->addWidget(downloadUpdate, 6, 0, 1, 2, Qt::AlignCenter);
     }
 
@@ -149,11 +149,11 @@ void SettingsWindow::checkRepo()
     loop.exec();
 
     if (reply->error() == QNetworkReply::NoError) {
-        repoAvailability->setText("Repository is available");
+        repoAvailability->setText(tr("Repository is available"));
     } else {
         qDebug() << repo;
         qWarning() << "The repository isn't available";
-        repoAvailability->setText("The repository isn't available");
+        repoAvailability->setText(tr("The repository isn't available"));
     }
 
     reply->deleteLater();
@@ -161,7 +161,7 @@ void SettingsWindow::checkRepo()
 
 void SettingsWindow::fopenFolder()
 {
-    QString str = QFileDialog::getExistingDirectory(this, "Select Folder");
+    QString str = QFileDialog::getExistingDirectory(this, tr("Select Folder"));
     if (!str.isEmpty()) {
         qDebug() << str;
         globalSettings->setValue("path", str);
@@ -172,7 +172,7 @@ void SettingsWindow::fopenFolder()
 
         messageBox->setIcon(QMessageBox::Information);
         messageBox->setWindowTitle("CodeKeeper - Settings");
-        messageBox->setText("To apply the settings, restart the application.");
+        messageBox->setText(tr("To apply the settings, restart the application."));
 
         messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
         messageBox->exec();
@@ -356,6 +356,12 @@ void SettingsWindow::setStyle2(QFont* selectedFont, int* font_size_int)
 
     gitRepo->setFont(*selectedFont);
     gitRepo->setStyleSheet("font-size: " + font_size + "pt;");
+
+    langLabel->setFont(*selectedFont);
+    langLabel->setStyleSheet("font-size: " + font_size + "pt;");
+
+    langSelector->setFont(*selectedFont);
+    langSelector->setStyleSheet("font-size: " + font_size + "pt;");
 
     autoSyncAfterStart->setFont(*selectedFont);
     autoSyncAfterStart->setStyleSheet("font-size: " + font_size + "pt;");

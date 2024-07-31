@@ -92,7 +92,7 @@ void MainWindow::getTotalProjects(QTabWidget* projectsTab, QListWidget* notStart
                                  int totalProjects = notStartedProjects->count() + finishlineProjects->count() + startedProjects->count()
                                          + finishedProjects->count();
 
-                                 totalProjectsL->setText("Total projects: " + QString::number(totalProjects) + " ");
+                                 totalProjectsL->setText(tr("Total projects: ") + QString::number(totalProjects) + " ");
                              });
                              timer3->start(500);
                          }
@@ -121,7 +121,7 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
         QPushButton* saveDataBtn = new QPushButton();
-        saveDataBtn->setText("Save");
+        saveDataBtn->setText(tr("Save"));
         saveDataBtn->setStyleSheet("font-size: " + font_size + "pt;");
         saveDataBtn->setFixedSize(100, 25);
         saveDataBtn->setIcon(QPixmap(":/save.png"));
@@ -176,14 +176,14 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
 
         QLineEdit* title = new QLineEdit();
         title->setAlignment(Qt::AlignCenter);
-        title->setPlaceholderText(" Project name: ");
+        title->setPlaceholderText(tr(" Project name: "));
         title->setStyleSheet("font-size: " + font_size + "pt;");
         title->setFixedHeight(25);
         title->setFont(selectedFont);
 
         QLineEdit* linkToGit = new QLineEdit();
         linkToGit->setAlignment(Qt::AlignCenter);
-        linkToGit->setPlaceholderText(" Link to GIT");
+        linkToGit->setPlaceholderText(tr(" Link to GIT"));
         linkToGit->setStyleSheet("font-size: " + font_size + "pt;");
         linkToGit->setFixedHeight(25);
         linkToGit->setFont(selectedFont);
@@ -193,7 +193,7 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         documentation->setFont(selectedFont);
 
         QLabel* lastMod = new QLabel();
-        lastMod->setText("Last mod: ");
+        lastMod->setText(tr("Last mod: "));
         lastMod->setStyleSheet("font-size: " + font_size + "pt;");
         lastMod->setFixedHeight(25);
         lastMod->setAlignment(Qt::AlignCenter);
@@ -224,7 +224,7 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
         // statsLayout->addItem(rightSpacer);
 
         QPushButton* openButton = new QPushButton();
-        openButton->setText("Open");
+        openButton->setText(tr("Open"));
         openButton->setStyleSheet("font-size: " + font_size + "pt;");
         openButton->setFixedHeight(25);
         openButton->setIcon(
@@ -234,7 +234,7 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
 
         title->setText(projectData[0]);
         linkToGit->setText(projectData[1]);
-        lastMod->setText("Last mod: " + projectData[4]);
+        lastMod->setText(tr("Last mod: ") + projectData[4]);
 
         loadDocumentations(dir, *documentation);
         documentation->setCurrentText(projectData[2]);
@@ -252,15 +252,15 @@ void MainWindow::openProject(QListWidget* listWidget, QListWidgetItem* item)
 
         QTextBrowser* issuesLabel = new QTextBrowser();
         issuesLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
-        issuesLabel->setText("Issues");
+        issuesLabel->setText(tr("Issues"));
         issuesLabel->setOpenExternalLinks(true);
         issuesLabel->setFont(selectedFont);
         issuesLabel->setStyleSheet("font-size: " + font_size + "pt;");
         issuesLabel->setAlignment(Qt::AlignCenter);
         issuesLayout.addWidget(issuesLabel);
 
-        tabs->addTab(projectTab, "Project");
-        tabs->addTab(issuesTab, "Issues");
+        tabs->addTab(projectTab, tr("Project"));
+        tabs->addTab(issuesTab, tr("Issues"));
 
         centralLayout->addWidget(descriptionL);
         centralLayout->addWidget(tabs);

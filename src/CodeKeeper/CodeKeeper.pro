@@ -51,3 +51,6 @@ include(3rdParty/qmarkdowntextedit/qmarkdowntextedit.pri)
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+TRANSLATIONS += \
+    CodeKeeper_ru_RU.ts
