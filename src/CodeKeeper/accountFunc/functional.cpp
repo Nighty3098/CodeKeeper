@@ -1,21 +1,22 @@
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
+#include <QImage>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QPixmap>
-#include <QPainter>
-#include <QImage>
 #include <QLabel>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QPainter>
+#include <QPixmap>
 
 #include "mainwindow.h"
 
-void AccountWindow::setImageFromUrl(const QString& url, QLabel* label)
+void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
 {
-    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
-    QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(url)));
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkReply *reply = manager->get(QNetworkRequest(QUrl(url)));
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
-        if (reply->error()) {
+        if (reply->error())
+        {
             qWarning() << "Error:" << reply->errorString();
             reply->deleteLater();
             return;
@@ -36,15 +37,16 @@ void AccountWindow::setImageFromUrl(const QString& url, QLabel* label)
         int radius = qMin(roundedImage.width(), roundedImage.height());
         painter.drawRoundedRect(0, 0, roundedImage.width(), roundedImage.height(), radius * 0.5, radius * 0.5);
 
-        label->setPixmap(QPixmap::fromImage(roundedImage.scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation)));
+        label->setPixmap(
+            QPixmap::fromImage(roundedImage.scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation)));
 
         reply->deleteLater();
     });
 }
 
-void AccountWindow::get_image_url(const QString& username, QLabel* label)
+void AccountWindow::get_image_url(const QString &username, QLabel *label)
 {
-    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/users/" + git_user);
 
     QUrlQuery query;
@@ -57,9 +59,10 @@ void AccountWindow::get_image_url(const QString& username, QLabel* label)
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply* reply = manager->get(request);
+    QNetworkReply *reply = manager->get(request);
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
-        if (reply->error()) {
+        if (reply->error())
+        {
             qWarning() << "Error:" << reply->errorString();
             reply->deleteLater();
             return;
@@ -142,7 +145,7 @@ void AccountWindow::setFontStyle()
                                "}");
 }
 
-int AccountWindow::getStarsCount(const QString& username, const QString& token)
+int AccountWindow::getStarsCount(const QString &username, const QString &token)
 {
     QNetworkAccessManager manager;
     QUrl url("https://api.github.com/users/" + username + "/repos");
@@ -151,21 +154,25 @@ int AccountWindow::getStarsCount(const QString& username, const QString& token)
     request.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply* reply = manager.get(request);
+    QNetworkReply *reply = manager.get(request);
     QEventLoop loop;
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
     int totalStars = 0;
-    if (!reply->error()) {
+    if (!reply->error())
+    {
         QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
         QJsonArray repos = json.array();
 
-        for (const QJsonValue& repo : repos) {
+        for (const QJsonValue &repo : repos)
+        {
             QJsonObject repoObject = repo.toObject();
             totalStars += repoObject["stargazers_count"].toInt();
         }
-    } else {
+    }
+    else
+    {
         qDebug() << "Error:" << reply->errorString();
     }
 
@@ -173,9 +180,9 @@ int AccountWindow::getStarsCount(const QString& username, const QString& token)
     return totalStars;
 }
 
-void AccountWindow::setUserData(const QString& username, QLabel* label)
+void AccountWindow::setUserData(const QString &username, QLabel *label)
 {
-    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QUrl url("https://api.github.com/users/" + git_user);
 
     QUrlQuery query;
@@ -188,9 +195,10 @@ void AccountWindow::setUserData(const QString& username, QLabel* label)
     request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
-    QNetworkReply* reply = manager->get(request);
+    QNetworkReply *reply = manager->get(request);
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
-        if (reply->error()) {
+        if (reply->error())
+        {
             qWarning() << "Error:" << reply->errorString();
             reply->deleteLater();
             return;
@@ -213,9 +221,11 @@ void AccountWindow::setUserData(const QString& username, QLabel* label)
         qDebug() << "Company:" << obj["company"].toString();
         qDebug() << "Login:" << obj["login"].toString();
 
-        label->setText("\n\n" + obj["bio"].toString() + tr("\nPublic repos: ") + QString::number(obj["public_repos"].toInt()) + tr("\n\nFollowing: ")
-                       + QString::number(obj["following"].toInt()) + tr("\n\nFollowers: ") + QString::number(obj["followers"].toInt())
-                       + tr("\n\nStars: ") + QString::number(getStarsCount(git_user, git_token)) + "\n");
+        label->setText("\n\n" + obj["bio"].toString() + tr("\nPublic repos: ") +
+                       QString::number(obj["public_repos"].toInt()) + tr("\n\nFollowing: ") +
+                       QString::number(obj["following"].toInt()) + tr("\n\nFollowers: ") +
+                       QString::number(obj["followers"].toInt()) + tr("\n\nStars: ") +
+                       QString::number(getStarsCount(git_user, git_token)) + "\n");
 
         reply->deleteLater();
     });
@@ -228,7 +238,7 @@ void AccountWindow::onOpenRepoClicked()
 
 void AccountWindow::setTasksProgress()
 {
-    MainWindow* mainWindow = qobject_cast<MainWindow*>(this->parent());
+    MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
     QString stats = mainWindow->getKeeperStats();
 
     int incompleteTasksCount = mainWindow->incompleteTasks->count();
@@ -252,29 +262,33 @@ void AccountWindow::setTasksProgress()
     tasksChartValuesDisplay->addValue(tr("Started"), started_percentage, QColor("#b1e032"), selectedFont);
     tasksChartValuesDisplay->addValue(tr("Not Started"), ns_percentage, QColor("#c75d5e"), selectedFont);
 
-    if (percentage < 101) {
+    if (percentage < 101)
+    {
         tasksStatsProgress->setProgressColor(QColor("#78b3ba"));
     }
 
-    if (percentage < 51) {
+    if (percentage < 51)
+    {
         tasksStatsProgress->setProgressColor(QColor("#e09132"));
     }
 
-    if (percentage < 26) {
+    if (percentage < 26)
+    {
         tasksStatsProgress->setProgressColor(QColor("#c75d5e"));
     }
 }
 
 void AccountWindow::setProjectsStats()
 {
-    MainWindow* mainWindow = qobject_cast<MainWindow*>(this->parent());
+    MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
 
     int notStartedProjectsCount = mainWindow->notStartedProjects->count();
     int startedProjectsCount = mainWindow->startedProjects->count();
     int finishlineProjectsCount = mainWindow->finishedProjects->count();
     int finishedProjectsCount = mainWindow->finishlineProjects->count();
 
-    int totalProjects = notStartedProjectsCount + startedProjectsCount + finishlineProjectsCount + finishedProjectsCount;
+    int totalProjects =
+        notStartedProjectsCount + startedProjectsCount + finishlineProjectsCount + finishedProjectsCount;
 
     int ns_p = static_cast<double>(notStartedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
     int s_p = static_cast<double>(startedProjectsCount) / static_cast<double>(totalProjects) * 100.0;

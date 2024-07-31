@@ -14,57 +14,72 @@ void MainWindow::create_tasks_connection()
                   "createdTime VARCHAR(50)"
                   ");";
 
-    if (!query.exec(str)) {
+    if (!query.exec(str))
+    {
         qDebug() << "" << query.lastError();
-    } else {
+    }
+    else
+    {
         qDebug() << "Tasks db was created";
     }
 }
 
-void MainWindow::updateTaskData(QString* task, QString* status, QString* cT)
+void MainWindow::updateTaskData(QString *task, QString *status, QString *cT)
 {
     QSqlQuery query;
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("UPDATE tasks SET task = '" + taskText[0] + "' WHERE createdTime = '" + cT + "' AND status = '" + *status + "'")) {
+    if (!query.exec("UPDATE tasks SET task = '" + taskText[0] + "' WHERE createdTime = '" + cT + "' AND status = '" +
+                    *status + "'"))
+    {
         qDebug() << "" << query.lastError();
     }
 }
 
-void MainWindow::updateTaskStatus(QString* task, QString* status, QString* cT)
+void MainWindow::updateTaskStatus(QString *task, QString *status, QString *cT)
 {
     QSqlQuery query;
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("UPDATE tasks SET status = '" + *status + "' WHERE createdTime = '" + *cT + "' AND task = '" + taskText[0] + "'")) {
+    if (!query.exec("UPDATE tasks SET status = '" + *status + "' WHERE createdTime = '" + *cT + "' AND task = '" +
+                    taskText[0] + "'"))
+    {
         qDebug() << "" << query.lastError();
     }
 }
 
-void MainWindow::saveTaskToDB(QString* task, QString* status)
+void MainWindow::saveTaskToDB(QString *task, QString *status)
 {
     QSqlQuery query;
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("INSERT INTO tasks (task, status, createdTime) VALUES('" + taskText[0] + "', '" + *status + "', '" + taskText[1] + "');")) {
+    if (!query.exec("INSERT INTO tasks (task, status, createdTime) VALUES('" + taskText[0] + "', '" + *status + "', '" +
+                    taskText[1] + "');"))
+    {
         qDebug() << "" << query.lastError();
-    } else {
+    }
+    else
+    {
         qDebug() << "" << taskText[0] << " was saved";
     }
 }
 
-void MainWindow::removeTaskFromDB(QString* task, QString* status)
+void MainWindow::removeTaskFromDB(QString *task, QString *status)
 {
     QSqlQuery query;
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("DELETE FROM tasks WHERE task = '" + taskText[0] + "' AND status = '" + *status + "' AND createdTime = '" + taskText[1] + "'")) {
+    if (!query.exec("DELETE FROM tasks WHERE task = '" + taskText[0] + "' AND status = '" + *status +
+                    "' AND createdTime = '" + taskText[1] + "'"))
+    {
         qDebug() << "" << query.lastError();
-    } else {
+    }
+    else
+    {
         qDebug() << "Sucsessfull removed";
     }
 }
@@ -78,7 +93,8 @@ void MainWindow::loadTasks()
     QSqlQuery query;
 
     query.exec("SELECT * FROM tasks");
-    while (query.next()) {
+    while (query.next())
+    {
         int id = query.value("id").toInt();
         QString task = query.value("task").toString();
         QString status = query.value("status").toString();
@@ -86,19 +102,24 @@ void MainWindow::loadTasks()
 
         QString text = task + "\n" + createdTime;
 
-        QListWidgetItem* item = new QListWidgetItem(text);
+        QListWidgetItem *item = new QListWidgetItem(text);
 
         item->setData(Qt::UserRole, id);
 
-        if (status == "IncompleteTasks") {
+        if (status == "IncompleteTasks")
+        {
             incompleteTasks->addItem(item);
         }
-        if (status == "InprocessTasks") {
+        if (status == "InprocessTasks")
+        {
             inprocessTasks->addItem(item);
         }
-        if (status == "CompleteTasks") {
+        if (status == "CompleteTasks")
+        {
             completeTasks->addItem(item);
-        } else {
+        }
+        else
+        {
             qDebug() << "🟠 Unknown status: " << status;
         }
     }

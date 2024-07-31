@@ -1,26 +1,28 @@
 #include <QApplication>
 #include <QFile>
+#include <QSettings>
 #include <QSplashScreen>
 #include <QTranslator>
-#include <QSettings>
 
 #include "mainwindow.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QSettings* globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
+    QSettings *globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     QString appLang = globalSettings->value("lang").value<QString>();
 
     QTranslator translator;
 
-    if (appLang == "Ru") {
+    if (appLang == "Ru")
+    {
         QString file = "CodeKeeper_ru_RU.qm";
         qDebug() << "Loading " << file;
         translator.load(file);
     }
-    if (appLang == "En") {
+    if (appLang == "En")
+    {
         qDebug() << "Loading " << "Eng";
     }
 

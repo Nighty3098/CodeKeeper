@@ -2,14 +2,14 @@
 
 #include <QGraphicsBlurEffect>
 #include <QSpacerItem>
-#include <QtWidgets>
 #include <QThread>
+#include <QtWidgets>
 
 #include "mainwindow.cpp"
 #include "mainwindow.h"
 #include "settingsFunc/functional.cpp"
 
-SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
+SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
 {
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     selectedFont = globalSettings->value("font").value<QFont>();
@@ -58,7 +58,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     tabs->setMovable(true);
     tabs->setTabPosition(QTabWidget::South);
 
-    QHBoxLayout* BtnsL = new QHBoxLayout();
+    QHBoxLayout *BtnsL = new QHBoxLayout();
 
     saveBtn = new QPushButton("Apply");
     saveBtn->setFixedSize(100, 30);
@@ -66,26 +66,26 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     quitBtn = new QPushButton();
     quitBtn->setFixedSize(15, 15);
 
-    QSpacerItem* spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     BtnsL->addWidget(quitBtn);
     BtnsL->addItem(spacer);
     BtnsL->addWidget(saveBtn);
 
     // main
-    QVBoxLayout* appInfoL = new QVBoxLayout();
-    QVBoxLayout* subAppInfoL = new QVBoxLayout();
-    QHBoxLayout* checkUpdatesBtnL = new QHBoxLayout();
-    QHBoxLayout* updatesL = new QHBoxLayout();
+    QVBoxLayout *appInfoL = new QVBoxLayout();
+    QVBoxLayout *subAppInfoL = new QVBoxLayout();
+    QHBoxLayout *checkUpdatesBtnL = new QHBoxLayout();
+    QHBoxLayout *updatesL = new QHBoxLayout();
 
     appName = new QLabel("CodeKeeper");
     appName->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
     appName->setStyleSheet("font-size: 32px;");
 
     urlToRepo = new QLabel();
-    urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size
-                       + "' "
-                         "href=\"https://github.com/DXS-GROUP/CodeKeeper\">Source</a>");
+    urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size +
+                       "' "
+                       "href=\"https://github.com/DXS-GROUP/CodeKeeper\">Source</a>");
     urlToRepo->setTextFormat(Qt::RichText);
     urlToRepo->setTextInteractionFlags(Qt::TextBrowserInteraction);
     urlToRepo->setOpenExternalLinks(true);
@@ -96,8 +96,9 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn = new QPushButton(
-            QPixmap(":/retry.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-            tr(" Checkfor updates"));
+        QPixmap(":/retry.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        tr(" Checkfor updates"));
     checkUpdatesBtn->setFixedSize(200, 30);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
@@ -116,7 +117,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     appInfoL->addLayout(subAppInfoL);
 
     // sync
-    QGridLayout* mainSyncLayout = new QGridLayout();
+    QGridLayout *mainSyncLayout = new QGridLayout();
 
     gitLabel = new QLabel(tr("Sync settings"));
     gitLabel->setStyleSheet("font-size: 24px;");
@@ -172,7 +173,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     mainSyncLayout->addWidget(isHost, 9, 2, 1, 1, Qt::AlignHCenter);
 
     // appereance
-    QGridLayout* layout1 = new QGridLayout();
+    QGridLayout *layout1 = new QGridLayout();
 
     mainTitle = new QLabel(tr("App settings"));
     mainTitle->setAlignment(Qt::AlignCenter);
@@ -229,7 +230,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     layout1->addWidget(langSelector, 6, 4);
 
     // storage tab
-    QGridLayout* storageL = new QGridLayout;
+    QGridLayout *storageL = new QGridLayout;
     storageL->setSpacing(10);
 
     storageLabel = new QLabel();
@@ -245,7 +246,9 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     pathToFolder->setAlignment(Qt::AlignCenter);
 
     openFolder = new QPushButton(
-            QPixmap(":/open.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), " Browse");
+        QPixmap(":/open.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        " Browse");
     openFolder->setMaximumHeight(30);
 
     storageL->setSpacing(10);
@@ -254,7 +257,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     storageL->addWidget(openFolder, 2, 3);
 
     // projects content tab
-    QGridLayout* projectsContentL = new QGridLayout;
+    QGridLayout *projectsContentL = new QGridLayout;
     projectsContentL->setSpacing(10);
     projectsContentL->setAlignment(Qt::AlignCenter);
 
@@ -290,10 +293,10 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     CisRepoSize = new QCheckBox(tr("Repo size"));
     CisRepoSize->setChecked(isRepoSize);
 
-    QSpacerItem* checkBoxSpacer1 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QSpacerItem* checkBoxSpacer2 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem *checkBoxSpacer1 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem *checkBoxSpacer2 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-    QVBoxLayout* checkboxLayout = new QVBoxLayout();
+    QVBoxLayout *checkboxLayout = new QVBoxLayout();
     checkboxLayout->setAlignment(Qt::AlignCenter);
 
     checkboxLayout->addItem(checkBoxSpacer1);
@@ -316,39 +319,39 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     projectsContentL->addLayout(checkboxLayout, 2, 0, 1, 1, Qt::AlignCenter);
 
     // info tab
-    QWidget* aboutTab = new QWidget();
-    QVBoxLayout* aboutTabLayout = new QVBoxLayout(aboutTab);
+    QWidget *aboutTab = new QWidget();
+    QVBoxLayout *aboutTabLayout = new QVBoxLayout(aboutTab);
 
     aboutTabLayout->addLayout(appInfoL);
 
     tabs->addTab(aboutTab, tr("About"));
 
     // sync tab
-    QWidget* syncTab = new QWidget();
-    QVBoxLayout* syncTabLayout = new QVBoxLayout(syncTab);
+    QWidget *syncTab = new QWidget();
+    QVBoxLayout *syncTabLayout = new QVBoxLayout(syncTab);
 
     syncTabLayout->addLayout(mainSyncLayout);
 
     tabs->addTab(syncTab, tr("Sync"));
 
     // storage tab
-    QWidget* storageTab = new QWidget();
-    QVBoxLayout* storageTabLayout = new QVBoxLayout(storageTab);
+    QWidget *storageTab = new QWidget();
+    QVBoxLayout *storageTabLayout = new QVBoxLayout(storageTab);
 
     storageTabLayout->addLayout(storageL);
 
     tabs->addTab(storageTab, tr("Storage"));
 
     // main tab
-    QWidget* appereanceTab = new QWidget();
-    QVBoxLayout* appereanceTabLayout = new QVBoxLayout(appereanceTab);
+    QWidget *appereanceTab = new QWidget();
+    QVBoxLayout *appereanceTabLayout = new QVBoxLayout(appereanceTab);
 
     appereanceTabLayout->addLayout(layout1);
 
     tabs->addTab(appereanceTab, tr("Appereance"));
 
     // projects content
-    QWidget* projectsContentTab = new QWidget();
+    QWidget *projectsContentTab = new QWidget();
     projectsContentTab->setLayout(projectsContentL);
     tabs->addTab(projectsContentTab, tr("Projects"));
 
@@ -382,10 +385,10 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     connect(checkUpdatesBtn, &QPushButton::clicked, this, [=]() { checkUpdates(); });
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
 
-    QTimer* repoTimer = new QTimer(this);
+    QTimer *repoTimer = new QTimer(this);
     qDebug() << "checking";
 
-    QThread* repoTimerThread = new QThread;
+    QThread *repoTimerThread = new QThread;
     QObject::connect(repoTimerThread, &QThread::started, this, [this, repoTimer]() {
         connect(repoTimer, &QTimer::timeout, [=]() { checkRepo(); });
         repoTimer->start(100);
@@ -394,7 +397,7 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     });
     repoTimerThread->start();
 
-    QThread* styleThread = new QThread;
+    QThread *styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {
         int font_size_int = font_size.toInt();
         setStyle2(&selectedFont, &font_size_int);
@@ -404,4 +407,6 @@ SettingsWindow::SettingsWindow(QWidget* parent) : QMainWindow { parent }
     styleThread->start();
 }
 
-SettingsWindow::~SettingsWindow() { }
+SettingsWindow::~SettingsWindow()
+{
+}
