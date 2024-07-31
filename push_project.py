@@ -45,7 +45,7 @@ cd ../..
     run_command(f"git commit -m \"{commit_message}\"")
 
     # Push changes to GitHub
-    run_command("git push origin main")  # Replace 'main' with your branch name if necessary
+    run_command("git push")  # Replace 'main' with your branch name if necessary
 
     print("Changes successfully pushed to GitHub.")
 
