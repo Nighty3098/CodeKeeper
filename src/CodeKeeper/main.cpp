@@ -26,7 +26,6 @@ int main(int argc, char* argv[])
 
     qApp->installTranslator(&translator);
 
-
     MainWindow keeper;
     keeper.setWindowIcon(QIcon(":/icon.png"));
     keeper.show();
