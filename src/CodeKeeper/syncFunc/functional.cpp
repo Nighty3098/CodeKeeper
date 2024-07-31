@@ -33,17 +33,20 @@ void SyncWindow::cancelSyncingFunc()
 
 bool SyncWindow::checkConnection()
 {
-    QNetworkAccessManager* manager;
-    QNetworkReply* reply;
+    QNetworkAccessManager *manager;
+    QNetworkReply *reply;
 
     manager = new QNetworkAccessManager();
     reply = manager->get(QNetworkRequest(QUrl("http://www.google.com")));
 
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
-        if (reply->error() == QNetworkReply::NoError) {
+        if (reply->error() == QNetworkReply::NoError)
+        {
             qDebug() << "Internet connection is available";
             return true;
-        } else {
+        }
+        else
+        {
             qDebug() << "No internet connection found";
             return false;
         }

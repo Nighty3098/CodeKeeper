@@ -1,4 +1,4 @@
-void MainWindow::onMovingTaskFrom(QListWidgetItem* item, QListWidget* list)
+void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list)
 {
     qDebug() << "Moving task: " << item->text() << " from: " << list->objectName();
 
@@ -6,7 +6,7 @@ void MainWindow::onMovingTaskFrom(QListWidgetItem* item, QListWidget* list)
     QString status = list->objectName();
 }
 
-void MainWindow::onMovingTaskTo(QListWidgetItem* item, QListWidget* list)
+void MainWindow::onMovingTaskTo(QListWidgetItem *item, QListWidget *list)
 {
     qDebug() << "Moved task: " << item->text() << " to: " << list->objectName();
 
@@ -21,25 +21,30 @@ void MainWindow::onMovingTaskTo(QListWidgetItem* item, QListWidget* list)
 void MainWindow::addNewTask()
 {
     QString text = taskText->text();
-    if (!text.isEmpty()) {
+    if (!text.isEmpty())
+    {
         taskText->clear();
         QString task = text + "\n" + getCurrentDateTimeString();
         qDebug() << "Added new task: " << task;
         incompleteTasks->addItem(task);
         QString status = incompleteTasks->objectName();
         saveTaskToDB(&task, &status);
-    } else {
+    }
+    else
+    {
         qWarning() << "Task is empty";
     }
 }
 
 void MainWindow::removeTask()
 {
-    QListWidget* listWidgets[] = { incompleteTasks, inprocessTasks, completeTasks };
+    QListWidget *listWidgets[] = {incompleteTasks, inprocessTasks, completeTasks};
 
-    for (QListWidget* listWidget : listWidgets) {
-        QListWidgetItem* item = listWidget->currentItem();
-        if (item) {
+    for (QListWidget *listWidget : listWidgets)
+    {
+        QListWidgetItem *item = listWidget->currentItem();
+        if (item)
+        {
             listWidget->takeItem(listWidget->row(item));
             qDebug() << "Removed task: " << item->text();
 
@@ -54,10 +59,12 @@ void MainWindow::removeTask()
     }
 }
 
-void MainWindow::getTotalTasks(QTabWidget* tasksTab, QListWidget* incompleteTasks, QListWidget* inprocessTasks, QListWidget* completeTasks)
+void MainWindow::getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks,
+                               QListWidget *completeTasks)
 {
-    if (tasksTab->currentIndex() == 2) {
-        QTimer* timer3 = new QTimer(this);
+    if (tasksTab->currentIndex() == 2)
+    {
+        QTimer *timer3 = new QTimer(this);
         connect(timer3, &QTimer::timeout, [=]() {
             int totalTasks = incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
 
@@ -67,18 +74,22 @@ void MainWindow::getTotalTasks(QTabWidget* tasksTab, QListWidget* incompleteTask
     }
 }
 
-void MainWindow::updateTasksProgress(QTabWidget* tasksTab, QListWidget* incompleteTasks, QListWidget* inprocessTasks, QListWidget* completeTasks,
-                                     QProgressBar* tasksProgress)
+void MainWindow::updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks,
+                                     QListWidget *completeTasks, QProgressBar *tasksProgress)
 {
-    if (tasksTab->currentIndex() == 2) {
-        QTimer* timer2 = new QTimer(this);
+    if (tasksTab->currentIndex() == 2)
+    {
+        QTimer *timer2 = new QTimer(this);
         connect(timer2, &QTimer::timeout, [=]() {
             int totalTasks = incompleteTasks->count() + inprocessTasks->count() + completeTasks->count();
             int completedTasks = completeTasks->count();
 
-            if (totalTasks == 0) {
+            if (totalTasks == 0)
+            {
                 tasksProgress->setValue(0);
-            } else {
+            }
+            else
+            {
                 double percentage = static_cast<double>(completedTasks) / static_cast<double>(totalTasks) * 100.0;
                 tasksProgress->setValue(percentage);
             }
@@ -87,9 +98,10 @@ void MainWindow::updateTasksProgress(QTabWidget* tasksTab, QListWidget* incomple
     }
 }
 
-void MainWindow::renameItemOnDoubleClick(QListWidget* listWidget, QListWidgetItem* item)
+void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item)
 {
-    if (item) {
+    if (item)
+    {
         qDebug() << font_size;
 
         QString oldText = item->text();
@@ -121,7 +133,8 @@ void MainWindow::renameItemOnDoubleClick(QListWidget* listWidget, QListWidgetIte
 
         QObject::connect(&okButton, &QPushButton::clicked, [&]() {
             QString newText = lineEdit.text();
-            if (!newText.isEmpty()) {
+            if (!newText.isEmpty())
+            {
                 QString newTask = newText + "\n" + getCurrentDateTimeString();
                 QString status = listWidget->objectName();
                 QString cT = oldData[1];

@@ -9,30 +9,45 @@ void MainWindow::createConnects()
     connect(toThirdTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(2); });
     connect(toFourthTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(3); });
 
-    connect(incompleteTasks, &QListWidget::itemChanged, this, [=](QListWidgetItem* item) { onMovingTaskTo(item, incompleteTasks); });
-    connect(inprocessTasks, &QListWidget::itemChanged, this, [=](QListWidgetItem* item) { onMovingTaskTo(item, inprocessTasks); });
-    connect(completeTasks, &QListWidget::itemChanged, this, [=](QListWidgetItem* item) { onMovingTaskTo(item, completeTasks); });
+    connect(incompleteTasks, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingTaskTo(item, incompleteTasks); });
+    connect(inprocessTasks, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingTaskTo(item, inprocessTasks); });
+    connect(completeTasks, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingTaskTo(item, completeTasks); });
 
-    connect(incompleteTasks, &QListWidget::itemEntered, this, [=](QListWidgetItem* item) { onMovingTaskFrom(item, incompleteTasks); });
-    connect(inprocessTasks, &QListWidget::itemEntered, this, [=](QListWidgetItem* item) { onMovingTaskFrom(item, inprocessTasks); });
-    connect(completeTasks, &QListWidget::itemEntered, this, [=](QListWidgetItem* item) { onMovingTaskFrom(item, completeTasks); });
+    connect(incompleteTasks, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) { onMovingTaskFrom(item, incompleteTasks); });
+    connect(inprocessTasks, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) { onMovingTaskFrom(item, inprocessTasks); });
+    connect(completeTasks, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) { onMovingTaskFrom(item, completeTasks); });
 
-    connect(notStartedProjects, &QListWidget::itemChanged, this, [=](QListWidgetItem* item) { onMovingProjectTo(item, notStartedProjects); });
-    connect(startedProjects, &QListWidget::itemChanged, this, [=](QListWidgetItem* item) { onMovingProjectTo(item, startedProjects); });
-    connect(finishlineProjects, &QListWidget::itemChanged, this, [=](QListWidgetItem* item) { onMovingProjectTo(item, finishlineProjects); });
-    connect(finishedProjects, &QListWidget::itemChanged, this, [=](QListWidgetItem* item) { onMovingProjectTo(item, finishedProjects); });
+    connect(notStartedProjects, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingProjectTo(item, notStartedProjects); });
+    connect(startedProjects, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingProjectTo(item, startedProjects); });
+    connect(finishlineProjects, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingProjectTo(item, finishlineProjects); });
+    connect(finishedProjects, &QListWidget::itemChanged, this,
+            [=](QListWidgetItem *item) { onMovingProjectTo(item, finishedProjects); });
 
-    connect(notStartedProjects, &QListWidget::itemEntered, this, [=](QListWidgetItem* item) { onMovingProjectFrom(item, notStartedProjects); });
-    connect(startedProjects, &QListWidget::itemEntered, this, [=](QListWidgetItem* item) { onMovingProjectFrom(item, startedProjects); });
-    connect(finishlineProjects, &QListWidget::itemEntered, this, [=](QListWidgetItem* item) { onMovingProjectFrom(item, finishlineProjects); });
-    connect(finishedProjects, &QListWidget::itemEntered, this, [=](QListWidgetItem* item) { onMovingProjectFrom(item, finishedProjects); });
+    connect(notStartedProjects, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) { onMovingProjectFrom(item, notStartedProjects); });
+    connect(startedProjects, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) { onMovingProjectFrom(item, startedProjects); });
+    connect(finishlineProjects, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) { onMovingProjectFrom(item, finishlineProjects); });
+    connect(finishedProjects, &QListWidget::itemEntered, this,
+            [=](QListWidgetItem *item) { onMovingProjectFrom(item, finishedProjects); });
 
     connect(closeBtn, &QPushButton::clicked, this, [this]() { close(); });
     connect(minimizeBtn, &QPushButton::clicked, this, [this]() { showMinimized(); });
     connect(maximizeBtn, &QPushButton::clicked, this, [this]() {
         this->setWindowState(this->windowState() ^ Qt::WindowFullScreen);
         isFullScreen = this->windowState() & Qt::WindowFullScreen;
-        if (isFullScreen) {
+        if (isFullScreen)
+        {
             maximizeBtn->setStyleSheet("QPushButton {"
                                        "    border-color: rgba(0, 0, 0, 0);"
                                        "    background-color: rgba(0, 0, 0, 0);"
@@ -46,7 +61,9 @@ void MainWindow::createConnects()
                                        "    background-color: rgba(0, 0, 0, 0);"
                                        "    background-repeat: no-repeat;"
                                        "}");
-        } else {
+        }
+        else
+        {
             maximizeBtn->setStyleSheet("QPushButton {"
                                        "    border-color: rgba(0, 0, 0, 0);"
                                        "    background-color: rgba(0, 0, 0, 0);"
@@ -66,10 +83,12 @@ void MainWindow::createConnects()
     connect(tabs, &QTabWidget::currentChanged, this,
             [=]() { updateTasksProgress(tabs, incompleteTasks, inprocessTasks, completeTasks, tasksProgress); });
 
-    connect(tabs, &QTabWidget::currentChanged, this, [=]() { getTotalTasks(tabs, incompleteTasks, inprocessTasks, completeTasks); });
-
     connect(tabs, &QTabWidget::currentChanged, this,
-            [=]() { getTotalProjects(tabs, notStartedProjects, startedProjects, finishedProjects, finishlineProjects); });
+            [=]() { getTotalTasks(tabs, incompleteTasks, inprocessTasks, completeTasks); });
+
+    connect(tabs, &QTabWidget::currentChanged, this, [=]() {
+        getTotalProjects(tabs, notStartedProjects, startedProjects, finishedProjects, finishlineProjects);
+    });
 
     connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));
     connect(openAccountWindow, SIGNAL(clicked()), this, SLOT(fOpenAccountWindow()));
@@ -86,16 +105,23 @@ void MainWindow::createConnects()
 
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::updateMDPreview);
 
-    connect(completeTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem* item) { renameItemOnDoubleClick(completeTasks, item); });
+    connect(completeTasks, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) { renameItemOnDoubleClick(completeTasks, item); });
 
-    connect(incompleteTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem* item) { renameItemOnDoubleClick(incompleteTasks, item); });
+    connect(incompleteTasks, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) { renameItemOnDoubleClick(incompleteTasks, item); });
 
-    connect(inprocessTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem* item) { renameItemOnDoubleClick(inprocessTasks, item); });
+    connect(inprocessTasks, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) { renameItemOnDoubleClick(inprocessTasks, item); });
 
-    connect(notStartedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem* item) { openProject(notStartedProjects, item); });
-    connect(startedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem* item) { openProject(startedProjects, item); });
-    connect(finishlineProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem* item) { openProject(finishlineProjects, item); });
-    connect(finishedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem* item) { openProject(finishedProjects, item); });
+    connect(notStartedProjects, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) { openProject(notStartedProjects, item); });
+    connect(startedProjects, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) { openProject(startedProjects, item); });
+    connect(finishlineProjects, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) { openProject(finishlineProjects, item); });
+    connect(finishedProjects, &QListWidget::itemDoubleClicked, this,
+            [=](QListWidgetItem *item) { openProject(finishedProjects, item); });
 
     connect(setH1B, &QPushButton::clicked, this, &MainWindow::setH1);
     connect(setH2B, &QPushButton::clicked, this, &MainWindow::setH2);
@@ -114,10 +140,12 @@ void MainWindow::createConnects()
 
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::saveNote);
 
-    connect(notesList, &QTreeView::clicked, this, [=](const QModelIndex& index) {
-        if (index.isValid()) {
+    connect(notesList, &QTreeView::clicked, this, [=](const QModelIndex &index) {
+        if (index.isValid())
+        {
             QDateTime lastModified = notesDirModel->data(index, Qt::UserRole + 1).toDateTime();
-            if (lastModified.isValid()) {
+            if (lastModified.isValid())
+            {
                 QString toolTip = "Last modified: " + lastModified.toString();
                 notesList->setToolTip(toolTip);
                 qDebug() << toolTip;

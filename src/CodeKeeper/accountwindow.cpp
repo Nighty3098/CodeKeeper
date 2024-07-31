@@ -1,16 +1,17 @@
-#include <QtWidgets>
-#include <QHBoxLayout>
-
 #include "accountwindow.h"
-#include "accountFunc/functional.cpp"
-#include "mainwindow.h"
-#include "custom/circleProgressbar/ProgressCircle.h"
-#include "custom/circleChart/CircleChart.h"
-#include "custom/ColorValueDisplay/ColorValueDisplay.h"
 
 #include <git2.h>
 
-AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
+#include <QHBoxLayout>
+#include <QtWidgets>
+
+#include "accountFunc/functional.cpp"
+#include "custom/ColorValueDisplay/ColorValueDisplay.h"
+#include "custom/circleChart/CircleChart.h"
+#include "custom/circleProgressbar/ProgressCircle.h"
+#include "mainwindow.h"
+
+AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 {
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
@@ -43,12 +44,12 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
 
     codeKeeperStats = new QLabel();
 
-    MainWindow* mainWindow = static_cast<MainWindow*>(parent);
+    MainWindow *mainWindow = static_cast<MainWindow *>(parent);
     QString stats = mainWindow->getKeeperStats();
     codeKeeperStats->setText(stats);
     codeKeeperStats->setAlignment(Qt::AlignHCenter);
 
-    QHBoxLayout* tasksStatsLayout = new QHBoxLayout();
+    QHBoxLayout *tasksStatsLayout = new QHBoxLayout();
 
     tasksStatsProgress = new CircleProgressBar();
     tasksStatsProgress->setFixedSize(60, 60);
@@ -72,7 +73,7 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     closeWindow = new QPushButton("");
     closeWindow->setFixedSize(15, 15);
 
-    QHBoxLayout* projectsStatsLayout = new QHBoxLayout();
+    QHBoxLayout *projectsStatsLayout = new QHBoxLayout();
 
     projectsChart = new CircleChart();
     projectsChart->setFixedSize(80, 80);
@@ -84,7 +85,7 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     projectsStatsLayout->addWidget(projectsChart);
     projectsStatsLayout->addWidget(chartValuesDisplay);
 
-    QThread* styleThread = new QThread;
+    QThread *styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {
         setFontStyle();
 
@@ -92,7 +93,7 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     });
     styleThread->start();
 
-    QThread* setUserDataThread = new QThread;
+    QThread *setUserDataThread = new QThread;
     QObject::connect(setUserDataThread, &QThread::started, this, [this]() {
         qDebug() << "setUserDataThread started";
 
@@ -102,7 +103,7 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     });
     setUserDataThread->start();
 
-    QThread* setUserImageThread = new QThread;
+    QThread *setUserImageThread = new QThread;
     QObject::connect(setUserImageThread, &QThread::started, this, [this]() {
         qDebug() << "setUserImageThread started";
 
