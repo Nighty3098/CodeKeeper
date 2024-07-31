@@ -21,13 +21,13 @@ def get_git_token():
         print(f"Configuration file not found: {config_file_path}")
         exit(1)
 
-    config.read(config_file_path)
-    
-    if 'DEFAULT' not in config or 'git_token' not in config['DEFAULT']:
-        print("Git token not found in the configuration file.")
-        exit(1)
+    with open(config_file_path, 'r') as file:
+        for line in file:
+            if line.startswith("git_token="):
+                return line.split("=")[1].strip()
 
-    return config['DEFAULT']['git_token']
+    print("Git token not found in the configuration file.")
+    exit(1)
 
 def main():
     # Change to the project directory
@@ -39,6 +39,8 @@ def main():
     print("Starting the project build...")
     
     build_command = """
+#!/bin/bash
+
 cd src/CodeKeeper
 qmake CodeKeeper.pro
 make
