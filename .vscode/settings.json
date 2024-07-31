@@ -149,6 +149,7 @@
     "typeinfo": "cpp",
     "valarray": "cpp",
     "locale": "cpp",
-    "ios": "cpp"
-  }
+    "ios": "cpp",
+    "regex": "cpp"
+}
 }

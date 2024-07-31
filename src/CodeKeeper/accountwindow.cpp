@@ -57,7 +57,7 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     tasksStatsProgress->setDisplayMode(CircleProgressBar::Percent); // Percent, CustomText, NoPercent, Hidden
 
     tasksChartValuesDisplay = new ColorValueDisplay();
-    tasksChartValuesDisplay->setFixedSize(120, 85);
+    tasksChartValuesDisplay->setFixedSize(160, 85);
 
     tasksStatsLayout->addWidget(tasksStatsProgress);
     tasksStatsLayout->addWidget(tasksChartValuesDisplay);
@@ -79,7 +79,7 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     projectsChart->setHeight(80);
 
     chartValuesDisplay = new ColorValueDisplay();
-    chartValuesDisplay->setFixedSize(120, 85);
+    chartValuesDisplay->setFixedSize(160, 85);
 
     projectsStatsLayout->addWidget(projectsChart);
     projectsStatsLayout->addWidget(chartValuesDisplay);

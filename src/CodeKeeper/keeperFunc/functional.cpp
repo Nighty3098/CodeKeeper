@@ -16,9 +16,9 @@ QString MainWindow::getKeeperStats()
 
     int tasks_count = incompleteTasksCount + completeTasksCount + inprocessTasksCount;
 
-    QString projectsStats = tr("Tasks: ") + QString::number(completeTasksCount) + " / " + QString::number(tasks_count) + "\n\n" + tr("Not started projects: ")
-            + QString::number(notStartedProjects->count()) + "\n\n" + tr("Started projects: ") + QString::number(startedProjects->count()) + "\n\n"
-            + tr("Projects on review: ") + QString::number(finishlineProjects->count()) + "\n\n"
+    QString projectsStats = tr("Tasks: ") + QString::number(completeTasksCount) + " / " + QString::number(tasks_count) + "\n\n"
+            + tr("Not started projects: ") + QString::number(notStartedProjects->count()) + "\n\n" + tr("Started projects: ")
+            + QString::number(startedProjects->count()) + "\n\n" + tr("Projects on review: ") + QString::number(finishlineProjects->count()) + "\n\n"
             + tr("Finished projects: ") + QString::number(finishedProjects->count());
 
     QString stats = "\n" + projectsStats;
@@ -86,10 +86,12 @@ void MainWindow::getSettingsData()
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
     isAutoCheckUpdates = globalSettings->value("isAutoCheckUpdates").value<bool>();
+    appLang = globalSettings->value("lang").value<QString>();
 
     qDebug() << " " << dir << selectedFont << font_size << theme << isCustomTitlebar << sortNotesRole << isAutoSyncing << isVisibleNotesList
              << isVisibleFolders << isVisiblePreview << isViewMode << git_repo << git_user << git_token << isAutoSyncB << isCustomTheme
              << isAutoCheckUpdates;
+    qDebug() << "App Language: " << appLang;
 }
 
 void MainWindow::setConnectionStatus()
