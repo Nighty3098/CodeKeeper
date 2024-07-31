@@ -133,17 +133,17 @@ void MainWindow::createConnects()
     connect(tasksTabButton, &QPushButton::clicked, [=]() {
         tabs->setCurrentIndex(1);
         windowTitle->setText(" ~ Notes ~ ");
-        setWindowTitle("Notes");
+        setWindowTitle(tr("Notes"));
     });
     connect(notesTabButton, &QPushButton::clicked, [=]() {
         tabs->setCurrentIndex(2);
         windowTitle->setText(" ~ Tasks ~ ");
-        setWindowTitle("Tasks");
+        setWindowTitle(tr("Tasks"));
     });
     connect(projectsTabButton, &QPushButton::clicked, [=]() {
         tabs->setCurrentIndex(3);
         windowTitle->setText(" ~ Projects ~ ");
-        setWindowTitle("Projects");
+        setWindowTitle(tr("Projects"));
     });
 }
 

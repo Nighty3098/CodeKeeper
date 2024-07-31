@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file>check-mark.png</file>
         <file>logo.png</file>
-    	<file>download.png</file>
+        <file>download.png</file>
         <file>sync.png</file>
         <file>user.png</file>
         <file>copy.png</file>
@@ -64,9 +64,14 @@
         <file>connected.png</file>
         <file>auto_sync_off.png</file>
         <file>auto_sync_on.png</file>
-	    <file>sorting.png</file>
-	    <file>export.png</file>
+        <file>sorting.png</file>
+        <file>export.png</file>
         <file>expand.png</file>
         <file>read.png</file>
+        <file>german.png</file>
+        <file>spanish.png</file>
+        <file>usa.png</file>
+        <file>japan.png</file>
+        <file>russian.png</file>
     </qresource>
 </RCC>

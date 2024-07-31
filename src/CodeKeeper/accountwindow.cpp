@@ -27,18 +27,18 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     getSettingsData();
 
     tasksTitle = new QLabel();
-    tasksTitle->setText("\nTasks\n");
+    tasksTitle->setText(tr("\nTasks\n"));
 
     projectTitle = new QLabel();
-    projectTitle->setText("\n\nProjects\n");
+    projectTitle->setText(tr("\n\nProjects\n"));
 
     profilePicture = new QLabel();
-    profilePicture->setText("Loading...");
+    profilePicture->setText(tr("Loading..."));
     profilePicture->setFixedSize(300, 300);
     profilePicture->setStyleSheet("border-radius: 145px;");
 
     profileInfo = new QLabel();
-    profileInfo->setText("Loading...");
+    profileInfo->setText(tr("Loading..."));
     profileInfo->setAlignment(Qt::AlignHCenter);
 
     codeKeeperStats = new QLabel();
@@ -66,7 +66,7 @@ AccountWindow::AccountWindow(QWidget* parent) : QMainWindow { parent }
     userName->setText(git_user);
     userName->setAlignment(Qt::AlignHCenter);
 
-    openRepo = new QPushButton("Open Git");
+    openRepo = new QPushButton(tr("Open Git"));
     openRepo->setFixedSize(100, 25);
 
     closeWindow = new QPushButton("");

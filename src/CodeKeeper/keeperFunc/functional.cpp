@@ -16,10 +16,10 @@ QString MainWindow::getKeeperStats()
 
     int tasks_count = incompleteTasksCount + completeTasksCount + inprocessTasksCount;
 
-    QString projectsStats = "Tasks: " + QString::number(completeTasksCount) + " / " + QString::number(tasks_count) + "\n\nNot started projects: "
-            + QString::number(notStartedProjects->count()) + "\n\n" + "Started projects: " + QString::number(startedProjects->count()) + "\n\n"
-            + "Projects on review: " + QString::number(finishlineProjects->count()) + "\n\n"
-            + "Finished projects: " + QString::number(finishedProjects->count());
+    QString projectsStats = tr("Tasks: ") + QString::number(completeTasksCount) + " / " + QString::number(tasks_count) + "\n\n" + tr("Not started projects: ")
+            + QString::number(notStartedProjects->count()) + "\n\n" + tr("Started projects: ") + QString::number(startedProjects->count()) + "\n\n"
+            + tr("Projects on review: ") + QString::number(finishlineProjects->count()) + "\n\n"
+            + tr("Finished projects: ") + QString::number(finishedProjects->count());
 
     QString stats = "\n" + projectsStats;
 
@@ -295,7 +295,7 @@ void MainWindow::openSyncWindow()
 
 void MainWindow::openFolder()
 {
-    QString str = QFileDialog::getExistingDirectory(0, "Select a directory");
+    QString str = QFileDialog::getExistingDirectory(0, tr("Select a directory"));
     if (!str.isEmpty()) {
         globalSettings->setValue("path", str);
         qDebug() << "" << str;

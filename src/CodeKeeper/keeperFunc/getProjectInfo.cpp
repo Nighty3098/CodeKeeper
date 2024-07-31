@@ -288,61 +288,61 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget* table, QLab
     QStringList dataList, textList;
 
     dataList << name;
-    textList << "Repo";
+    textList << tr("Repo");
 
     if (isCreated) {
-        textList << "Created at";
+        textList << tr("Created at");
         dataList << createdAt;
     }
 
     if (isIssue) {
         dataList << openIssues;
-        textList << "Open issues";
+        textList << tr("Open issues");
     }
 
     if (isForks) {
         dataList << forks;
-        textList << "Forks";
+        textList << tr("Forks");
     }
 
     if (isLang) {
         dataList << lang;
-        textList << "Lang";
+        textList << tr("Lang");
     }
 
     if (isStars) {
         dataList << stars;
-        textList << "Stars";
+        textList << tr("Stars");
     }
 
     if (isRepoSize) {
         dataList << repoSize;
-        textList << "Repo size";
+        textList << tr("Repo size");
     }
 
     if (isLicense) {
         dataList << license;
-        textList << "License";
+        textList << tr("License");
     }
 
     if (isLastCommit) {
         dataList << lastCommitS;
-        textList << "Last commit";
+        textList << tr("Last commit");
     }
 
     if (isDownloads) {
         dataList << totalDownloads;
-        textList << "Downloads";
+        textList << tr("Downloads");
     }
 
     if (isRelease) {
         dataList << release;
-        textList << "Release";
+        textList << tr("Release");
     }
 
     if (isReleaseDate) {
         dataList << releaseDate;
-        textList << "Release at";
+        textList << tr("Release at");
     }
 
     label->setText(name + " - " + description);

@@ -96,10 +96,13 @@ private:
     QLabel *fontLabel;
     QLabel *fontSizeLabel;
     QLabel *themeLabel;
+    QLabel *langLabel;
 
     QSpinBox *fontSize;
     QFontComboBox *fontSelector;
     QComboBox *themeSelector;
+
+    QComboBox *langSelector;
 
     QCheckBox *customTheme;
     QCheckBox *customTitleBar;

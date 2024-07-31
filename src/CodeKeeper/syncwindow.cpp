@@ -24,7 +24,7 @@ SyncWindow::SyncWindow(QWidget* parent) : QMainWindow(parent)
 
     mainLayout = new QGridLayout;
 
-    appIcon = new QLabel("Syncing with Git");
+    appIcon = new QLabel(tr("Syncing with Git"));
     appIcon->setPixmap(QPixmap(":/icon.png"));
     appIcon->setAlignment(Qt::AlignCenter);
 
@@ -32,7 +32,7 @@ SyncWindow::SyncWindow(QWidget* parent) : QMainWindow(parent)
     appName->setStyleSheet("font-size: 30px;");
     appName->setAlignment(Qt::AlignCenter);
 
-    infoLabel = new QLabel("Syncing with Git");
+    infoLabel = new QLabel(tr("Syncing with Git"));
     infoLabel->setAlignment(Qt::AlignCenter);
 
     syncingProgress = new QProgressBar();
@@ -42,10 +42,10 @@ SyncWindow::SyncWindow(QWidget* parent) : QMainWindow(parent)
     syncingProgress->setAlignment(Qt::AlignCenter);
     syncingProgress->setFormat(" ");
 
-    startSyncing = new QPushButton("Start");
+    startSyncing = new QPushButton(tr("Start"));
     startSyncing->setFixedSize(100, 25);
 
-    stopSyncing = new QPushButton("Cancel && Quit");
+    stopSyncing = new QPushButton(tr("Cancel && Quit"));
     stopSyncing->setFixedSize(100, 25);
 
     QVBoxLayout* infoLayout = new QVBoxLayout();
@@ -65,7 +65,7 @@ SyncWindow::SyncWindow(QWidget* parent) : QMainWindow(parent)
 
     setFontStyle();
 
-    qDebug() << "\033[0m\033[32mOpening Sync Window";
+    qDebug() << "Opening Sync Window";
 
     centralWidget->setLayout(mainLayout);
 

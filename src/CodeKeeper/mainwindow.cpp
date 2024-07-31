@@ -117,7 +117,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     sizeGrip4->setVisible(true);
     sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
-    windowTitle = new QLabel(" ~ CodeKeeper ~ ");
+    windowTitle = new QLabel(tr(" ~ CodeKeeper ~ "));
 
     createCustomTitlebar();
 
@@ -191,7 +191,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     mdPreview->page()->setBackgroundColor(Qt::transparent);
 
     noteEdit = new NoteEditor();
-    noteEdit->setPlaceholderText(" Just start typing");
+    noteEdit->setPlaceholderText(tr(" Just start typing"));
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
     noteEdit->setLineNumberEnabled(true);
     noteEdit->setLineNumbersCurrentLineColor("#51afef");
@@ -207,7 +207,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     noteSplitter->setStretchFactor(2, 1);
 
     // title
-    noteNameLabel = new QLabel("Note");
+    noteNameLabel = new QLabel(tr("Note"));
     noteNameLabel->setAlignment(Qt::AlignCenter);
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::setHeader);
 
@@ -315,7 +315,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     tasksStatsL->addWidget(tasksProgress);
     tasksStatsL->addItem(spacer2);
 
-    label_1 = new QLabel("Incomplete");
+    label_1 = new QLabel(tr("Incomplete"));
     label_1->setFixedHeight(30);
     label_1->setAlignment(Qt::AlignCenter);
 
@@ -326,7 +326,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     incompleteTasks->setSpacing(5);
     incompleteTasks->setObjectName("IncompleteTasks");
 
-    label_2 = new QLabel("Inprocess");
+    label_2 = new QLabel(tr("Inprocess"));
     label_2->setFixedHeight(30);
     label_2->setAlignment(Qt::AlignCenter);
 
@@ -337,7 +337,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     inprocessTasks->setSpacing(5);
     inprocessTasks->setObjectName("InprocessTasks");
 
-    label_3 = new QLabel("Complete");
+    label_3 = new QLabel(tr("Complete"));
     label_3->setFixedHeight(30);
     label_3->setAlignment(Qt::AlignCenter);
 
@@ -349,7 +349,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     completeTasks->setObjectName("CompleteTasks");
 
     taskText = new QLineEdit();
-    taskText->setPlaceholderText(" Task...");
+    taskText->setPlaceholderText(tr(" Task..."));
     taskText->setFixedHeight(25);
 
     tasksGLayout->addLayout(tasksStatsL, 0, 0, 1, 3);
@@ -390,14 +390,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
     projectsMenuButton->setMenu(projectsMenu);
 
-    projectsMainLabel = new QLabel("Projects");
+    projectsMainLabel = new QLabel(tr("Projects"));
     projectsMainLabel->setAlignment(Qt::AlignCenter);
 
     totalProjectsL = new QLabel();
     totalProjectsL->setFixedHeight(30);
     totalProjectsL->setAlignment(Qt::AlignCenter);
 
-    nsProjects = new QLabel("Not started");
+    nsProjects = new QLabel(tr("Not started"));
     nsProjects->setAlignment(Qt::AlignHCenter);
     notStartedProjects = new QListWidget();
     notStartedProjects->setDragEnabled(true);
@@ -407,7 +407,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     notStartedProjects->setSpacing(5);
     notStartedProjects->setObjectName("NotStartedProjects");
 
-    sProjects = new QLabel("Started");
+    sProjects = new QLabel(tr("Started"));
     sProjects->setAlignment(Qt::AlignHCenter);
     startedProjects = new QListWidget();
     startedProjects->setDragEnabled(true);
@@ -417,7 +417,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     startedProjects->setSpacing(5);
     startedProjects->setObjectName("StartedProjects");
 
-    flProjects = new QLabel("For review");
+    flProjects = new QLabel(tr("For review"));
     flProjects->setAlignment(Qt::AlignHCenter);
     finishlineProjects = new QListWidget();
     finishlineProjects->setDragEnabled(true);
@@ -427,7 +427,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     finishlineProjects->setSpacing(5);
     finishlineProjects->setObjectName("FinishlineProjects");
 
-    fProjects = new QLabel("Finished");
+    fProjects = new QLabel(tr("Finished"));
     fProjects->setAlignment(Qt::AlignHCenter);
     finishedProjects = new QListWidget();
     finishedProjects->setDragEnabled(true);
@@ -469,7 +469,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
     firstLayout->addLayout(infoLayout);
 
-    tabs->addTab(mainTab, "Homepage");
+    tabs->addTab(mainTab, tr("Homepage"));
 
     // notes tab
     QWidget* notesTab = new QWidget();
@@ -477,7 +477,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
     notesLayout->addLayout(notesCLayout);
 
-    tabs->addTab(notesTab, "Doc");
+    tabs->addTab(notesTab, tr("Doc"));
 
     // tasks tab
     QWidget* tasksTab = new QWidget();
@@ -485,7 +485,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
     tasksLayout->addLayout(tasksGLayout);
 
-    tabs->addTab(tasksTab, "Tasks");
+    tabs->addTab(tasksTab, tr("Tasks"));
 
     // projects tab
     QWidget* projectsTab = new QWidget();
@@ -493,7 +493,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
     projectsLayout->addLayout(projectsGLayout);
 
-    tabs->addTab(projectsTab, "Projects");
+    tabs->addTab(projectsTab, tr("Projects"));
 
     QIcon mainIco;
     QIcon projectsIco;

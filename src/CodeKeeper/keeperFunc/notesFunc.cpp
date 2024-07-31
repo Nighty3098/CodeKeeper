@@ -41,7 +41,7 @@ void MainWindow::exportNoteToPdf()
     QString filePath = fileSystemModel->filePath(selectedIndex);
     qDebug() << "File Path : " << filePath;
 
-    QString str = QFileDialog::getSaveFileName(0, "Enter filename");
+    QString str = QFileDialog::getSaveFileName(0, tr("Enter filename"));
     QString pdf_file = str + ".pdf";
 
     QString md = noteEdit->toPlainText();
@@ -66,7 +66,7 @@ void MainWindow::exportNoteToHtml()
     QString filePath = fileSystemModel->filePath(selectedIndex);
     qDebug() << "File Path : " << filePath;
 
-    QString str = QFileDialog::getSaveFileName(0, "Enter filename");
+    QString str = QFileDialog::getSaveFileName(0, tr("Enter filename"));
     QString html_file = str + ".html";
 
     QString md = noteEdit->toPlainText();
@@ -164,7 +164,7 @@ void MainWindow::onNoteDoubleClicked()
                 file.close();
             }
         } else {
-            noteEdit->setPlainText("### File format not supported.");
+            noteEdit->setPlainText(tr("### File format not supported."));
             qWarning() << "File format not supported";
         }
     }
@@ -226,7 +226,7 @@ void MainWindow::createFolder()
     QModelIndex index = notesList->currentIndex();
 
     if (index.isValid()) {
-        QString name = QInputDialog::getText(this, "Name", "Folder name");
+        QString name = QInputDialog::getText(this, tr("Name"), tr("Folder name"));
         if (!name.isEmpty()) {
             qDebug() << "🔸 Folder name:" << name;
             notesDirModel->mkdir(index, name);
@@ -239,11 +239,11 @@ void MainWindow::createNote()
     QModelIndex index = notesList->currentIndex();
 
     if (index.isValid()) {
-        QString name = QInputDialog::getText(this, "Name", "Note name");
+        QString name = QInputDialog::getText(this, tr("Name"), tr("Note name"));
         if (!name.isEmpty()) {
             name = name + ".md";
             QString path_to_note = notesDirModel->filePath(index) + "/" + name;
-            qDebug() << "🔸 Note name:" << name;
+            qDebug() << "Note name:" << name;
             createFile(path_to_note);
         }
     }
