@@ -45,6 +45,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
 
     isAutoCheckUpdates = globalSettings->value("isAutoCheckUpdates").value<bool>();
 
+    appLang = globalSettings->value("lang").value<int>();
+
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     centralWidget = new QWidget(this);
@@ -60,7 +62,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
-    saveBtn = new QPushButton("Apply");
+    saveBtn = new QPushButton(tr("Apply"));
     saveBtn->setFixedSize(100, 30);
 
     quitBtn = new QPushButton();
@@ -210,9 +212,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     langSelector->setFixedHeight(30);
     langSelector->addItem(QIcon(":/usa.png"), tr("English"));
     langSelector->addItem(QIcon(":/russian.png"), tr("Russian"));
-    langSelector->addItem(QIcon(":/japan.png"), tr("Japanese"));
-    langSelector->addItem(QIcon(":/german.png"), tr("Germany"));
-    langSelector->addItem(QIcon(":/spanish.png"), tr("Spanish"));
+    // langSelector->addItem(QIcon(":/japan.png"), tr("Japanese"));
+    // langSelector->addItem(QIcon(":/german.png"), tr("Germany"));
+    // langSelector->addItem(QIcon(":/spanish.png"), tr("Spanish"));
+
+    langSelector->setCurrentIndex(appLang);
 
     langLabel = new QLabel(tr("Language:"));
     langLabel->setAlignment(Qt::AlignCenter);

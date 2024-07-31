@@ -11,19 +11,31 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     QSettings *globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
-    QString appLang = globalSettings->value("lang").value<QString>();
+    int appLang = globalSettings->value("lang").value<int>();
 
     QTranslator translator;
 
-    if (appLang == "Ru")
+    if (appLang == 1)
     {
         QString file = "CodeKeeper_ru_RU.qm";
         qDebug() << "Loading " << file;
         translator.load(file);
     }
-    if (appLang == "En")
+    if (appLang == 0)
     {
-        qDebug() << "Loading " << "Eng";
+        qDebug() << "Loading " << "English";
+    }
+    if (appLang == 2)
+    {
+        qDebug() << "Loading " << "Japanese";
+    }
+    if (appLang == 3)
+    {
+        qDebug() << "Loading " << "Germany";
+    }
+    if (appLang == 4)
+    {
+        qDebug() << "Loading " << "Spanish";
     }
 
     qApp->installTranslator(&translator);
