@@ -1,6 +1,7 @@
 import subprocess
 import os
 import time
+import configparser
 
 def run_command(command, check=True):
     """Executes a command in the terminal and returns the result."""
@@ -10,6 +11,23 @@ def run_command(command, check=True):
         print(result.stderr)
         exit(1)
     return result.stdout
+
+def get_git_token():
+    """Retrieves the GitHub token from the configuration file."""
+    config = configparser.ConfigParser()
+    config_file_path = os.path.expanduser("~/.config/CodeKeeper/CodeKeeper.conf")
+    
+    if not os.path.exists(config_file_path):
+        print(f"Configuration file not found: {config_file_path}")
+        exit(1)
+
+    config.read(config_file_path)
+    
+    if 'DEFAULT' not in config or 'git_token' not in config['DEFAULT']:
+        print("Git token not found in the configuration file.")
+        exit(1)
+
+    return config['DEFAULT']['git_token']
 
 def main():
     # Change to the project directory
@@ -44,8 +62,13 @@ cd ../..
     commit_message = input("Enter commit message: ")
     run_command(f"git commit -m \"{commit_message}\"")
 
+    # Get GitHub token
+    git_token = get_git_token()
+    
     # Push changes to GitHub
-    run_command("git push")  # Replace 'main' with your branch name if necessary
+    username = "Nighty3098"
+    remote_url = f"https://{username}:{git_token}@github.com/{username}/your-repo.git"  # Replace 'your-repo' with your repository name
+    run_command(f"git push {remote_url} main")  # Replace 'main' with your branch name if necessary
 
     print("Changes successfully pushed to GitHub.")
 
