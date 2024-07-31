@@ -89,22 +89,6 @@ class MainWindow : public QMainWindow
 
 public:
     QSettings *globalSettings;
-    bool isVisibleNotesList;
-    bool isViewMode;
-    bool isVisiblePreview;
-    bool isVisibleFolders;
-    QString dir;
-    QFont selectedFont;
-    QString font_size;
-    QString theme;
-    bool isCustomTitlebar;
-    int sortNotesRole;
-    bool isAutoSyncing;
-
-    QString git_repo;
-    QString git_user;
-    QString git_token;
-    bool isAutoSyncB;
 
     NoteEditor *noteEdit;
     notesTree *notesList;
@@ -138,9 +122,22 @@ public:
     QListWidget *inprocessTasks;
     QListWidget *completeTasks;
 
+    QListWidget *notStartedProjects;
+    QListWidget *startedProjects;
+    QListWidget *finishedProjects;
+    QListWidget *finishlineProjects;
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    bool isVisibleNotesList;
+    bool isViewMode;
+    bool isVisiblePreview;
+    bool isVisibleFolders;
+    bool isAutoSyncB;
+    bool isCustomTitlebar;
+    int sortNotesRole;
+    bool isAutoSyncing;
     bool isCustomTheme;
     bool isCreated;
     bool isReleaseDate;
@@ -155,8 +152,17 @@ public:
     bool isStars;
     bool isForks;
     bool isRepoSize;
-
     bool isAutoCheckUpdates;
+
+    QString git_repo;
+    QString git_user;
+    QString git_token;
+
+    QString dir;
+    QFont selectedFont;
+    QString font_size;
+    QString theme;
+    QString appLang;
 
 private slots:
     QString getRepositoryData(QString git_url, QTableWidget *table, QLabel *label);
@@ -362,11 +368,6 @@ private:
     QLabel *flProjects;
     QLabel *sProjects;
     QLabel *nsProjects;
-
-    QListWidget *notStartedProjects;
-    QListWidget *startedProjects;
-    QListWidget *finishedProjects;
-    QListWidget *finishlineProjects;
 
     QAction *newNote;
     QAction *rmNote;

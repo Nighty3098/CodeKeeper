@@ -21,25 +21,21 @@ void AccountWindow::setImageFromUrl(const QString& url, QLabel* label)
             return;
         }
 
-        // Загружаем изображение из данных
         QPixmap pixmap;
         pixmap.loadFromData(reply->readAll());
 
-        // Создаем закругленное изображение
         QImage image = pixmap.toImage();
         QImage roundedImage(image.size(), QImage::Format_ARGB32);
-        roundedImage.fill(Qt::transparent); // Заполняем прозрачным цветом
+        roundedImage.fill(Qt::transparent);
 
         QPainter painter(&roundedImage);
-        painter.setRenderHint(QPainter::Antialiasing); // Включаем сглаживание
-        painter.setBrush(QBrush(image)); // Устанавливаем кисть с оригинальным изображением
-        painter.setPen(Qt::NoPen); // Убираем обводку
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setBrush(QBrush(image));
+        painter.setPen(Qt::NoPen);
 
-        // Рисуем круг с закругленными углами
         int radius = qMin(roundedImage.width(), roundedImage.height());
         painter.drawRoundedRect(0, 0, roundedImage.width(), roundedImage.height(), radius * 0.5, radius * 0.5);
 
-        // Устанавливаем закругленное изображение в QLabel
         label->setPixmap(QPixmap::fromImage(roundedImage.scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation)));
 
         reply->deleteLater();
@@ -217,8 +213,8 @@ void AccountWindow::setUserData(const QString& username, QLabel* label)
         qDebug() << "Company:" << obj["company"].toString();
         qDebug() << "Login:" << obj["login"].toString();
 
-        label->setText("\n\n" + obj["bio"].toString() + tr("\nPublic repos: ") + QString::number(obj["public_repos"].toInt())
-                       + tr("\n\nFollowing: ") + QString::number(obj["following"].toInt()) + tr("\n\nFollowers: ") + QString::number(obj["followers"].toInt())
+        label->setText("\n\n" + obj["bio"].toString() + tr("\nPublic repos: ") + QString::number(obj["public_repos"].toInt()) + tr("\n\nFollowing: ")
+                       + QString::number(obj["following"].toInt()) + tr("\n\nFollowers: ") + QString::number(obj["followers"].toInt())
                        + tr("\n\nStars: ") + QString::number(getStarsCount(git_user, git_token)) + "\n");
 
         reply->deleteLater();
@@ -272,24 +268,11 @@ void AccountWindow::setTasksProgress()
 void AccountWindow::setProjectsStats()
 {
     MainWindow* mainWindow = qobject_cast<MainWindow*>(this->parent());
-    QString stats = mainWindow->getKeeperStats();
 
-    // Extract the values using regular expressions
-    QRegExp rx(tr("Not started projects: ") + "(\\d+)");
-    rx.indexIn(stats);
-    int notStartedProjectsCount = rx.cap(1).toInt();
-
-    rx.setPattern(tr("Started projects: ") + "(\\d+)");
-    rx.indexIn(stats);
-    int startedProjectsCount = rx.cap(1).toInt();
-
-    rx.setPattern(tr("Projects on review: ") + "(\\d+)");
-    rx.indexIn(stats);
-    int finishlineProjectsCount = rx.cap(1).toInt();
-
-    rx.setPattern(tr("Finished projects: ") + "(\\d+)");
-    rx.indexIn(stats);
-    int finishedProjectsCount = rx.cap(1).toInt();
+    int notStartedProjectsCount = mainWindow->notStartedProjects->count();
+    int startedProjectsCount = mainWindow->startedProjects->count();
+    int finishlineProjectsCount = mainWindow->finishedProjects->count();
+    int finishedProjectsCount = mainWindow->finishlineProjects->count();
 
     int totalProjects = notStartedProjectsCount + startedProjectsCount + finishlineProjectsCount + finishedProjectsCount;
 

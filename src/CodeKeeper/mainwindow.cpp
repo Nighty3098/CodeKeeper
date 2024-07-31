@@ -33,7 +33,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     setCentralWidget(centralWidget);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
-    restoreGeometry(globalSettings->value("geometry").toByteArray());
 
     getSettingsData();
 
@@ -41,7 +40,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
         QFile custom_theme(":/stylesheet/custom_stylesheet.qss");
         if (custom_theme.open(QFile::ReadOnly)) {
             QString customStyleSheet = custom_theme.readAll();
-            qDebug() << "Loading custom stylesheet:" << customStyleSheet;
+            qDebug() << "Loading custom stylesheet";
             setStyleSheet(customStyleSheet);
             custom_theme.close();
         } else {
@@ -51,7 +50,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
         QFile theme_file(":/stylesheet/stylesheet.qss");
         if (theme_file.open(QFile::ReadOnly)) {
             QString defaultStyleSheet = theme_file.readAll();
-            qDebug() << "Loading default stylesheet:" << defaultStyleSheet;
+            qDebug() << "Loading default stylesheet";
             setStyleSheet(defaultStyleSheet);
             theme_file.close();
         } else {
