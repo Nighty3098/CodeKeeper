@@ -26,6 +26,8 @@ public:
     QString git_token;
     QString path;
 
+    int appLang;
+
     bool isTimeB;
     bool isDateB;
     bool isHostB;

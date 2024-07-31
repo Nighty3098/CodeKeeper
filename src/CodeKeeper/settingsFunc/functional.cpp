@@ -308,6 +308,12 @@ void SettingsWindow::saveData()
     isAutoCheckUpdates = autoUpdates->isChecked();
     globalSettings->setValue("isAutoCheckUpdates", isAutoCheckUpdates);
 
+    appLang = langSelector->currentIndex();
+    qDebug() << "===============================";
+    qDebug() << appLang;
+    qDebug() << "===============================";
+    globalSettings->setValue("lang", appLang);
+
     MainWindow *mainWindow = static_cast<MainWindow *>(parent());
     setStyle2(&selectedFont, &font_size);
     mainWindow->setStyle(&selectedFont, &font_size);

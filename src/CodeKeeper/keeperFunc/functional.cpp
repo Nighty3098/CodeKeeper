@@ -88,7 +88,7 @@ void MainWindow::getSettingsData()
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
     isAutoCheckUpdates = globalSettings->value("isAutoCheckUpdates").value<bool>();
-    appLang = globalSettings->value("lang").value<QString>();
+    appLang = globalSettings->value("lang").value<int>();
 
     qDebug() << " " << dir << selectedFont << font_size << theme << isCustomTitlebar << sortNotesRole << isAutoSyncing
              << isVisibleNotesList << isVisibleFolders << isVisiblePreview << isViewMode << git_repo << git_user

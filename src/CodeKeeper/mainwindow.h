@@ -162,7 +162,8 @@ public:
     QFont selectedFont;
     QString font_size;
     QString theme;
-    QString appLang;
+
+    int appLang;
 
 private slots:
     QString getRepositoryData(QString git_url, QTableWidget *table, QLabel *label);
