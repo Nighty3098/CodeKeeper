@@ -110,9 +110,11 @@ public:
     void loadTasks();
 
     bool createConnection(QString path);
-
     void createConnects();
     void createShortcuts();
+
+    void activateProjectContextMenu(const QPoint &pos, QListWidget *listWidget);
+    // void activateTasksContextMenu(const QPoint &pos);
 
     QString getKeeperStats();
 
@@ -208,7 +210,8 @@ private slots:
                           QListWidget *startedProjects, QListWidget *finishedProjects,
                           QListWidget *finishlineProjects);
 
-    void openProject(QListWidget *listWidget, QListWidgetItem *item);
+    void openProject();
+    void openGitProject();
 
     void createProject();
     void removeProject();
@@ -378,9 +381,11 @@ private:
     QAction *showList;
     QAction *showRender;
     QAction *addTask;
+    QAction *editProject;
     QAction *rmTask;
     QAction *viewMode;
     QAction *newProject;
+    QAction *openProjectInGit;
     QAction *rmProject;
     QAction *setH1A;
     QAction *setH2A;

@@ -127,23 +127,31 @@ void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
 
 void MainWindow::createProjectMenu(QMenu *menu, QString font_size)
 {
-    newProject = projectsMenu->addAction(
+    newProject = menu->addAction(
         QPixmap(":/new.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("New"), this, SLOT(createProject()), Qt::CTRL + Qt::Key_N);
-    rmProject = projectsMenu->addAction(
+    rmProject = menu->addAction(
         QPixmap(":/delete.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Remove"), this, SLOT(removeProject()), Qt::Key_Delete);
+    editProject = menu->addAction(
+        QPixmap(":/edit.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        tr("Edit"), this, SLOT(openProject()));
+    openProjectInGit = menu->addAction(
+        QPixmap(":/open.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        tr("Open in git"), this, SLOT(openGitProject()));
 }
 
 void MainWindow::createTaskMenu(QMenu *menu, QString font_size)
 {
-    addTask = tasksMenu->addAction(
+    addTask = menu->addAction(
         QPixmap(":/new.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Add task"), this, SLOT(addNewTask()), Qt::Key_Return);
-    rmTask = tasksMenu->addAction(
+    rmTask = menu->addAction(
         QPixmap(":/delete.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Delete task"), this, SLOT(removeTask()), Qt::Key_Delete);

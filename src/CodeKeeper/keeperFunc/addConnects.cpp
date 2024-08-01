@@ -41,6 +41,18 @@ void MainWindow::createConnects()
     connect(finishedProjects, &QListWidget::itemEntered, this,
             [=](QListWidgetItem *item) { onMovingProjectFrom(item, finishedProjects); });
 
+    connect(notStartedProjects, &QListWidget::customContextMenuRequested, this,
+            [this](const QPoint &pos) { activateProjectContextMenu(pos, notStartedProjects); });
+
+    connect(startedProjects, &QListWidget::customContextMenuRequested, this,
+            [this](const QPoint &pos) { activateProjectContextMenu(pos, startedProjects); });
+
+    connect(finishlineProjects, &QListWidget::customContextMenuRequested, this,
+            [this](const QPoint &pos) { activateProjectContextMenu(pos, finishlineProjects); });
+
+    connect(finishedProjects, &QListWidget::customContextMenuRequested, this,
+            [this](const QPoint &pos) { activateProjectContextMenu(pos, finishedProjects); });
+
     connect(closeBtn, &QPushButton::clicked, this, [this]() { close(); });
     connect(minimizeBtn, &QPushButton::clicked, this, [this]() { showMinimized(); });
     connect(maximizeBtn, &QPushButton::clicked, this, [this]() {
@@ -114,14 +126,10 @@ void MainWindow::createConnects()
     connect(inprocessTasks, &QListWidget::itemDoubleClicked, this,
             [=](QListWidgetItem *item) { renameItemOnDoubleClick(inprocessTasks, item); });
 
-    connect(notStartedProjects, &QListWidget::itemDoubleClicked, this,
-            [=](QListWidgetItem *item) { openProject(notStartedProjects, item); });
-    connect(startedProjects, &QListWidget::itemDoubleClicked, this,
-            [=](QListWidgetItem *item) { openProject(startedProjects, item); });
-    connect(finishlineProjects, &QListWidget::itemDoubleClicked, this,
-            [=](QListWidgetItem *item) { openProject(finishlineProjects, item); });
-    connect(finishedProjects, &QListWidget::itemDoubleClicked, this,
-            [=](QListWidgetItem *item) { openProject(finishedProjects, item); });
+    connect(notStartedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) { openProject(); });
+    connect(startedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) { openProject(); });
+    connect(finishlineProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) { openProject(); });
+    connect(finishedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) { openProject(); });
 
     connect(setH1B, &QPushButton::clicked, this, &MainWindow::setH1);
     connect(setH2B, &QPushButton::clicked, this, &MainWindow::setH2);
