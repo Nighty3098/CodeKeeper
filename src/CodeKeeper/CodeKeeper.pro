@@ -39,7 +39,7 @@ HEADERS += \
     syncwindow.h \
     custom/circleProgressbar/ProgressCircle.h \
     custom/circleChart/CircleChart.h \
-    custom/ColorValueDisplay/ColorValueDisplay.h
+    custom/ColorValueDisplay/ColorValueDisplay.h 
 
 RESOURCES += \
     ../resources/resources.qrc \

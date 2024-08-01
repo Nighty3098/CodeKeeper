@@ -56,15 +56,15 @@ void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     setH1A = editMenu->addAction(
         QPixmap(":/h1.png")
-            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Set H1"), this, SLOT(setH1()));
     setH2A = editMenu->addAction(
         QPixmap(":/h2.png")
-            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Set H2"), this, SLOT(setH2()));
     setH3A = editMenu->addAction(
         QPixmap(":/h3.png")
-            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Set H3"), this, SLOT(setH3()));
     editMenu->addSeparator();
     setQuoteA = editMenu->addAction(

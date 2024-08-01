@@ -167,14 +167,14 @@ void MainWindow::createConnects()
         setWindowTitle("CodeKeeper");
     });
     connect(tasksTabButton, &QPushButton::clicked, [=]() {
-        tabs->setCurrentIndex(1);
-        windowTitle->setText(" ~ Notes ~ ");
-        setWindowTitle(tr("Notes"));
-    });
-    connect(notesTabButton, &QPushButton::clicked, [=]() {
         tabs->setCurrentIndex(2);
         windowTitle->setText(" ~ Tasks ~ ");
         setWindowTitle(tr("Tasks"));
+    });
+    connect(notesTabButton, &QPushButton::clicked, [=]() {
+        tabs->setCurrentIndex(1);
+        windowTitle->setText(" ~ Notes ~ ");
+        setWindowTitle(tr("Notes"));
     });
     connect(projectsTabButton, &QPushButton::clicked, [=]() {
         tabs->setCurrentIndex(3);

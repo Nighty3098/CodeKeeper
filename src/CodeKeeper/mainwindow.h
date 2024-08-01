@@ -248,7 +248,6 @@ private slots:
     void onMovingTaskFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingTaskTo(QListWidgetItem *item, QListWidget *list);
 
-    void createGitBadges(QString git_url, QWebEngineView *page);
     QStringList GetProjectData(QString *title, QString *status, QString *git_url);
     void updateProjectStatus(QString *status, QString *createdTime, QString *oldTime);
     void removeProjectFromDB(QString *git_url, QString *status, QString *createdTime);
@@ -259,6 +258,7 @@ private slots:
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
     bool checkConnection();
+    void updateTime();
 
     void createNotesMenu(QMenu *menu, QString font_size);
     void createProjectMenu(QMenu *menu, QString font_size);
@@ -294,7 +294,6 @@ private:
     QShortcut* openSettingsWindowQS;
 
     // other
-    QLabel *appIcon;
     QLabel *windowTitle;
     QWidget *centralWidget;
     QGridLayout *mainLayout;
@@ -304,6 +303,10 @@ private:
     QSizeGrip *sizeGrip2;
     QSizeGrip *sizeGrip3;
     QSizeGrip *sizeGrip4;
+
+    QLabel *timeLabel;
+    QLabel *dateLabel;
+    QLabel *helloLabel;
 
     QPushButton *maximizeBtn;
     QPushButton *closeBtn;
