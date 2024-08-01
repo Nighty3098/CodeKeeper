@@ -100,14 +100,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     minimizeBtn = new QPushButton();
     maximizeBtn = new QPushButton();
 
-    openAccountWindow = new QPushButton(
-        QPixmap(":/user.png")
-            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        "");
-    openAccountWindow->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                                  "#0D1117;'>Account</p>");
-    openAccountWindow->setFixedSize(40, 40);
-
     winControlL = new QHBoxLayout;
     winControlL->setSpacing(7);
 
@@ -152,26 +144,38 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     dateLabel = new QLabel("");
     dateLabel->setAlignment(Qt::AlignTop);
 
-    helloLabel = new QLabel("Hi, " + git_user);
-    helloLabel->setAlignment(Qt::AlignCenter);
+    helloLabel = new QLabel();
+    helloLabel->setAlignment(Qt::AlignVCenter);
 
-    // settings btn
+
     openSettingsBtn = new QPushButton(
         QPixmap(":/settings.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     openSettingsBtn->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
                                 "#0D1117;'>Settings</p>");
-    openSettingsBtn->setFixedSize(40, 40);
+    openSettingsBtn->setFixedSize(50, 50);
+    openSettingsBtn->setFlat(true);
 
-    // sync btn
+
     syncDataBtn = new QPushButton(
         QPixmap(":/sync.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     syncDataBtn->setToolTip("<p style='color: #ffffff; border-radius: 5px; "
                             "background-color: #0D1117;'>Sync</p>");
-    syncDataBtn->setFixedSize(40, 40);
+    syncDataBtn->setFixedSize(50, 50);
+    syncDataBtn->setFlat(true);
+
+
+    openAccountWindow = new QPushButton(
+        QPixmap(":/user.png")
+            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        "");
+    openAccountWindow->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
+                                  "#0D1117;'>Account</p>");
+    openAccountWindow->setFixedSize(50, 50);
+    openAccountWindow->setFlat(true);
 
     // ========================================================
     QHBoxLayout *menuLayout = new QHBoxLayout;
@@ -610,25 +614,29 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         QPixmap(":/main.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    mainTabButton->setFixedSize(40, 40);
+    mainTabButton->setFixedSize(50, 50);
+    mainTabButton->setFlat(true);
 
     tasksTabButton = new QPushButton(
         QPixmap(":/task.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    tasksTabButton->setFixedSize(40, 40);
+    tasksTabButton->setFixedSize(50, 50);
+    tasksTabButton->setFlat(true);
 
     notesTabButton = new QPushButton(
         QPixmap(":/document.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    notesTabButton->setFixedSize(40, 40);
+    notesTabButton->setFixedSize(50, 50);
+    notesTabButton->setFlat(true);
 
     projectsTabButton = new QPushButton(
         QPixmap(":/project.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    projectsTabButton->setFixedSize(40, 40);
+    projectsTabButton->setFixedSize(50, 50);
+    projectsTabButton->setFlat(true);
 
     QSpacerItem *headerSp5 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QSpacerItem *headerSp6 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -686,10 +694,35 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QObject::connect(timedateThread, &QThread::started, this, [this]() {
         QTimer *dateTimer = new QTimer();
         dateTimer->setInterval(1000);
-        QObject::connect(dateTimer, &QTimer::timeout, this, [this](){ emit updateTime(); });
+        QObject::connect(dateTimer, &QTimer::timeout, this, [this]() { emit updateTime(); });
         dateTimer->start();
     });
     timedateThread->start();
+
+    QThread *checkTasks = new QThread;
+    QObject::connect(checkTasks, &QThread::started, this, [this]() {
+        QTimer *tasksTimer = new QTimer();
+        tasksTimer->setInterval(1000);
+        QObject::connect(tasksTimer, &QTimer::timeout, this, [this]() {
+            int incompleteTasksCount = incompleteTasks->count();
+
+            int totalTasksCount = completeTasks->count() + inprocessTasks->count() + incompleteTasks->count();
+
+            if (incompleteTasksCount >= 1)
+            {
+                helloLabel->setText(tr("Welcome, ") + git_user + tr("!\n\nYou have ") +
+                                    QString::number(incompleteTasksCount) + tr(" uncompleted tasks out of ") +
+                                    QString::number(totalTasksCount) + "");
+            }
+            else
+            {
+                helloLabel->setText(tr("Welcome, ") + git_user +
+                                    tr("!\n\nYou have completed all of your tasks for the day. Good job!"));
+            }
+        });
+        tasksTimer->start();
+    });
+    checkTasks->start();
 
     qDebug() << "" << dir;
     qDebug() << "Load time:" << startup.elapsed() << "ms";

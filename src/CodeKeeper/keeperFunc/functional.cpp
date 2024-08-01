@@ -55,7 +55,8 @@ QString MainWindow::getCurrentDateTimeString()
     return dateTimeString;
 }
 
-void MainWindow::updateTime() {
+void MainWindow::updateTime()
+{
     QString currentTime = QTime::currentTime().toString("hh:mm");
     QString currentDate = QDate::currentDate().toString("ddd dd MMM yyyy");
 
@@ -358,8 +359,9 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     qDebug() << "Applying preferences";
 
     QString font_size = QString::number(*font_size_int);
-    QString font_size_clock = QString::number(*font_size_int*7);
-    QString font_size_date = QString::number(*font_size_int*1.6);
+    QString font_size_clock = QString::number(*font_size_int * 7);
+    QString font_size_date = QString::number(*font_size_int * 1.6);
+    QString font_size_hello = QString::number(*font_size_int * 1.4);
 
     timeLabel->setFont(*selectedFont);
     timeLabel->setStyleSheet("font-size: " + font_size_clock + "pt; color: #8ebecf;");
@@ -368,7 +370,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     dateLabel->setStyleSheet("font-size: " + font_size_date + "pt; color: #8ebecf;");
 
     helloLabel->setFont(*selectedFont);
-    helloLabel->setStyleSheet("font-size: " + font_size_date + "pt; color: #8ebecf;");
+    helloLabel->setStyleSheet("font-size: " + font_size_hello + "pt; color: #8ebecf;");
 
     projectsMainLabel->setFont(*selectedFont);
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
