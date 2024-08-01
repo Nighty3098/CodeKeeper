@@ -210,7 +210,8 @@ private slots:
                           QListWidget *startedProjects, QListWidget *finishedProjects,
                           QListWidget *finishlineProjects);
 
-    void openProject(QListWidget *listWidget, QListWidgetItem *item);
+    void openProject();
+    void openGitProject();
 
     void createProject();
     void removeProject();
@@ -384,6 +385,7 @@ private:
     QAction *rmTask;
     QAction *viewMode;
     QAction *newProject;
+    QAction *openProjectInGit;
     QAction *rmProject;
     QAction *setH1A;
     QAction *setH2A;
