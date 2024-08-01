@@ -922,7 +922,7 @@ Projects
     <message>
         <location filename="syncwindow.cpp" line="48"/>
         <source>Cancel &amp;&amp; Quit</source>
-        <translation>Остановить</translation>
+        <translation>Отменить &amp;&amp; выйти</translation>
     </message>
 </context>
 </TS>
