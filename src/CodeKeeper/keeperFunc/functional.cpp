@@ -58,7 +58,7 @@ QString MainWindow::getCurrentDateTimeString()
 void MainWindow::updateTime()
 {
     QString currentTime = QTime::currentTime().toString("hh:mm");
-    QString currentDate = QDate::currentDate().toString("ddd dd MMM yyyy");
+    QString currentDate = QDate::currentDate().toString("dd MM yyyy");
 
     timeLabel->setText(currentTime);
     dateLabel->setText(currentDate);
@@ -202,7 +202,7 @@ void MainWindow::createCustomTitlebar()
 
     if (isCustomTitlebar)
     {
-        this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+        this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Window);
 
         winControlL->addWidget(closeBtn);
         winControlL->addWidget(minimizeBtn);

@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
+    setMinimumSize(900, 900);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -147,7 +148,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     helloLabel = new QLabel();
     helloLabel->setAlignment(Qt::AlignVCenter);
 
-
     openSettingsBtn = new QPushButton(
         QPixmap(":/settings.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
@@ -157,7 +157,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     openSettingsBtn->setFixedSize(50, 50);
     openSettingsBtn->setFlat(true);
 
-
     syncDataBtn = new QPushButton(
         QPixmap(":/sync.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
@@ -166,7 +165,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                             "background-color: #0D1117;'>Sync</p>");
     syncDataBtn->setFixedSize(50, 50);
     syncDataBtn->setFlat(true);
-
 
     openAccountWindow = new QPushButton(
         QPixmap(":/user.png")
