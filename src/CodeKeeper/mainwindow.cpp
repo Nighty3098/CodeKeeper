@@ -456,6 +456,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notStartedProjects->setWordWrap(true);
     notStartedProjects->setSpacing(5);
     notStartedProjects->setObjectName("NotStartedProjects");
+    notStartedProjects->setContextMenuPolicy(Qt::CustomContextMenu);
 
     sProjects = new QLabel(tr("Started"));
     sProjects->setAlignment(Qt::AlignHCenter);
@@ -466,6 +467,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     startedProjects->setWordWrap(true);
     startedProjects->setSpacing(5);
     startedProjects->setObjectName("StartedProjects");
+    startedProjects->setContextMenuPolicy(Qt::CustomContextMenu);
 
     flProjects = new QLabel(tr("For review"));
     flProjects->setAlignment(Qt::AlignHCenter);
@@ -476,6 +478,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     finishlineProjects->setWordWrap(true);
     finishlineProjects->setSpacing(5);
     finishlineProjects->setObjectName("FinishlineProjects");
+    finishlineProjects->setContextMenuPolicy(Qt::CustomContextMenu);
 
     fProjects = new QLabel(tr("Finished"));
     fProjects->setAlignment(Qt::AlignHCenter);
@@ -486,6 +489,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     finishedProjects->setWordWrap(true);
     finishedProjects->setSpacing(5);
     finishedProjects->setObjectName("FinishedProjects");
+    finishedProjects->setContextMenuPolicy(Qt::CustomContextMenu);
 
     projectsStatsL->addItem(spacer3);
     projectsStatsL->addWidget(projectsMenuButton);

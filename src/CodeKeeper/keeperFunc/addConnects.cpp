@@ -41,6 +41,22 @@ void MainWindow::createConnects()
     connect(finishedProjects, &QListWidget::itemEntered, this,
             [=](QListWidgetItem *item) { onMovingProjectFrom(item, finishedProjects); });
 
+    connect(notStartedProjects, &QListWidget::customContextMenuRequested, this, [this](const QPoint& pos) {
+        activateProjectContextMenu(pos, notStartedProjects);
+    });
+
+    connect(startedProjects, &QListWidget::customContextMenuRequested, this, [this](const QPoint& pos) {
+        activateProjectContextMenu(pos, startedProjects);
+    });
+
+    connect(finishlineProjects, &QListWidget::customContextMenuRequested, this, [this](const QPoint& pos) {
+        activateProjectContextMenu(pos, finishlineProjects);
+    });
+
+    connect(finishedProjects, &QListWidget::customContextMenuRequested, this, [this](const QPoint& pos) {
+        activateProjectContextMenu(pos, finishedProjects);
+    });
+
     connect(closeBtn, &QPushButton::clicked, this, [this]() { close(); });
     connect(minimizeBtn, &QPushButton::clicked, this, [this]() { showMinimized(); });
     connect(maximizeBtn, &QPushButton::clicked, this, [this]() {

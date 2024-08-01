@@ -110,9 +110,11 @@ public:
     void loadTasks();
 
     bool createConnection(QString path);
-
     void createConnects();
     void createShortcuts();
+
+    void activateProjectContextMenu(const QPoint &pos, QListWidget *listWidget);
+    // void activateTasksContextMenu(const QPoint &pos);
 
     QString getKeeperStats();
 
@@ -378,6 +380,7 @@ private:
     QAction *showList;
     QAction *showRender;
     QAction *addTask;
+    QAction *editProject;
     QAction *rmTask;
     QAction *viewMode;
     QAction *newProject;

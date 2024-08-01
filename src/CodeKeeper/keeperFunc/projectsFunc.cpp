@@ -11,6 +11,16 @@
 
 #include "getProjectInfo.cpp"
 
+void MainWindow::activateProjectContextMenu(const QPoint &pos, QListWidget *listWidget) {
+    QPoint item = listWidget->mapToGlobal(pos);
+
+    QMenu* submenu = new QMenu;
+    
+    createProjectMenu(submenu, font_size);
+
+    QAction* rightClickItem = submenu->exec(item);
+}
+
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
 {
     qDebug() << "Moving project: " << item->text() << " from: " << list->objectName();
