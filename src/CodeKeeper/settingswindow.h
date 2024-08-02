@@ -50,6 +50,27 @@ public:
     bool isForks;
     bool isRepoSize;
 
+protected:
+    void mousePressEvent(QMouseEvent *event) override
+    {
+        if (event->button() == Qt::LeftButton) {
+            m_dragPosition = event->globalPos() - frameGeometry().topLeft();
+            event->accept();
+        } else {
+            QMainWindow::mousePressEvent(event);
+        }
+    }
+
+    void mouseMoveEvent(QMouseEvent *event) override
+    {
+        if (event->buttons() & Qt::LeftButton) {
+            move(event->globalPos() - m_dragPosition);
+            event->accept();
+        } else {
+            QMainWindow::mouseMoveEvent(event);
+        }
+    }
+
 private slots:
     void closeEvent(QCloseEvent *event);
     void QuitW();
@@ -62,6 +83,13 @@ private slots:
     void checkRepo();
 
 private:
+    QPoint m_dragPosition;
+
+    QSizeGrip *sizeGrip;
+    QSizeGrip *sizeGrip2;
+    QSizeGrip *sizeGrip3;
+    QSizeGrip *sizeGrip4;
+
     QWidget *centralWidget;
     QVBoxLayout *mainLayout;
     QTabWidget *tabs;

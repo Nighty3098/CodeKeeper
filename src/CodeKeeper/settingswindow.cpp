@@ -44,16 +44,20 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
     isAutoCheckUpdates = globalSettings->value("isAutoCheckUpdates").value<bool>();
-
     appLang = globalSettings->value("lang").value<int>();
 
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
+    setMinimumSize(650, 650);
 
     mainLayout = new QVBoxLayout(centralWidget);
-    setMinimumSize(600, 600);
+
+    sizeGrip = new QSizeGrip(this);
+
+    sizeGrip->setFixedSize(11, 11);
+    sizeGrip->setVisible(true);
+    sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     // tabs
     tabs = new QTabWidget();
