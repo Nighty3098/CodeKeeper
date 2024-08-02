@@ -523,9 +523,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QWidget *mainTab = new QWidget();
     QGridLayout *firstLayout = new QGridLayout(mainTab);
 
-    firstLayout->addWidget(timeLabel, 1, 0, 1, 2, Qt::AlignBottom);
-    firstLayout->addWidget(dateLabel, 2, 0, 1, 2, Qt::AlignTop);
-    firstLayout->addWidget(helloLabel, 3, 0, 3, 2, Qt::AlignCenter);
+    firstLayout->addWidget(timeLabel, 0, 1, 2, 2, Qt::AlignBottom);
+    firstLayout->addWidget(dateLabel, 2, 1, 1, 2, Qt::AlignTop);
+    firstLayout->addWidget(helloLabel, 3, 0, 3, 6, Qt::AlignCenter);
 
     tabs->addTab(mainTab, tr("Homepage"));
 
@@ -553,15 +553,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tabs->addTab(projectsTab, tr("Projects"));
 
-    QIcon mainIco;
-    QIcon projectsIco;
-    QIcon noteIco;
-    QIcon tasksIco;
-
-    mainIco.addFile(":/main.png");
-    projectsIco.addFile(":/project.png");
-    noteIco.addFile(":/document.png");
-    tasksIco.addFile(":/task.png");
+    QPixmap mainIco(":/main.png");
+    QPixmap projectsIco(":/project.png");
+    QPixmap noteIco(":/document.png");
+    QPixmap tasksIco(":/task.png");
 
     tabs->setTabIcon(tabs->indexOf(mainTab), mainIco);
     tabs->setTabIcon(tabs->indexOf(notesTab), noteIco);
