@@ -99,7 +99,10 @@ void MainWindow::createProject()
 
     qDebug() << "New project: " << newProjectTeamplate;
 
-    notStartedProjects->addItem(newProjectTeamplate);
+    QListWidgetItem *item = new QListWidgetItem(newProjectTeamplate);
+    item->setTextAlignment(Qt::AlignCenter);
+
+    notStartedProjects->addItem(item);
 
     saveProjectToDB(&title, &git, &status, &date);
 }
@@ -194,6 +197,8 @@ void MainWindow::openProject()
         if (item)
         {
             QDialog dialog(this);
+            QSizeGrip *sizeGrip = new QSizeGrip(this);
+            
             dialog.setFixedWidth(600);
             dialog.setMinimumHeight(500);
             dialog.setWindowTitle(tr("Project"));

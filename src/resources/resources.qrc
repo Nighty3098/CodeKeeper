@@ -75,5 +75,6 @@
         <file>russian.png</file>
         <file>MapleMono-ExtraBold.ttf</file>
         <file>Monoton-Regular.ttf</file>
+        <file>git.png</file>
     </qresource>
 </RCC>

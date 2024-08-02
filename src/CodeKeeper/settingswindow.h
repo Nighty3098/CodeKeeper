@@ -86,9 +86,6 @@ private:
     QPoint m_dragPosition;
 
     QSizeGrip *sizeGrip;
-    QSizeGrip *sizeGrip2;
-    QSizeGrip *sizeGrip3;
-    QSizeGrip *sizeGrip4;
 
     QWidget *centralWidget;
     QVBoxLayout *mainLayout;

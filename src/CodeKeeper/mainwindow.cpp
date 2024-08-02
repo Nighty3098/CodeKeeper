@@ -152,8 +152,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         QPixmap(":/settings.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    openSettingsBtn->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                                "#0D1117;'>Settings</p>");
+    openSettingsBtn->setToolTip(tr("Settings"));
     openSettingsBtn->setFixedSize(50, 50);
     openSettingsBtn->setFlat(true);
 
@@ -161,8 +160,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         QPixmap(":/sync.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    syncDataBtn->setToolTip("<p style='color: #ffffff; border-radius: 5px; "
-                            "background-color: #0D1117;'>Sync</p>");
+    syncDataBtn->setToolTip(tr("Sync"));
     syncDataBtn->setFixedSize(50, 50);
     syncDataBtn->setFlat(true);
 
@@ -170,8 +168,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         QPixmap(":/user.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    openAccountWindow->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                                  "#0D1117;'>Account</p>");
+    openAccountWindow->setToolTip(tr("Account"));
     openAccountWindow->setFixedSize(50, 50);
     openAccountWindow->setFlat(true);
 
@@ -609,6 +606,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         "");
     mainTabButton->setFixedSize(50, 50);
     mainTabButton->setFlat(true);
+    mainTabButton->setToolTip(tr("Home"));
 
     tasksTabButton = new QPushButton(
         QPixmap(":/task.png")
@@ -616,6 +614,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         "");
     tasksTabButton->setFixedSize(50, 50);
     tasksTabButton->setFlat(true);
+    tasksTabButton->setToolTip(tr("Tasks"));
 
     notesTabButton = new QPushButton(
         QPixmap(":/document.png")
@@ -623,6 +622,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         "");
     notesTabButton->setFixedSize(50, 50);
     notesTabButton->setFlat(true);
+    notesTabButton->setToolTip(tr("Notes"));
 
     projectsTabButton = new QPushButton(
         QPixmap(":/project.png")
@@ -630,15 +630,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         "");
     projectsTabButton->setFixedSize(50, 50);
     projectsTabButton->setFlat(true);
+    projectsTabButton->setToolTip(tr("Projects"));
 
     QSpacerItem *headerSp5 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QSpacerItem *headerSp6 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     tabButtons->addItem(headerSp5);
     tabButtons->addWidget(mainTabButton);
+    tabButtons->addWidget(projectsTabButton);
     tabButtons->addWidget(tasksTabButton);
     tabButtons->addWidget(notesTabButton);
-    tabButtons->addWidget(projectsTabButton);
     tabButtons->addItem(headerSp6);
     tabButtons->addWidget(openAccountWindow);
     tabButtons->addWidget(syncDataBtn);

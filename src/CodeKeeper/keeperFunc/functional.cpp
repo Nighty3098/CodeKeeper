@@ -57,7 +57,7 @@ QString MainWindow::getCurrentDateTimeString()
 
 void MainWindow::updateTime()
 {
-    QString currentTime = QTime::currentTime().toString("hh:mm");
+    QString currentTime = QTime::currentTime().toString("hh:mm:ss");
     QString currentDate = QDate::currentDate().toString("dd MM yyyy");
 
     timeLabel->setText(currentTime);
@@ -112,10 +112,7 @@ void MainWindow::setConnectionStatus()
         isConnected->setIcon(
             QPixmap(":/connected.png")
                 .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isConnected->setToolTip("<p style='color: #ffffff; border: 1px "
-                                "#ffffff; border-radius: "
-                                "5px; background-color: "
-                                "#0D1117'>Connected</p>");
+        isConnected->setToolTip(tr("Connected"));
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     }
     else
@@ -123,10 +120,7 @@ void MainWindow::setConnectionStatus()
         isConnected->setIcon(
             QPixmap(":/disconnected.png")
                 .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isConnected->setToolTip("<p style='color: #ffffff; border: 1px "
-                                "#ffffff; border-radius: "
-                                "5px; background-color: "
-                                "#0D1117;'>Disconnected</p>");
+        isConnected->setToolTip(tr("Disconnected"));
     }
 
     if (isAutoSyncing)
@@ -134,10 +128,7 @@ void MainWindow::setConnectionStatus()
         isAutoSync->setIcon(
             QPixmap(":/auto_sync_on.png")
                 .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px "
-                               "#ffffff; border-radius: 5px; "
-                               "background-color: "
-                               "#0D1117;'>Auto sync on</p>");
+        isAutoSync->setToolTip(tr("Auto sync on"));
         sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
     }
     else
@@ -145,10 +136,7 @@ void MainWindow::setConnectionStatus()
         isAutoSync->setIcon(
             QPixmap(":/auto_sync_off.png")
                 .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        isAutoSync->setToolTip("<p style='color: #ffffff; border: 1px "
-                               "#ffffff; border-radius: 5px; "
-                               "background-color: "
-                               "#0D1117;'>Auto sync off</p>");
+        isAutoSync->setToolTip(tr("Auto sync off"));
     }
 }
 
@@ -418,8 +406,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "}"
                                    "QListWidget::Item {"
                                    "margin: 0px;"
-                                   "background-color: rgb(211, 102, 107); color: #000000; "
-                                   "border-width: 0px; border-color: rgb(211, 102, 107); "
+                                   "background-color: rgba(211, 102, 107, 250); color: #000000; "
+                                   "border-width: 0px; border-color: rgba(211, 102, 107, 250); "
                                    "border-radius: 5px;"
                                    "font-size: " +
                                    font_size +
@@ -436,7 +424,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                   "}"
                                   "QListWidget::Item {"
                                   "margin: 0px;"
-                                  "background-color: rgb(231, 232, 141); "
+                                  "background-color: rgba(231, 232, 141, 250); "
                                   "color: #000000; text-decoration: underline; "
                                   "border-width: 0px; "
                                   "border-radius: 5px;"
@@ -455,7 +443,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                  "}"
                                  "QListWidget::Item {"
                                  "margin: 0px;"
-                                 "background-color: rgb(195, 232, 141); "
+                                 "background-color: rgba(195, 232, 141, 250); "
                                  "color: #000000;"
                                  "border-radius: 5px;"
                                  "line-through; border-width: 0px; "
@@ -474,7 +462,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "}"
                                       "QListWidget::Item {"
                                       "margin: 0px;"
-                                      "background-color: rgb(211, 102, 107);"
+                                      "background-color: rgba(211, 102, 107, 250);"
                                       "color: #000000; border-width: 0px; "
                                       "border-radius: 5px;"
                                       "border-color: #ff757f; "
@@ -493,7 +481,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "}"
                                    "QListWidget::Item {"
                                    "margin: 0px;"
-                                   "background-color: rgb(231, 232, 141); color: #000000; "
+                                   "background-color: rgba(231, 232, 141, 250); color: #000000; "
                                    "border-radius: 5px;"
                                    "border-width: 0px; border-color: #ffc777; "
                                    "font-size: " +
@@ -511,7 +499,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "}"
                                       "QListWidget::Item {"
                                       "margin: 0px;"
-                                      "background-color: rgb(126, 156, 216 "
+                                      "background-color: rgba(126, 156, 216, 250 "
                                       "); color: #000000; border-width: 0px; "
                                       "border-radius: 5px;"
                                       "border-color: #82aaff; "
@@ -530,7 +518,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                     "}"
                                     "QListWidget::Item {"
                                     "margin: 0px;"
-                                    "background-color: rgb(195, 232, 141); color: #000000; "
+                                    "background-color: rgba(195, 232, 141, 250); color: #000000; "
                                     "border-radius: 5px;"
                                     "border-width: 0px; border-color: #c3e88d; "
                                     "font-size: " +
@@ -578,8 +566,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     windowTitle->setStyleSheet("font-size: " + font_size + "pt;");
 
     tasksProgress->setFont(*selectedFont);
-    tasksProgress->setStyleSheet("background-color: rgb(211, 102, 107); selection-background-color: "
-                                 "#c3e88d; color: #222436; font-size: " +
+    tasksProgress->setStyleSheet("background-color: rgba(211, 102, 107, 250); selection-background-color: "
+                                 "rgba(195, 232, 141, 250); color: #222436; font-size: " +
                                  font_size + "pt;");
 
     menu->setStyleSheet("font-size: " + font_size + "pt;");
@@ -613,30 +601,18 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     setTableB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
     setQuoteB->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
 
-    setH1B->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                       "#0D1117;'>Set heading 1</p>");
-    setH2B->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                       "#0D1117;'>Set heading 2</p>");
-    setH3B->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                       "#0D1117;'>Set heading 3</p>");
-    setListB->setToolTip("<p style='color: #ffffff; border-radius: 5px; "
-                         "background-color: #0D1117;'>List</p>");
-    setLinkB->setToolTip("<p style='color: #ffffff; border-radius: 5px; "
-                         "background-color: #0D1117;'>Link</p>");
-    setBoldB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                         "#0D1117;'>Bold text</p>");
-    setItalicB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                           "#0D1117;'>Italic text</p>");
-    setStrikeB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                           "#0D1117;'>Strikethrough text</p>");
-    setTaskB->setToolTip("<p style='color: #ffffff; border-radius: 5px; "
-                         "background-color: #0D1117;'>Task</p>");
-    setNumListB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                            "#0D1117;'>Numbered list</p>");
-    setTableB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                          "#0D1117;'>Insert table</p>");
-    setQuoteB->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                          "#0D1117;'>Set quote</p>");
+    setH1B->setToolTip(tr("Set heading 1"));
+    setH2B->setToolTip(tr("Set heading 2"));
+    setH3B->setToolTip(tr("Set heading 3"));
+    setListB->setToolTip(tr("List"));
+    setLinkB->setToolTip(tr("Link"));
+    setBoldB->setToolTip(tr("Bold text"));
+    setItalicB->setToolTip(tr("Italic text"));
+    setStrikeB->setToolTip(tr("Strikethrough text"));
+    setTaskB->setToolTip(tr("Task"));
+    setNumListB->setToolTip(tr("Numbered list"));
+    setTableB->setToolTip(tr("Insert table"));
+    setQuoteB->setToolTip(tr("Set quote"));
 
     menuButton->setStyleSheet("border: 5px; border-radius: 10px;");
 

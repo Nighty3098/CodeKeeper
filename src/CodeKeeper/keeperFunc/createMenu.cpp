@@ -139,9 +139,9 @@ void MainWindow::createProjectMenu(QMenu *menu, QString font_size)
     menu->addSeparator();
     
     editProject = menu->addAction(
-        QPixmap(":/edit.png")
+        QPixmap(":/open.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("Edit"), this, SLOT(openProject()));
+        tr("Open"), this, SLOT(openProject()));
     openProjectInGit = menu->addAction(
         QPixmap(":/open.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
