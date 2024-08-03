@@ -1,16 +1,17 @@
 #include "mainwindow.h"
 
 #include <md4c-html.h>
+#include <md4c.h>
 
 #include <QDragEnterEvent>
 #include <QInputDialog>
 #include <QMimeData>
 #include <QPropertyAnimation>
 #include <QSizeGrip>
+#include <QSystemTrayIcon>
 #include <QThread>
 #include <QWebEngineView>
 #include <QtWidgets>
-#include <QSystemTrayIcon>
 
 #include "3rdParty/qmarkdowntextedit/markdownhighlighter.h"
 #include "keeperFunc/addConnects.cpp"
@@ -48,8 +49,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createTrayMenu(&trayMenu, font_size);
     trayIcon->setContextMenu(&trayMenu);
 
-    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
+            SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
     trayIcon->showMessage("CodeKeeper", "Welcome back, " + git_user + "!", QSystemTrayIcon::Information, 3000);
 
@@ -165,7 +166,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     decorationLabel = new QLabel();
     decorationLabel->setAlignment(Qt::AlignHCenter);
-    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(350, 350, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     openSettingsBtn = new QPushButton(
         QPixmap(":/settings.png")

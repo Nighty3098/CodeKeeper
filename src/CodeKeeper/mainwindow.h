@@ -178,7 +178,6 @@ private slots:
 
     void openSyncWindow();
     void openFolder();
-    void openDocumentation(QString fileName);
 
     void selectFileInQTreeView(QTreeView *treeView, const QString &fileName);
 

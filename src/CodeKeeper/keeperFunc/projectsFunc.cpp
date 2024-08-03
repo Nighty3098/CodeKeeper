@@ -67,29 +67,6 @@ void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
     updateProjectStatus(&status, &date, &data[2]);
 }
 
-void loadDocumentations(QDir path, QComboBox &comboBox)
-{
-    QFileInfoList fileInfoList = path.entryInfoList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
-    foreach (const QFileInfo &fileInfo, fileInfoList)
-    {
-        if (fileInfo.suffix() == "md")
-        {
-            comboBox.addItem(fileInfo.baseName());
-        }
-    }
-
-    QDir subdir;
-    QFileInfoList subdirList = path.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
-    foreach (const QFileInfo &subdirInfo, subdirList)
-    {
-        subdir.setPath(subdirInfo.filePath());
-        if (subdir.exists())
-        {
-            loadDocumentations(subdir, comboBox);
-        }
-    }
-}
-
 void MainWindow::createProject()
 {
     QString date = getCurrentDateTimeString();
@@ -153,15 +130,6 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStart
     totalProjectsThread->start();
 }
 
-void MainWindow::openDocumentation(QString fileName)
-{
-    QString name = fileName + ".md";
-    qDebug() << name;
-    tabs->setCurrentIndex(1);
-
-    selectFileInQTreeView(notesList, name);
-}
-
 void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName)
 {
 }
@@ -200,7 +168,7 @@ void MainWindow::openProject()
             QDialog dialog(this);
             QSizeGrip *sizeGrip = new QSizeGrip(this);
 
-            dialog.setFixedWidth(600);
+            dialog.setFixedWidth(570);
             dialog.setMinimumHeight(500);
             dialog.setWindowTitle(tr("Project"));
             dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
@@ -273,10 +241,6 @@ void MainWindow::openProject()
             linkToGit->setFixedHeight(25);
             linkToGit->setFont(selectedFont);
 
-            QComboBox *documentation = new QComboBox();
-            documentation->setMinimumSize(170, 20);
-            documentation->setFont(selectedFont);
-
             QLabel *lastMod = new QLabel();
             lastMod->setText(tr("Last mod: "));
             lastMod->setStyleSheet("font-size: " + font_size + "pt;");
@@ -304,32 +268,15 @@ void MainWindow::openProject()
             QSpacerItem *leftSpacer = new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
             QSpacerItem *rightSpacer = new QSpacerItem(0, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-            // statsLayout->addItem(leftSpacer);
             statsLayout->addWidget(git_stats);
-            // statsLayout->addItem(rightSpacer);
-
-            QPushButton *openButton = new QPushButton();
-            openButton->setText(tr("Open"));
-            openButton->setStyleSheet("font-size: " + font_size + "pt;");
-            openButton->setFixedHeight(25);
-            openButton->setIcon(QPixmap(":/read.png")
-                                    .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio,
-                                            Qt::SmoothTransformation));
-            openButton->setIconSize(QSize(10, 10));
-            openButton->setFont(selectedFont);
 
             title->setText(projectData[0]);
             linkToGit->setText(projectData[1]);
             lastMod->setText(tr("Last mod: ") + projectData[4]);
 
-            loadDocumentations(dir, *documentation);
-            documentation->setCurrentText(projectData[2]);
-
             mainLayout.addWidget(title, 0, 0, 1, 2);
             mainLayout.addWidget(linkToGit, 1, 0, 1, 2);
-            // mainLayout.addWidget(documentation, 2, 0);
-            // mainLayout.addWidget(openButton, 2, 1);
-            // mainLayout.addWidget(descriptionL, 3, 0, 1, 2);
+            mainLayout.addWidget(descriptionL, 3, 0, 1, 2);
             mainLayout.addLayout(statsLayout, 5, 0, 5, 2);
             mainLayout.addWidget(lastMod, 10, 0, 1, 2, Qt::AlignCenter);
 
@@ -363,23 +310,17 @@ void MainWindow::openProject()
                 QString projectTitle = title->text();
                 QString projectLink = linkToGit->text();
                 QString projectCreatedTime = getCurrentDateTimeString();
-                QString projectDocumentation = documentation->currentText();
 
                 QString itemText = projectTitle + "\n" + projectLink + "\n" + projectCreatedTime;
                 item->setText(itemText);
                 qDebug() << itemText;
 
-                updateProjectData(&projectTitle, &projectLink, &projectDocumentation, &projectCreatedTime,
-                                  &PCreatedTime, &PGit);
+                QString projectDocumentation = "";
+
+                updateProjectData(&projectTitle, &projectLink, &projectDocumentation, &projectCreatedTime, &PCreatedTime, &PGit);
             });
 
             QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
-
-            QObject::connect(openButton, &QPushButton::clicked, [&]() {
-                dialog.close();
-                QString doc = documentation->currentText();
-                openDocumentation(doc);
-            });
 
             QObject::connect(linkToGit, &QLineEdit::textChanged, [&]() {
                 QString prefix = "https://github.com/";
