@@ -307,6 +307,7 @@ private:
     QLabel *timeLabel;
     QLabel *dateLabel;
     QLabel *helloLabel;
+    QLabel *decorationLabel;
 
     QPushButton *maximizeBtn;
     QPushButton *closeBtn;

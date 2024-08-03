@@ -352,13 +352,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     QString font_size_hello = QString::number(*font_size_int * 1.4);
 
     timeLabel->setFont(*selectedFont);
-    timeLabel->setStyleSheet("font-size: " + font_size_clock + "pt; color: #8ebecf;");
+    timeLabel->setStyleSheet("background: transparent; font-size: " + font_size_clock + "pt; color: #8ebecf;");
 
     dateLabel->setFont(*selectedFont);
-    dateLabel->setStyleSheet("font-size: " + font_size_date + "pt; color: #8ebecf;");
+    dateLabel->setStyleSheet("background: transparent; font-size: " + font_size_date + "pt; color: #8ebecf;");
 
     helloLabel->setFont(*selectedFont);
-    helloLabel->setStyleSheet("font-size: " + font_size_hello + "pt; color: #8ebecf;");
+    helloLabel->setStyleSheet("background: transparent; font-size: " + font_size_hello + "pt; color: #8ebecf;");
 
     projectsMainLabel->setFont(*selectedFont);
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
