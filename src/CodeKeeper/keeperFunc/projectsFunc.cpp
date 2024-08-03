@@ -19,32 +19,33 @@ void MainWindow::activateProjectContextMenu(const QPoint &pos, QListWidget *list
     QMenu *submenu = new QMenu;
 
     // ! Trash - need fixed
-    if(isCustomTheme) {
-        submenu->setStyleSheet(
-            "QMenu {"
-            "    background-color: #2b3d4c;"
-            "    color: #fff;"
-            "    border: 1px solid #fff;"
-            "    border-radius: 10px;"
-            "}"
-            "QMenu::separator {"
-            "    height: 3px;"
-            "    border-radius: 1px;"
-            "    background-color: #fff;"
-            "}"
-            "QMenu::item {"
-            "    border-radius: 0px;"
-            "    color: #fff;"
-            "    margin: 5px 10px;"
-            "}"
-            "QMenu::item:selected {"
-            "    border-radius: 10px;"
-            "    color: #78b3ba;"
-            "    text-decoration: none;"
-            "}"
-        );
+    if (isCustomTheme)
+    {
+        submenu->setStyleSheet("QMenu {"
+                               "    background-color: #2b3d4c;"
+                               "    color: #fff;"
+                               "    border: 1px solid #fff;"
+                               "    border-radius: 10px;"
+                               "}"
+                               "QMenu::separator {"
+                               "    height: 3px;"
+                               "    border-radius: 1px;"
+                               "    background-color: #fff;"
+                               "}"
+                               "QMenu::item {"
+                               "    border-radius: 0px;"
+                               "    color: #fff;"
+                               "    margin: 5px 10px;"
+                               "}"
+                               "QMenu::item:selected {"
+                               "    border-radius: 10px;"
+                               "    color: #78b3ba;"
+                               "    text-decoration: none;"
+                               "}");
     }
-    else {}
+    else
+    {
+    }
 
     createProjectMenu(submenu, font_size);
 
@@ -198,7 +199,7 @@ void MainWindow::openProject()
         {
             QDialog dialog(this);
             QSizeGrip *sizeGrip = new QSizeGrip(this);
-            
+
             dialog.setFixedWidth(600);
             dialog.setMinimumHeight(500);
             dialog.setWindowTitle(tr("Project"));

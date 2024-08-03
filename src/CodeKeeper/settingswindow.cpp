@@ -399,7 +399,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     QThread *repoTimerThread = new QThread;
     QObject::connect(repoTimerThread, &QThread::started, this, [this, repoTimer]() {
         connect(repoTimer, &QTimer::timeout, [=]() { checkRepo(); });
-        repoTimer->start(100);
+        repoTimer->start(2000);
 
         qDebug() << "repoTimerThread started";
     });

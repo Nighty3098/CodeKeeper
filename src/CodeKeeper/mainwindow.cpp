@@ -187,8 +187,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->setAlignment(Qt::AlignHCenter);
 
     QStringList filters;
-    filters << ""
-            << "*.md";
+    filters << "" << "*.md";
 
     iconProvider = new CustomIconProvider();
 

@@ -61,7 +61,7 @@ protected:
         qDebug() << "[Dropped file]:" << filePath;
 
         if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md") {
-            QString newLine = "[Dropped file](" + filePath + ")";
+            QString newLine = "[Dropped document](" + filePath + ")";
 
             QTextCursor cursor = this->textCursor();
             int lineNumber = cursor.blockNumber();

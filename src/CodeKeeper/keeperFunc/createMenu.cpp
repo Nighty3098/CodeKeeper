@@ -135,9 +135,9 @@ void MainWindow::createProjectMenu(QMenu *menu, QString font_size)
         QPixmap(":/delete.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Remove"), this, SLOT(removeProject()), Qt::Key_Delete);
-    
+
     menu->addSeparator();
-    
+
     editProject = menu->addAction(
         QPixmap(":/open.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
