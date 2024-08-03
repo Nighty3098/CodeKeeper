@@ -73,5 +73,9 @@
         <file>usa.png</file>
         <file>japan.png</file>
         <file>russian.png</file>
+        <file>MapleMono-ExtraBold.ttf</file>
+        <file>Monoton-Regular.ttf</file>
+        <file>git.png</file>
+        <file>tea.svg</file>
     </qresource>
 </RCC>

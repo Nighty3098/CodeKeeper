@@ -106,6 +106,7 @@ void MainWindow::createConnects()
     connect(openAccountWindow, SIGNAL(clicked()), this, SLOT(fOpenAccountWindow()));
     connect(syncDataBtn, SIGNAL(clicked()), this, SLOT(openSyncWindow()));
 
+    // fix
     connect(notStartedProjects, &QListWidget::itemClicked, this, &MainWindow::on_listWidget_itemClicked);
     connect(startedProjects, &QListWidget::itemClicked, this, &MainWindow::on_listWidget_itemClicked);
     connect(finishlineProjects, &QListWidget::itemClicked, this, &MainWindow::on_listWidget_itemClicked);
@@ -114,6 +115,15 @@ void MainWindow::createConnects()
     connect(incompleteTasks, &QListWidget::itemClicked, this, &MainWindow::on_listWidget_itemClicked);
     connect(inprocessTasks, &QListWidget::itemClicked, this, &MainWindow::on_listWidget_itemClicked);
     connect(completeTasks, &QListWidget::itemClicked, this, &MainWindow::on_listWidget_itemClicked);
+
+    connect(notStartedProjects, &QListWidget::itemPressed, this, &MainWindow::on_listWidget_itemClicked);
+    connect(startedProjects, &QListWidget::itemPressed, this, &MainWindow::on_listWidget_itemClicked);
+    connect(finishlineProjects, &QListWidget::itemPressed, this, &MainWindow::on_listWidget_itemClicked);
+    connect(finishedProjects, &QListWidget::itemPressed, this, &MainWindow::on_listWidget_itemClicked);
+
+    connect(incompleteTasks, &QListWidget::itemPressed, this, &MainWindow::on_listWidget_itemClicked);
+    connect(inprocessTasks, &QListWidget::itemPressed, this, &MainWindow::on_listWidget_itemClicked);
+    connect(completeTasks, &QListWidget::itemPressed, this, &MainWindow::on_listWidget_itemClicked);
 
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::updateMDPreview);
 
@@ -167,14 +177,14 @@ void MainWindow::createConnects()
         setWindowTitle("CodeKeeper");
     });
     connect(tasksTabButton, &QPushButton::clicked, [=]() {
-        tabs->setCurrentIndex(1);
-        windowTitle->setText(" ~ Notes ~ ");
-        setWindowTitle(tr("Notes"));
-    });
-    connect(notesTabButton, &QPushButton::clicked, [=]() {
         tabs->setCurrentIndex(2);
         windowTitle->setText(" ~ Tasks ~ ");
         setWindowTitle(tr("Tasks"));
+    });
+    connect(notesTabButton, &QPushButton::clicked, [=]() {
+        tabs->setCurrentIndex(1);
+        windowTitle->setText(" ~ Notes ~ ");
+        setWindowTitle(tr("Notes"));
     });
     connect(projectsTabButton, &QPushButton::clicked, [=]() {
         tabs->setCurrentIndex(3);

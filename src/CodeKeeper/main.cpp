@@ -14,7 +14,6 @@ int main(int argc, char *argv[])
     int appLang = globalSettings->value("lang").value<int>();
 
     QTranslator translator;
-
     if (appLang == 1)
     {
         QString file = "CodeKeeper_ru_RU.qm";
@@ -37,11 +36,11 @@ int main(int argc, char *argv[])
     {
         qDebug() << "Loading " << "Spanish";
     }
-
     qApp->installTranslator(&translator);
 
     MainWindow keeper;
     keeper.setWindowIcon(QIcon(":/icon.png"));
+    keeper.setMinimumSize(900, 700);
     keeper.show();
 
     return a.exec();

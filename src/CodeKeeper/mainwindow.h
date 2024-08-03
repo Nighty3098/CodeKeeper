@@ -61,7 +61,7 @@ protected:
         qDebug() << "[Dropped file]:" << filePath;
 
         if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md") {
-            QString newLine = "[Dropped file](" + filePath + ")";
+            QString newLine = "[Dropped document](" + filePath + ")";
 
             QTextCursor cursor = this->textCursor();
             int lineNumber = cursor.blockNumber();
@@ -168,6 +168,8 @@ public:
     int appLang;
 
 private slots:
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
     QString getRepositoryData(QString git_url, QTableWidget *table, QLabel *label);
     QString getProjectIssues(QString git_url);
     
@@ -248,7 +250,6 @@ private slots:
     void onMovingTaskFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingTaskTo(QListWidgetItem *item, QListWidget *list);
 
-    void createGitBadges(QString git_url, QWebEngineView *page);
     QStringList GetProjectData(QString *title, QString *status, QString *git_url);
     void updateProjectStatus(QString *status, QString *createdTime, QString *oldTime);
     void removeProjectFromDB(QString *git_url, QString *status, QString *createdTime);
@@ -259,10 +260,12 @@ private slots:
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
     bool checkConnection();
+    void updateTime();
 
     void createNotesMenu(QMenu *menu, QString font_size);
     void createProjectMenu(QMenu *menu, QString font_size);
     void createTaskMenu(QMenu *menu, QString font_size);
+    void createTrayMenu(QMenu *menu, QString font_size);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override
@@ -286,6 +289,8 @@ protected:
     }
 
 private:
+    QSystemTrayIcon *trayIcon;
+
     // shortcuts
     QShortcut* toFirstTab;
     QShortcut* toSecondTab;
@@ -294,7 +299,6 @@ private:
     QShortcut* openSettingsWindowQS;
 
     // other
-    QLabel *appIcon;
     QLabel *windowTitle;
     QWidget *centralWidget;
     QGridLayout *mainLayout;
@@ -304,6 +308,11 @@ private:
     QSizeGrip *sizeGrip2;
     QSizeGrip *sizeGrip3;
     QSizeGrip *sizeGrip4;
+
+    QLabel *timeLabel;
+    QLabel *dateLabel;
+    QLabel *helloLabel;
+    QLabel *decorationLabel;
 
     QPushButton *maximizeBtn;
     QPushButton *closeBtn;
@@ -403,6 +412,11 @@ private:
     QAction *setQuoteA;
     QAction *nameAction;
     QAction *dateAction;
+
+    QAction *closeAppA;
+    QAction *openNotesA;
+    QAction *openProjectsA;
+    QAction *openTasksA;
 
     QMenu *menu;
     QMenu *tasksMenu;

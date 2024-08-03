@@ -150,6 +150,7 @@
     "valarray": "cpp",
     "locale": "cpp",
     "ios": "cpp",
-    "regex": "cpp"
+    "regex": "cpp",
+    "__locale": "cpp"
   }
 }

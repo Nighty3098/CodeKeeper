@@ -10,6 +10,7 @@
 #include <QThread>
 #include <QWebEngineView>
 #include <QtWidgets>
+#include <QSystemTrayIcon>
 
 #include "3rdParty/qmarkdowntextedit/markdownhighlighter.h"
 #include "keeperFunc/addConnects.cpp"
@@ -32,10 +33,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
+    setMinimumSize(900, 900);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
     getSettingsData();
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon(":/icon.png"));
+    trayIcon->setVisible(true);
+    trayIcon->setToolTip(tr("CodeKeeper"));
+
+    QMenu trayMenu;
+    createTrayMenu(&trayMenu, font_size);
+    trayIcon->setContextMenu(&trayMenu);
+
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+
+
+    trayIcon->showMessage("CodeKeeper", "Welcome back, " + git_user + "!", QSystemTrayIcon::Information, 3000);
 
     if (isCustomTheme)
     {
@@ -100,14 +116,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     minimizeBtn = new QPushButton();
     maximizeBtn = new QPushButton();
 
-    openAccountWindow = new QPushButton(
-        QPixmap(":/user.png")
-            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        "");
-    openAccountWindow->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                                  "#0D1117;'>Account</p>");
-    openAccountWindow->setFixedSize(35, 35);
-
     winControlL = new QHBoxLayout;
     winControlL->setSpacing(7);
 
@@ -146,28 +154,42 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     mainLayout->setSpacing(0);
 
     // ========================================================
+    timeLabel = new QLabel("");
+    timeLabel->setAlignment(Qt::AlignBottom);
 
-    appIcon = new QLabel();
-    appIcon->setAlignment(Qt::AlignCenter);
-    appIcon->setPixmap(QPixmap(":/logo.png").scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    dateLabel = new QLabel("");
+    dateLabel->setAlignment(Qt::AlignTop);
 
-    // settings btn
+    helloLabel = new QLabel();
+    helloLabel->setAlignment(Qt::AlignLeft);
+
+    decorationLabel = new QLabel();
+    decorationLabel->setAlignment(Qt::AlignHCenter);
+    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
     openSettingsBtn = new QPushButton(
         QPixmap(":/settings.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    openSettingsBtn->setToolTip("<p style='color: #ffffff; border-radius: 5px; background-color: "
-                                "#0D1117;'>Settings</p>");
-    openSettingsBtn->setFixedSize(35, 35);
+    openSettingsBtn->setToolTip(tr("Settings"));
+    openSettingsBtn->setFixedSize(50, 50);
+    openSettingsBtn->setFlat(true);
 
-    // sync btn
     syncDataBtn = new QPushButton(
         QPixmap(":/sync.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    syncDataBtn->setToolTip("<p style='color: #ffffff; border-radius: 5px; "
-                            "background-color: #0D1117;'>Sync</p>");
-    syncDataBtn->setFixedSize(35, 35);
+    syncDataBtn->setToolTip(tr("Sync"));
+    syncDataBtn->setFixedSize(50, 50);
+    syncDataBtn->setFlat(true);
+
+    openAccountWindow = new QPushButton(
+        QPixmap(":/user.png")
+            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        "");
+    openAccountWindow->setToolTip(tr("Account"));
+    openAccountWindow->setFixedSize(50, 50);
+    openAccountWindow->setFlat(true);
 
     // ========================================================
     QHBoxLayout *menuLayout = new QHBoxLayout;
@@ -184,8 +206,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->setAlignment(Qt::AlignHCenter);
 
     QStringList filters;
-    filters << ""
-            << "*.md";
+    filters << "" << "*.md";
 
     iconProvider = new CustomIconProvider();
 
@@ -515,13 +536,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // main tab
     QWidget *mainTab = new QWidget();
-    QVBoxLayout *firstLayout = new QVBoxLayout(mainTab);
+    QGridLayout *firstLayout = new QGridLayout(mainTab);
 
-    QVBoxLayout *infoLayout = new QVBoxLayout();
-    infoLayout->setAlignment(Qt::AlignCenter);
-    infoLayout->addWidget(appIcon);
-
-    firstLayout->addLayout(infoLayout);
+    firstLayout->addWidget(decorationLabel, 4, 0, 2, 6, Qt::AlignBottom | Qt::AlignRight);
+    firstLayout->addWidget(timeLabel, 0, 1, 2, 2, Qt::AlignBottom);
+    firstLayout->addWidget(dateLabel, 2, 1, 1, 2, Qt::AlignTop);
+    firstLayout->addWidget(helloLabel, 3, 1, 3, 5, Qt::AlignLeft | Qt::AlignVCenter);
 
     tabs->addTab(mainTab, tr("Homepage"));
 
@@ -549,15 +569,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tabs->addTab(projectsTab, tr("Projects"));
 
-    QIcon mainIco;
-    QIcon projectsIco;
-    QIcon noteIco;
-    QIcon tasksIco;
-
-    mainIco.addFile(":/main.png");
-    projectsIco.addFile(":/project.png");
-    noteIco.addFile(":/edit.png");
-    tasksIco.addFile(":/task.png");
+    QPixmap mainIco(":/main.png");
+    QPixmap projectsIco(":/project.png");
+    QPixmap noteIco(":/document.png");
+    QPixmap tasksIco(":/task.png");
 
     tabs->setTabIcon(tabs->indexOf(mainTab), mainIco);
     tabs->setTabIcon(tabs->indexOf(notesTab), noteIco);
@@ -608,34 +623,42 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         QPixmap(":/main.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    mainTabButton->setFixedSize(35, 35);
+    mainTabButton->setFixedSize(50, 50);
+    mainTabButton->setFlat(true);
+    mainTabButton->setToolTip(tr("Home"));
 
     tasksTabButton = new QPushButton(
         QPixmap(":/task.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    tasksTabButton->setFixedSize(35, 35);
+    tasksTabButton->setFixedSize(50, 50);
+    tasksTabButton->setFlat(true);
+    tasksTabButton->setToolTip(tr("Tasks"));
 
     notesTabButton = new QPushButton(
-        QPixmap(":/note.png")
+        QPixmap(":/document.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    notesTabButton->setFixedSize(35, 35);
+    notesTabButton->setFixedSize(50, 50);
+    notesTabButton->setFlat(true);
+    notesTabButton->setToolTip(tr("Notes"));
 
     projectsTabButton = new QPushButton(
         QPixmap(":/project.png")
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
-    projectsTabButton->setFixedSize(35, 35);
+    projectsTabButton->setFixedSize(50, 50);
+    projectsTabButton->setFlat(true);
+    projectsTabButton->setToolTip(tr("Projects"));
 
     QSpacerItem *headerSp5 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QSpacerItem *headerSp6 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     tabButtons->addItem(headerSp5);
     tabButtons->addWidget(mainTabButton);
+    tabButtons->addWidget(projectsTabButton);
     tabButtons->addWidget(tasksTabButton);
     tabButtons->addWidget(notesTabButton);
-    tabButtons->addWidget(projectsTabButton);
     tabButtons->addItem(headerSp6);
     tabButtons->addWidget(openAccountWindow);
     tabButtons->addWidget(syncDataBtn);
@@ -679,6 +702,40 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         qDebug() << "connectsThread started";
     });
     connectsThread->start();
+
+    QThread *timedateThread = new QThread;
+    QObject::connect(timedateThread, &QThread::started, this, [this]() {
+        QTimer *dateTimer = new QTimer();
+        dateTimer->setInterval(1000);
+        QObject::connect(dateTimer, &QTimer::timeout, this, [this]() { emit updateTime(); });
+        dateTimer->start();
+    });
+    timedateThread->start();
+
+    QThread *checkTasks = new QThread;
+    QObject::connect(checkTasks, &QThread::started, this, [this]() {
+        QTimer *tasksTimer = new QTimer();
+        tasksTimer->setInterval(1000);
+        QObject::connect(tasksTimer, &QTimer::timeout, this, [this]() {
+            int incompleteTasksCount = incompleteTasks->count();
+
+            int totalTasksCount = completeTasks->count() + inprocessTasks->count() + incompleteTasks->count();
+
+            if (incompleteTasksCount >= 1)
+            {
+                helloLabel->setText(tr("Welcome, ") + git_user + tr("!\n\nYou have ") +
+                                    QString::number(incompleteTasksCount) + tr(" uncompleted tasks out of ") +
+                                    QString::number(totalTasksCount) + "");
+            }
+            else
+            {
+                helloLabel->setText(tr("Welcome, ") + git_user +
+                                    tr("!\n\nYou have completed all of your tasks for the day. Good job!"));
+            }
+        });
+        tasksTimer->start();
+    });
+    checkTasks->start();
 
     qDebug() << "" << dir;
     qDebug() << "Load time:" << startup.elapsed() << "ms";

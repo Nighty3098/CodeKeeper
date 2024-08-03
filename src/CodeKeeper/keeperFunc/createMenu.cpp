@@ -1,5 +1,26 @@
 #include "mainwindow.h"
 
+void MainWindow::createTrayMenu(QMenu *menu, QString font_size) {
+    closeAppA = menu->addAction(QPixmap(":/quit.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), tr("Exit"), this, [=]() {
+        this->close();
+    });
+    closeAppA = menu->addAction(QPixmap(":/task.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), tr("Open tasks"), this, [=]() {
+        tabs->setCurrentIndex(2);
+        windowTitle->setText(" ~ Tasks ~ ");
+        setWindowTitle(tr("Tasks"));
+    });
+    closeAppA = menu->addAction(QPixmap(":/project.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), tr("Open projects"), this, [=]() {
+        tabs->setCurrentIndex(3);
+        windowTitle->setText(" ~ Projects ~ ");
+        setWindowTitle(tr("Projects"));
+    });
+    closeAppA = menu->addAction(QPixmap(":/document.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), tr("Open notes"), this, [=]() {
+        tabs->setCurrentIndex(1);
+        windowTitle->setText(" ~ Notes ~ ");
+        setWindowTitle(tr("Notes"));
+    });
+}
+
 void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
 {
     newNote = menu->addAction(
@@ -56,15 +77,15 @@ void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     setH1A = editMenu->addAction(
         QPixmap(":/h1.png")
-            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Set H1"), this, SLOT(setH1()));
     setH2A = editMenu->addAction(
         QPixmap(":/h2.png")
-            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Set H2"), this, SLOT(setH2()));
     setH3A = editMenu->addAction(
         QPixmap(":/h3.png")
-            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Set H3"), this, SLOT(setH3()));
     editMenu->addSeparator();
     setQuoteA = editMenu->addAction(
@@ -135,10 +156,13 @@ void MainWindow::createProjectMenu(QMenu *menu, QString font_size)
         QPixmap(":/delete.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Remove"), this, SLOT(removeProject()), Qt::Key_Delete);
+
+    menu->addSeparator();
+
     editProject = menu->addAction(
-        QPixmap(":/edit.png")
+        QPixmap(":/open.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("Edit"), this, SLOT(openProject()));
+        tr("Open"), this, SLOT(openProject()));
     openProjectInGit = menu->addAction(
         QPixmap(":/open.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
