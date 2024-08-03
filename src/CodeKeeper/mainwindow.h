@@ -1,21 +1,21 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QFile>
 #include <QFileIconProvider>
 #include <QFileSystemModel>
 #include <QMainWindow>
-#include <QSettings>
-#include <QTextBrowser>
-#include <QtWidgets>
-#include <QtConcurrent/QtConcurrent>
-#include <QWebEngineView>
-#include <QDragEnterEvent>
 #include <QMimeData>
-#include <QDropEvent>
-#include <QFile>
-#include <QTextStream>
+#include <QSettings>
 #include <QTabBar>
+#include <QTextBrowser>
+#include <QTextStream>
 #include <QThread>
+#include <QWebEngineView>
+#include <QtConcurrent/QtConcurrent>
+#include <QtWidgets>
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "accountwindow.h"
@@ -24,10 +24,11 @@
 
 class CustomIconProvider : public QFileIconProvider
 {
-public:
+  public:
     QIcon icon(IconType type) const override
     {
-        switch (type) {
+        switch (type)
+        {
         case QFileIconProvider::IconType::Computer:
             return QIcon(":/home_dir.png");
         case QFileIconProvider::IconType::Trashcan:
@@ -44,12 +45,12 @@ public:
 
 class notesTree : public QTreeView
 {
-protected:
+  protected:
 };
 
 class NoteEditor : public QMarkdownTextEdit
 {
-protected:
+  protected:
     // ! Bug with cursor - need fixed
 
     void dropEvent(QDropEvent *event)
@@ -60,7 +61,8 @@ protected:
 
         qDebug() << "[Dropped file]:" << filePath;
 
-        if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md") {
+        if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md")
+        {
             QString newLine = "[Dropped document](" + filePath + ")";
 
             QTextCursor cursor = this->textCursor();
@@ -69,8 +71,9 @@ protected:
             cursor.movePosition(QTextCursor::EndOfLine);
             cursor.insertText(newLine);
             this->setTextCursor(cursor);
-
-        } else {
+        }
+        else
+        {
             QString newLine = "![Dropped file](" + filePath + ")";
 
             QTextCursor cursor = this->textCursor();
@@ -87,7 +90,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
+  public:
     QSettings *globalSettings;
 
     NoteEditor *noteEdit;
@@ -115,6 +118,8 @@ public:
 
     void activateProjectContextMenu(const QPoint &pos, QListWidget *listWidget);
     // void activateTasksContextMenu(const QPoint &pos);
+
+    QStringList getAllReposUrl();
 
     QString getKeeperStats();
 
@@ -167,12 +172,12 @@ public:
 
     int appLang;
 
-private slots:
+  private slots:
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
     QString getRepositoryData(QString git_url, QTableWidget *table, QLabel *label);
     QString getProjectIssues(QString git_url);
-    
+
     void openSettingsWindow();
     void fOpenAccountWindow();
 
@@ -200,16 +205,14 @@ private slots:
     void on_listWidget_itemClicked(QListWidgetItem *item);
     void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
     void onNoteDoubleClicked();
-    void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks,
-                             QListWidget *inprocessTasks, QListWidget *completeTasks,
-                             QProgressBar *tasksProgress);
+    void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks,
+                             QListWidget *completeTasks, QProgressBar *tasksProgress);
 
-    void getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks,
-                       QListWidget *inprocessTasks, QListWidget *completeTasks);
+    void getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks,
+                       QListWidget *completeTasks);
 
-    void getTotalProjects(QTabWidget *tasksTab, QListWidget *notStartedProjects,
-                          QListWidget *startedProjects, QListWidget *finishedProjects,
-                          QListWidget *finishlineProjects);
+    void getTotalProjects(QTabWidget *tasksTab, QListWidget *notStartedProjects, QListWidget *startedProjects,
+                          QListWidget *finishedProjects, QListWidget *finishlineProjects);
 
     void openProject();
     void openGitProject();
@@ -253,8 +256,8 @@ private slots:
     void updateProjectStatus(QString *status, QString *createdTime, QString *oldTime);
     void removeProjectFromDB(QString *git_url, QString *status, QString *createdTime);
     void saveProjectToDB(QString *title, QString *git_url, QString *status, QString *createdTime);
-    void updateProjectData(QString *title, QString *git_url, QString *doc, QString *createdTime,
-                           QString *oldTime, QString *oldGit);
+    void updateProjectData(QString *title, QString *git_url, QString *doc, QString *createdTime, QString *oldTime,
+                           QString *oldGit);
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
@@ -266,36 +269,42 @@ private slots:
     void createTaskMenu(QMenu *menu, QString font_size);
     void createTrayMenu(QMenu *menu, QString font_size);
 
-protected:
+  protected:
     void mousePressEvent(QMouseEvent *event) override
     {
-        if (event->button() == Qt::LeftButton) {
+        if (event->button() == Qt::LeftButton)
+        {
             m_dragPosition = event->globalPos() - frameGeometry().topLeft();
             event->accept();
-        } else {
+        }
+        else
+        {
             QMainWindow::mousePressEvent(event);
         }
     }
 
     void mouseMoveEvent(QMouseEvent *event) override
     {
-        if (event->buttons() & Qt::LeftButton) {
+        if (event->buttons() & Qt::LeftButton)
+        {
             move(event->globalPos() - m_dragPosition);
             event->accept();
-        } else {
+        }
+        else
+        {
             QMainWindow::mouseMoveEvent(event);
         }
     }
 
-private:
+  private:
     QSystemTrayIcon *trayIcon;
 
     // shortcuts
-    QShortcut* toFirstTab;
-    QShortcut* toSecondTab;
-    QShortcut* toThirdTab;
-    QShortcut* toFourthTab;
-    QShortcut* openSettingsWindowQS;
+    QShortcut *toFirstTab;
+    QShortcut *toSecondTab;
+    QShortcut *toThirdTab;
+    QShortcut *toFourthTab;
+    QShortcut *openSettingsWindowQS;
 
     // other
     QLabel *windowTitle;

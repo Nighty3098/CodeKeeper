@@ -85,6 +85,18 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     projectsStatsLayout->addWidget(projectsChart);
     projectsStatsLayout->addWidget(chartValuesDisplay);
 
+    QThread *langsStats = new QThread;
+    QObject::connect(langsStats, &QThread::started, this, [this]() {
+        MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
+
+        QStringList urls = mainWindow->getAllReposUrl();
+        QString langsStats = getLangByRepo(urls);
+        qDebug() << langsStats;
+
+        qDebug() << "langsStats started";
+    });
+    langsStats->start();
+
     QThread *styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {
         setFontStyle();

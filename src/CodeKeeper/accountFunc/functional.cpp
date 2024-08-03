@@ -1,14 +1,70 @@
+#include <QEventLoop>
 #include <QImage>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLabel>
+#include <QMap>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QPainter>
 #include <QPixmap>
+#include <QStringList>
 
 #include "mainwindow.h"
+
+QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
+{
+    QMap<QString, int> languageCounts;
+    int totalBytes = 0;
+
+    QNetworkAccessManager manager;
+
+    for (const QString& repoUrl : repoUrls) {
+        // Удаляем префикс "https://github.com/"
+        QString apiUrl = repoUrl;
+        apiUrl.remove("https://github.com/"); // Удаляем префикс
+        apiUrl.prepend("https://api.github.com/repos/"); // Добавляем префикс для API
+
+        apiUrl += "/languages"; // Формируем URL для API
+        QNetworkRequest request{QUrl(apiUrl)}; // Используем фигурные скобки для инициализации
+        request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+        request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+        request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+        request.setRawHeader("Accept", "application/vnd.github.v3+json");
+        QNetworkReply* reply = manager.get(request);
+
+        // Ожидаем завершения запроса
+        QEventLoop loop;
+        QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray response = reply->readAll();
+            QJsonDocument doc = QJsonDocument::fromJson(response);
+            QJsonObject obj = doc.object();
+
+            // Подсчитываем языки и их объем
+            for (const QString& lang : obj.keys()) {
+                int bytes = obj.value(lang).toInt();
+                languageCounts[lang] += bytes;
+                totalBytes += bytes;
+            }
+        } else {
+            qDebug() << "Ошибка при запросе:" << reply->errorString();
+        }
+        reply->deleteLater();
+    }
+
+    // Формируем строку с процентами
+    QString result;
+    for (const QString& lang : languageCounts.keys()) {
+        double percentage = (static_cast<double>(languageCounts[lang]) / totalBytes) * 100;
+        result += QString("%1: %2%\n").arg(lang).arg(QString::number(percentage, 'f', 2));
+    }
+
+    return result.trimmed(); // Убираем лишние пробелы и символы новой строки
+}
 
 void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
 {

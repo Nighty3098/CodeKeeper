@@ -63,6 +63,7 @@ private slots:
     void setTasksProgress();
     void setProjectsStats();
     void get_image_url(const QString& username, QLabel *label);
+    QString getLangByRepo(const QStringList& repositories);
 };
 
 #endif // ACCOUNTWINDOW_H

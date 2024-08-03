@@ -317,7 +317,8 @@ void MainWindow::openProject()
 
                 QString projectDocumentation = "";
 
-                updateProjectData(&projectTitle, &projectLink, &projectDocumentation, &projectCreatedTime, &PCreatedTime, &PGit);
+                updateProjectData(&projectTitle, &projectLink, &projectDocumentation, &projectCreatedTime,
+                                  &PCreatedTime, &PGit);
             });
 
             QObject::connect(cancelBtn, &QPushButton::clicked, [&]() { dialog.close(); });
