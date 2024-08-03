@@ -168,6 +168,8 @@ public:
     int appLang;
 
 private slots:
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
     QString getRepositoryData(QString git_url, QTableWidget *table, QLabel *label);
     QString getProjectIssues(QString git_url);
     
@@ -263,6 +265,7 @@ private slots:
     void createNotesMenu(QMenu *menu, QString font_size);
     void createProjectMenu(QMenu *menu, QString font_size);
     void createTaskMenu(QMenu *menu, QString font_size);
+    void createTrayMenu(QMenu *menu, QString font_size);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override
@@ -286,6 +289,8 @@ protected:
     }
 
 private:
+    QSystemTrayIcon *trayIcon;
+
     // shortcuts
     QShortcut* toFirstTab;
     QShortcut* toSecondTab;
@@ -407,6 +412,11 @@ private:
     QAction *setQuoteA;
     QAction *nameAction;
     QAction *dateAction;
+
+    QAction *closeAppA;
+    QAction *openNotesA;
+    QAction *openProjectsA;
+    QAction *openTasksA;
 
     QMenu *menu;
     QMenu *tasksMenu;

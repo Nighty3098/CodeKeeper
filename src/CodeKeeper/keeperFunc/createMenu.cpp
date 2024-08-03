@@ -1,5 +1,26 @@
 #include "mainwindow.h"
 
+void MainWindow::createTrayMenu(QMenu *menu, QString font_size) {
+    closeAppA = menu->addAction(QPixmap(":/quit.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), tr("Exit"), this, [=]() {
+        this->close();
+    });
+    closeAppA = menu->addAction(QPixmap(":/task.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), tr("Open tasks"), this, [=]() {
+        tabs->setCurrentIndex(2);
+        windowTitle->setText(" ~ Tasks ~ ");
+        setWindowTitle(tr("Tasks"));
+    });
+    closeAppA = menu->addAction(QPixmap(":/project.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), tr("Open projects"), this, [=]() {
+        tabs->setCurrentIndex(3);
+        windowTitle->setText(" ~ Projects ~ ");
+        setWindowTitle(tr("Projects"));
+    });
+    closeAppA = menu->addAction(QPixmap(":/document.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), tr("Open notes"), this, [=]() {
+        tabs->setCurrentIndex(1);
+        windowTitle->setText(" ~ Notes ~ ");
+        setWindowTitle(tr("Notes"));
+    });
+}
+
 void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
 {
     newNote = menu->addAction(

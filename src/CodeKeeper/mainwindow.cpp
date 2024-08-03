@@ -10,6 +10,7 @@
 #include <QThread>
 #include <QWebEngineView>
 #include <QtWidgets>
+#include <QSystemTrayIcon>
 
 #include "3rdParty/qmarkdowntextedit/markdownhighlighter.h"
 #include "keeperFunc/addConnects.cpp"
@@ -37,6 +38,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
     getSettingsData();
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon(":/icon.png"));
+    trayIcon->setVisible(true);
+    trayIcon->setToolTip(tr("CodeKeeper"));
+
+    QMenu trayMenu;
+    createTrayMenu(&trayMenu, font_size);
+    trayIcon->setContextMenu(&trayMenu);
+
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+
+
+    trayIcon->showMessage("CodeKeeper", "Welcome back, " + git_user + "!", QSystemTrayIcon::Information, 3000);
 
     if (isCustomTheme)
     {
@@ -146,7 +161,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     dateLabel->setAlignment(Qt::AlignTop);
 
     helloLabel = new QLabel();
-    helloLabel->setAlignment(Qt::AlignVCenter);
+    helloLabel->setAlignment(Qt::AlignLeft);
 
     decorationLabel = new QLabel();
     decorationLabel->setAlignment(Qt::AlignHCenter);
@@ -523,10 +538,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QWidget *mainTab = new QWidget();
     QGridLayout *firstLayout = new QGridLayout(mainTab);
 
-    firstLayout->addWidget(decorationLabel, 4, 4, 2, 2, Qt::AlignBottom);
+    firstLayout->addWidget(decorationLabel, 4, 0, 2, 6, Qt::AlignBottom | Qt::AlignRight);
     firstLayout->addWidget(timeLabel, 0, 1, 2, 2, Qt::AlignBottom);
     firstLayout->addWidget(dateLabel, 2, 1, 1, 2, Qt::AlignTop);
-    firstLayout->addWidget(helloLabel, 3, 0, 3, 6, Qt::AlignCenter);
+    firstLayout->addWidget(helloLabel, 3, 1, 3, 5, Qt::AlignLeft | Qt::AlignVCenter);
 
     tabs->addTab(mainTab, tr("Homepage"));
 

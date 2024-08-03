@@ -8,6 +8,17 @@
 #include <QSyntaxHighlighter>
 #include <QThread>
 
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason){
+    case QSystemTrayIcon::Trigger:
+        this->show();
+        break;
+    default:
+        break;
+    }
+}
+
 QString MainWindow::getKeeperStats()
 {
     int incompleteTasksCount = incompleteTasks->count();
@@ -57,7 +68,7 @@ QString MainWindow::getCurrentDateTimeString()
 
 void MainWindow::updateTime()
 {
-    QString currentTime = QTime::currentTime().toString("hh:mm:ss");
+    QString currentTime = QTime::currentTime().toString("hh:mm");
     QString currentDate = QDate::currentDate().toString("dd MM yyyy");
 
     timeLabel->setText(currentTime);
