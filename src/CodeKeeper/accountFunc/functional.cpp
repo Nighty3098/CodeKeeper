@@ -77,7 +77,7 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
 
     // Формируем строку с первыми 5 языками
     QString result;
-    for (int i = 0; i < std::min(6, languagePercentages.size()); ++i) {
+    for (int i = 0; i < std::min(4, languagePercentages.size()); ++i) {
         result += QString("%1 %2 ").arg(languagePercentages[i].first).arg(QString::number(languagePercentages[i].second, 'f', 2));
     }
 
@@ -176,17 +176,23 @@ void AccountWindow::setFontStyle()
 {
     userName->setFont(selectedFont);
 
-    int header_size = font_size.toInt() + 5;
-    qDebug() << header_size;
-
     chartValuesDisplay->setFont(selectedFont);
     chartValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
 
+    tasksChartValuesDisplay->setFont(selectedFont);
+    tasksChartValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
+
+    langsValuesDisplay->setFont(selectedFont);
+    langsValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
+
+    langsTitle->setFont(selectedFont);
+    langsTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
+
     tasksTitle->setFont(selectedFont);
-    tasksTitle->setStyleSheet("font-size: " + QString(header_size) + "px;");
+    tasksTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
 
     projectTitle->setFont(selectedFont);
-    projectTitle->setStyleSheet("font-size: " + QString(header_size) + "px;");
+    projectTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
 
     userName->setStyleSheet("font-size: 36pt;");
 

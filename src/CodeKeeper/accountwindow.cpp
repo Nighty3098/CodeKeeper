@@ -21,17 +21,20 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     setCentralWidget(centralWidget);
 
     mainLayout = new QGridLayout(centralWidget);
-    setFixedSize(800, 600);
+    setFixedSize(750, 600);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
     getSettingsData();
 
     tasksTitle = new QLabel();
-    tasksTitle->setText(tr("\nTasks\n"));
+    tasksTitle->setText(tr("\n\nTasks"));
 
     projectTitle = new QLabel();
-    projectTitle->setText(tr("\n\nProjects\n"));
+    projectTitle->setText(tr("\n\nProjects"));
+
+    langsTitle = new QLabel();
+    langsTitle->setText(tr("\n\nLanguages"));
 
     profilePicture = new QLabel();
     profilePicture->setText(tr("Loading..."));
@@ -62,6 +65,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     tasksStatsLayout->addWidget(tasksStatsProgress);
     tasksStatsLayout->addWidget(tasksChartValuesDisplay);
+    tasksStatsLayout->setSpacing(20);
 
     userName = new QLabel();
     userName->setText(git_user);
@@ -74,10 +78,12 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     closeWindow->setFixedSize(15, 15);
 
     QHBoxLayout *projectsStatsLayout = new QHBoxLayout();
+    projectsStatsLayout->setSpacing(20);
 
     projectsChart = new CircleChart();
-    projectsChart->setFixedSize(80, 80);
-    projectsChart->setHeight(80);
+    projectsChart->setAlignment(Qt::AlignCenter);
+    projectsChart->setFixedSize(90, 90);
+    projectsChart->setHeight(90);
 
     chartValuesDisplay = new ColorValueDisplay();
     chartValuesDisplay->setFixedSize(160, 85);
@@ -86,13 +92,15 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     projectsStatsLayout->addWidget(chartValuesDisplay);
 
     QHBoxLayout *langsStatsLayout = new QHBoxLayout();
+    langsStatsLayout->setSpacing(20);
 
     langsChart = new CircleChart();
-    langsChart->setFixedSize(150, 150);
-    langsChart->setHeight(150);
+    langsChart->setFixedSize(100, 100);
+    langsChart->setAlignment(Qt::AlignCenter);
+    langsChart->setHeight(90);
 
     langsValuesDisplay = new ColorValueDisplay();
-    langsValuesDisplay->setFixedSize(160, 150);
+    langsValuesDisplay->setFixedSize(160, 100);
 
     langsStatsLayout->addWidget(langsChart);
     langsStatsLayout->addWidget(langsValuesDisplay);
@@ -138,7 +146,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     setUserImageThread->start();
 
     mainLayout->addWidget(closeWindow, 0, 0, 1, 6, Qt::AlignLeft);
-    mainLayout->addWidget(profilePicture, 2, 0, 6, 3, Qt::AlignCenter);
+    mainLayout->addWidget(profilePicture, 2, 0, 8, 3, Qt::AlignCenter);
 
     mainLayout->addWidget(userName, 2, 3, 1, 3, Qt::AlignCenter);
 
@@ -148,10 +156,12 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     mainLayout->addWidget(projectTitle, 5, 3, 1, 3, Qt::AlignHCenter);
     mainLayout->addLayout(projectsStatsLayout, 6, 3, 1, 3, Qt::AlignHCenter);
 
-    mainLayout->addWidget(profileInfo, 14, 0, 3, 3, Qt::AlignCenter);
+    mainLayout->addWidget(langsTitle, 13, 3, 1, 3, Qt::AlignHCenter);
+
+    mainLayout->addWidget(profileInfo, 13, 0, 4, 3, Qt::AlignCenter);
     mainLayout->addLayout(langsStatsLayout, 14, 3, 3, 3, Qt::AlignCenter);
     // mainLayout->addWidget(codeKeeperStats, 14, 3, 3, 3, Qt::AlignCenter);
-    mainLayout->addWidget(openRepo, 17, 0, 1, 6, Qt::AlignCenter);
+    mainLayout->addWidget(openRepo, 17, 0, 2, 6, Qt::AlignCenter);
 
     connect(closeWindow, SIGNAL(clicked()), this, SLOT(closeWindowSlot()));
     connect(openRepo, SIGNAL(clicked()), this, SLOT(onOpenRepoClicked()));

@@ -38,8 +38,8 @@ private:
             layout->setContentsMargins(0, 0, 0, 0);
 
             QLabel *colorLabel = new QLabel(this);
-            colorLabel->setStyleSheet(QString("background-color: %1; border: 0px solid black; border-radius: 7px;").arg(color.name()));
-            colorLabel->setFixedSize(15, 15);
+            colorLabel->setStyleSheet(QString("background-color: %1; border: 0px solid black; border-radius: 5px;").arg(color.name()));
+            colorLabel->setFixedSize(10, 10);
             layout->addWidget(colorLabel);
 
             QLabel *dashLabel = new QLabel("-", this);

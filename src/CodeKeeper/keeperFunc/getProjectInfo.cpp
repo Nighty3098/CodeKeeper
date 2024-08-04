@@ -227,7 +227,6 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
         }
         languages += lang;
     }
-
     // working on table
 
     table->setRowCount(12);

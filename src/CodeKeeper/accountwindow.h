@@ -43,6 +43,7 @@ private:
     
     QLabel *tasksTitle;
     QLabel *projectTitle;
+    QLabel *langsTitle;
 
     QPushButton *closeWindow;
     QPushButton *openRepo;
