@@ -121,8 +121,6 @@ class MainWindow : public QMainWindow
 
     QStringList getAllReposUrl();
 
-    QString getKeeperStats();
-
     QMarkdownTextEdit *note;
 
     QListWidget *incompleteTasks;

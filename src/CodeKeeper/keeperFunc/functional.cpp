@@ -20,26 +20,6 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
-QString MainWindow::getKeeperStats()
-{
-    int incompleteTasksCount = incompleteTasks->count();
-    int completeTasksCount = completeTasks->count();
-    int inprocessTasksCount = inprocessTasks->count();
-
-    int tasks_count = incompleteTasksCount + completeTasksCount + inprocessTasksCount;
-
-    QString projectsStats = tr("Tasks: ") + QString::number(completeTasksCount) + " / " + QString::number(tasks_count) +
-                            "\n\n" + tr("Not started projects: ") + QString::number(notStartedProjects->count()) +
-                            "\n\n" + tr("Started projects: ") + QString::number(startedProjects->count()) + "\n\n" +
-                            tr("Projects on review: ") + QString::number(finishlineProjects->count()) + "\n\n" +
-                            tr("Finished projects: ") + QString::number(finishedProjects->count());
-
-    QString stats = "\n" + projectsStats;
-
-    qDebug() << stats;
-    return stats;
-}
-
 bool MainWindow::createConnection(QString path)
 {
     qDebug() << "DB path: " << (path) + QStringLiteral("/data.db");
@@ -364,16 +344,16 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     QString font_size_hello = QString::number(*font_size_int * 1.4);
 
     timeLabel->setFont(*selectedFont);
-    timeLabel->setStyleSheet("background: transparent; font-size: " + font_size_clock + "pt; color: #8ebecf;");
+    timeLabel->setStyleSheet("background: transparent; font-size: " + font_size_clock + "pt; color: #799987;");
 
     dateLabel->setFont(*selectedFont);
-    dateLabel->setStyleSheet("background: transparent; font-size: " + font_size_date + "pt; color: #8ebecf;");
+    dateLabel->setStyleSheet("background: transparent; font-size: " + font_size_date + "pt; color: #799987;");
 
     helloLabel->setFont(*selectedFont);
-    helloLabel->setStyleSheet("background: transparent; font-size: " + font_size_hello + "pt; color: #8ebecf;");
+    helloLabel->setStyleSheet("background: transparent; font-size: " + font_size_hello + "pt; color: #799987;");
 
     projectsMainLabel->setFont(*selectedFont);
-    projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
+    projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt;");
 
     openSettingsBtn->setFont(*selectedFont);
     openSettingsBtn->setStyleSheet("QPushButton {border: none; background-color: transparent; font-size: " + font_size +
