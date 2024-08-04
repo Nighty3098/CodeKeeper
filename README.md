@@ -2,7 +2,7 @@
     <h1 align="center">CodeKeeper</h1>
     <h3 align="center">Projects manager for developers</h3>
     <br><br>    
-    <img align="center" src="imgs/logo.png" align="center" width="30%" />
+    <img src="imgs/1.png" />
     <br><br>
 </div>
 
@@ -68,7 +68,6 @@
   <br>
   <img src="imgs/6.png" />
   <img src="imgs/7.png" />
-  <img src="imgs/8.png" />
 </details>
 
 <br>
