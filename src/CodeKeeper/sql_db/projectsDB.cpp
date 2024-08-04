@@ -3,6 +3,27 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
+QStringList MainWindow::getAllReposUrl()
+{
+    QStringList reposUrls;
+
+    QSqlQuery query;
+    if (query.exec("SELECT git_url FROM projects"))
+    {
+        while (query.next())
+        {
+            QString url = query.value(0).toString();
+            reposUrls.append(url);
+        }
+    }
+    else
+    {
+        qWarning() << query.lastError();
+    }
+
+    return reposUrls;
+}
+
 void MainWindow::create_projects_connection()
 {
     QSqlQuery query;

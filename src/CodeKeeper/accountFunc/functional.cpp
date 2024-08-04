@@ -1,14 +1,98 @@
+#include <QEventLoop>
 #include <QImage>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLabel>
+#include <QMap>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QPainter>
 #include <QPixmap>
+#include <QStringList>
+#include <algorithm>
 
 #include "mainwindow.h"
+
+QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
+{
+    QMap<QString, int> languageCounts; // Хранит количество байт для каждого языка
+    int totalBytes = 0;                // Общее количество байт
+
+    QNetworkAccessManager manager;
+
+    for (const QString &repoUrl : repoUrls)
+    {
+        // Удаляем префикс "https://github.com/"
+        QString apiUrl = repoUrl;
+        apiUrl.remove("https://github.com/");            // Удаляем префикс
+        apiUrl.prepend("https://api.github.com/repos/"); // Добавляем префикс для API
+
+        apiUrl += "/languages";                // Формируем URL для API
+        QNetworkRequest request{QUrl(apiUrl)}; // Создаем запрос
+
+        // Устанавливаем заголовки
+        request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+        request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+        request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+        request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+        QNetworkReply *reply = manager.get(request);
+
+        // Ожидаем завершения запроса
+        QEventLoop loop;
+        QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
+        if (reply->error() == QNetworkReply::NoError)
+        {
+            QByteArray response = reply->readAll();
+            QJsonDocument doc = QJsonDocument::fromJson(response);
+            QJsonObject obj = doc.object();
+
+            // Подсчитываем языки и их объем
+            for (const QString &lang : obj.keys())
+            {
+                if (lang != "documentation_url" && lang != "message" && lang != "url")
+                { // Игнорируем ненужные ключи
+                    int bytes = obj.value(lang).toInt();
+                    languageCounts[lang] += bytes;
+                    totalBytes += bytes;
+                }
+            }
+        }
+        else
+        {
+            qDebug() << "Ошибка при запросе:" << reply->errorString();
+        }
+        reply->deleteLater();
+    }
+
+    // Формируем вектор для сортировки
+    QVector<QPair<QString, double>> languagePercentages;
+    for (const QString &lang : languageCounts.keys())
+    {
+        double percentage = (static_cast<double>(languageCounts[lang]) / totalBytes) * 100;
+        languagePercentages.append(qMakePair(lang, percentage));
+    }
+
+    // Сортируем по процентам в порядке убывания
+    std::sort(languagePercentages.begin(), languagePercentages.end(),
+              [](const QPair<QString, double> &a, const QPair<QString, double> &b) {
+                  return a.second > b.second; // Сортировка по убыванию
+              });
+
+    // Формируем строку с первыми 5 языками
+    QString result;
+    for (int i = 0; i < std::min(4, languagePercentages.size()); ++i)
+    {
+        result += QString("%1 %2 ")
+                      .arg(languagePercentages[i].first)
+                      .arg(QString::number(languagePercentages[i].second, 'f', 2));
+    }
+
+    return result.trimmed(); // Убираем лишние пробелы и символы новой строки
+}
 
 void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
 {
@@ -102,17 +186,23 @@ void AccountWindow::setFontStyle()
 {
     userName->setFont(selectedFont);
 
-    int header_size = font_size.toInt() + 5;
-    qDebug() << header_size;
-
     chartValuesDisplay->setFont(selectedFont);
     chartValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
 
+    tasksChartValuesDisplay->setFont(selectedFont);
+    tasksChartValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
+
+    langsValuesDisplay->setFont(selectedFont);
+    langsValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
+
+    langsTitle->setFont(selectedFont);
+    langsTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
+
     tasksTitle->setFont(selectedFont);
-    tasksTitle->setStyleSheet("font-size: " + QString(header_size) + "px;");
+    tasksTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
 
     projectTitle->setFont(selectedFont);
-    projectTitle->setStyleSheet("font-size: " + QString(header_size) + "px;");
+    projectTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
 
     userName->setStyleSheet("font-size: 36pt;");
 
@@ -290,10 +380,10 @@ void AccountWindow::setProjectsStats()
     int totalProjects =
         notStartedProjectsCount + startedProjectsCount + finishlineProjectsCount + finishedProjectsCount;
 
-    int ns_p = static_cast<double>(notStartedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
-    int s_p = static_cast<double>(startedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
-    int fl_p = static_cast<double>(finishlineProjectsCount) / static_cast<double>(totalProjects) * 100.0;
-    int f_p = static_cast<double>(finishedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    float ns_p = static_cast<double>(notStartedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    float s_p = static_cast<double>(startedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    float fl_p = static_cast<double>(finishlineProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    float f_p = static_cast<double>(finishedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
 
     projectsChart->setMaximumValue(100);
 
@@ -306,4 +396,31 @@ void AccountWindow::setProjectsStats()
     chartValuesDisplay->addValue(tr("In Dev"), s_p, QColor("#e09132"), selectedFont);
     chartValuesDisplay->addValue(tr("On Review"), fl_p, QColor("#b1e032"), selectedFont);
     chartValuesDisplay->addValue(tr("Finished"), f_p, QColor("#78b3ba"), selectedFont);
+}
+
+void AccountWindow::setLangsStats(const QString langsData)
+{
+    QStringList langsColors;
+    langsColors << "#c75d5e" << "#e09132" << "#b1e032" << "#78b3ba"
+                << "#5dc7c3" << "#c75da9" << "#c7c25d" << "#875dc7";
+
+    QStringList result = langsData.split(' ');
+    int count = result.size() / 2;
+    qDebug() << count;
+
+    langsChart->setMaximumValue(100);
+    double other = 100;
+
+    for (int i = 0; i < count; i++)
+    {
+        int value = static_cast<int>(std::round(result[i * 2 + 1].toDouble()));
+        other = other - value;
+
+        qDebug() << result[i * 2] << " " << value;
+        langsChart->addValue(result[i * 2 + 1].toDouble(), langsColors[i]);
+        langsValuesDisplay->addValue(result[i * 2], value, langsColors[i], selectedFont);
+    }
+
+    langsChart->addValue(other, QColor("#333333"));
+    langsValuesDisplay->addValue("Other", other, "#333333", selectedFont);
 }

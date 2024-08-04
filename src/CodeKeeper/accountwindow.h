@@ -40,9 +40,10 @@ private:
     QLabel *profileInfo;
     QLabel *codeKeeperStats;
     QLabel *tasksStats;
-
+    
     QLabel *tasksTitle;
     QLabel *projectTitle;
+    QLabel *langsTitle;
 
     QPushButton *closeWindow;
     QPushButton *openRepo;
@@ -53,6 +54,10 @@ private:
     CircleChart *projectsChart;
     ColorValueDisplay *chartValuesDisplay;
 
+
+    CircleChart *langsChart;
+    ColorValueDisplay *langsValuesDisplay;
+
 private slots:
     void setUserData(const QString &username, QLabel *label);
     void closeWindowSlot();
@@ -62,7 +67,9 @@ private slots:
     int getStarsCount(const QString& username, const QString& token);
     void setTasksProgress();
     void setProjectsStats();
+    void setLangsStats(const QString langsData);
     void get_image_url(const QString& username, QLabel *label);
+    QString getLangByRepo(const QStringList& repositories);
 };
 
 #endif // ACCOUNTWINDOW_H

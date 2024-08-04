@@ -63,7 +63,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
     openIssues = QString::number(obj["open_issues"].toInt());
 
     forks = QString::number(obj["forks"].toInt());
-    lang = obj["language"].toString();
+    // lang = obj["language"].toString();
 
     stars = QString::number(obj["stargazers_count"].toInt());
 
@@ -193,6 +193,42 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
     releasesReply->deleteLater();
     reply->deleteLater();
 
+    // get repo langs
+    QUrl langUrl("https://api.github.com/repos/" + repo + "/languages");
+    langUrl.setQuery(query);
+
+    QNetworkRequest langRequest(langUrl);
+    langRequest.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    langRequest.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    langRequest.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    langRequest.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QNetworkReply *langReply = manager->get(langRequest);
+    QObject::connect(langReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+
+    loop.exec();
+
+    if (langReply->error())
+    {
+        qWarning() << "Error:" << langReply->errorString();
+        langReply->deleteLater();
+    }
+
+    QJsonDocument langDoc = QJsonDocument::fromJson(langReply->readAll());
+    QJsonObject langObj = langDoc.object();
+    qDebug() << langDoc;
+
+    QString languages;
+    for (const QString &lang : langObj.keys())
+    {
+        if (!languages.isEmpty())
+        {
+            languages += ", ";
+        }
+        languages += lang;
+    }
+    // working on table
+
     table->setRowCount(12);
     table->setColumnCount(2);
     table->setShowGrid(false);
@@ -245,7 +281,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
 
     if (isLang)
     {
-        dataList << lang;
+        dataList << languages;
         textList << tr("Lang");
     }
 
@@ -291,6 +327,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
         textList << tr("Release at");
     }
 
+    description = description.left(30) + "...";
     label->setText(name + " - " + description);
 
     for (int i = 0; i < dataList.count(); i++)

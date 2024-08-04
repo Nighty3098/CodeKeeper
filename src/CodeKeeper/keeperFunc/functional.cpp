@@ -10,7 +10,8 @@
 
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    switch (reason){
+    switch (reason)
+    {
     case QSystemTrayIcon::Trigger:
         this->show();
         break;
