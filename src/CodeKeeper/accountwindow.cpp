@@ -85,17 +85,31 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     projectsStatsLayout->addWidget(projectsChart);
     projectsStatsLayout->addWidget(chartValuesDisplay);
 
-    QThread *langsStats = new QThread;
-    QObject::connect(langsStats, &QThread::started, this, [this]() {
+    QHBoxLayout *langsStatsLayout = new QHBoxLayout();
+
+    langsChart = new CircleChart();
+    langsChart->setFixedSize(150, 150);
+    langsChart->setHeight(150);
+
+    langsValuesDisplay = new ColorValueDisplay();
+    langsValuesDisplay->setFixedSize(160, 150);
+
+    langsStatsLayout->addWidget(langsChart);
+    langsStatsLayout->addWidget(langsValuesDisplay);
+
+    QThread *langsStatsThread = new QThread;
+    QObject::connect(langsStatsThread, &QThread::started, this, [this]() {
         MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
 
         QStringList urls = mainWindow->getAllReposUrl();
-        QString langsStats = getLangByRepo(urls);
-        qDebug() << langsStats;
+        QString langsStatsS = getLangByRepo(urls);
+
+        qDebug() << langsStatsS;
+        setLangsStats(langsStatsS);
 
         qDebug() << "langsStats started";
     });
-    langsStats->start();
+    langsStatsThread->start();
 
     QThread *styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {
@@ -134,7 +148,8 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     mainLayout->addWidget(projectTitle, 5, 3, 1, 3, Qt::AlignHCenter);
     mainLayout->addLayout(projectsStatsLayout, 6, 3, 1, 3, Qt::AlignHCenter);
 
-    mainLayout->addWidget(profileInfo, 14, 0, 3, 6, Qt::AlignCenter);
+    mainLayout->addWidget(profileInfo, 14, 0, 3, 3, Qt::AlignCenter);
+    mainLayout->addLayout(langsStatsLayout, 14, 3, 3, 3, Qt::AlignCenter);
     // mainLayout->addWidget(codeKeeperStats, 14, 3, 3, 3, Qt::AlignCenter);
     mainLayout->addWidget(openRepo, 17, 0, 1, 6, Qt::AlignCenter);
 
