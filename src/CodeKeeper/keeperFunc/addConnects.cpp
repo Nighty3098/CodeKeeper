@@ -41,6 +41,13 @@ void MainWindow::createConnects()
     connect(finishedProjects, &QListWidget::itemEntered, this,
             [=](QListWidgetItem *item) { onMovingProjectFrom(item, finishedProjects); });
 
+    connect(incompleteTasks, &QListWidget::customContextMenuRequested, this,
+            [this](const QPoint &pos) { activateTasksContextMenu(pos, incompleteTasks); });
+    connect(inprocessTasks, &QListWidget::customContextMenuRequested, this,
+            [this](const QPoint &pos) { activateTasksContextMenu(pos, inprocessTasks); });
+    connect(completeTasks, &QListWidget::customContextMenuRequested, this,
+            [this](const QPoint &pos) { activateTasksContextMenu(pos, completeTasks); });
+
     connect(notStartedProjects, &QListWidget::customContextMenuRequested, this,
             [this](const QPoint &pos) { activateProjectContextMenu(pos, notStartedProjects); });
 

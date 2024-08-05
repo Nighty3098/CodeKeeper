@@ -1,3 +1,39 @@
+void MainWindow::activateTasksContextMenu(const QPoint &pos, QListWidget *listWidget) {
+    QPoint item = listWidget->mapToGlobal(pos);
+    QMenu *submenu = new QMenu;
+
+    // ! Need fixed 
+    if (isCustomTheme)
+    {
+        submenu->setStyleSheet("QMenu {"
+                               "    background-color: #2b3d4c;"
+                               "    color: #fff;"
+                               "    border: 1px solid #fff;"
+                               "    border-radius: 10px;"
+                               "}"
+                               "QMenu::separator {"
+                               "    height: 3px;"
+                               "    border-radius: 1px;"
+                               "    background-color: #fff;"
+                               "}"
+                               "QMenu::item {"
+                               "    border-radius: 0px;"
+                               "    color: #fff;"
+"    margin: 5px 10px;"
+                               "}"
+                               "QMenu::item:selected {"
+                               "    border-radius: 10px;"
+                               "    color: #78b3ba;"
+                               "    text-decoration: none;"
+                               "}");
+    }
+    else
+    {
+    }
+    createTaskMenu(submenu, font_size);
+    QAction *rightClickItem = submenu->exec(item);
+}
+
 void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list)
 {
     qDebug() << "Moving task: " << item->text() << " from: " << list->objectName();

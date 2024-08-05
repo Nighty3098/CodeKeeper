@@ -117,7 +117,7 @@ class MainWindow : public QMainWindow
     void createShortcuts();
 
     void activateProjectContextMenu(const QPoint &pos, QListWidget *listWidget);
-    // void activateTasksContextMenu(const QPoint &pos);
+    void activateTasksContextMenu(const QPoint &pos, QListWidget *listWidget);
 
     QStringList getAllReposUrl();
 
