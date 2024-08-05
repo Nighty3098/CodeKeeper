@@ -212,9 +212,6 @@ void AccountWindow::setFontStyle()
     openRepo->setFont(selectedFont);
     openRepo->setStyleSheet("font-size: " + font_size + "pt;");
 
-    codeKeeperStats->setFont(selectedFont);
-    codeKeeperStats->setStyleSheet("font-size: " + font_size + "pt;");
-
     profileInfo->setFont(selectedFont);
     profileInfo->setStyleSheet("font-size: " + font_size + "pt;");
 
@@ -329,7 +326,6 @@ void AccountWindow::onOpenRepoClicked()
 void AccountWindow::setTasksProgress()
 {
     MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
-    QString stats = mainWindow->getKeeperStats();
 
     int incompleteTasksCount = mainWindow->incompleteTasks->count();
     int completeTasksCount = mainWindow->completeTasks->count();

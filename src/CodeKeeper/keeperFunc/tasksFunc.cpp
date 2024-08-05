@@ -1,3 +1,39 @@
+void MainWindow::activateTasksContextMenu(const QPoint &pos, QListWidget *listWidget) {
+    QPoint item = listWidget->mapToGlobal(pos);
+    QMenu *submenu = new QMenu;
+
+    // ! Need fixed 
+    if (isCustomTheme)
+    {
+        submenu->setStyleSheet("QMenu {"
+                               "    background-color: #2b3d4c;"
+                               "    color: #fff;"
+                               "    border: 1px solid #fff;"
+                               "    border-radius: 10px;"
+                               "}"
+                               "QMenu::separator {"
+                               "    height: 3px;"
+                               "    border-radius: 1px;"
+                               "    background-color: #fff;"
+                               "}"
+                               "QMenu::item {"
+                               "    border-radius: 0px;"
+                               "    color: #fff;"
+"    margin: 5px 10px;"
+                               "}"
+                               "QMenu::item:selected {"
+                               "    border-radius: 10px;"
+                               "    color: #78b3ba;"
+                               "    text-decoration: none;"
+                               "}");
+    }
+    else
+    {
+    }
+    createTaskMenu(submenu, font_size);
+    QAction *rightClickItem = submenu->exec(item);
+}
+
 void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list)
 {
     qDebug() << "Moving task: " << item->text() << " from: " << list->objectName();
@@ -98,56 +134,63 @@ void MainWindow::updateTasksProgress(QTabWidget *tasksTab, QListWidget *incomple
     }
 }
 
-void MainWindow::renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item)
+void MainWindow::editTask()
 {
-    if (item)
+    QListWidget *listWidgets[] = {incompleteTasks, inprocessTasks, completeTasks};
+
+    for (QListWidget *listWidget : listWidgets)
     {
-        qDebug() << font_size;
+        QListWidgetItem *item = listWidget->currentItem();
+        if (item)
+        {
+            qDebug() << font_size;
 
-        QString oldText = item->text();
-        QStringList oldData = oldText.split("\n");
+            QString oldText = item->text();
+            QStringList oldData = oldText.split("\n");
 
-        QDialog dialog(this);
-        dialog.setFixedSize(220, 200);
-        dialog.setWindowTitle(tr("Edit task"));
-        dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+            QDialog dialog(this);
+            dialog.setFixedSize(220, 200);
+            dialog.setWindowTitle(tr("Edit task"));
+            dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
-        QVBoxLayout layout(&dialog);
-        QLineEdit lineEdit(&dialog);
-        lineEdit.setFont(selectedFont);
-        lineEdit.setFixedSize(200, 100);
-        lineEdit.setAlignment(Qt::AlignCenter);
+            QVBoxLayout layout(&dialog);
+            QLineEdit lineEdit(&dialog);
+            lineEdit.setFont(selectedFont);
+            lineEdit.setFixedSize(200, 100);
+            lineEdit.setAlignment(Qt::AlignCenter);
 
-        layout.addWidget(&lineEdit);
+            layout.addWidget(&lineEdit);
 
-        lineEdit.setText(oldData[0]);
+            lineEdit.setText(oldData[0]);
 
-        QPushButton okButton(tr("Save"), &dialog);
-        okButton.setFont(selectedFont);
-        okButton.setFixedSize(200, 25);
-        QPushButton cancelButton(tr("Cancel"), &dialog);
-        cancelButton.setFont(selectedFont);
-        cancelButton.setFixedSize(200, 25);
-        layout.addWidget(&okButton);
-        layout.addWidget(&cancelButton);
+            QPushButton okButton(tr("Save"), &dialog);
+            okButton.setFont(selectedFont);
+            okButton.setFixedSize(200, 25);
+            QPushButton cancelButton(tr("Cancel"), &dialog);
+            cancelButton.setFont(selectedFont);
+            cancelButton.setFixedSize(200, 25);
+            layout.addWidget(&okButton);
+            layout.addWidget(&cancelButton);
 
-        QObject::connect(&okButton, &QPushButton::clicked, [&]() {
-            QString newText = lineEdit.text();
-            if (!newText.isEmpty())
-            {
-                QString newTask = newText + "\n" + getCurrentDateTimeString();
-                QString status = listWidget->objectName();
-                QString cT = oldData[1];
+            QObject::connect(&okButton, &QPushButton::clicked, [&]() {
+                QString newText = lineEdit.text();
+                if (!newText.isEmpty())
+                {
+                    QString newTask = newText + "\n" + getCurrentDateTimeString();
+                    QString status = listWidget->objectName();
+                    QString cT = oldData[1];
 
-                item->setText(newTask);
+                    item->setText(newTask);
 
-                updateTaskData(&newTask, &status, &cT);
-            }
-            dialog.close();
-        });
+                    updateTaskData(&newTask, &status, &cT);
+                }
+                dialog.close();
+            });
 
-        QObject::connect(&cancelButton, &QPushButton::clicked, [&]() { dialog.close(); });
+            QObject::connect(&cancelButton, &QPushButton::clicked, [&]() { dialog.close(); });
 
-        dialog.exec();
+            dialog.exec();
+            break;
+        }
     }
 }

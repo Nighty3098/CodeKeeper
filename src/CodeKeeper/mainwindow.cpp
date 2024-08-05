@@ -396,6 +396,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     incompleteTasks->setWordWrap(true);
     incompleteTasks->setSpacing(5);
     incompleteTasks->setObjectName("IncompleteTasks");
+    incompleteTasks->setContextMenuPolicy(Qt::CustomContextMenu);
 
     label_2 = new QLabel(tr("Inprocess"));
     label_2->setFixedHeight(30);
@@ -407,6 +408,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     inprocessTasks->setWordWrap(true);
     inprocessTasks->setSpacing(5);
     inprocessTasks->setObjectName("InprocessTasks");
+    inprocessTasks->setContextMenuPolicy(Qt::CustomContextMenu);
 
     label_3 = new QLabel(tr("Complete"));
     label_3->setFixedHeight(30);
@@ -418,6 +420,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     completeTasks->setWordWrap(true);
     completeTasks->setSpacing(5);
     completeTasks->setObjectName("CompleteTasks");
+    completeTasks->setContextMenuPolicy(Qt::CustomContextMenu);
 
     taskText = new QLineEdit();
     taskText->setPlaceholderText(tr(" Task..."));

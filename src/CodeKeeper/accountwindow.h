@@ -38,7 +38,6 @@ private:
     QLabel *profilePicture;
     QLabel *userName;
     QLabel *profileInfo;
-    QLabel *codeKeeperStats;
     QLabel *tasksStats;
     
     QLabel *tasksTitle;

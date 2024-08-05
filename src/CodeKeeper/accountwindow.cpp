@@ -21,7 +21,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     setCentralWidget(centralWidget);
 
     mainLayout = new QGridLayout(centralWidget);
-    setFixedSize(750, 600);
+    setFixedSize(800, 600);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -45,12 +45,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     profileInfo->setText(tr("Loading..."));
     profileInfo->setAlignment(Qt::AlignHCenter);
 
-    codeKeeperStats = new QLabel();
-
     MainWindow *mainWindow = static_cast<MainWindow *>(parent);
-    QString stats = mainWindow->getKeeperStats();
-    codeKeeperStats->setText(stats);
-    codeKeeperStats->setAlignment(Qt::AlignHCenter);
 
     QHBoxLayout *tasksStatsLayout = new QHBoxLayout();
 
@@ -147,20 +142,14 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     mainLayout->addWidget(closeWindow, 0, 0, 1, 6, Qt::AlignLeft);
     mainLayout->addWidget(profilePicture, 2, 0, 8, 3, Qt::AlignCenter);
-
     mainLayout->addWidget(userName, 2, 3, 1, 3, Qt::AlignCenter);
-
     mainLayout->addWidget(tasksTitle, 3, 3, 1, 3, Qt::AlignHCenter);
     mainLayout->addLayout(tasksStatsLayout, 4, 3, 1, 3, Qt::AlignHCenter);
-
     mainLayout->addWidget(projectTitle, 5, 3, 1, 3, Qt::AlignHCenter);
     mainLayout->addLayout(projectsStatsLayout, 6, 3, 1, 3, Qt::AlignHCenter);
-
     mainLayout->addWidget(langsTitle, 13, 3, 1, 3, Qt::AlignHCenter);
-
     mainLayout->addWidget(profileInfo, 13, 0, 4, 3, Qt::AlignCenter);
     mainLayout->addLayout(langsStatsLayout, 14, 3, 3, 3, Qt::AlignCenter);
-    // mainLayout->addWidget(codeKeeperStats, 14, 3, 3, 3, Qt::AlignCenter);
     mainLayout->addWidget(openRepo, 17, 0, 2, 6, Qt::AlignCenter);
 
     connect(closeWindow, SIGNAL(clicked()), this, SLOT(closeWindowSlot()));
