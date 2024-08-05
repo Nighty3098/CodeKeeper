@@ -108,6 +108,7 @@ class MainWindow : public QMainWindow
     void setConnectionStatus();
 
     void setStyle(QFont *selectedFont, int *font_size_int);
+
     void loadNotes();
     void loadProjects();
     void loadTasks();
