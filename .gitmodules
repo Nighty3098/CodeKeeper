@@ -1,7 +1,3 @@
 [submodule "src/CodeKeeper/3rdParty/qmarkdowntextedit"]
 	path = src/CodeKeeper/3rdParty/qmarkdowntextedit
 	url = https://github.com/pbek/qmarkdowntextedit
-
-[submodule "src/CodeKeeper/3rdParty/cpp_restapi"]
-	path = src/CodeKeeper/3rdParty/cpp_restapi
-	url = https://github.com/Kicer86/cpp_restapi
