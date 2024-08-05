@@ -135,13 +135,13 @@ void MainWindow::createConnects()
     connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::updateMDPreview);
 
     connect(completeTasks, &QListWidget::itemDoubleClicked, this,
-            [=](QListWidgetItem *item) { renameItemOnDoubleClick(completeTasks, item); });
+            [=](QListWidgetItem *item) { editTask(); });
 
     connect(incompleteTasks, &QListWidget::itemDoubleClicked, this,
-            [=](QListWidgetItem *item) { renameItemOnDoubleClick(incompleteTasks, item); });
+            [=](QListWidgetItem *item) { editTask(); });
 
     connect(inprocessTasks, &QListWidget::itemDoubleClicked, this,
-            [=](QListWidgetItem *item) { renameItemOnDoubleClick(inprocessTasks, item); });
+            [=](QListWidgetItem *item) { editTask(); });
 
     connect(notStartedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) { openProject(); });
     connect(startedProjects, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) { openProject(); });

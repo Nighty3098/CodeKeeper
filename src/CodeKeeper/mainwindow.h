@@ -201,7 +201,7 @@ class MainWindow : public QMainWindow
     void removeTask();
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
-    void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
+    void editTask();
     void onNoteDoubleClicked();
     void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks,
                              QListWidget *completeTasks, QProgressBar *tasksProgress);
@@ -395,13 +395,23 @@ class MainWindow : public QMainWindow
     QAction *newFolder;
     QAction *showList;
     QAction *showRender;
-    QAction *addTask;
-    QAction *editProject;
-    QAction *rmTask;
+
+    QAction *exportToPdf;
+    QAction *exportToHtml;
+
     QAction *viewMode;
+    QAction *nameAction;
+    QAction *dateAction;
+
+    QAction *addTaskA;
+    QAction *rmTaskA;
+    QAction *editTaskA;
+    
     QAction *newProject;
     QAction *openProjectInGit;
     QAction *rmProject;
+    QAction *editProject;
+
     QAction *setH1A;
     QAction *setH2A;
     QAction *setH3A;
@@ -413,11 +423,7 @@ class MainWindow : public QMainWindow
     QAction *setStrikeA;
     QAction *setNumListA;
     QAction *setTableA;
-    QAction *exportToPdf;
-    QAction *exportToHtml;
     QAction *setQuoteA;
-    QAction *nameAction;
-    QAction *dateAction;
 
     QAction *closeAppA;
     QAction *openNotesA;

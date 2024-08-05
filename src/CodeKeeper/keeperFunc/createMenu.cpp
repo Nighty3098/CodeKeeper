@@ -182,12 +182,16 @@ void MainWindow::createProjectMenu(QMenu *menu, QString font_size)
 
 void MainWindow::createTaskMenu(QMenu *menu, QString font_size)
 {
-    addTask = menu->addAction(
+    addTaskA = menu->addAction(
         QPixmap(":/new.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Add task"), this, SLOT(addNewTask()), Qt::Key_Return);
-    rmTask = menu->addAction(
+    rmTaskA = menu->addAction(
         QPixmap(":/delete.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr("Delete task"), this, SLOT(removeTask()), Qt::Key_Delete);
+    editTaskA = menu->addAction(
+        QPixmap(":/edit.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        tr("Edit task"), this, SLOT(editTask()));
 }
