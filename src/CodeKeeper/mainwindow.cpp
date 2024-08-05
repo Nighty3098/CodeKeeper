@@ -397,6 +397,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     incompleteTasks->setSpacing(5);
     incompleteTasks->setObjectName("IncompleteTasks");
     incompleteTasks->setContextMenuPolicy(Qt::CustomContextMenu);
+    incompleteTasks->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     label_2 = new QLabel(tr("Inprocess"));
     label_2->setFixedHeight(30);
@@ -409,6 +410,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     inprocessTasks->setSpacing(5);
     inprocessTasks->setObjectName("InprocessTasks");
     inprocessTasks->setContextMenuPolicy(Qt::CustomContextMenu);
+    inprocessTasks->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     label_3 = new QLabel(tr("Complete"));
     label_3->setFixedHeight(30);
@@ -421,6 +423,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     completeTasks->setSpacing(5);
     completeTasks->setObjectName("CompleteTasks");
     completeTasks->setContextMenuPolicy(Qt::CustomContextMenu);
+    completeTasks->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     taskText = new QLineEdit();
     taskText->setPlaceholderText(tr(" Task..."));
@@ -482,6 +485,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notStartedProjects->setSpacing(5);
     notStartedProjects->setObjectName("NotStartedProjects");
     notStartedProjects->setContextMenuPolicy(Qt::CustomContextMenu);
+    notStartedProjects->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     sProjects = new QLabel(tr("Started"));
     sProjects->setAlignment(Qt::AlignHCenter);
@@ -493,6 +497,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     startedProjects->setSpacing(5);
     startedProjects->setObjectName("StartedProjects");
     startedProjects->setContextMenuPolicy(Qt::CustomContextMenu);
+    startedProjects->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     flProjects = new QLabel(tr("For review"));
     flProjects->setAlignment(Qt::AlignHCenter);
@@ -504,6 +509,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     finishlineProjects->setSpacing(5);
     finishlineProjects->setObjectName("FinishlineProjects");
     finishlineProjects->setContextMenuPolicy(Qt::CustomContextMenu);
+    finishlineProjects->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     fProjects = new QLabel(tr("Finished"));
     fProjects->setAlignment(Qt::AlignHCenter);
@@ -515,6 +521,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     finishedProjects->setSpacing(5);
     finishedProjects->setObjectName("FinishedProjects");
     finishedProjects->setContextMenuPolicy(Qt::CustomContextMenu);
+    finishedProjects->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     projectsStatsL->addItem(spacer3);
     projectsStatsL->addWidget(projectsMenuButton);
