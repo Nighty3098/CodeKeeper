@@ -42,7 +42,9 @@
 <br><br>
 
 > [!TIP] 
-> [Official project roadmap](https://github.com/Nighty3098/CodeKeeper/issues/132) \\
+> [Official project roadmap](https://github.com/Nighty3098/CodeKeeper/issues/132)
+
+> [!TIP]
 > [Tech Support Bot](https://t.me/DXS_TechSupport_bot)
 
 <br><br>
