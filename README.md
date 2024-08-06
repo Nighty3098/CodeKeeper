@@ -45,15 +45,10 @@
 > If you have found bugs in our product or have suggestions, please write about them:
 > [Tech Support Bot](https://t.me/DXS_TechSupport_bot)
 
-> [!WARNING]
-> On some operating systems there may be problems with the standard qt theme, in this case, we recommend to enable custom theme in the program settings.
-
-
+### Installation
 > [!IMPORTANT]
 > The program requires qt and other third-party modules to run. This will be fixed in the nearest future
 
-
-### Installation
 ```
 git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules 
 cd CodeKeeper/src/CodeKeeper
@@ -93,6 +88,9 @@ make
 |Ctrl+Shift+S       | Open settings |
 
 ### Tweaks
+
+> [!WARNING]
+> On some operating systems there may be problems with the standard qt theme, in this case, we recommend to enable custom theme in the program settings.
 
 | Default theme | Custom theme |
 |:--------------|:-------------|
