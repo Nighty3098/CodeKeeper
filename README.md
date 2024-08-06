@@ -61,6 +61,7 @@ make
 ```
 <br><br>
 ### Screenshots
+
 ![](imgs/1.png)
 ![](imgs/2,png)
 ![](imgs/3,png)
@@ -71,6 +72,7 @@ make
 
 <br><br>
 ### Shortcuts
+
 | Shortcut          | Action            |
 |:------------------|:------------------|
 | Alt+1             | Move to tab 1     |
@@ -92,14 +94,17 @@ make
 
 <br><br>
 ### Tweaks
+
 > [!WARNING]
 > On some operating systems there may be problems with the standard qt theme, in this case, we recommend to enable custom theme in the program settings.
+
 | Default theme | Custom theme |
 |:--------------|:-------------|
 | ![](imgs/default_theme.png) | ![](imgs/custom_theme.png) |
 
 <br><br>
 ### Stats
+
 ![](https://repobeats.axiom.co/api/embed/0d75989e77c487901abc8abe41e46589905ee8af.svg)
 
 <br><br>
