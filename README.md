@@ -36,11 +36,11 @@
     </p>
     <br>
     <a href="https://github.com/Nighty3098/CodeKeeper/issues/132">Official Project Roadmap</a>
-    <br>
-    <h3>If you have found bugs in our product or have suggestions, please write about them:</h3>
-    <a href="https://t.me/DXS_TechSupport_bot"><img src="https://github.com/Nighty3098/Nighty3098/blob/main/TechSupport.png?raw=true" width="65%" /></a>
 </div>
 
+> [!TIP]
+> If you have found bugs in our product or have suggestions, please write about them:
+> ![https://t.me/DXS_TechSupport_bot](https://github.com/Nighty3098/Nighty3098/blob/main/TechSupport.png?raw=true)
 
 > [!WARNING]
 > On some operating systems there may be problems with the standard qt theme, in this case, we recommend to enable custom theme in the program settings.
