@@ -40,7 +40,7 @@
     <a href="https://t.me/DXS_TechSupport_bot"><img src="https://github.com/Nighty3098/Nighty3098/blob/main/TechSupport.png?raw=true" width="65%" /></a>
 </div>
 
-> !Tip 
+> [!TIP] 
 > [Official project roadmap](https://github.com/Nighty3098/CodeKeeper/issues/132)
 
 <br><br>
