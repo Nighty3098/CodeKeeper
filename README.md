@@ -35,13 +35,15 @@
         </a>
     </p>
     <br>
-    <br>
     <h3>If you have found bugs in our product or have suggestions, please write about them:</h3>
     <a href="https://t.me/DXS_TechSupport_bot"><img src="https://github.com/Nighty3098/Nighty3098/blob/main/TechSupport.png?raw=true" width="65%" /></a>
 </div>
 
+<br><br>
+
 > [!TIP] 
 > [Official project roadmap](https://github.com/Nighty3098/CodeKeeper/issues/132)
+> [Tech Support Bot](https://t.me/DXS_TechSupport_bot)
 
 <br><br>
 
