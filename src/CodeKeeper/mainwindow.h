@@ -51,7 +51,7 @@ class notesTree : public QTreeView
 class NoteEditor : public QMarkdownTextEdit
 {
   protected:
-    // ! Bug with cursor - need fixed
+    // ! Why it doesn't work right. WTF
 
     void dropEvent(QDropEvent *event)
     {

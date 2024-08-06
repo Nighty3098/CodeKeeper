@@ -1,8 +1,9 @@
-void MainWindow::activateTasksContextMenu(const QPoint &pos, QListWidget *listWidget) {
+void MainWindow::activateTasksContextMenu(const QPoint &pos, QListWidget *listWidget)
+{
     QPoint item = listWidget->mapToGlobal(pos);
     QMenu *submenu = new QMenu;
 
-    // ! Need fixed 
+    // ! Need fixed
     if (isCustomTheme)
     {
         submenu->setStyleSheet("QMenu {"
@@ -19,7 +20,7 @@ void MainWindow::activateTasksContextMenu(const QPoint &pos, QListWidget *listWi
                                "QMenu::item {"
                                "    border-radius: 0px;"
                                "    color: #fff;"
-"    margin: 5px 10px;"
+                               "    margin: 5px 10px;"
                                "}"
                                "QMenu::item:selected {"
                                "    border-radius: 10px;"
