@@ -40,7 +40,7 @@
 
 > [!TIP]
 > If you have found bugs in our product or have suggestions, please write about them:
-> ![https://t.me/DXS_TechSupport_bot](https://github.com/Nighty3098/Nighty3098/blob/main/TechSupport.png?raw=true)
+> [https://t.me/DXS_TechSupport_bot](Tech Support Bot)
 
 > [!WARNING]
 > On some operating systems there may be problems with the standard qt theme, in this case, we recommend to enable custom theme in the program settings.
