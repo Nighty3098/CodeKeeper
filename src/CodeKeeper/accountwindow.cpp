@@ -36,7 +36,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     projectTitle->setAlignment(Qt::AlignCenter);
 
     langsTitle = new QLabel();
-    langsTitle->setText(tr("\n\nLanguages"));
+    langsTitle->setText(tr("Loading..."));
     langsTitle->setAlignment(Qt::AlignCenter);
 
     profilePicture = new QLabel();

@@ -14,7 +14,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
-    theme = globalSettings->value("theme").value<QString>();
+    theme = globalSettings->value("theme").value<int>();
     path = globalSettings->value("path").value<QString>();
 
     git_repo = globalSettings->value("git_repo").value<QString>();
@@ -209,8 +209,16 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     customTheme->setText(tr("Use custom theme"));
     customTheme->setChecked(isCustomTheme);
 
+    if(isCustomTheme) {
+        themeSelector->setEnabled(true);
+    }
+    else {
+        themeSelector->setEnabled(false);
+    }
+
     themeSelector->addItem(tr("Dark"));
     themeSelector->addItem(tr("Light"));
+    themeSelector->setCurrentIndex(theme);
 
     langSelector = new QComboBox();
     langSelector->setFixedHeight(30);

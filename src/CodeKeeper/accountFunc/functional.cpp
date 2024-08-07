@@ -16,22 +16,20 @@
 
 QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
 {
-    QMap<QString, int> languageCounts; // Хранит количество байт для каждого языка
-    int totalBytes = 0;                // Общее количество байт
+    QMap<QString, int> languageCounts;
+    int totalBytes = 0;
 
     QNetworkAccessManager manager;
 
     for (const QString &repoUrl : repoUrls)
     {
-        // Удаляем префикс "https://github.com/"
         QString apiUrl = repoUrl;
-        apiUrl.remove("https://github.com/");            // Удаляем префикс
-        apiUrl.prepend("https://api.github.com/repos/"); // Добавляем префикс для API
+        apiUrl.remove("https://github.com/");
+        apiUrl.prepend("https://api.github.com/repos/");
 
-        apiUrl += "/languages";                // Формируем URL для API
-        QNetworkRequest request{QUrl(apiUrl)}; // Создаем запрос
+        apiUrl += "/languages";
+        QNetworkRequest request{QUrl(apiUrl)};
 
-        // Устанавливаем заголовки
         request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
         request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
         request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
@@ -39,7 +37,6 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
 
         QNetworkReply *reply = manager.get(request);
 
-        // Ожидаем завершения запроса
         QEventLoop loop;
         QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
         loop.exec();
@@ -50,11 +47,10 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
             QJsonDocument doc = QJsonDocument::fromJson(response);
             QJsonObject obj = doc.object();
 
-            // Подсчитываем языки и их объем
             for (const QString &lang : obj.keys())
             {
                 if (lang != "documentation_url" && lang != "message" && lang != "url")
-                { // Игнорируем ненужные ключи
+                {
                     int bytes = obj.value(lang).toInt();
                     languageCounts[lang] += bytes;
                     totalBytes += bytes;
@@ -67,8 +63,6 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
         }
         reply->deleteLater();
     }
-
-    // Формируем вектор для сортировки
     QVector<QPair<QString, double>> languagePercentages;
     for (const QString &lang : languageCounts.keys())
     {
@@ -76,13 +70,9 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
         languagePercentages.append(qMakePair(lang, percentage));
     }
 
-    // Сортируем по процентам в порядке убывания
     std::sort(languagePercentages.begin(), languagePercentages.end(),
-              [](const QPair<QString, double> &a, const QPair<QString, double> &b) {
-                  return a.second > b.second; // Сортировка по убыванию
-              });
+              [](const QPair<QString, double> &a, const QPair<QString, double> &b) { return a.second > b.second; });
 
-    // Формируем строку с первыми 5 языками
     QString result;
     for (int i = 0; i < std::min(4, languagePercentages.size()); ++i)
     {
@@ -91,7 +81,7 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
                       .arg(QString::number(languagePercentages[i].second, 'f', 2));
     }
 
-    return result.trimmed(); // Убираем лишние пробелы и символы новой строки
+    return result.trimmed();
 }
 
 void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
@@ -419,4 +409,6 @@ void AccountWindow::setLangsStats(const QString langsData)
 
     langsChart->addValue(other, QColor("#333333"));
     langsValuesDisplay->addValue("Other", other, "#333333", selectedFont);
+
+    langsTitle->setText(tr("\n\nLanguages"));
 }

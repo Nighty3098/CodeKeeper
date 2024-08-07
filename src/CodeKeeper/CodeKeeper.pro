@@ -44,7 +44,8 @@ HEADERS += \
 RESOURCES += \
     ../resources/resources.qrc \
     ../stylesheet/stylesheet.qss \
-    ../stylesheet/custom_stylesheet.qss
+    ../stylesheet/custom_stylesheet.qss \
+    ../stylesheet/custom_stylesheet_light.qss
 
 include(3rdParty/qmarkdowntextedit/qmarkdowntextedit.pri)
 

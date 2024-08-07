@@ -56,17 +56,35 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     if (isCustomTheme)
     {
-        QFile custom_theme(":/stylesheet/custom_stylesheet.qss");
-        if (custom_theme.open(QFile::ReadOnly))
+        if (theme == 0)
         {
-            QString customStyleSheet = custom_theme.readAll();
-            qDebug() << "Loading custom stylesheet";
-            setStyleSheet(customStyleSheet);
-            custom_theme.close();
+            QFile custom_theme(":/stylesheet/custom_stylesheet.qss");
+            if (custom_theme.open(QFile::ReadOnly))
+            {
+                QString customStyleSheet = custom_theme.readAll();
+                qDebug() << "Loading custom stylesheet";
+                setStyleSheet(customStyleSheet);
+                custom_theme.close();
+            }
+            else
+            {
+                qDebug() << "Failed to open custom stylesheet file";
+            }
         }
-        else
+        else if (theme == 1)
         {
-            qDebug() << "Failed to open custom stylesheet file";
+            QFile custom_light_theme(":/stylesheet/custom_stylesheet_light.qss");
+            if (custom_light_theme.open(QFile::ReadOnly))
+            {
+                QString customStyleSheetLight = custom_light_theme.readAll();
+                qDebug() << "Loading custom light stylesheet";
+                setStyleSheet(customStyleSheetLight);
+                custom_light_theme.close();
+            }
+            else
+            {
+                qDebug() << "Failed to open custom light stylesheet file";
+            }
         }
     }
     else
@@ -207,7 +225,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuLayout->setAlignment(Qt::AlignHCenter);
 
     QStringList filters;
-    filters << "" << "*.md";
+    filters << ""
+            << "*.md";
 
     iconProvider = new CustomIconProvider();
 

@@ -20,7 +20,7 @@ public:
 
     QFont selectedFont;
     QString font_size;
-    QString theme;
+    int theme;
     QString git_repo;
     QString git_user;
     QString git_token;
