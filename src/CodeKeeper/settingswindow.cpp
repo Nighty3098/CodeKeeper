@@ -209,10 +209,12 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     customTheme->setText(tr("Use custom theme"));
     customTheme->setChecked(isCustomTheme);
 
-    if(isCustomTheme) {
+    if (isCustomTheme)
+    {
         themeSelector->setEnabled(true);
     }
-    else {
+    else
+    {
         themeSelector->setEnabled(false);
     }
 
