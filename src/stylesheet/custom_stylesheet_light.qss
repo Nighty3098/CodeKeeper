@@ -185,9 +185,9 @@ QTabWidget {
 QTabWidget::pane {
     border: 0px solid lightgray;
     border-radius: 10px;
-    top:-1px; 
-    background: transparent;; 
-} 
+    top:-1px;
+    background: transparent;;
+}
 
 QMenu {
     background-color: #799987;
@@ -273,24 +273,24 @@ QTabBar::tab {
     height: 15px;
     width: 100px;
     font-size: 10px;
-    background: transparent; 
+    background: transparent;
     color: #000000;
-    border: 0px solid lightgray; 
+    border: 0px solid lightgray;
     border-radius: 5px;
     margin: 5px;
     padding: 5px 5px;
-    margin-bottom: 1px; 
-} 
+    margin-bottom: 1px;
+}
 
 QTabBar::tab:selected {
     height: 15px;
     width: 100px;
     font-size: 10px;
     color: #000000;
-    background: #799987; 
+    background: rgba(0, 0, 0, 10);
     padding: 5px 5px;
     border-radius: 5px;
-    margin-bottom: 1px; 
+    margin-bottom: 1px;
 }
 
 
@@ -395,16 +395,18 @@ QTreeView {
     border-radius: 10px;
     border-color: #799987;
     alternate-background-color: #799987;
-} 
+}
 
 QTreeView::item:alternate {
     height: 14px;
+    color: #000000;
     background-color: transparent;
     border-radius: 0px;
 }
 
 QTreeView::item:selected {
     height: 14px;
+    color: #000000;
     background-color: #799987;
     border: 0px solid #799987;
     border-radius: 0px;
@@ -412,6 +414,7 @@ QTreeView::item:selected {
 
 QTreeView::item:selected:!active {
     height: 14px;
+    color: #000000;
     background-color: transparent;
     color: #000000;
     border-radius: 0px;
@@ -426,6 +429,7 @@ QTreeView::item:selected:active {
 
 QTreeView::item:hover {
     height: 14px;
+    color: #000000;
     background-color: transparent;
     border-radius: 0px;
 }
