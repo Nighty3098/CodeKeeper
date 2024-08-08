@@ -166,7 +166,7 @@ class MainWindow : public QMainWindow
     QString dir;
     QFont selectedFont;
     QString font_size;
-    QString theme;
+    int theme;
 
     int appLang;
 

@@ -61,7 +61,7 @@ void MainWindow::getSettingsData()
     dir = globalSettings->value("path").value<QString>();
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
-    theme = globalSettings->value("theme").value<QString>();
+    theme = globalSettings->value("theme").value<int>();
     isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
     isCustomTheme = globalSettings->value("isCustomTheme").value<bool>();
     sortNotesRole = globalSettings->value("sortRole", Qt::DisplayRole).value<int>();

@@ -63,7 +63,6 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
     openIssues = QString::number(obj["open_issues"].toInt());
 
     forks = QString::number(obj["forks"].toInt());
-    // lang = obj["language"].toString();
 
     stars = QString::number(obj["stargazers_count"].toInt());
 

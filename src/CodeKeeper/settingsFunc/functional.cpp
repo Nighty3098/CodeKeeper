@@ -245,7 +245,7 @@ void SettingsWindow::saveData()
     int font_size = fontSize->value();
     globalSettings->setValue("fontSize", font_size);
 
-    QString theme = themeSelector->currentText();
+    int theme = themeSelector->currentIndex();
     globalSettings->setValue("theme", theme);
 
     QString dir = pathToFolder->text();
@@ -463,7 +463,6 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
 
     fontSelector->setCurrentFont(*selectedFont);
     fontSize->setValue(font_size.toInt());
-    themeSelector->setCurrentText(theme);
 
     quitBtn->setStyleSheet("QPushButton {"
                            "    border-color: rgba(0, 0, 0, 0);"
