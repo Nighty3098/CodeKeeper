@@ -28,6 +28,7 @@ QMainWindow {
 QCheckBox {
     color: #fff;
 }
+
 QCheckBox::indicator {
     border-radius: 6px;
     width: 13px;

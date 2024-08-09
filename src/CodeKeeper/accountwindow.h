@@ -1,18 +1,18 @@
 #ifndef ACCOUNTWINDOW_H
 #define ACCOUNTWINDOW_H
 
+#include "custom/ColorValueDisplay/ColorValueDisplay.h"
+#include "custom/circleChart/CircleChart.h"
+#include "custom/circleProgressbar/ProgressCircle.h"
+#include <QGridLayout>
 #include <QMainWindow>
 #include <QObject>
-#include <QGridLayout>
 #include <QtWidgets>
-#include "custom/circleProgressbar/ProgressCircle.h"
-#include "custom/circleChart/CircleChart.h"
-#include "custom/ColorValueDisplay/ColorValueDisplay.h"
 
 class AccountWindow : public QMainWindow
 {
     Q_OBJECT
-public:
+  public:
     explicit AccountWindow(QWidget *parent = nullptr);
     ~AccountWindow();
 
@@ -22,7 +22,7 @@ public:
 
     QFont selectedFont;
     QString font_size;
-    QString theme;
+    int theme;
     QString path;
 
     QString git_repo;
@@ -31,7 +31,7 @@ public:
 
     bool isAutoSyncB;
 
-private:
+  private:
     QWidget *centralWidget;
     QGridLayout *mainLayout;
 
@@ -39,7 +39,7 @@ private:
     QLabel *userName;
     QLabel *profileInfo;
     QLabel *tasksStats;
-    
+
     QLabel *tasksTitle;
     QLabel *projectTitle;
     QLabel *langsTitle;
@@ -53,22 +53,24 @@ private:
     CircleChart *projectsChart;
     ColorValueDisplay *chartValuesDisplay;
 
-
     CircleChart *langsChart;
     ColorValueDisplay *langsValuesDisplay;
 
-private slots:
+    QWidget *statsWidget;
+
+  private slots:
     void setUserData(const QString &username, QLabel *label);
     void closeWindowSlot();
     void getSettingsData();
     void setImageFromUrl(const QString &url, QLabel *label);
     void onOpenRepoClicked();
-    int getStarsCount(const QString& username, const QString& token);
+    int getStarsCount(const QString &username, const QString &token);
     void setTasksProgress();
     void setProjectsStats();
     void setLangsStats(const QString langsData);
-    void get_image_url(const QString& username, QLabel *label);
-    QString getLangByRepo(const QStringList& repositories);
+    void get_image_url(const QString &username, QLabel *label);
+    QString getLangByRepo(const QStringList &repositories);
+    float calculatePercentage(int count, int total);
 };
 
 #endif // ACCOUNTWINDOW_H

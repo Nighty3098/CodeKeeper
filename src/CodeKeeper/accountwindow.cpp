@@ -28,15 +28,15 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     getSettingsData();
 
     tasksTitle = new QLabel();
-    tasksTitle->setText(tr("\n\nTasks"));
+    tasksTitle->setText(tr("Tasks"));
     tasksTitle->setAlignment(Qt::AlignCenter);
 
     projectTitle = new QLabel();
-    projectTitle->setText(tr("\n\nProjects"));
+    projectTitle->setText(tr("Projects"));
     projectTitle->setAlignment(Qt::AlignCenter);
 
     langsTitle = new QLabel();
-    langsTitle->setText(tr("Loading..."));
+    langsTitle->setText(tr("Languages"));
     langsTitle->setAlignment(Qt::AlignCenter);
 
     profilePicture = new QLabel();
@@ -111,6 +111,19 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     statsLayout->addWidget(langsTitle, Qt::AlignHCenter);
     statsLayout->addLayout(langsStatsLayout);
 
+    statsWidget = new QWidget();
+    statsWidget->setFixedSize(350, 550);
+    statsWidget->setLayout(statsLayout);
+    qDebug() << "Theme: " << theme;
+    if (theme == 0)
+    {
+        statsWidget->setStyleSheet("background-color: #171b22; border-radius: 25px;");
+    }
+    if (theme == 1)
+    {
+        statsWidget->setStyleSheet("background-color: #799987; border-radius: 25px;");
+    }
+
     QVBoxLayout *gitProfileLayout = new QVBoxLayout();
     gitProfileLayout->addWidget(userName, Qt::AlignCenter);
     gitProfileLayout->addWidget(profilePicture, Qt::AlignCenter);
@@ -158,7 +171,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     mainLayout->addWidget(closeWindow, 0, 0, 1, 6, Qt::AlignLeft);
     mainLayout->addLayout(gitProfileLayout, 1, 0, 13, 3, Qt::AlignCenter);
-    mainLayout->addLayout(statsLayout, 1, 3, 13, 3, Qt::AlignCenter);
+    mainLayout->addWidget(statsWidget, 1, 3, 13, 3, Qt::AlignCenter);
     mainLayout->addWidget(openRepo, 14, 0, 2, 6, Qt::AlignCenter);
 
     connect(closeWindow, SIGNAL(clicked()), this, SLOT(closeWindowSlot()));
