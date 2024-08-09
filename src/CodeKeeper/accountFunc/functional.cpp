@@ -14,6 +14,11 @@
 
 #include "mainwindow.h"
 
+float AccountWindow::calculatePercentage(int count, int total)
+{
+    return total > 0 ? static_cast<float>(count) / total * 100.0f : 0.0f;
+}
+
 QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
 {
     QMap<QString, int> languageCounts;
@@ -162,7 +167,7 @@ void AccountWindow::getSettingsData()
 {
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
-    theme = globalSettings->value("theme").value<QString>();
+    theme = globalSettings->value("theme").value<int>();
     path = globalSettings->value("path").value<QString>();
 
     git_repo = globalSettings->value("git_repo").value<QString>();
@@ -323,65 +328,45 @@ void AccountWindow::setTasksProgress()
 
     int totalTasks = incompleteTasksCount + completeTasksCount + inprocessTasksCount;
 
-    double percentage = static_cast<double>(completeTasksCount) / static_cast<double>(totalTasks) * 100.0;
-
-    double complete_percentage, started_percentage, ns_percentage;
-
-    if (completeTasksCount <= 0)
-    {
-        complete_percentage = 0.0;
-    }
-    else
-    {
-        complete_percentage = static_cast<double>(completeTasksCount) / static_cast<double>(totalTasks) * 100.0;
-    }
-
-    if (inprocessTasksCount <= 0)
-    {
-        started_percentage = 0.0;
-    }
-    else
-    {
-        started_percentage = static_cast<double>(inprocessTasksCount) / static_cast<double>(totalTasks) * 100.0;
-    }
-
-    if (incompleteTasksCount <= 0)
-    {
-        ns_percentage = 0.0;
-    }
-    else
-    {
-        ns_percentage = static_cast<double>(incompleteTasksCount) / static_cast<double>(totalTasks) * 100.0;
-    }
-
     if (totalTasks <= 0)
     {
         tasksStatsProgress->hide();
+        tasksTitle->setText(tr("No tasks found"));
+        return;
     }
 
+    double percentage = calculatePercentage(completeTasksCount, totalTasks);
     qDebug() << completeTasksCount << "/" << totalTasks;
 
     tasksStatsProgress->setValue(percentage);
     tasksStatsProgress->setMaxValue(100);
 
-    tasksChartValuesDisplay->addValue(tr("Completed"), complete_percentage, QColor("#78b3ba"), selectedFont);
-    tasksChartValuesDisplay->addValue(tr("Started"), started_percentage, QColor("#b1e032"), selectedFont);
-    tasksChartValuesDisplay->addValue(tr("Not Started"), ns_percentage, QColor("#c75d5e"), selectedFont);
+    double percentages[] = {calculatePercentage(completeTasksCount, totalTasks),
+                            calculatePercentage(inprocessTasksCount, totalTasks),
+                            calculatePercentage(incompleteTasksCount, totalTasks)};
 
-    if (percentage < 101)
+    QString labels[] = {tr("Completed"), tr("Started"), tr("Not Started")};
+    QColor colors[] = {QColor("#78b3ba"), QColor("#b1e032"), QColor("#c75d5e")};
+
+    for (int i = 0; i < 3; ++i)
     {
-        tasksStatsProgress->setProgressColor(QColor("#78b3ba"));
+        tasksChartValuesDisplay->addValue(labels[i], percentages[i], colors[i], selectedFont);
     }
 
-    if (percentage < 51)
-    {
-        tasksStatsProgress->setProgressColor(QColor("#e09132"));
-    }
-
+    QColor progressColor;
     if (percentage < 26)
     {
-        tasksStatsProgress->setProgressColor(QColor("#c75d5e"));
+        progressColor = QColor("#c75d5e");
     }
+    else if (percentage < 51)
+    {
+        progressColor = QColor("#e09132");
+    }
+    else
+    {
+        progressColor = QColor("#78b3ba");
+    }
+    tasksStatsProgress->setProgressColor(progressColor);
 }
 
 void AccountWindow::setProjectsStats()
@@ -393,62 +378,34 @@ void AccountWindow::setProjectsStats()
     int finishlineProjectsCount = mainWindow->finishedProjects->count();
     int finishedProjectsCount = mainWindow->finishlineProjects->count();
 
-    float ns_p, s_p, fl_p, f_p;
-
     int totalProjects =
         notStartedProjectsCount + startedProjectsCount + finishlineProjectsCount + finishedProjectsCount;
-
-    if (notStartedProjectsCount <= 0)
-    {
-        ns_p = 0.0;
-    }
-    else
-    {
-        ns_p = static_cast<double>(notStartedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
-    }
-    if (startedProjectsCount <= 0)
-    {
-        s_p = 0.0;
-    }
-    else
-    {
-        s_p = static_cast<double>(startedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
-    }
-    if (finishlineProjectsCount <= 0)
-    {
-        fl_p = 0.0;
-    }
-    else
-    {
-        fl_p = static_cast<double>(finishlineProjectsCount) / static_cast<double>(totalProjects) * 100.0;
-    }
-    if (finishedProjectsCount <= 0)
-    {
-        f_p = 0.0;
-    }
-    else
-    {
-        f_p = static_cast<double>(finishedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
-    }
 
     if (totalProjects == 0)
     {
         projectsChart->hide();
+        projectTitle->setText("\n\nNo projects found");
+        return;
     }
+
+    float ns_p = calculatePercentage(notStartedProjectsCount, totalProjects);
+    float s_p = calculatePercentage(startedProjectsCount, totalProjects);
+    float fl_p = calculatePercentage(finishlineProjectsCount, totalProjects);
+    float f_p = calculatePercentage(finishedProjectsCount, totalProjects);
 
     qDebug() << "Projects: " << ns_p << " " << s_p << " " << fl_p << " " << f_p << " " << totalProjects;
 
     projectsChart->setMaximumValue(100);
 
-    projectsChart->addValue(ns_p, QColor("#c75d5e"));
-    projectsChart->addValue(s_p, QColor("#e09132"));
-    projectsChart->addValue(fl_p, QColor("#b1e032"));
-    projectsChart->addValue(f_p, QColor("#78b3ba"));
+    float values[] = {ns_p, s_p, fl_p, f_p};
+    QString labels[] = {tr("Not started"), tr("In Dev"), tr("On Review"), tr("Finished")};
+    QColor colors[] = {QColor("#c75d5e"), QColor("#e09132"), QColor("#b1e032"), QColor("#78b3ba")};
 
-    chartValuesDisplay->addValue(tr("Not started"), ns_p, QColor("#c75d5e"), selectedFont);
-    chartValuesDisplay->addValue(tr("In Dev"), s_p, QColor("#e09132"), selectedFont);
-    chartValuesDisplay->addValue(tr("On Review"), fl_p, QColor("#b1e032"), selectedFont);
-    chartValuesDisplay->addValue(tr("Finished"), f_p, QColor("#78b3ba"), selectedFont);
+    for (int i = 0; i < 4; ++i)
+    {
+        projectsChart->addValue(values[i], colors[i]);
+        chartValuesDisplay->addValue(labels[i], values[i], colors[i], selectedFont);
+    }
 }
 
 void AccountWindow::setLangsStats(const QString langsData)

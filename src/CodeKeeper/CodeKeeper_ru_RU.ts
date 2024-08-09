@@ -4,14 +4,14 @@
 <context>
     <name>AccountWindow</name>
     <message>
-        <location filename="accountFunc/functional.cpp" line="301"/>
+        <location filename="accountFunc/functional.cpp" line="306"/>
         <source>
 Public repos: </source>
         <translation>
 Публичные репозитории: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="302"/>
+        <location filename="accountFunc/functional.cpp" line="307"/>
         <source>
 
 Following: </source>
@@ -20,7 +20,7 @@ Following: </source>
 Подписки: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="303"/>
+        <location filename="accountFunc/functional.cpp" line="308"/>
         <source>
 
 Followers: </source>
@@ -29,7 +29,7 @@ Followers: </source>
 Подписчики: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="304"/>
+        <location filename="accountFunc/functional.cpp" line="309"/>
         <source>
 
 Stars: </source>
@@ -38,27 +38,40 @@ Stars: </source>
 Звёзды: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="367"/>
+        <location filename="accountFunc/functional.cpp" line="334"/>
+        <source>No tasks found</source>
+        <translation>Задачи не найдены</translation>
+    </message>
+    <message>
+        <location filename="accountFunc/functional.cpp" line="348"/>
         <source>Completed</source>
         <translation>Выполнено</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="368"/>
+        <location filename="accountFunc/functional.cpp" line="348"/>
         <source>Started</source>
         <translation>Начато</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="369"/>
+        <location filename="accountFunc/functional.cpp" line="348"/>
         <source>Not Started</source>
         <translation>Не начато</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="490"/>
+        <source>
+
+No languages found</source>
+        <translation type="vanished">
+
+Статистика языков не найдена</translation>
+    </message>
+    <message>
+        <location filename="accountFunc/functional.cpp" line="447"/>
         <source>None</source>
         <translation>Отсутствуют</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="494"/>
+        <location filename="accountFunc/functional.cpp" line="451"/>
         <source>Other</source>
         <translation>Другие</translation>
     </message>
@@ -79,52 +92,48 @@ Stars: </source>
         <translation type="vanished">Закончено: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="448"/>
+        <location filename="accountFunc/functional.cpp" line="401"/>
         <source>Not started</source>
         <translation>Не начато</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="449"/>
+        <location filename="accountFunc/functional.cpp" line="401"/>
         <source>In Dev</source>
         <translation>В разработке</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="450"/>
+        <location filename="accountFunc/functional.cpp" line="401"/>
         <source>On Review</source>
         <translation>На ревью</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="451"/>
+        <location filename="accountFunc/functional.cpp" line="401"/>
         <source>Finished</source>
         <translation>Закончено</translation>
     </message>
     <message>
         <location filename="accountwindow.cpp" line="31"/>
-        <source>
-
-Tasks</source>
+        <source>Tasks</source>
         <oldsource>
-Tasks
-</oldsource>
-        <translation>
 
-Задачи</translation>
+Tasks</oldsource>
+        <translation>Задачи</translation>
     </message>
     <message>
         <location filename="accountwindow.cpp" line="35"/>
-        <source>
-
-Projects</source>
+        <source>Projects</source>
         <oldsource>
 
-Projects
-</oldsource>
-        <translation>
-
-Проекты</translation>
+Projects</oldsource>
+        <translation>Проекты</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="485"/>
+        <location filename="accountwindow.cpp" line="39"/>
+        <source>Languages</source>
+        <translation>Языки</translation>
+    </message>
+    <message>
+        <location filename="accountFunc/functional.cpp" line="442"/>
         <source>
 
 Languages</source>
@@ -133,7 +142,6 @@ Languages</source>
 Языки</translation>
     </message>
     <message>
-        <location filename="accountwindow.cpp" line="39"/>
         <location filename="accountwindow.cpp" line="43"/>
         <location filename="accountwindow.cpp" line="48"/>
         <source>Loading...</source>
