@@ -325,9 +325,39 @@ void AccountWindow::setTasksProgress()
 
     double percentage = static_cast<double>(completeTasksCount) / static_cast<double>(totalTasks) * 100.0;
 
-    double complete_percentage = static_cast<double>(completeTasksCount) / static_cast<double>(totalTasks) * 100.0;
-    double started_percentage = static_cast<double>(inprocessTasksCount) / static_cast<double>(totalTasks) * 100.0;
-    double ns_percentage = static_cast<double>(incompleteTasksCount) / static_cast<double>(totalTasks) * 100.0;
+    double complete_percentage, started_percentage, ns_percentage;
+
+    if (completeTasksCount <= 0)
+    {
+        complete_percentage = 0.0;
+    }
+    else
+    {
+        complete_percentage = static_cast<double>(completeTasksCount) / static_cast<double>(totalTasks) * 100.0;
+    }
+
+    if (inprocessTasksCount <= 0)
+    {
+        started_percentage = 0.0;
+    }
+    else
+    {
+        started_percentage = static_cast<double>(inprocessTasksCount) / static_cast<double>(totalTasks) * 100.0;
+    }
+
+    if (incompleteTasksCount <= 0)
+    {
+        ns_percentage = 0.0;
+    }
+    else
+    {
+        ns_percentage = static_cast<double>(incompleteTasksCount) / static_cast<double>(totalTasks) * 100.0;
+    }
+
+    if (totalTasks <= 0)
+    {
+        tasksStatsProgress->hide();
+    }
 
     qDebug() << completeTasksCount << "/" << totalTasks;
 
@@ -363,13 +393,50 @@ void AccountWindow::setProjectsStats()
     int finishlineProjectsCount = mainWindow->finishedProjects->count();
     int finishedProjectsCount = mainWindow->finishlineProjects->count();
 
+    float ns_p, s_p, fl_p, f_p;
+
     int totalProjects =
         notStartedProjectsCount + startedProjectsCount + finishlineProjectsCount + finishedProjectsCount;
 
-    float ns_p = static_cast<double>(notStartedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
-    float s_p = static_cast<double>(startedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
-    float fl_p = static_cast<double>(finishlineProjectsCount) / static_cast<double>(totalProjects) * 100.0;
-    float f_p = static_cast<double>(finishedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    if (notStartedProjectsCount <= 0)
+    {
+        ns_p = 0.0;
+    }
+    else
+    {
+        ns_p = static_cast<double>(notStartedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    }
+    if (startedProjectsCount <= 0)
+    {
+        s_p = 0.0;
+    }
+    else
+    {
+        s_p = static_cast<double>(startedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    }
+    if (finishlineProjectsCount <= 0)
+    {
+        fl_p = 0.0;
+    }
+    else
+    {
+        fl_p = static_cast<double>(finishlineProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    }
+    if (finishedProjectsCount <= 0)
+    {
+        f_p = 0.0;
+    }
+    else
+    {
+        f_p = static_cast<double>(finishedProjectsCount) / static_cast<double>(totalProjects) * 100.0;
+    }
+
+    if (totalProjects == 0)
+    {
+        projectsChart->hide();
+    }
+
+    qDebug() << "Projects: " << ns_p << " " << s_p << " " << fl_p << " " << f_p << " " << totalProjects;
 
     projectsChart->setMaximumValue(100);
 
@@ -387,8 +454,14 @@ void AccountWindow::setProjectsStats()
 void AccountWindow::setLangsStats(const QString langsData)
 {
     QStringList langsColors;
-    langsColors << "#c75d5e" << "#e09132" << "#b1e032" << "#78b3ba"
-                << "#5dc7c3" << "#c75da9" << "#c7c25d" << "#875dc7";
+    langsColors << "#c75d5e"
+                << "#e09132"
+                << "#b1e032"
+                << "#78b3ba"
+                << "#5dc7c3"
+                << "#c75da9"
+                << "#c7c25d"
+                << "#875dc7";
 
     QStringList result = langsData.split(' ');
     int count = result.size() / 2;
@@ -408,7 +481,16 @@ void AccountWindow::setLangsStats(const QString langsData)
     }
 
     langsChart->addValue(other, QColor("#333333"));
-    langsValuesDisplay->addValue("Other", other, "#333333", selectedFont);
 
     langsTitle->setText(tr("\n\nLanguages"));
+
+    if (count <= 0)
+    {
+        langsChart->hide();
+        langsValuesDisplay->addValue(tr("None"), other, "#333333", selectedFont);
+    }
+    else
+    {
+        langsValuesDisplay->addValue(tr("Other"), other, "#333333", selectedFont);
+    }
 }
