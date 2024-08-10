@@ -14,6 +14,7 @@
 #include <QtWidgets>
 
 #include "3rdParty/qmarkdowntextedit/markdownhighlighter.h"
+
 #include "keeperFunc/addConnects.cpp"
 #include "keeperFunc/createMenu.cpp"
 #include "keeperFunc/functional.cpp"
@@ -34,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
-    setMinimumSize(900, 900);
+    setMinimumSize(1000, 900);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -568,10 +569,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QWidget *mainTab = new QWidget();
     QGridLayout *firstLayout = new QGridLayout(mainTab);
 
-    firstLayout->addWidget(decorationLabel, 4, 0, 2, 6, Qt::AlignBottom | Qt::AlignRight);
-    firstLayout->addWidget(timeLabel, 0, 1, 2, 2, Qt::AlignBottom);
-    firstLayout->addWidget(dateLabel, 2, 1, 1, 2, Qt::AlignTop);
-    firstLayout->addWidget(helloLabel, 3, 1, 3, 5, Qt::AlignLeft | Qt::AlignVCenter);
+    firstLayout->addWidget(decorationLabel, 4, 0, 2, 8, Qt::AlignBottom | Qt::AlignRight);
+    firstLayout->addWidget(timeLabel, 0, 1, 2, 4, Qt::AlignBottom);
+    firstLayout->addWidget(dateLabel, 2, 1, 1, 4, Qt::AlignTop);
+    firstLayout->addWidget(helloLabel, 3, 1, 3, 7, Qt::AlignLeft | Qt::AlignVCenter);
 
     tabs->addTab(mainTab, tr("Homepage"));
 

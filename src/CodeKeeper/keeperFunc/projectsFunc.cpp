@@ -166,7 +166,7 @@ void MainWindow::openProject()
         if (item)
         {
             QDialog dialog(this);
-            QSizeGrip *sizeGrip = new QSizeGrip(this);
+            QSizeGrip *dialogSizeGrip = new QSizeGrip(this);
 
             dialog.setFixedWidth(570);
             dialog.setMinimumHeight(500);
