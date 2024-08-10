@@ -77,5 +77,6 @@
         <file>Monoton-Regular.ttf</file>
         <file>git.png</file>
         <file>tea.svg</file>
+        <file>resize.png</file>
     </qresource>
 </RCC>

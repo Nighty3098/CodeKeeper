@@ -175,6 +175,7 @@ void AccountWindow::getSettingsData()
     git_token = globalSettings->value("git_token").value<QString>();
 
     isAutoSyncB = globalSettings->value("isAutoSync").value<bool>();
+    isCustomTheme = globalSettings->value("isCustomTheme").value<bool>();
 }
 
 void AccountWindow::setFontStyle()

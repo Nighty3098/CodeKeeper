@@ -115,13 +115,19 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     statsWidget->setFixedSize(350, 550);
     statsWidget->setLayout(statsLayout);
     qDebug() << "Theme: " << theme;
-    if (theme == 0)
+    if (isCustomTheme)
     {
-        statsWidget->setStyleSheet("background-color: #171b22; border-radius: 25px;");
+        if (theme == 0)
+        {
+            statsWidget->setStyleSheet("background-color: #171b22; border-radius: 25px;");
+        }
+        if (theme == 1)
+        {
+            statsWidget->setStyleSheet("background-color: #799987; border-radius: 25px;");
+        }
     }
-    if (theme == 1)
+    else
     {
-        statsWidget->setStyleSheet("background-color: #799987; border-radius: 25px;");
     }
 
     QVBoxLayout *gitProfileLayout = new QVBoxLayout();
