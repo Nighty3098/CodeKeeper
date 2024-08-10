@@ -30,6 +30,7 @@ class AccountWindow : public QMainWindow
     QString git_token;
 
     bool isAutoSyncB;
+    bool isCustomTheme;
 
   private:
     QWidget *centralWidget;
