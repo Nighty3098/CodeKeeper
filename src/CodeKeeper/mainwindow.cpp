@@ -631,10 +631,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     }
 
     isConnected = new QPushButton("");
-    isConnected->setFixedSize(15, 15);
+    isConnected->setFixedSize(16, 30);
 
     isAutoSync = new QPushButton("");
-    isAutoSync->setFixedSize(15, 15);
+    isAutoSync->setFixedSize(16, 30);
 
     QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
