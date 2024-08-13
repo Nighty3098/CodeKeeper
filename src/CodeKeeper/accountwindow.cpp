@@ -124,8 +124,8 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     LangsWidget->setLayout(langsStatsLayout);
 
     langsCard = new QToolBox();
-    langsCard->addItem(gitLangsWidget, "From Git profile");
-    langsCard->addItem(LangsWidget, "From local data");
+    langsCard->addItem(gitLangsWidget, tr("From Git profile"));
+    langsCard->addItem(LangsWidget, tr("From local data"));
 
     QVBoxLayout *statsLayout = new QVBoxLayout();
     statsLayout->setSpacing(20);
@@ -174,7 +174,6 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
         qDebug() << "langsStats started";
     });
     GitLangsStatsThread->start();
-
 
     QThread *langsStatsThread = new QThread;
     QObject::connect(langsStatsThread, &QThread::started, this, [this]() {
