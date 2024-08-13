@@ -89,7 +89,7 @@ QStatusBar::QSizeGrip {
 }
 
 QSizeGrip {
-    background-color: #171b22;
+    background-color: transparent;
     background-image: url(':/resize.png');
     border-radius: 6px;
     background-repeat: no-repeat;

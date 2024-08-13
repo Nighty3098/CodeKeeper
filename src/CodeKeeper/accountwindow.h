@@ -45,6 +45,8 @@ class AccountWindow : public QMainWindow
     QLabel *projectTitle;
     QLabel *langsTitle;
 
+    QToolBox *langsCard;
+
     QPushButton *closeWindow;
     QPushButton *openRepo;
 
@@ -57,6 +59,9 @@ class AccountWindow : public QMainWindow
     CircleChart *langsChart;
     ColorValueDisplay *langsValuesDisplay;
 
+    CircleChart *GitLangsChart;
+    ColorValueDisplay *GitLangsValuesDisplay;
+
     QWidget *statsWidget;
 
   private slots:
@@ -68,8 +73,9 @@ class AccountWindow : public QMainWindow
     int getStarsCount(const QString &username, const QString &token);
     void setTasksProgress();
     void setProjectsStats();
-    void setLangsStats(const QString langsData);
+    void setLangsStats(const QString langsData, CircleChart *langsChart, ColorValueDisplay *langsValuesDisplay);
     void get_image_url(const QString &username, QLabel *label);
+    QStringList getAllGitReposUrls(const QString &username);
     QString getLangByRepo(const QStringList &repositories);
     float calculatePercentage(int count, int total);
 };

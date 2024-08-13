@@ -103,13 +103,38 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     langsStatsLayout->addWidget(langsChart);
     langsStatsLayout->addWidget(langsValuesDisplay);
 
+    QHBoxLayout *GitLangsStatsLayout = new QHBoxLayout();
+    GitLangsStatsLayout->setSpacing(20);
+
+    GitLangsChart = new CircleChart();
+    GitLangsChart->setFixedSize(100, 100);
+    GitLangsChart->setAlignment(Qt::AlignCenter);
+    GitLangsChart->setHeight(90);
+
+    GitLangsValuesDisplay = new ColorValueDisplay();
+    GitLangsValuesDisplay->setFixedSize(160, 100);
+
+    GitLangsStatsLayout->addWidget(GitLangsChart);
+    GitLangsStatsLayout->addWidget(GitLangsValuesDisplay);
+
+    QWidget *gitLangsWidget = new QWidget;
+    gitLangsWidget->setLayout(GitLangsStatsLayout);
+
+    QWidget *LangsWidget = new QWidget;
+    LangsWidget->setLayout(langsStatsLayout);
+
+    langsCard = new QToolBox();
+    langsCard->addItem(gitLangsWidget, "From Git profile");
+    langsCard->addItem(LangsWidget, "From local data");
+
     QVBoxLayout *statsLayout = new QVBoxLayout();
+    statsLayout->setSpacing(20);
     statsLayout->addWidget(tasksTitle, Qt::AlignHCenter);
     statsLayout->addLayout(tasksStatsLayout);
     statsLayout->addWidget(projectTitle, Qt::AlignHCenter);
     statsLayout->addLayout(projectsStatsLayout);
     statsLayout->addWidget(langsTitle, Qt::AlignHCenter);
-    statsLayout->addLayout(langsStatsLayout);
+    statsLayout->addWidget(langsCard, Qt::AlignCenter);
 
     statsWidget = new QWidget();
     statsWidget->setFixedSize(350, 550);
@@ -135,15 +160,32 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     gitProfileLayout->addWidget(profilePicture, Qt::AlignCenter);
     gitProfileLayout->addWidget(profileInfo, Qt::AlignCenter);
 
+    QThread *GitLangsStatsThread = new QThread;
+    QObject::connect(GitLangsStatsThread, &QThread::started, this, [this]() {
+        MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
+
+        // QStringList urls = mainWindow->getAllReposUrl();
+        QStringList urls = getAllGitReposUrls(git_user);
+        QString langsStatsS = getLangByRepo(urls);
+
+        qDebug() << langsStatsS;
+        setLangsStats(langsStatsS, GitLangsChart, GitLangsValuesDisplay);
+
+        qDebug() << "langsStats started";
+    });
+    GitLangsStatsThread->start();
+
+
     QThread *langsStatsThread = new QThread;
     QObject::connect(langsStatsThread, &QThread::started, this, [this]() {
         MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
 
         QStringList urls = mainWindow->getAllReposUrl();
+        // QStringList urls = getAllGitReposUrls(git_user);
         QString langsStatsS = getLangByRepo(urls);
 
         qDebug() << langsStatsS;
-        setLangsStats(langsStatsS);
+        setLangsStats(langsStatsS, langsChart, langsValuesDisplay);
 
         qDebug() << "langsStats started";
     });

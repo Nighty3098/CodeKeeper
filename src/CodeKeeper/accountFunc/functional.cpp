@@ -12,7 +12,82 @@
 #include <QStringList>
 #include <algorithm>
 
+#include "custom/ColorValueDisplay/ColorValueDisplay.h"
+#include "custom/circleChart/CircleChart.h"
+#include "custom/circleProgressbar/ProgressCircle.h"
+
 #include "mainwindow.h"
+
+QStringList AccountWindow::getAllGitReposUrls(const QString &username)
+{
+    QStringList repoUrls;
+
+    // Создаем менеджер сети
+    QNetworkAccessManager manager;
+
+    // URL для получения репозиториев пользователя
+    QString reposUrl = QString("https://api.github.com/users/%1/repos").arg(username);
+
+    // URL для получения событий пользователя
+    QString eventsUrl = QString("https://api.github.com/users/%1/events").arg(username);
+
+    // Функция для отправки запроса и обработки ответа
+    auto fetchUrls = [&](const QString &url) {
+        QNetworkRequest request;
+        request.setUrl(QUrl(url));
+        request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+        request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+        QNetworkReply *reply = manager.get(request);
+        QEventLoop eventLoop;
+        QObject::connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
+        eventLoop.exec();
+
+        if (reply->error() == QNetworkReply::NoError)
+        {
+            QByteArray responseData = reply->readAll();
+            QJsonDocument jsonDoc = QJsonDocument::fromJson(responseData);
+            if (jsonDoc.isArray())
+            {
+                QJsonArray jsonArray = jsonDoc.array();
+                for (const QJsonValue &value : jsonArray)
+                {
+                    QString repoUrl;
+                    if (url == reposUrl)
+                    {
+                        repoUrl = value.toObject().value("html_url").toString();
+                    }
+                    else
+                    {
+                        // Обработка событий для получения репозиториев
+                        QJsonObject repoObject = value.toObject().value("repo").toObject();
+                        repoUrl = repoObject.value("html_url").toString();
+                    }
+                    if (!repoUrl.isEmpty() && !repoUrls.contains(repoUrl))
+                    {
+                        repoUrls.append(repoUrl);
+                    }
+                }
+            }
+        }
+        else
+        {
+            qWarning() << "Error fetching data:" << reply->errorString();
+        }
+
+        reply->deleteLater();
+    };
+
+    // Получаем репозитории пользователя
+    fetchUrls(reposUrl);
+
+    // Получаем события пользователя
+    fetchUrls(eventsUrl);
+
+    qDebug() << "User repos: " << repoUrls;
+
+    return repoUrls;
+}
 
 float AccountWindow::calculatePercentage(int count, int total)
 {
@@ -79,7 +154,7 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
               [](const QPair<QString, double> &a, const QPair<QString, double> &b) { return a.second > b.second; });
 
     QString result;
-    for (int i = 0; i < std::min(4, languagePercentages.size()); ++i)
+    for (int i = 0; i < std::min(5, languagePercentages.size()); ++i)
     {
         result += QString("%1 %2 ")
                       .arg(languagePercentages[i].first)
@@ -409,7 +484,7 @@ void AccountWindow::setProjectsStats()
     }
 }
 
-void AccountWindow::setLangsStats(const QString langsData)
+void AccountWindow::setLangsStats(const QString langsData, CircleChart *langsChart, ColorValueDisplay *langsValuesDisplay)
 {
     QStringList langsColors;
     langsColors << "#c75d5e"
