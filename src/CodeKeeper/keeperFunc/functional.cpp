@@ -134,11 +134,12 @@ void MainWindow::setConnectionStatus()
 
 void MainWindow::createCustomTitlebar()
 {
-    closeBtn->setFixedSize(15, 15);
-    minimizeBtn->setFixedSize(15, 15);
-    maximizeBtn->setFixedSize(15, 15);
+    closeBtn->setFixedSize(16, 20);
+    minimizeBtn->setFixedSize(16, 20);
+    maximizeBtn->setFixedSize(16, 20);
 
     closeBtn->setStyleSheet("QPushButton {"
+                            "    border-radius: 0px;"
                             "    border-color: rgba(0, 0, 0, 0);"
                             "    background-color: rgba(0, 0, 0, 0);"
                             "    background-image: url(':/red.png');"
@@ -146,6 +147,7 @@ void MainWindow::createCustomTitlebar()
                             "}"
 
                             "QPushButton:hover {"
+                            "    border-radius: 0px;"
                             "    border-color: rgba(0, 0, 0, 0);"
                             "    background-image: url(':/redHovered.png');"
                             "    background-repeat: no-repeat;"
@@ -153,6 +155,7 @@ void MainWindow::createCustomTitlebar()
                             "}");
 
     minimizeBtn->setStyleSheet("QPushButton {"
+                               "    border-radius: 0px;"
                                "    border-color: rgba(0, 0, 0, 0);"
                                "    background-color: rgba(0, 0, 0, 0);"
                                "    background-image: url(':/yellow.png');"
@@ -160,6 +163,7 @@ void MainWindow::createCustomTitlebar()
                                "}"
 
                                "QPushButton:hover {"
+                               "    border-radius: 0px;"
                                "    border-color: rgba(0, 0, 0, 0);"
                                "    background-image: url(':/yellowHovered.png');"
                                "    background-repeat: no-repeat;"
@@ -167,6 +171,7 @@ void MainWindow::createCustomTitlebar()
                                "}");
 
     maximizeBtn->setStyleSheet("QPushButton {"
+                               "    border-radius: 0px;"
                                "    border-color: rgba(0, 0, 0, 0);"
                                "    background-color: rgba(0, 0, 0, 0);"
                                "    background-image: url(':/green.png');"
@@ -174,6 +179,7 @@ void MainWindow::createCustomTitlebar()
                                "}"
 
                                "QPushButton:hover {"
+                               "    border-radius: 0px;"
                                "    border-color: rgba(0, 0, 0, 0);"
                                "    background-image: url(':/greenHovered.png');"
                                "    background-color: rgba(0, 0, 0, 0);"

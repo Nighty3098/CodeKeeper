@@ -344,11 +344,10 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
 
     saveBtn->setFont(*selectedFont);
     saveBtn->setStyleSheet("QPushButton {border: none; background-color: "
-                           "transparent; color: #fff; font-size: " +
+                           "transparent; font-size: " +
                            font_size +
                            "pt;} QPushButton:hover {border: none; "
-                           "background-color: transparent; color: "
-                           "#7289DA; font-size: " +
+                           "background-color: transparent; font-size: " +
                            font_size + "pt;}");
 
     appName->setFont(*selectedFont);

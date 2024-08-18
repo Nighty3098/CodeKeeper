@@ -1,6 +1,7 @@
 QDialog {
     background-color: transparent;
-    border-width: 2px;
+    border: none;
+    border-radius: 0px;
 }
 
 QTableWidget {
@@ -8,7 +9,7 @@ QTableWidget {
     alternate-background-color: transparent;
     show-decoration-selected: 0;
     border: 0px;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 QTableWidget::item {
     border-radius: 5px;
@@ -16,14 +17,16 @@ QTableWidget::item {
 
 QWidget {
     background-color: #cfe1b9;
-    border-width: 2px;
+    border: none;
     border-color: #000000;
+    border-radius: 0px;
 }
 QMainWindow {
     background-color: #cfe1b9;
     border: none;
     background: transparent;
     color: #000000;
+    border-radius: 0px;
 }
 
 QCheckBox {
@@ -87,7 +90,9 @@ QStatusBar::QSizeGrip {
 
 QSizeGrip {
     background-color: transparent;
-    border-radius: 10px;
+    background-image: url(':/resize.png');
+    border-radius: 6px;
+    background-repeat: no-repeat;
 }
 
 QMarkdownTextEdit {
