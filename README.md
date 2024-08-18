@@ -35,7 +35,7 @@
         </a>
     </p>
     <br><br>
-    <a href="[https://t.me/DXS_TechSupport_bot](https://github.com/Nighty3098/CodeKeeper/issues/132)"><kbd><br> Official project roadmap <br></kbd></a>
+    <a href="https://github.com/Nighty3098/CodeKeeper/issues/132"><kbd><br> Official project roadmap <br></kbd></a>
     <a href="https://t.me/DXS_TechSupport_bot"><kbd><br> Tech Support <br></kbd></a>
 </div>
 
