@@ -104,7 +104,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     checkUpdatesBtn = new QPushButton(
         QPixmap(":/retry.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr(" Checkfor updates"));
+        tr(" Check for updates"));
     checkUpdatesBtn->setFixedSize(200, 30);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
