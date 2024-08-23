@@ -22,16 +22,11 @@ QStringList AccountWindow::getAllGitReposUrls(const QString &username)
 {
     QStringList repoUrls;
 
-    // Создаем менеджер сети
     QNetworkAccessManager manager;
 
-    // URL для получения репозиториев пользователя
     QString reposUrl = QString("https://api.github.com/users/%1/repos").arg(username);
 
-    // URL для получения событий пользователя
     QString eventsUrl = QString("https://api.github.com/users/%1/events").arg(username);
-
-    // Функция для отправки запроса и обработки ответа
     auto fetchUrls = [&](const QString &url) {
         QNetworkRequest request;
         request.setUrl(QUrl(url));
@@ -78,10 +73,8 @@ QStringList AccountWindow::getAllGitReposUrls(const QString &username)
         reply->deleteLater();
     };
 
-    // Получаем репозитории пользователя
     fetchUrls(reposUrl);
 
-    // Получаем события пользователя
     fetchUrls(eventsUrl);
 
     qDebug() << "User repos: " << repoUrls;
@@ -484,7 +477,8 @@ void AccountWindow::setProjectsStats()
     }
 }
 
-void AccountWindow::setLangsStats(const QString langsData, CircleChart *langsChart, ColorValueDisplay *langsValuesDisplay)
+void AccountWindow::setLangsStats(const QString langsData, CircleChart *langsChart,
+                                  ColorValueDisplay *langsValuesDisplay)
 {
     QStringList langsColors;
     langsColors << "#c75d5e"

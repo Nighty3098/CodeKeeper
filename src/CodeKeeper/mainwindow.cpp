@@ -451,15 +451,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tasksGLayout->addLayout(tasksStatsL, 0, 0, 1, 3);
 
-    tasksGLayout->addWidget(label_1, 1, 0);
-    tasksGLayout->addWidget(label_2, 1, 1);
-    tasksGLayout->addWidget(label_3, 1, 2);
+    QSplitter *tasksSplitter = new QSplitter(Qt::Horizontal);
 
-    tasksGLayout->addWidget(incompleteTasks, 2, 0);
-    tasksGLayout->addWidget(inprocessTasks, 2, 1);
-    tasksGLayout->addWidget(completeTasks, 2, 2);
+    tasksSplitter->addWidget(incompleteTasks);
+    tasksSplitter->addWidget(inprocessTasks);
+    tasksSplitter->addWidget(completeTasks);
 
-    tasksGLayout->addWidget(taskText, 3, 1);
+    tasksSplitter->setStretchFactor(0, 1);
+    tasksSplitter->setStretchFactor(1, 1);
+    tasksSplitter->setStretchFactor(2, 1);
+
+    tasksGLayout->addWidget(label_1, 1, 0, Qt::AlignHCenter);
+    tasksGLayout->addWidget(label_2, 1, 1, Qt::AlignHCenter);
+    tasksGLayout->addWidget(label_3, 1, 2, Qt::AlignHCenter);
+
+    tasksGLayout->addWidget(tasksSplitter, 2, 0, 1, 3);
+
+    tasksGLayout->addWidget(taskText, 4, 1);
 
     // ========================================================
 
