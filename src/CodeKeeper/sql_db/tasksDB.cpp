@@ -136,7 +136,7 @@ void MainWindow::loadTasks()
         }
         else
         {
-            qDebug() << "🟠 Unknown status: " << status;
+            qDebug() << "Unknown status: " << status;
         }
     }
 

@@ -54,17 +54,30 @@ void MainWindow::activateProjectContextMenu(const QPoint &pos, QListWidget *list
 
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "Moving project: " << item->text() << " from: " << list->objectName();
+    if (item && list)
+    {
+        qDebug() << "Moving project: " << item->text() << " from: " << list->objectName();
+    }
 }
 
 void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "Moved project: " << item->text() << " to: " << list->objectName();
-    QStringList data = item->text().split("\n");
-    QString status = list->objectName();
-    QString date = getCurrentDateTimeString();
+    if (item && list)
+    {
+        qDebug() << "Moved project: " << item->text() << " to: " << list->objectName();
+        QStringList data = item->text().split("\n");
+        if (data.size() >= 3) // Check if data has at least 3 elements
+        {
+            QString status = list->objectName();
+            QString date = getCurrentDateTimeString();
 
-    updateProjectStatus(&status, &date, &data[2]);
+            updateProjectStatus(&status, &date, &data[2]);
+        }
+        else
+        {
+            qWarning() << "Invalid project data format";
+        }
+    }
 }
 
 void MainWindow::createProject()
@@ -87,7 +100,7 @@ void MainWindow::createProject()
 
 void MainWindow::removeProject()
 {
-    QListWidget *listWidgets[] = {notStartedProjects, startedProjects, finishlineProjects, finishedProjects};
+    QList<QListWidget *> listWidgets = {notStartedProjects, startedProjects, finishlineProjects, finishedProjects};
 
     for (QListWidget *listWidget : listWidgets)
     {
@@ -97,7 +110,8 @@ void MainWindow::removeProject()
             QStringList data = item->text().split("\n");
             QString status = listWidget->objectName();
 
-            listWidget->takeItem(listWidget->row(item));
+            int row = listWidget->row(item);
+            listWidget->takeItem(row);
 
             removeProjectFromDB(&data[1], &status, &data[2]);
 
@@ -112,22 +126,23 @@ void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStart
                                   QListWidget *startedProjects, QListWidget *finishedProjects,
                                   QListWidget *finishlineProjects)
 {
-    QThread *totalProjectsThread = new QThread;
-    QObject::connect(totalProjectsThread, &QThread::started, this,
-                     [this, projectsTab, notStartedProjects, startedProjects, finishedProjects, finishlineProjects]() {
-                         if (projectsTab->currentIndex() == 3)
-                         {
-                             QTimer *timer3 = new QTimer(this);
-                             connect(timer3, &QTimer::timeout, [=]() {
-                                 int totalProjects = notStartedProjects->count() + finishlineProjects->count() +
-                                                     startedProjects->count() + finishedProjects->count();
+    static QTimer *timer3 = new QTimer(this);
 
-                                 totalProjectsL->setText(tr("Total projects: ") + QString::number(totalProjects) + " ");
-                             });
-                             timer3->start(500);
-                         }
-                     });
-    totalProjectsThread->start();
+    connect(timer3, &QTimer::timeout, this, [=]() {
+        int totalProjects = notStartedProjects->count() + finishlineProjects->count() + startedProjects->count() +
+                            finishedProjects->count();
+
+        totalProjectsL->setText(tr("Total projects: ") + QString::number(totalProjects) + " ");
+    });
+
+    if (projectsTab->currentIndex() == 3)
+    {
+        timer3->start(500);
+    }
+    else
+    {
+        timer3->stop();
+    }
 }
 
 void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName)
@@ -136,21 +151,19 @@ void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileN
 
 void MainWindow::openGitProject()
 {
-    QListWidget *listWidgets[] = {notStartedProjects, startedProjects, finishlineProjects, finishedProjects};
+    QList<QListWidget *> listWidgets = {notStartedProjects, startedProjects, finishlineProjects, finishedProjects};
 
     for (QListWidget *listWidget : listWidgets)
     {
         QListWidgetItem *item = listWidget->currentItem();
         if (item)
         {
-            QStringList data = item->text().split("\n");
-
-            QString git_url = data[1];
+            QString git_url = item->text().split("\n").value(1);
             qDebug() << git_url;
+
             QUrl url(git_url);
             QDesktopServices::openUrl(url);
-
-            break;
+            return;
         }
     }
 }
