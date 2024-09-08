@@ -142,22 +142,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     isFullScreen = false;
 
     sizeGrip = new QSizeGrip(this);
-    sizeGrip->setFixedSize(11, 11);
+    sizeGrip->setFixedSize(7, 7);
     sizeGrip->setVisible(true);
     sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     sizeGrip2 = new QSizeGrip(this);
-    sizeGrip2->setFixedSize(11, 11);
+    sizeGrip2->setFixedSize(7, 7);
     sizeGrip2->setVisible(true);
     sizeGrip2->setStyleSheet("background-color: #febe30; border-radius: 5px;");
 
     sizeGrip3 = new QSizeGrip(this);
-    sizeGrip3->setFixedSize(11, 11);
+    sizeGrip3->setFixedSize(7, 7);
     sizeGrip3->setVisible(true);
     sizeGrip3->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     sizeGrip4 = new QSizeGrip(this);
-    sizeGrip4->setFixedSize(11, 11);
+    sizeGrip4->setFixedSize(7, 7);
     sizeGrip4->setVisible(true);
     sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
