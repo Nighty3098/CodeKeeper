@@ -147,7 +147,7 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
               [](const QPair<QString, double> &a, const QPair<QString, double> &b) { return a.second > b.second; });
 
     QString result;
-    for (int i = 0; i < std::min(5, languagePercentages.size()); ++i)
+    for (int i = 0; i < std::min(5, static_cast<int>(languagePercentages.size())); ++i)
     {
         result += QString("%1 %2 ")
                       .arg(languagePercentages[i].first)

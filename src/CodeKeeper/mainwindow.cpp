@@ -4,6 +4,7 @@
 #include <md4c.h>
 
 #include <QDragEnterEvent>
+#include <QElapsedTimer>
 #include <QInputDialog>
 #include <QMimeData>
 #include <QPropertyAnimation>
@@ -28,7 +29,7 @@ Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    QTime startup;
+    QElapsedTimer startup;
     startup.start();
 
     qDebug() << "Starting CodeKeeper";
@@ -147,9 +148,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     sizeGrip2 = new QSizeGrip(this);
-    sizeGrip2->setFixedSize(7, 7);
+    sizeGrip2->setFixedSize(13, 13);
     sizeGrip2->setVisible(true);
-    sizeGrip2->setStyleSheet("background-color: #febe30; border-radius: 5px;");
+    sizeGrip2->setStyleSheet("background-color: #febe30; border-radius: 6px;");
 
     sizeGrip3 = new QSizeGrip(this);
     sizeGrip3->setFixedSize(7, 7);

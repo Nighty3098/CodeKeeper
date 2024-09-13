@@ -36,7 +36,7 @@ void MainWindow::toPdf(const QString &html, const QString &outputFile)
     printer.setOutputFileName(outputFile);
     QTextDocument document;
     document.setHtml(html);
-    document.setPageSize(printer.pageRect().size());
+    document.setPageSize(printer.pageRect(QPrinter::Millimeter).size());
     document.print(&printer);
 }
 

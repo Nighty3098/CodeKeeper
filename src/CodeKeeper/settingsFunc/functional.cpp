@@ -1,5 +1,4 @@
 #include <QNetworkAccessManager>
-#include <QNetworkConfigurationManager>
 
 #include "mainwindow.h"
 #include "settingsFunc/GitHubReleaseDownloader.h"
