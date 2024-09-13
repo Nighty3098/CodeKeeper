@@ -2,23 +2,19 @@
 
 #include <QGraphicsBlurEffect>
 #include <QSpacerItem>
-#include <QtWidgets>
 #include <QThread>
+#include <QtWidgets>
 
 #include "mainwindow.cpp"
 #include "mainwindow.h"
 #include "settingsFunc/functional.cpp"
 
-SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
+SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
 {
-    // visual
-    QFile file(":/stylesheet/stylesheet_setting_window.qss");
-    file.open(QFile::ReadOnly);
-
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     selectedFont = globalSettings->value("font").value<QFont>();
     font_size = globalSettings->value("fontSize").value<QString>();
-    theme = globalSettings->value("theme").value<QString>();
+    theme = globalSettings->value("theme").value<int>();
     path = globalSettings->value("path").value<QString>();
 
     git_repo = globalSettings->value("git_repo").value<QString>();
@@ -31,6 +27,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isAutoSyncB = globalSettings->value("isAutoSync").value<bool>();
 
     isCustomTitlebar = globalSettings->value("isCustomTitlebar").value<bool>();
+    isCustomTheme = globalSettings->value("isCustomTheme").value<bool>();
 
     isCreated = globalSettings->value("isCreated").value<bool>();
     isReleaseDate = globalSettings->value("isReleaseDate").value<bool>();
@@ -46,14 +43,21 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     isForks = globalSettings->value("isForks").value<bool>();
     isRepoSize = globalSettings->value("isRepoSize").value<bool>();
 
-    this->setStyleSheet(file.readAll());
-    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    isAutoCheckUpdates = globalSettings->value("isAutoCheckUpdates").value<bool>();
+    appLang = globalSettings->value("lang").value<int>();
 
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
+    setMinimumSize(650, 650);
 
     mainLayout = new QVBoxLayout(centralWidget);
-    setFixedSize(600, 600);
+
+    sizeGrip = new QSizeGrip(this);
+
+    sizeGrip->setFixedSize(11, 11);
+    sizeGrip->setVisible(true);
+    sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     // tabs
     tabs = new QTabWidget();
@@ -62,22 +66,10 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
-    saveBtn = new QPushButton("Apply");
-    saveBtn->setFixedSize(100, 25);
+    saveBtn = new QPushButton(tr("Apply"));
+    saveBtn->setFixedSize(100, 30);
 
     quitBtn = new QPushButton();
-    quitBtn->setStyleSheet("QPushButton {"
-                           "    border-color: rgba(0, 0, 0, 0);"
-                           "    background-color: rgba(0, 0, 0, 0);"
-                           "    background-image: url(':/red.png');"
-                           "    background-repeat: no-repeat;"
-                           "}"
-                           "QPushButton:hover {"
-                           "    border-color: rgba(0, 0, 0, 0);"
-                           "    background-image: url(':/redHovered.png');"
-                           "    background-repeat: no-repeat;"
-                           "    background-color: rgba(0, 0, 0, 0);"
-                           "}");
     quitBtn->setFixedSize(15, 15);
 
     QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -86,86 +78,92 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     BtnsL->addItem(spacer);
     BtnsL->addWidget(saveBtn);
 
-    // control buttons
-
     // main
     QVBoxLayout *appInfoL = new QVBoxLayout();
     QVBoxLayout *subAppInfoL = new QVBoxLayout();
     QHBoxLayout *checkUpdatesBtnL = new QHBoxLayout();
+    QHBoxLayout *updatesL = new QHBoxLayout();
 
     appName = new QLabel("CodeKeeper");
     appName->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
     appName->setStyleSheet("font-size: 32px;");
 
     urlToRepo = new QLabel();
-    urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size
-                       + "' "
-                         "href=\"https://github.com/DXS-GROUP/CodeKeeper\">Source</a>");
+    urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size +
+                       "' "
+                       "href=\"https://github.com/DXS-GROUP/CodeKeeper\">Source</a>");
     urlToRepo->setTextFormat(Qt::RichText);
     urlToRepo->setTextInteractionFlags(Qt::TextBrowserInteraction);
     urlToRepo->setOpenExternalLinks(true);
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
     versionInfo = new QLabel();
-    versionInfo->setText("0.1.8");
+    versionInfo->setText("0.2.0");
     versionInfo->setAlignment(Qt::AlignCenter);
 
-    checkUpdatesBtn =
-            new QPushButton(QPixmap(":/retry.png")
-                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                            Qt::KeepAspectRatio, Qt::SmoothTransformation),
-                            " Chech for updates");
-    checkUpdatesBtn->setFixedSize(200, 25);
+    checkUpdatesBtn = new QPushButton(
+        QPixmap(":/retry.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        tr(" Check for updates"));
+    checkUpdatesBtn->setFixedSize(200, 30);
     checkUpdatesBtnL->addWidget(checkUpdatesBtn);
+
+    autoUpdates = new QCheckBox(tr("Check for updates automatically"));
+    autoUpdates->setChecked(isAutoCheckUpdates);
+
+    updatesL->addWidget(autoUpdates);
+    updatesL->setAlignment(Qt::AlignCenter);
 
     subAppInfoL->addWidget(appName);
     subAppInfoL->addWidget(urlToRepo);
     subAppInfoL->addWidget(versionInfo);
     subAppInfoL->addLayout(checkUpdatesBtnL);
+    subAppInfoL->addLayout(updatesL);
 
     appInfoL->addLayout(subAppInfoL);
 
     // sync
     QGridLayout *mainSyncLayout = new QGridLayout();
 
-    gitLabel = new QLabel("Sync settings");
+    gitLabel = new QLabel(tr("Sync settings"));
     gitLabel->setStyleSheet("font-size: 24px;");
     gitLabel->setAlignment(Qt::AlignCenter);
 
-    gitLabel2 = new QLabel("Data in commit");
+    gitLabel2 = new QLabel(tr("Data in commit"));
     gitLabel2->setStyleSheet("font-size: 24px;");
     gitLabel2->setAlignment(Qt::AlignCenter);
 
     gitToken = new QLineEdit();
-    gitToken->setPlaceholderText("GitHub token");
+    gitToken->setPlaceholderText(tr("GitHub token"));
     gitToken->setAlignment(Qt::AlignCenter);
-    gitToken->setFixedSize(200, 25);
+    gitToken->setFixedSize(300, 30);
     gitToken->setText(git_token);
+    gitToken->setEchoMode(QLineEdit::Password);
 
     gitUser = new QLineEdit();
-    gitUser->setPlaceholderText("GitHub user");
+    gitUser->setPlaceholderText(tr("GitHub user"));
     gitUser->setAlignment(Qt::AlignCenter);
-    gitUser->setFixedSize(200, 25);
+    gitUser->setFixedSize(300, 30);
     gitUser->setText(git_user);
 
     gitRepo = new QLineEdit();
-    gitRepo->setPlaceholderText("GitHub repo");
+    gitRepo->setPlaceholderText(tr("GitHub repo"));
     gitRepo->setAlignment(Qt::AlignCenter);
-    gitRepo->setFixedSize(200, 25);
+    gitRepo->setFixedSize(300, 30);
     gitRepo->setText(git_repo);
 
-    autoSyncAfterStart = new QCheckBox("Auto sync after start");
+    autoSyncAfterStart = new QCheckBox(tr("Auto sync after start"));
 
-    isDate = new QCheckBox("Date");
+    isDate = new QCheckBox(tr("Date"));
     isDate->setChecked(isDateB);
-    isTime = new QCheckBox("Time");
+    isTime = new QCheckBox(tr("Time"));
     isTime->setChecked(isTimeB);
-    isHost = new QCheckBox("Host");
+    isHost = new QCheckBox(tr("Host"));
     isHost->setChecked(isHostB);
-    isSync = new QCheckBox("Auto sync after start");
+    isSync = new QCheckBox(tr("Auto sync after start"));
     isSync->setChecked(isAutoSyncB);
 
-    repoAvailability = new QLabel("Repo");
+    repoAvailability = new QLabel(tr("Repo"));
     repoAvailability->setAlignment(Qt::AlignHCenter);
 
     mainSyncLayout->setSpacing(10);
@@ -183,62 +181,95 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     // appereance
     QGridLayout *layout1 = new QGridLayout();
 
-    mainTitle = new QLabel("App settings");
+    mainTitle = new QLabel(tr("App settings"));
     mainTitle->setAlignment(Qt::AlignCenter);
     mainTitle->setStyleSheet("font-size: 32px;");
 
-    fontLabel = new QLabel("Font:");
+    fontLabel = new QLabel(tr("Font:"));
     fontLabel->setAlignment(Qt::AlignCenter);
-    fontSizeLabel = new QLabel("Font size:");
+    fontSizeLabel = new QLabel(tr("Font size:"));
     fontSizeLabel->setAlignment(Qt::AlignCenter);
-    themeLabel = new QLabel("Theme:");
+    themeLabel = new QLabel(tr("Theme:"));
     themeLabel->setAlignment(Qt::AlignCenter);
 
     fontSize = new QSpinBox();
-    fontSize->setFixedHeight(25);
+    fontSize->setFixedHeight(30);
     fontSelector = new QFontComboBox();
-    fontSelector->setFixedHeight(25);
+    fontSelector->setFixedHeight(30);
     themeSelector = new QComboBox();
-    themeSelector->setFixedHeight(25);
+    themeSelector->setFixedHeight(30);
 
     customTitleBar = new QCheckBox();
-    customTitleBar->setText("Use custom titlebar");
+    customTitleBar->setText(tr("Use custom titlebar"));
     customTitleBar->setChecked(isCustomTitlebar);
 
-    themeSelector->addItem("Dark");
-    themeSelector->addItem("Light");
+    qDebug() << "isCustomTheme: " << isCustomTheme;
+
+    customTheme = new QCheckBox();
+    customTheme->setText(tr("Use custom theme"));
+    customTheme->setChecked(isCustomTheme);
+
+    if (isCustomTheme)
+    {
+        themeSelector->setEnabled(true);
+    }
+    else
+    {
+        themeSelector->setEnabled(false);
+    }
+
+    themeSelector->addItem(tr("Dark"));
+    themeSelector->addItem(tr("Light"));
+    themeSelector->setCurrentIndex(theme);
+
+    langSelector = new QComboBox();
+    langSelector->setFixedHeight(30);
+    langSelector->addItem(QIcon(":/usa.png"), tr("English"));
+    langSelector->addItem(QIcon(":/russian.png"), tr("Russian"));
+    // langSelector->addItem(QIcon(":/japan.png"), tr("Japanese"));
+    // langSelector->addItem(QIcon(":/german.png"), tr("Germany"));
+    // langSelector->addItem(QIcon(":/spanish.png"), tr("Spanish"));
+
+    langSelector->setCurrentIndex(appLang);
+
+    langLabel = new QLabel(tr("Language:"));
+    langLabel->setAlignment(Qt::AlignCenter);
 
     layout1->addWidget(mainTitle, 0, 2, 0, 4);
-    layout1->addWidget(customTitleBar, 1, 2, 1, 4, Qt::AlignHCenter);
-    layout1->addWidget(fontLabel, 2, 3);
-    layout1->addWidget(fontSelector, 2, 4);
-    layout1->addWidget(fontSizeLabel, 3, 3);
-    layout1->addWidget(fontSize, 3, 4);
-    layout1->addWidget(themeLabel, 4, 3);
-    layout1->addWidget(themeSelector, 4, 4);
+    layout1->addWidget(customTheme, 1, 2, 1, 4, Qt::AlignHCenter);
+    layout1->addWidget(customTitleBar, 2, 2, 1, 4, Qt::AlignHCenter);
+    layout1->addWidget(fontLabel, 3, 3);
+    layout1->addWidget(fontSelector, 3, 4);
+    layout1->addWidget(fontSizeLabel, 4, 3);
+    layout1->addWidget(fontSize, 4, 4);
+    layout1->addWidget(themeLabel, 5, 3);
+    layout1->addWidget(themeSelector, 5, 4);
+    layout1->addWidget(langLabel, 6, 3);
+    layout1->addWidget(langSelector, 6, 4);
 
     // storage tab
     QGridLayout *storageL = new QGridLayout;
-    storageL->setSpacing(25);
+    storageL->setSpacing(10);
 
     storageLabel = new QLabel();
-    storageLabel->setText("Storage settings");
+    storageLabel->setText(tr("Storage settings"));
     storageLabel->setAlignment(Qt::AlignCenter);
     storageLabel->setStyleSheet("font-size: 32px;");
 
     pathToFolder = new QLineEdit();
-    pathToFolder->setText("Directory");
-    pathToFolder->setPlaceholderText("Directory");
-    pathToFolder->setMaximumHeight(25);
+    pathToFolder->setText(tr("Directory"));
+    pathToFolder->setPlaceholderText(tr("Directory"));
+    pathToFolder->setMaximumHeight(30);
     pathToFolder->setText(path);
+    pathToFolder->setAlignment(Qt::AlignCenter);
 
-    openFolder = new QPushButton(QPixmap(":/open.png")
-                                         .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                                 Qt::KeepAspectRatio, Qt::SmoothTransformation),
-                                 " Browse");
-    openFolder->setMaximumHeight(25);
+    openFolder = new QPushButton(
+        QPixmap(":/open.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        " Browse");
+    openFolder->setMaximumHeight(30);
 
-    storageL->setSpacing(25);
+    storageL->setSpacing(10);
     storageL->addWidget(storageLabel, 0, 1, 0, 4);
     storageL->addWidget(pathToFolder, 1, 3);
     storageL->addWidget(openFolder, 2, 3);
@@ -248,52 +279,62 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     projectsContentL->setSpacing(10);
     projectsContentL->setAlignment(Qt::AlignCenter);
 
-    projectsContentLabel = new QLabel("Projects content");
+    projectsContentLabel = new QLabel(tr("Projects content"));
     projectsContentLabel->setStyleSheet("font-size: 32px;");
     projectsContentLabel->setAlignment(Qt::AlignCenter);
     projectsContentLabel->setFixedHeight(150);
 
-    CisCreated = new QCheckBox("Created time");
+    CisCreated = new QCheckBox(tr("Created time"));
     CisCreated->setChecked(isCreated);
-    CisReleaseDate = new QCheckBox("Last release time");
+    CisReleaseDate = new QCheckBox(tr("Last release time"));
     CisReleaseDate->setChecked(isReleaseDate);
-    CisLastCommit = new QCheckBox("Last commit time");
+    CisLastCommit = new QCheckBox(tr("Last commit time"));
     CisLastCommit->setChecked(isLastCommit);
-    CisPullReq = new QCheckBox("Total pull requests");
+    CisPullReq = new QCheckBox(tr("Total pull requests"));
     CisPullReq->setChecked(isPullReq);
-    CisLicense = new QCheckBox("License");
+    CisLicense = new QCheckBox(tr("License"));
     CisLicense->setChecked(isLicense);
-    CisRelease = new QCheckBox("Release");
+    CisRelease = new QCheckBox(tr("Release"));
     CisRelease->setChecked(isRelease);
-    CisIssue = new QCheckBox("Issues");
+    CisIssue = new QCheckBox(tr("Issues"));
     CisIssue->setChecked(isIssue);
-    CisDownloads = new QCheckBox("Downloads");
+    CisDownloads = new QCheckBox(tr("Downloads"));
     CisDownloads->setChecked(isDownloads);
-    CisCommit = new QCheckBox("Commits");
+    CisCommit = new QCheckBox(tr("Commits"));
     CisCommit->setChecked(isCommit);
-    CisLang = new QCheckBox("Langs");
+    CisLang = new QCheckBox(tr("Langs"));
     CisLang->setChecked(isLang);
-    CisStars = new QCheckBox("Stars");
+    CisStars = new QCheckBox(tr("Stars"));
     CisStars->setChecked(isStars);
-    CisForks = new QCheckBox("Forks");
+    CisForks = new QCheckBox(tr("Forks"));
     CisForks->setChecked(isForks);
-    CisRepoSize = new QCheckBox("Repo size");
+    CisRepoSize = new QCheckBox(tr("Repo size"));
     CisRepoSize->setChecked(isRepoSize);
 
+    QSpacerItem *checkBoxSpacer1 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem *checkBoxSpacer2 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+    QVBoxLayout *checkboxLayout = new QVBoxLayout();
+    checkboxLayout->setAlignment(Qt::AlignCenter);
+
+    checkboxLayout->addItem(checkBoxSpacer1);
+    checkboxLayout->addWidget(CisCreated);
+    checkboxLayout->addWidget(CisReleaseDate);
+    checkboxLayout->addWidget(CisLastCommit);
+    checkboxLayout->addWidget(CisPullReq);
+    checkboxLayout->addWidget(CisLicense);
+    checkboxLayout->addWidget(CisRelease);
+    checkboxLayout->addWidget(CisIssue);
+    checkboxLayout->addWidget(CisDownloads);
+    checkboxLayout->addWidget(CisCommit);
+    checkboxLayout->addWidget(CisLang);
+    checkboxLayout->addWidget(CisStars);
+    checkboxLayout->addWidget(CisForks);
+    checkboxLayout->addWidget(CisRepoSize);
+    checkboxLayout->addItem(checkBoxSpacer2);
+
     projectsContentL->addWidget(projectsContentLabel, 0, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisCreated, 1, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisReleaseDate, 2, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisLastCommit, 3, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisPullReq, 4, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisLicense, 5, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisRelease, 6, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisIssue, 7, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisDownloads, 8, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisCommit, 9, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisLang, 10, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisStars, 11, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisForks, 12, 0, 1, 1, Qt::AlignCenter);
-    projectsContentL->addWidget(CisRepoSize, 13, 0, 1, 1, Qt::AlignCenter);
+    projectsContentL->addLayout(checkboxLayout, 2, 0, 1, 1, Qt::AlignCenter);
 
     // info tab
     QWidget *aboutTab = new QWidget();
@@ -301,7 +342,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     aboutTabLayout->addLayout(appInfoL);
 
-    tabs->addTab(aboutTab, "About");
+    tabs->addTab(aboutTab, tr("About"));
 
     // sync tab
     QWidget *syncTab = new QWidget();
@@ -309,7 +350,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     syncTabLayout->addLayout(mainSyncLayout);
 
-    tabs->addTab(syncTab, "Sync");
+    tabs->addTab(syncTab, tr("Sync"));
 
     // storage tab
     QWidget *storageTab = new QWidget();
@@ -317,7 +358,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     storageTabLayout->addLayout(storageL);
 
-    tabs->addTab(storageTab, "Storage");
+    tabs->addTab(storageTab, tr("Storage"));
 
     // main tab
     QWidget *appereanceTab = new QWidget();
@@ -325,12 +366,12 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
 
     appereanceTabLayout->addLayout(layout1);
 
-    tabs->addTab(appereanceTab, "Appereance");
+    tabs->addTab(appereanceTab, tr("Appereance"));
 
     // projects content
     QWidget *projectsContentTab = new QWidget();
     projectsContentTab->setLayout(projectsContentL);
-    tabs->addTab(projectsContentTab, "Projects");
+    tabs->addTab(projectsContentTab, tr("Projects"));
 
     QIcon aboutIco;
     QIcon syncIco;
@@ -359,7 +400,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     // connects
     connect(saveBtn, SIGNAL(clicked()), this, SLOT(saveData()));
     connect(quitBtn, SIGNAL(clicked()), this, SLOT(QuitW()));
-    connect(checkUpdatesBtn, SIGNAL(clicked()), this, SLOT(checkUpdates()));
+    connect(checkUpdatesBtn, &QPushButton::clicked, this, [=]() { checkUpdates(); });
     connect(openFolder, SIGNAL(clicked()), this, SLOT(fopenFolder()));
 
     QTimer *repoTimer = new QTimer(this);
@@ -368,7 +409,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     QThread *repoTimerThread = new QThread;
     QObject::connect(repoTimerThread, &QThread::started, this, [this, repoTimer]() {
         connect(repoTimer, &QTimer::timeout, [=]() { checkRepo(); });
-        repoTimer->start(100);
+        repoTimer->start(2000);
 
         qDebug() << "repoTimerThread started";
     });
@@ -377,11 +418,13 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{ parent }
     QThread *styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {
         int font_size_int = font_size.toInt();
-        setFontPr2(&selectedFont, &font_size_int);
+        setStyle2(&selectedFont, &font_size_int);
 
         qDebug() << "styleThread started";
     });
     styleThread->start();
 }
 
-SettingsWindow::~SettingsWindow() { }
+SettingsWindow::~SettingsWindow()
+{
+}

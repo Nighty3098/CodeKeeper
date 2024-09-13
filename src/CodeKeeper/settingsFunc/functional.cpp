@@ -1,11 +1,54 @@
+#include <QNetworkAccessManager>
+
 #include "mainwindow.h"
 #include "settingsFunc/GitHubReleaseDownloader.h"
-#include <QNetworkAccessManager>
-#include <QNetworkConfigurationManager>
 
 void SettingsWindow::QuitW()
 {
     this->close();
+}
+
+QString SettingsWindow::fetchSecondLastRelease()
+{
+    QString version;
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases");
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QNetworkReply *reply = manager->get(request);
+    connect(reply, &QNetworkReply::finished, this, [reply, &version]() {
+        if (reply->error() == QNetworkReply::NoError)
+        {
+            QByteArray response = reply->readAll();
+            QJsonDocument jsonDoc = QJsonDocument::fromJson(response);
+            QJsonArray releases = jsonDoc.array();
+
+            if (releases.size() >= 2)
+            {
+                QJsonObject secondLastRelease = releases[1].toObject();
+                version = secondLastRelease["tag_name"].toString();
+                qDebug() << "Penultimate release:" << version;
+            }
+            else
+            {
+                qDebug() << "Not enough releases to get the "
+                            "penultimate one.";
+            }
+        }
+        else
+        {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+
+    return version;
 }
 
 void SettingsWindow::closeEvent(QCloseEvent *event)
@@ -18,14 +61,12 @@ void SettingsWindow::closeEvent(QCloseEvent *event)
 
 void SettingsWindow::checkUpdates()
 {
-    QFile file(":/stylesheet/stylesheet.qss");
-    file.open(QFile::ReadOnly);
+    QString secondLastRelease = fetchSecondLastRelease();
 
     QDialog dialog(this);
     dialog.setFixedSize(400, 400);
     dialog.setWindowTitle(tr("Edit project"));
     dialog.setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-    dialog.setStyleSheet(file.readAll());
 
     QString newAppVersion = getNewAppVersion();
     QString currentAppVersion = versionInfo->text();
@@ -49,8 +90,7 @@ void SettingsWindow::checkUpdates()
                                "}");
 
     QLabel *iconLabel = new QLabel();
-    iconLabel->setPixmap(QPixmap(":/refresh.png")
-                                 .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    iconLabel->setPixmap(QPixmap(":/refresh.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     QLabel *updateInfoLabel = new QLabel();
     updateInfoLabel->setStyleSheet("font-size: " + font_size + "pt;");
@@ -62,28 +102,35 @@ void SettingsWindow::checkUpdates()
     verInfoLabel->setFont(selectedFont);
     verInfoLabel->setAlignment(Qt::AlignCenter);
 
-    QPushButton *downloadUpdate =
-            new QPushButton(QPixmap(":/download.png")
-                                    .scaled(font_size.toInt() + 1, font_size.toInt() + 1,
-                                            Qt::KeepAspectRatio, Qt::SmoothTransformation),
-                            " Update");
+    QPushButton *downloadUpdate = new QPushButton(
+        QPixmap(":/download.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        " Update");
     downloadUpdate->setFixedSize(100, 25);
+
+    QPushButton *whatsNewButton = new QPushButton(tr("What's new"));
+    whatsNewButton->setFixedSize(100, 25);
+    whatsNewButton->setFont(selectedFont);
+    whatsNewButton->setStyleSheet("font-size: " + font_size +
+                                  "pt; border: none; background-color: transparent; color: #55b27d;");
 
     qDebug() << newAppVersion << "  " << currentAppVersion;
 
-    if (newAppVersion == currentAppVersion) {
+    whatsNewButton->hide();
+
+    if (newAppVersion == currentAppVersion)
+    {
+        whatsNewButton->show();
         iconLabel->setPixmap(
-                QPixmap(":/check-mark.png")
-                        .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        updateInfoLabel->setText("You are running the latest version of the app.");
-        verInfoLabel->setText("Current version: " + currentAppVersion);
-    } else {
-        iconLabel->setPixmap(
-                QPixmap(":/refresh.png")
-                        .scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        updateInfoLabel->setText("A new version of the application is available.");
-        verInfoLabel->setText("Current version: " + currentAppVersion
-                              + "\nNew version: " + newAppVersion);
+            QPixmap(":/check-mark.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        updateInfoLabel->setText(tr("You are running the latest version of the app."));
+        verInfoLabel->setText(tr("Current version: ") + currentAppVersion);
+    }
+    else
+    {
+        iconLabel->setPixmap(QPixmap(":/refresh.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        updateInfoLabel->setText(tr("A new version of the application is available."));
+        verInfoLabel->setText(tr("Current version: ") + currentAppVersion + "\n" + tr("New version: ") + newAppVersion);
         layout->addWidget(downloadUpdate, 6, 0, 1, 2, Qt::AlignCenter);
     }
 
@@ -91,11 +138,16 @@ void SettingsWindow::checkUpdates()
     layout->addWidget(iconLabel, 1, 0, 3, 2, Qt::AlignCenter);
     layout->addWidget(updateInfoLabel, 4, 0, 1, 2, Qt::AlignCenter);
     layout->addWidget(verInfoLabel, 5, 0, 1, 2, Qt::AlignCenter);
+    layout->addWidget(whatsNewButton, 7, 0, 1, 2, Qt::AlignCenter);
 
     connect(closeWindow, &QPushButton::clicked, [&]() { dialog.close(); });
 
-    connect(downloadUpdate, &QPushButton::clicked, [&]() {
-        QDesktopServices::openUrl(QUrl("https://github.com/DXS-GROUP/CodeKeeper/releases/latest"));
+    connect(downloadUpdate, &QPushButton::clicked,
+            [&]() { QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/releases/latest")); });
+
+    connect(whatsNewButton, &QPushButton::clicked, [&]() {
+        QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/compare/" + secondLastRelease + "..." +
+                                       currentAppVersion + ""));
     });
 
     dialog.exec();
@@ -111,15 +163,72 @@ void SettingsWindow::checkRepo()
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
-    if (reply->error() == QNetworkReply::NoError) {
-        repoAvailability->setText("Repository is available");
-    } else {
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        repoAvailability->setText(tr("Repository is available"));
+    }
+    else
+    {
         qDebug() << repo;
         qWarning() << "The repository isn't available";
-        repoAvailability->setText("The repository isn't available");
+        repoAvailability->setText(tr("The repository isn't available"));
     }
 
     reply->deleteLater();
+}
+
+void SettingsWindow::fopenFolder()
+{
+    QString str = QFileDialog::getExistingDirectory(this, tr("Select Folder"));
+    if (!str.isEmpty())
+    {
+        qDebug() << str;
+        globalSettings->setValue("path", str);
+
+        pathToFolder->setText(str);
+
+        QMessageBox *messageBox = new QMessageBox();
+
+        messageBox->setIcon(QMessageBox::Information);
+        messageBox->setWindowTitle("CodeKeeper - Settings");
+        messageBox->setText(tr("To apply the settings, restart the application."));
+
+        messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+        messageBox->exec();
+        MainWindow *mainWindow = static_cast<MainWindow *>(parent());
+        mainWindow->loadNotes();
+    }
+}
+
+QString SettingsWindow::getNewAppVersion()
+{
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QUrl url("https://api.github.com/repos/Nighty3098/CodeKeeper/releases/latest");
+
+    QUrlQuery query;
+    url.setQuery(query);
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
+    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
+    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
+    request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+    QNetworkReply *reply = manager->get(request);
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+
+    loop.exec();
+
+    QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+    QJsonObject obj = doc.object();
+
+    QString version = obj["tag_name"].toString();
+    qDebug() << version;
+
+    reply->deleteLater();
+
+    return version;
 }
 
 void SettingsWindow::saveData()
@@ -135,7 +244,7 @@ void SettingsWindow::saveData()
     int font_size = fontSize->value();
     globalSettings->setValue("fontSize", font_size);
 
-    QString theme = themeSelector->currentText();
+    int theme = themeSelector->currentIndex();
     globalSettings->setValue("theme", theme);
 
     QString dir = pathToFolder->text();
@@ -165,6 +274,9 @@ void SettingsWindow::saveData()
     isCustomTitlebar = customTitleBar->isChecked();
     globalSettings->setValue("isCustomTitlebar", isCustomTitlebar);
 
+    isCustomTheme = customTheme->isChecked();
+    globalSettings->setValue("isCustomTheme", isCustomTheme);
+
     isCreated = CisCreated->isChecked();
     globalSettings->setValue("isCreated", isCreated);
     isReleaseDate = CisReleaseDate->isChecked();
@@ -192,9 +304,18 @@ void SettingsWindow::saveData()
     isRepoSize = CisRepoSize->isChecked();
     globalSettings->setValue("isRepoSize", isRepoSize);
 
+    isAutoCheckUpdates = autoUpdates->isChecked();
+    globalSettings->setValue("isAutoCheckUpdates", isAutoCheckUpdates);
+
+    appLang = langSelector->currentIndex();
+    qDebug() << "===============================";
+    qDebug() << appLang;
+    qDebug() << "===============================";
+    globalSettings->setValue("lang", appLang);
+
     MainWindow *mainWindow = static_cast<MainWindow *>(parent());
-    setFontPr2(&selectedFont, &font_size);
-    mainWindow->setFontPr1(&selectedFont, &font_size);
+    setStyle2(&selectedFont, &font_size);
+    mainWindow->setStyle(&selectedFont, &font_size);
     mainWindow->getSettingsData();
 
     mainWindow->setConnectionStatus();
@@ -208,83 +329,33 @@ void SettingsWindow::saveData()
     AccountWindow *accountWindow = static_cast<AccountWindow *>(parent());
 }
 
-void SettingsWindow::fopenFolder()
-{
-    QString str = QFileDialog::getExistingDirectory(this, "Select Folder");
-    if (!str.isEmpty()) {
-        qDebug() << str;
-        globalSettings->setValue("path", str);
-
-        pathToFolder->setText(str);
-
-        QMessageBox *messageBox = new QMessageBox();
-
-        messageBox->setIcon(QMessageBox::Information);
-        messageBox->setWindowTitle("CodeKeeper - Settings");
-        messageBox->setText("To apply the settings, restart the application.");
-
-        messageBox->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
-        messageBox->exec();
-        MainWindow *mainWindow = static_cast<MainWindow *>(parent());
-        mainWindow->loadNotes();
-    }
-}
-
-QString SettingsWindow::getNewAppVersion()
-{
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("https://api.github.com/repos/DXS-GROUP/CodeKeeper/releases/latest");
-
-    QUrlQuery query;
-    url.setQuery(query);
-
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
-    request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
-    request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
-    request.setRawHeader("Accept", "application/vnd.github.v3+json");
-
-    QNetworkReply *reply = manager->get(request);
-    QEventLoop loop;
-    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-
-    loop.exec();
-
-    QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-    QJsonObject obj = doc.object();
-
-    QString version = obj["tag_name"].toString();
-    qDebug() << version;
-
-    reply->deleteLater();
-
-    return version;
-}
-
-void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
+void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
 {
     qDebug() << "Applying preferences";
 
     QString font_size = QString::number(*font_size_int);
+    QString font_size_2 = QString::number(*font_size_int * 1.2);
 
     // set font
     tabs->setFont(*selectedFont);
-    tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size
-                        + "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
+    tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size +
+                        "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
 
     saveBtn->setFont(*selectedFont);
-    saveBtn->setStyleSheet(
-            "QPushButton {background-color: transparent; color: #fff; font-size: " + font_size
-            + "pt;} QPushButton:hover {background-color: transparent; color: #7289DA; font-size: "
-            + font_size + "pt;}");
+    saveBtn->setStyleSheet("QPushButton {border: none; background-color: "
+                           "transparent; font-size: " +
+                           font_size +
+                           "pt;} QPushButton:hover {border: none; "
+                           "background-color: transparent; font-size: " +
+                           font_size + "pt;}");
 
     appName->setFont(*selectedFont);
 
     urlToRepo->setFont(*selectedFont);
-    urlToRepo->setStyleSheet("font-size: " + font_size + "pt;");
+    urlToRepo->setStyleSheet("font-size: " + font_size_2 + "pt;");
 
     versionInfo->setFont(*selectedFont);
-    versionInfo->setStyleSheet("font-size: " + font_size + "pt;");
+    versionInfo->setStyleSheet("font-size: " + font_size_2 + "pt;");
 
     checkUpdatesBtn->setFont(*selectedFont);
     checkUpdatesBtn->setStyleSheet("font-size: " + font_size + "pt;");
@@ -305,11 +376,20 @@ void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
     gitToken->setFont(*selectedFont);
     gitToken->setStyleSheet("font-size: " + font_size + "pt;");
 
+    autoUpdates->setFont(*selectedFont);
+    autoUpdates->setStyleSheet("font-size: " + font_size + "pt;");
+
     gitUser->setFont(*selectedFont);
     gitUser->setStyleSheet("font-size: " + font_size + "pt;");
 
     gitRepo->setFont(*selectedFont);
     gitRepo->setStyleSheet("font-size: " + font_size + "pt;");
+
+    langLabel->setFont(*selectedFont);
+    langLabel->setStyleSheet("font-size: " + font_size + "pt;");
+
+    langSelector->setFont(*selectedFont);
+    langSelector->setStyleSheet("font-size: " + font_size + "pt;");
 
     autoSyncAfterStart->setFont(*selectedFont);
     autoSyncAfterStart->setStyleSheet("font-size: " + font_size + "pt;");
@@ -345,6 +425,9 @@ void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
     customTitleBar->setFont(*selectedFont);
     customTitleBar->setStyleSheet("font-size: " + font_size + "pt;");
 
+    customTheme->setFont(*selectedFont);
+    customTheme->setStyleSheet("font-size: " + font_size + "pt;");
+
     repoAvailability->setFont(*selectedFont);
     repoAvailability->setStyleSheet("font-size: " + font_size + "pt;");
 
@@ -376,8 +459,19 @@ void SettingsWindow::setFontPr2(QFont *selectedFont, int *font_size_int)
     CisStars->setStyleSheet("font-size: " + font_size + "pt;");
     CisForks->setStyleSheet("font-size: " + font_size + "pt;");
 
-    // set Data
     fontSelector->setCurrentFont(*selectedFont);
     fontSize->setValue(font_size.toInt());
-    themeSelector->setCurrentText(theme);
+
+    quitBtn->setStyleSheet("QPushButton {"
+                           "    border-color: rgba(0, 0, 0, 0);"
+                           "    background-color: rgba(0, 0, 0, 0);"
+                           "    background-image: url(':/red.png');"
+                           "    background-repeat: no-repeat;"
+                           "}"
+                           "QPushButton:hover {"
+                           "    border-color: rgba(0, 0, 0, 0);"
+                           "    background-image: url(':/redHovered.png');"
+                           "    background-repeat: no-repeat;"
+                           "    background-color: rgba(0, 0, 0, 0);"
+                           "}");
 }

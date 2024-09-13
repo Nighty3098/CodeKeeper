@@ -22,26 +22,36 @@ SOURCES += \
     keeperFunc/projectsFunc.cpp \
     keeperFunc/notesFunc.cpp \
     keeperFunc/getProjectInfo.cpp \
+    accountFunc/functional.cpp \
     syncFunc/functional.cpp \
     sql_db/projectsDB.cpp \
     sql_db/tasksDB.cpp \
     gitFunc/cloneRepo.cpp \
     gitFunc/getUpdates.cpp \
-    gitFunc/pushUpdates.cpp
+    gitFunc/pushUpdates.cpp \
+    keeperFunc/createMenu.cpp \
+    keeperFunc/addConnects.cpp
 
 HEADERS += \
     accountwindow.h \
     mainwindow.h \
     settingswindow.h \
-    syncwindow.h
+    syncwindow.h \
+    custom/circleProgressbar/ProgressCircle.h \
+    custom/circleChart/CircleChart.h \
+    custom/ColorValueDisplay/ColorValueDisplay.h 
 
 RESOURCES += \
     ../resources/resources.qrc \
     ../stylesheet/stylesheet.qss \
-    ../stylesheet/stylesheet_setting_window.qss
+    ../stylesheet/custom_stylesheet.qss \
+    ../stylesheet/custom_stylesheet_light.qss
 
 include(3rdParty/qmarkdowntextedit/qmarkdowntextedit.pri)
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+TRANSLATIONS += \
+    CodeKeeper_ru_RU.ts

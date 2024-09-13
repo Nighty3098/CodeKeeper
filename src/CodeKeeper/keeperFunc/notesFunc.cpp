@@ -1,23 +1,29 @@
 #include <md4.h>
 #include <md4c-html.h>
-#include <QWebEngineScript>
-#include <QWebChannel>
 #include <md4c.h>
+
 #include <QFile>
 #include <QPrinter>
+#include <QWebChannel>
+#include <QWebEngineScript>
 
-QModelIndex indexFromItem(QTreeWidgetItem *item, int column) { }
+QModelIndex indexFromItem(QTreeWidgetItem *item, int column)
+{
+}
 
 bool createFile(const QString &path)
 {
     QFile file(path);
-    if (file.open(QIODevice::WriteOnly)) {
+    if (file.open(QIODevice::WriteOnly))
+    {
         QTextStream stream(&file);
         stream << "Just start typing...";
         file.close();
         qDebug() << "File created successfully at " << path;
         return true;
-    } else {
+    }
+    else
+    {
         qWarning() << "Failed to create file at " << path << " : " << file.errorString();
         return false;
     }
@@ -30,7 +36,7 @@ void MainWindow::toPdf(const QString &html, const QString &outputFile)
     printer.setOutputFileName(outputFile);
     QTextDocument document;
     document.setHtml(html);
-    document.setPageSize(printer.pageRect().size());
+    document.setPageSize(printer.pageRect(QPrinter::Millimeter).size());
     document.print(&printer);
 }
 
@@ -41,20 +47,20 @@ void MainWindow::exportNoteToPdf()
     QString filePath = fileSystemModel->filePath(selectedIndex);
     qDebug() << "File Path : " << filePath;
 
-    QString str = QFileDialog::getSaveFileName(0, "Enter filename");
+    QString str = QFileDialog::getSaveFileName(0, tr("Enter filename"));
     QString pdf_file = str + ".pdf";
 
     QString md = noteEdit->toPlainText();
 
     QString html;
     md_html(
-            md.toUtf8().constData(), md.length(),
-            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
-                QString *htmlPtr = static_cast<QString *>(userdata);
-                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
-                *htmlPtr += htmlStr;
-            },
-            &html, 0, 0);
+        md.toUtf8().constData(), md.length(),
+        [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
+            QString *htmlPtr = static_cast<QString *>(userdata);
+            QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
+            *htmlPtr += htmlStr;
+        },
+        &html, 0, 0);
 
     toPdf(html, pdf_file);
 }
@@ -66,28 +72,31 @@ void MainWindow::exportNoteToHtml()
     QString filePath = fileSystemModel->filePath(selectedIndex);
     qDebug() << "File Path : " << filePath;
 
-    QString str = QFileDialog::getSaveFileName(0, "Enter filename");
+    QString str = QFileDialog::getSaveFileName(0, tr("Enter filename"));
     QString html_file = str + ".html";
 
     QString md = noteEdit->toPlainText();
 
     QString html;
     md_html(
-            md.toUtf8().constData(), md.length(),
-            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
-                QString *htmlPtr = static_cast<QString *>(userdata);
-                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
-                *htmlPtr += htmlStr;
-            },
-            &html, 0, 0);
+        md.toUtf8().constData(), md.length(),
+        [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
+            QString *htmlPtr = static_cast<QString *>(userdata);
+            QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
+            *htmlPtr += htmlStr;
+        },
+        &html, 0, 0);
 
     QFile file(html_file);
-    if (file.open(QIODevice::WriteOnly)) {
+    if (file.open(QIODevice::WriteOnly))
+    {
         QTextStream stream(&file);
         stream << html;
         file.close();
         qDebug() << "File saved successfully at " << filePath;
-    } else {
+    }
+    else
+    {
         qWarning() << "Error, Failed to open file for writing.";
     }
 }
@@ -129,20 +138,27 @@ void MainWindow::setSortByName()
 void MainWindow::saveNote()
 {
     QModelIndex index = notesList->currentIndex();
-    if (index.isValid() && notesDirModel->fileInfo(index).isFile()) {
+    if (index.isValid() && notesDirModel->fileInfo(index).isFile())
+    {
         QString filePath = notesDirModel->filePath(index);
         QString text = noteEdit->toPlainText();
 
         QFile file(filePath);
-        if (file.open(QIODevice::WriteOnly)) {
+        if (file.open(QIODevice::WriteOnly))
+        {
             QTextStream stream(&file);
             stream << text;
             file.close();
-            // qDebug() << "Success, Text written to file successfully.";
-        } else {
+            // ! qDebug() << "Success, Text written to file
+            // successfully.";
+        }
+        else
+        {
             qWarning() << "Error, Failed to open file for writing.";
         }
-    } else {
+    }
+    else
+    {
         qWarning() << "Error,  Please select a valid file.";
     }
 }
@@ -155,16 +171,21 @@ void MainWindow::onNoteDoubleClicked()
     QFile file(path_to_note);
 
     QRegularExpression re("(\\.md|\\.html|\\.txt)$");
-    if (notesDirModel->fileInfo(index).isFile()) {
-        if (re.match(path_to_note).hasMatch()) {
-            if (file.open(QIODevice::ReadWrite)) {
+    if (notesDirModel->fileInfo(index).isFile())
+    {
+        if (re.match(path_to_note).hasMatch())
+        {
+            if (file.open(QIODevice::ReadWrite))
+            {
                 qDebug() << path_to_note;
                 QTextStream stream(&file);
                 noteEdit->setPlainText(stream.readAll());
                 file.close();
             }
-        } else {
-            noteEdit->setPlainText("### File format not supported.");
+        }
+        else
+        {
+            noteEdit->setPlainText(tr("### File format not supported."));
             qWarning() << "File format not supported";
         }
     }
@@ -225,9 +246,11 @@ void MainWindow::createFolder()
 {
     QModelIndex index = notesList->currentIndex();
 
-    if (index.isValid()) {
-        QString name = QInputDialog::getText(this, "Name", "Folder name");
-        if (!name.isEmpty()) {
+    if (index.isValid())
+    {
+        QString name = QInputDialog::getText(this, tr("Name"), tr("Folder name"));
+        if (!name.isEmpty())
+        {
             qDebug() << "🔸 Folder name:" << name;
             notesDirModel->mkdir(index, name);
         }
@@ -238,12 +261,14 @@ void MainWindow::createNote()
 {
     QModelIndex index = notesList->currentIndex();
 
-    if (index.isValid()) {
-        QString name = QInputDialog::getText(this, "Name", "Note name");
-        if (!name.isEmpty()) {
+    if (index.isValid())
+    {
+        QString name = QInputDialog::getText(this, tr("Name"), tr("Note name"));
+        if (!name.isEmpty())
+        {
             name = name + ".md";
             QString path_to_note = notesDirModel->filePath(index) + "/" + name;
-            qDebug() << "🔸 Note name:" << name;
+            qDebug() << "Note name:" << name;
             createFile(path_to_note);
         }
     }
@@ -252,11 +277,15 @@ void MainWindow::createNote()
 void MainWindow::removeNote()
 {
     QModelIndex index = notesList->currentIndex();
-    if (index.isValid()) {
-        if (notesDirModel->fileInfo(index).isDir()) {
+    if (index.isValid())
+    {
+        if (notesDirModel->fileInfo(index).isDir())
+        {
             qDebug() << "Folder deleted successfully ";
             notesDirModel->rmdir(index);
-        } else {
+        }
+        else
+        {
             qDebug() << "Note deleted successfully ";
             notesDirModel->remove(index);
         }
@@ -268,7 +297,8 @@ void MainWindow::renameItem()
     QItemSelectionModel *selectionModel = notesList->selectionModel();
     QModelIndexList indexes = selectionModel->selectedIndexes();
 
-    if (indexes.isEmpty()) {
+    if (indexes.isEmpty())
+    {
         // No items are selected
         return;
     }
@@ -278,21 +308,28 @@ void MainWindow::renameItem()
 
     // Prompt the user to enter a new name
     bool ok;
-    QString newName =
-            QInputDialog::getText(notesList, tr("Rename File or Folder"), tr("Enter the new name:"),
-                                  QLineEdit::Normal, fileInfo.baseName(), &ok);
+    QString newName = QInputDialog::getText(notesList, tr("Rename File or Folder"), tr("Enter the new name:"),
+                                            QLineEdit::Normal, fileInfo.baseName(), &ok);
 
-    if (ok && !newName.isEmpty()) {
+    if (ok && !newName.isEmpty())
+    {
         // Get the new file path
         QString newFilePath = fileInfo.absoluteDir().absoluteFilePath(newName);
 
         // Rename the file or folder
-        if (fileInfo.isFile()) {
+        if (fileInfo.isFile())
+        {
             QFile file(fileInfo.absoluteFilePath());
-            if (file.rename(newFilePath)) { }
-        } else if (fileInfo.isDir()) {
+            if (file.rename(newFilePath))
+            {
+            }
+        }
+        else if (fileInfo.isDir())
+        {
             QDir dir(fileInfo.absoluteFilePath());
-            if (dir.rename(fileInfo.absoluteFilePath(), newFilePath)) { }
+            if (dir.rename(fileInfo.absoluteFilePath(), newFilePath))
+            {
+            }
         }
     }
 }
@@ -468,235 +505,237 @@ void MainWindow::updateMDPreview()
 
     QString html;
     md_html(
-            md.toUtf8().constData(), md.length(),
-            [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
-                QString *htmlPtr = static_cast<QString *>(userdata);
-                QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
-                *htmlPtr += htmlStr;
-            },
-            &html, 0, 0);
+        md.toUtf8().constData(), md.length(),
+        [](const MD_CHAR *html, MD_SIZE html_size, void *userdata) {
+            QString *htmlPtr = static_cast<QString *>(userdata);
+            QString htmlStr(QString::fromUtf8(reinterpret_cast<const char *>(html), html_size));
+            *htmlPtr += htmlStr;
+        },
+        &html, 0, 0);
     html += "</body></html>";
 
-    QString html_result =
-            "<script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
-            "<script id='MathJax-script' async "
-            "src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>"
-            "<script type='module'>"
-            "    import mermaid from "
-            "'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';"
-            "    mermaid.initialize({ startOnLoad: true });"
-            "</script>"
-            "<style>"
-            "body {"
-            "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    line-height: 1.5;"
-              "}"
-              "h1, h2, h3, h4, h5, h6 {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-weight: normal;"
-              "    margin-top: 20px;"
-              "    margin-bottom: 10px;"
-              "    color: #c3ceec;"
-              "}"
-              "details, summary {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-weight: normal;"
-              "    margin-top: 20px;"
-              "    margin-bottom: 10px;"
-              "    color: #c3ceec;"
-              "}"
-              "hr {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    color: #ecbe7b;"
-              "}"
-              "p{"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    font-weight: normal;"
-              "    margin-top: 20px;"
-              "    margin-bottom: 10px;"
-              "    color: #c3ceec;"
-              "}"
-              "ul{"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    font-weight: normal;"
-              "    margin-top: 20px;"
-              "    margin-bottom: 10px;"
-              "    color: #c3ceec;"
-              "}"
-              "li{"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    font-weight: normal;"
-              "    margin-top: 20px;"
-              "    margin-bottom: 10px;"
-              "    color: #c3ceec;"
-              "}"
-              "italic{"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    font-weight: normal;"
-              "    margin-top: 20px;"
-              "    margin-bottom: 10px;"
-              "    color: #ecbe7b;"
-              "}"
-              "bold{"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    font-weight: normal;"
-              "    margin-top: 20px;"
-              "    margin-bottom: 10px;"
-              "    color: #ecbe7b;"
-              "}"
-              "a{"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    font-weight: normal;"
-              "    margin-top: 20px;"
-              "    margin-bottom: 10px;"
-              "    color: #ecbe7b;"
-              "}"
-              "blockquote {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    color: #222436;"
-              "    background-color: #7e6c9c;"
-              "    padding: 2px 5px;"
-              "    border-radius: 6px;"
-              "}"
-              "code {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    background-color: #7e6c9c;"
-              "    padding: 2px 5px;"
-              "    border-radius: 6px;"
-              "}"
-              "quote {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    background-color: #7e6c9c;"
-              "    padding: 2px 5px;"
-              "    border-radius: 6px;"
-              "}"
-              "body::-webkit-scrollbar {"
-              "    width: 6px;"
-              "}"
-              "body::-webkit-scrollbar-track {"
-              "    background: transparent;"
-              "}"
-              "body::-webkit-scrollbar-thumb {"
-              "    background-color: transparent;"
-              "    border-radius: 20px;"
-              "    border: 4px solid #666c72;"
-              "}"
-              "table {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    border-collapse: collapse;"
-              "    width: 100%;"
-              "    color: #c3ceec;"
-              "}"
-              "th, td {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    border: 1px solid #dddddd;"
-              "    padding: 8px;"
-              "    text-align: left;"
-              "    color: #c3ceec;"
-              "}"
-              "th {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    background-color: #2f334d;"
-              "    color: #c3ceec;"
-              "    font-weight: bold;"
-              "    color: #c3ceec;"
-              "}"
-              "tr:nth-child(even) {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    background-color: #2f334d;"
-              "    color: #c3ceec;"
-              "}"
-              "tr:hover {"
-              "    font-family: "
-            + selectedFont.toString()
-            + ";"
-              "    font-size: "
-            + font_size
-            + ";"
-              "    background-color: #2f334d;"
-              "    color: #c3ceec;"
-              "}"
-              "</style>"
-            + html;
+    QString html_result = "<script "
+                          "src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>"
+                          "<script id='MathJax-script' async "
+                          "src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/"
+                          "tex-mml-chtml.js'></"
+                          "script>"
+                          "<script type='module'>"
+                          "    import mermaid from "
+                          "'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';"
+                          "    mermaid.initialize({ startOnLoad: true });"
+                          "</script>"
+                          "<style>"
+                          "body {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    line-height: 1.5;"
+                          "}"
+                          "h1, h2, h3, h4, h5, h6 {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-weight: normal;"
+                          "    margin-top: 20px;"
+                          "    margin-bottom: 10px;"
+                          "    color: #c3ceec;"
+                          "}"
+                          "details, summary {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-weight: normal;"
+                          "    margin-top: 20px;"
+                          "    margin-bottom: 10px;"
+                          "    color: #c3ceec;"
+                          "}"
+                          "hr {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    color: #ecbe7b;"
+                          "}"
+                          "p{"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    font-weight: normal;"
+                          "    margin-top: 20px;"
+                          "    margin-bottom: 10px;"
+                          "    color: #c3ceec;"
+                          "}"
+                          "ul{"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    font-weight: normal;"
+                          "    margin-top: 20px;"
+                          "    margin-bottom: 10px;"
+                          "    color: #c3ceec;"
+                          "}"
+                          "li{"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    font-weight: normal;"
+                          "    margin-top: 20px;"
+                          "    margin-bottom: 10px;"
+                          "    color: #c3ceec;"
+                          "}"
+                          "italic{"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    font-weight: normal;"
+                          "    margin-top: 20px;"
+                          "    margin-bottom: 10px;"
+                          "    color: #ecbe7b;"
+                          "}"
+                          "bold{"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    font-weight: normal;"
+                          "    margin-top: 20px;"
+                          "    margin-bottom: 10px;"
+                          "    color: #ecbe7b;"
+                          "}"
+                          "a{"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    font-weight: normal;"
+                          "    margin-top: 20px;"
+                          "    margin-bottom: 10px;"
+                          "    color: #ecbe7b;"
+                          "}"
+                          "blockquote {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    color: #222436;"
+                          "    background-color: #7e6c9c;"
+                          "    padding: 2px 5px;"
+                          "    border-radius: 6px;"
+                          "}"
+                          "code {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    background-color: #7e6c9c;"
+                          "    padding: 2px 5px;"
+                          "    border-radius: 6px;"
+                          "}"
+                          "quote {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    background-color: #7e6c9c;"
+                          "    padding: 2px 5px;"
+                          "    border-radius: 6px;"
+                          "}"
+                          "body::-webkit-scrollbar {"
+                          "    width: 6px;"
+                          "}"
+                          "body::-webkit-scrollbar-track {"
+                          "    background: transparent;"
+                          "}"
+                          "body::-webkit-scrollbar-thumb {"
+                          "    background-color: transparent;"
+                          "    border-radius: 20px;"
+                          "    border: 4px solid #666c72;"
+                          "}"
+                          "table {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    border-collapse: collapse;"
+                          "    width: 100%;"
+                          "    color: #c3ceec;"
+                          "}"
+                          "th, td {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    border: 1px solid #dddddd;"
+                          "    padding: 8px;"
+                          "    text-align: left;"
+                          "    color: #c3ceec;"
+                          "}"
+                          "th {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    background-color: #2f334d;"
+                          "    color: #c3ceec;"
+                          "    font-weight: bold;"
+                          "    color: #c3ceec;"
+                          "}"
+                          "tr:nth-child(even) {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    background-color: #2f334d;"
+                          "    color: #c3ceec;"
+                          "}"
+                          "tr:hover {"
+                          "    font-family: " +
+                          selectedFont.toString() +
+                          ";"
+                          "    font-size: " +
+                          font_size +
+                          ";"
+                          "    background-color: #2f334d;"
+                          "    color: #c3ceec;"
+                          "}"
+                          "</style>" +
+                          html;
 
     mdPreview->setHtml(html_result);
 }

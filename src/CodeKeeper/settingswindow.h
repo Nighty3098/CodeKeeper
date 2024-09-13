@@ -13,19 +13,28 @@ public:
     ~SettingsWindow();
     QSettings *globalSettings;
 
+    void checkUpdates();
+    QString getNewAppVersion();
+
+    QLabel *versionInfo;
+
     QFont selectedFont;
     QString font_size;
-    QString theme;
+    int theme;
     QString git_repo;
     QString git_user;
     QString git_token;
     QString path;
+
+    int appLang;
 
     bool isTimeB;
     bool isDateB;
     bool isHostB;
     bool isAutoSyncB;
     bool isCustomTitlebar;
+    bool isCustomTheme;
+    bool isAutoCheckUpdates;
 
     bool isCreated;
     bool isReleaseDate;
@@ -41,18 +50,43 @@ public:
     bool isForks;
     bool isRepoSize;
 
+protected:
+    void mousePressEvent(QMouseEvent *event) override
+    {
+        if (event->button() == Qt::LeftButton) {
+            m_dragPosition = event->globalPos() - frameGeometry().topLeft();
+            event->accept();
+        } else {
+            QMainWindow::mousePressEvent(event);
+        }
+    }
+
+    void mouseMoveEvent(QMouseEvent *event) override
+    {
+        if (event->buttons() & Qt::LeftButton) {
+            move(event->globalPos() - m_dragPosition);
+            event->accept();
+        } else {
+            QMainWindow::mouseMoveEvent(event);
+        }
+    }
+
 private slots:
     void closeEvent(QCloseEvent *event);
     void QuitW();
-    void checkUpdates();
     void saveData();
     void fopenFolder();
 
-    void setFontPr2(QFont *selectedFont, int *font_size_int);
+    QString fetchSecondLastRelease();
+
+    void setStyle2(QFont *selectedFont, int *font_size_int);
     void checkRepo();
-    QString getNewAppVersion();
 
 private:
+    QPoint m_dragPosition;
+
+    QSizeGrip *sizeGrip;
+
     QWidget *centralWidget;
     QVBoxLayout *mainLayout;
     QTabWidget *tabs;
@@ -63,9 +97,9 @@ private:
     // main tab
     QLabel *appName;
     QLabel *urlToRepo;
-    QLabel *versionInfo;
 
     QPushButton *checkUpdatesBtn;
+    QCheckBox *autoUpdates;
 
     // sync settings
     QLabel *repoAvailability;
@@ -89,11 +123,15 @@ private:
     QLabel *fontLabel;
     QLabel *fontSizeLabel;
     QLabel *themeLabel;
+    QLabel *langLabel;
 
     QSpinBox *fontSize;
     QFontComboBox *fontSelector;
     QComboBox *themeSelector;
 
+    QComboBox *langSelector;
+
+    QCheckBox *customTheme;
     QCheckBox *customTitleBar;
 
     // storage

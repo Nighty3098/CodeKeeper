@@ -40,10 +40,13 @@ bool SyncWindow::checkConnection()
     reply = manager->get(QNetworkRequest(QUrl("http://www.google.com")));
 
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
-        if (reply->error() == QNetworkReply::NoError) {
+        if (reply->error() == QNetworkReply::NoError)
+        {
             qDebug() << "Internet connection is available";
             return true;
-        } else {
+        }
+        else
+        {
             qDebug() << "No internet connection found";
             return false;
         }

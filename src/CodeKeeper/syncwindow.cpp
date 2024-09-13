@@ -1,24 +1,21 @@
 #include "syncwindow.h"
-#include "syncFunc/functional.cpp"
+
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QtWidgets>
 
 #include "gitFunc/cloneRepo.cpp"
 #include "gitFunc/getUpdates.cpp"
 #include "gitFunc/pushUpdates.cpp"
-
-#include <QtWidgets>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
+#include "syncFunc/functional.cpp"
 
 SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
 {
-    QFile file(":/stylesheet/stylesheet_setting_window.qss");
-    file.open(QFile::ReadOnly);
-
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
+
     this->setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     this->setFixedSize(300, 500);
-    this->setStyleSheet(file.readAll());
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
     selectedFont = globalSettings->value("font").value<QFont>();
@@ -27,7 +24,7 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
 
     mainLayout = new QGridLayout;
 
-    appIcon = new QLabel("Syncing with Git");
+    appIcon = new QLabel(tr("Syncing with Git"));
     appIcon->setPixmap(QPixmap(":/icon.png"));
     appIcon->setAlignment(Qt::AlignCenter);
 
@@ -35,7 +32,7 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
     appName->setStyleSheet("font-size: 30px;");
     appName->setAlignment(Qt::AlignCenter);
 
-    infoLabel = new QLabel("Syncing with Git");
+    infoLabel = new QLabel(tr("Syncing with Git"));
     infoLabel->setAlignment(Qt::AlignCenter);
 
     syncingProgress = new QProgressBar();
@@ -45,15 +42,14 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
     syncingProgress->setAlignment(Qt::AlignCenter);
     syncingProgress->setFormat(" ");
 
-    startSyncing = new QPushButton("Start");
+    startSyncing = new QPushButton(tr("Start"));
     startSyncing->setFixedSize(100, 25);
 
-    stopSyncing = new QPushButton("Cancel && Quit");
+    stopSyncing = new QPushButton(tr("Cancel && Quit"));
     stopSyncing->setFixedSize(100, 25);
 
     QVBoxLayout *infoLayout = new QVBoxLayout();
     infoLayout->setAlignment(Qt::AlignHCenter);
-    // infoLayout->addWidget(appIcon);
     infoLayout->addWidget(appName);
     infoLayout->addWidget(infoLabel);
 
@@ -69,7 +65,7 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
 
     setFontStyle();
 
-    qDebug() << "\033[0m\033[32mOpening Sync Window";
+    qDebug() << "Opening Sync Window";
 
     centralWidget->setLayout(mainLayout);
 
@@ -77,4 +73,6 @@ SyncWindow::SyncWindow(QWidget *parent) : QMainWindow(parent)
     connect(stopSyncing, SIGNAL(clicked()), this, SLOT(cancelSyncingFunc()));
 }
 
-SyncWindow::~SyncWindow() { }
+SyncWindow::~SyncWindow()
+{
+}

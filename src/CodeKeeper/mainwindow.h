@@ -1,21 +1,21 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QFile>
 #include <QFileIconProvider>
 #include <QFileSystemModel>
 #include <QMainWindow>
-#include <QSettings>
-#include <QTextBrowser>
-#include <QtWidgets>
-#include <QtConcurrent/QtConcurrent>
-#include <QWebEngineView>
-#include <QDragEnterEvent>
 #include <QMimeData>
-#include <QDropEvent>
-#include <QFile>
-#include <QTextStream>
+#include <QSettings>
 #include <QTabBar>
+#include <QTextBrowser>
+#include <QTextStream>
 #include <QThread>
+#include <QWebEngineView>
+#include <QtConcurrent/QtConcurrent>
+#include <QtWidgets>
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "accountwindow.h"
@@ -24,10 +24,11 @@
 
 class CustomIconProvider : public QFileIconProvider
 {
-public:
+  public:
     QIcon icon(IconType type) const override
     {
-        switch (type) {
+        switch (type)
+        {
         case QFileIconProvider::IconType::Computer:
             return QIcon(":/home_dir.png");
         case QFileIconProvider::IconType::Trashcan:
@@ -44,13 +45,13 @@ public:
 
 class notesTree : public QTreeView
 {
-protected:
+  protected:
 };
 
 class NoteEditor : public QMarkdownTextEdit
 {
-protected:
-    // Bug with cursor - need fixed
+  protected:
+    // ! Why it doesn't work right. WTF
 
     void dropEvent(QDropEvent *event)
     {
@@ -60,8 +61,9 @@ protected:
 
         qDebug() << "[Dropped file]:" << filePath;
 
-        if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md") {
-            QString newLine = "[Dropped file](" + filePath + ")";
+        if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md")
+        {
+            QString newLine = "[Dropped document](" + filePath + ")";
 
             QTextCursor cursor = this->textCursor();
             int lineNumber = cursor.blockNumber();
@@ -69,8 +71,9 @@ protected:
             cursor.movePosition(QTextCursor::EndOfLine);
             cursor.insertText(newLine);
             this->setTextCursor(cursor);
-
-        } else {
+        }
+        else
+        {
             QString newLine = "![Dropped file](" + filePath + ")";
 
             QTextCursor cursor = this->textCursor();
@@ -87,24 +90,8 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
+  public:
     QSettings *globalSettings;
-    bool isVisibleNotesList;
-    bool isViewMode;
-    bool isVisiblePreview;
-    bool isVisibleFolders;
-    QString dir;
-    QFont selectedFont;
-    QString font_size;
-    QString theme;
-    bool isCustomTitlebar;
-    int sortNotesRole;
-    bool isAutoSyncing;
-
-    QString git_repo;
-    QString git_user;
-    QString git_token;
-    bool isAutoSyncB;
 
     NoteEditor *noteEdit;
     notesTree *notesList;
@@ -120,20 +107,43 @@ public:
     void createCustomTitlebar();
     void setConnectionStatus();
 
-    void setFontPr1(QFont *selectedFont, int *font_size_int);
+    void setStyle(QFont *selectedFont, int *font_size_int);
     void loadNotes();
     void loadProjects();
     void loadTasks();
 
     bool createConnection(QString path);
+    void createConnects();
+    void createShortcuts();
 
-    QString getKeeperStats();
+    void activateProjectContextMenu(const QPoint &pos, QListWidget *listWidget);
+    void activateTasksContextMenu(const QPoint &pos, QListWidget *listWidget);
+
+    QStringList getAllReposUrl();
 
     QMarkdownTextEdit *note;
+
+    QListWidget *incompleteTasks;
+    QListWidget *inprocessTasks;
+    QListWidget *completeTasks;
+
+    QListWidget *notStartedProjects;
+    QListWidget *startedProjects;
+    QListWidget *finishedProjects;
+    QListWidget *finishlineProjects;
 
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    bool isVisibleNotesList;
+    bool isViewMode;
+    bool isVisiblePreview;
+    bool isVisibleFolders;
+    bool isAutoSyncB;
+    bool isCustomTitlebar;
+    int sortNotesRole;
+    bool isAutoSyncing;
+    bool isCustomTheme;
     bool isCreated;
     bool isReleaseDate;
     bool isLastCommit;
@@ -147,17 +157,30 @@ public:
     bool isStars;
     bool isForks;
     bool isRepoSize;
+    bool isAutoCheckUpdates;
 
-private slots:
-    QString getRepositoryData(QString git_url, QTableWidget *table);
+    QString git_repo;
+    QString git_user;
+    QString git_token;
+
+    QString dir;
+    QFont selectedFont;
+    QString font_size;
+    int theme;
+
+    int appLang;
+
+  private slots:
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
+    QString getRepositoryData(QString git_url, QTableWidget *table, QLabel *label);
     QString getProjectIssues(QString git_url);
-    
+
     void openSettingsWindow();
     void fOpenAccountWindow();
 
     void openSyncWindow();
     void openFolder();
-    void openDocumentation(QString fileName);
 
     void selectFileInQTreeView(QTreeView *treeView, const QString &fileName);
 
@@ -178,20 +201,19 @@ private slots:
     void removeTask();
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
-    void renameItemOnDoubleClick(QListWidget *listWidget, QListWidgetItem *item);
+    void editTask();
     void onNoteDoubleClicked();
-    void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks,
-                             QListWidget *inprocessTasks, QListWidget *completeTasks,
-                             QProgressBar *tasksProgress);
+    void updateTasksProgress(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks,
+                             QListWidget *completeTasks, QProgressBar *tasksProgress);
 
-    void getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks,
-                       QListWidget *inprocessTasks, QListWidget *completeTasks);
+    void getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks,
+                       QListWidget *completeTasks);
 
-    void getTotalProjects(QTabWidget *tasksTab, QListWidget *notStartedProjects,
-                          QListWidget *startedProjects, QListWidget *finishedProjects,
-                          QListWidget *finishlineProjects);
+    void getTotalProjects(QTabWidget *tasksTab, QListWidget *notStartedProjects, QListWidget *startedProjects,
+                          QListWidget *finishedProjects, QListWidget *finishlineProjects);
 
-    void openProject(QListWidget *listWidget, QListWidgetItem *item);
+    void openProject();
+    void openGitProject();
 
     void createProject();
     void removeProject();
@@ -228,41 +250,61 @@ private slots:
     void onMovingTaskFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingTaskTo(QListWidgetItem *item, QListWidget *list);
 
-    void createGitBadges(QString git_url, QWebEngineView *page);
     QStringList GetProjectData(QString *title, QString *status, QString *git_url);
     void updateProjectStatus(QString *status, QString *createdTime, QString *oldTime);
     void removeProjectFromDB(QString *git_url, QString *status, QString *createdTime);
     void saveProjectToDB(QString *title, QString *git_url, QString *status, QString *createdTime);
-    void updateProjectData(QString *title, QString *git_url, QString *doc, QString *createdTime,
-                           QString *oldTime, QString *oldGit);
+    void updateProjectData(QString *title, QString *git_url, QString *doc, QString *createdTime, QString *oldTime,
+                           QString *oldGit);
     void onMovingProjectFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingProjectTo(QListWidgetItem *item, QListWidget *list);
 
     bool checkConnection();
+    void updateTime();
 
-protected:
+    void createNotesMenu(QMenu *menu, QString font_size);
+    void createProjectMenu(QMenu *menu, QString font_size);
+    void createTaskMenu(QMenu *menu, QString font_size);
+    void createTrayMenu(QMenu *menu, QString font_size);
+
+  protected:
     void mousePressEvent(QMouseEvent *event) override
     {
-        if (event->button() == Qt::LeftButton) {
+        if (event->button() == Qt::LeftButton)
+        {
             m_dragPosition = event->globalPos() - frameGeometry().topLeft();
             event->accept();
-        } else {
+        }
+        else
+        {
             QMainWindow::mousePressEvent(event);
         }
     }
 
     void mouseMoveEvent(QMouseEvent *event) override
     {
-        if (event->buttons() & Qt::LeftButton) {
+        if (event->buttons() & Qt::LeftButton)
+        {
             move(event->globalPos() - m_dragPosition);
             event->accept();
-        } else {
+        }
+        else
+        {
             QMainWindow::mouseMoveEvent(event);
         }
     }
 
-private:
-    QLabel *appIcon;
+  private:
+    QSystemTrayIcon *trayIcon;
+
+    // shortcuts
+    QShortcut *toFirstTab;
+    QShortcut *toSecondTab;
+    QShortcut *toThirdTab;
+    QShortcut *toFourthTab;
+    QShortcut *openSettingsWindowQS;
+
+    // other
     QLabel *windowTitle;
     QWidget *centralWidget;
     QGridLayout *mainLayout;
@@ -272,6 +314,11 @@ private:
     QSizeGrip *sizeGrip2;
     QSizeGrip *sizeGrip3;
     QSizeGrip *sizeGrip4;
+
+    QLabel *timeLabel;
+    QLabel *dateLabel;
+    QLabel *helloLabel;
+    QLabel *decorationLabel;
 
     QPushButton *maximizeBtn;
     QPushButton *closeBtn;
@@ -313,9 +360,6 @@ private:
 
     // ========================================================
     // tasks tab
-    QListWidget *incompleteTasks;
-    QListWidget *inprocessTasks;
-    QListWidget *completeTasks;
 
     QProgressBar *tasksProgress;
     QToolButton *tasksMenuBtn;
@@ -325,6 +369,13 @@ private:
     QLabel *label_3;
 
     QLineEdit *taskText;
+
+    // ========================================================
+
+    QPushButton *mainTabButton;
+    QPushButton *tasksTabButton;
+    QPushButton *notesTabButton;
+    QPushButton *projectsTabButton;
 
     // ========================================================
     // projects tab
@@ -337,11 +388,6 @@ private:
     QLabel *sProjects;
     QLabel *nsProjects;
 
-    QListWidget *notStartedProjects;
-    QListWidget *startedProjects;
-    QListWidget *finishedProjects;
-    QListWidget *finishlineProjects;
-
     QAction *newNote;
     QAction *rmNote;
     QAction *expandAllA;
@@ -349,11 +395,23 @@ private:
     QAction *newFolder;
     QAction *showList;
     QAction *showRender;
-    QAction *addTask;
-    QAction *rmTask;
+
+    QAction *exportToPdf;
+    QAction *exportToHtml;
+
     QAction *viewMode;
+    QAction *nameAction;
+    QAction *dateAction;
+
+    QAction *addTaskA;
+    QAction *rmTaskA;
+    QAction *editTaskA;
+    
     QAction *newProject;
+    QAction *openProjectInGit;
     QAction *rmProject;
+    QAction *editProject;
+
     QAction *setH1A;
     QAction *setH2A;
     QAction *setH3A;
@@ -365,11 +423,12 @@ private:
     QAction *setStrikeA;
     QAction *setNumListA;
     QAction *setTableA;
-    QAction *exportToPdf;
-    QAction *exportToHtml;
     QAction *setQuoteA;
-    QAction *nameAction;
-    QAction *dateAction;
+
+    QAction *closeAppA;
+    QAction *openNotesA;
+    QAction *openProjectsA;
+    QAction *openTasksA;
 
     QMenu *menu;
     QMenu *tasksMenu;
