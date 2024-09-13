@@ -37,22 +37,31 @@ void MainWindow::activateTasksContextMenu(const QPoint &pos, QListWidget *listWi
 
 void MainWindow::onMovingTaskFrom(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "Moving task: " << item->text() << " from: " << list->objectName();
-
-    QString task = item->text();
-    QString status = list->objectName();
+    if (item && list)
+    {
+        qDebug() << "Moving task: " << item->text() << " from: " << list->objectName();
+    }
 }
 
 void MainWindow::onMovingTaskTo(QListWidgetItem *item, QListWidget *list)
 {
-    qDebug() << "Moved task: " << item->text() << " to: " << list->objectName();
+    if (item && list)
+    {
+        qDebug() << "Moved task: " << item->text() << " to: " << list->objectName();
 
-    QString task = item->text();
-    QString status = list->objectName();
-    QStringList data = task.split("\n");
-    QString cT = data[1];
+        QStringList data = item->text().split("\n");
+        if (data.size() >= 2) // Check if data has at least 2 elements
+        {
+            QString status = list->objectName();
+            QString cT = data[1];
 
-    updateTaskStatus(&task, &status, &cT);
+            updateTaskStatus(&data[0], &status, &cT);
+        }
+        else
+        {
+            qWarning() << "Invalid task data format";
+        }
+    }
 }
 
 void MainWindow::addNewTask()
@@ -75,21 +84,20 @@ void MainWindow::addNewTask()
 
 void MainWindow::removeTask()
 {
-    QListWidget *listWidgets[] = {incompleteTasks, inprocessTasks, completeTasks};
+    QList<QListWidget *> listWidgets = {incompleteTasks, inprocessTasks, completeTasks};
 
     for (QListWidget *listWidget : listWidgets)
     {
         QListWidgetItem *item = listWidget->currentItem();
         if (item)
         {
-            listWidget->takeItem(listWidget->row(item));
-            qDebug() << "Removed task: " << item->text();
-
             QString task = item->text();
             QString status = listWidget->objectName();
 
-            removeTaskFromDB(&task, &status);
+            listWidget->takeItem(listWidget->row(item));
+            qDebug() << "Removed task: " << task;
 
+            removeTaskFromDB(&task, &status);
             delete item;
             break;
         }

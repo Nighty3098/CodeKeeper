@@ -37,26 +37,26 @@ void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
     newNote = menu->addAction(
         QPixmap(":/new.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("New Note"), this, SLOT(createNote()), Qt::CTRL + Qt::Key_N);
+        tr("New Note"), this, SLOT(createNote()), QKeySequence(Qt::CTRL + Qt::Key_N));
     rmNote = menu->addAction(
         QPixmap(":/delete.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("Remove"), this, SLOT(removeNote()), Qt::CTRL + Qt::Key_Delete);
+        tr("Remove"), this, SLOT(removeNote()), QKeySequence(Qt::CTRL + Qt::Key_Delete));
     newFolder = menu->addAction(
         QPixmap(":/new_folder.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("New folder"), this, SLOT(createFolder()), Qt::CTRL + Qt::SHIFT + Qt::Key_N);
+        tr("New folder"), this, SLOT(createFolder()), QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_N));
     renameItemA = menu->addAction(
         QPixmap(":/rename.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("Rename"), this, SLOT(renameItem()), Qt::Key_F2);
+        tr("Rename"), this, SLOT(renameItem()), QKeySequence(Qt::Key_F2));
 
     menu->addSeparator();
 
     expandAllA = menu->addAction(
         QPixmap(":/expand.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("Expand on one stage"), [this]() { notesList->expandAll(); }, Qt::CTRL + Qt::Key_E);
+        tr("Expand on one stage"), [this]() { notesList->expandAll(); }, QKeySequence(Qt::CTRL + Qt::Key_E));
 
     menu->addSeparator();
 
@@ -66,19 +66,19 @@ void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
         QPixmap(":/view.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-    showList =
-        viewMenu->addAction(tr("Show notes list"), this, SLOT(hideNotesList()), Qt::CTRL + Qt::SHIFT + Qt::Key_L);
+    showList = viewMenu->addAction(tr("Show notes list"), this, SLOT(hideNotesList()),
+                                   QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_L));
     showList->setCheckable(true);
     showList->setChecked(isVisibleNotesList);
-    showRender =
-        viewMenu->addAction(tr("Show md preview"), this, SLOT(showPreview()), Qt::CTRL + Qt::SHIFT + Qt::Key_P);
+    showRender = viewMenu->addAction(tr("Show md preview"), this, SLOT(showPreview()),
+                                     QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P));
     showRender->setCheckable(true);
     showRender->setChecked(isVisiblePreview);
     viewMenu->addSeparator();
     viewMode = viewMenu->addAction(
         QPixmap(":/view.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("Reading mode"), this, SLOT(toViewMode()), Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+        tr("Reading mode"), this, SLOT(toViewMode()), QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_V));
     viewMode->setCheckable(true);
     viewMode->setChecked(isViewMode);
 
@@ -162,11 +162,11 @@ void MainWindow::createProjectMenu(QMenu *menu, QString font_size)
     newProject = menu->addAction(
         QPixmap(":/new.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("New"), this, SLOT(createProject()), Qt::CTRL + Qt::Key_N);
+        tr("New"), this, SLOT(createProject()), QKeySequence(Qt::CTRL + Qt::Key_N));
     rmProject = menu->addAction(
         QPixmap(":/delete.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("Remove"), this, SLOT(removeProject()), Qt::Key_Delete);
+        tr("Remove"), this, SLOT(removeProject()), QKeySequence(Qt::Key_Delete));
 
     menu->addSeparator();
 
@@ -185,11 +185,11 @@ void MainWindow::createTaskMenu(QMenu *menu, QString font_size)
     addTaskA = menu->addAction(
         QPixmap(":/new.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("Add task"), this, SLOT(addNewTask()), Qt::Key_Return);
+        tr("Add task"), this, SLOT(addNewTask()), QKeySequence(Qt::Key_Return));
     rmTaskA = menu->addAction(
         QPixmap(":/delete.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("Delete task"), this, SLOT(removeTask()), Qt::Key_Delete);
+        tr("Delete task"), this, SLOT(removeTask()), QKeySequence(Qt::Key_Delete));
     editTaskA = menu->addAction(
         QPixmap(":/edit.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),

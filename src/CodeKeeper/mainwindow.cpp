@@ -4,6 +4,7 @@
 #include <md4c.h>
 
 #include <QDragEnterEvent>
+#include <QElapsedTimer>
 #include <QInputDialog>
 #include <QMimeData>
 #include <QPropertyAnimation>
@@ -28,7 +29,7 @@ Q_DECLARE_METATYPE(QDir)
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    QTime startup;
+    QElapsedTimer startup;
     startup.start();
 
     qDebug() << "Starting CodeKeeper";
@@ -142,22 +143,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     isFullScreen = false;
 
     sizeGrip = new QSizeGrip(this);
-    sizeGrip->setFixedSize(11, 11);
+    sizeGrip->setFixedSize(7, 7);
     sizeGrip->setVisible(true);
     sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     sizeGrip2 = new QSizeGrip(this);
-    sizeGrip2->setFixedSize(11, 11);
+    sizeGrip2->setFixedSize(13, 13);
     sizeGrip2->setVisible(true);
-    sizeGrip2->setStyleSheet("background-color: #febe30; border-radius: 5px;");
+    sizeGrip2->setStyleSheet("background-color: #febe30; border-radius: 6px;");
 
     sizeGrip3 = new QSizeGrip(this);
-    sizeGrip3->setFixedSize(11, 11);
+    sizeGrip3->setFixedSize(7, 7);
     sizeGrip3->setVisible(true);
     sizeGrip3->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     sizeGrip4 = new QSizeGrip(this);
-    sizeGrip4->setFixedSize(11, 11);
+    sizeGrip4->setFixedSize(7, 7);
     sizeGrip4->setVisible(true);
     sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
@@ -759,17 +760,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             int incompleteTasksCount = incompleteTasks->count();
 
             int totalTasksCount = completeTasks->count() + inprocessTasks->count() + incompleteTasks->count();
+            int startedProjectsCount = startedProjects->count() + finishlineProjects->count();
+            int notstartedProjectsCount = notStartedProjects->count();
 
             if (incompleteTasksCount >= 1)
             {
                 helloLabel->setText(tr("Welcome, ") + git_user + tr("!\n\nYou have ") +
                                     QString::number(incompleteTasksCount) + tr(" uncompleted tasks out of ") +
-                                    QString::number(totalTasksCount) + "");
+                                    QString::number(totalTasksCount) + tr("\nAnd ") +
+                                    QString::number(startedProjectsCount) + tr(" started projects"));
             }
             else
             {
                 helloLabel->setText(tr("Welcome, ") + git_user +
-                                    tr("!\n\nYou have completed all of your tasks for the day. Good job!"));
+                                    tr("!\n\nYou have completed all of your tasks for the day.\n\nGood job!"));
             }
         });
         tasksTimer->start();

@@ -30,8 +30,12 @@ void MainWindow::updateTaskData(QString *task, QString *status, QString *cT)
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("UPDATE tasks SET task = '" + taskText[0] + "' WHERE createdTime = '" + cT + "' AND status = '" +
-                    *status + "'"))
+    query.prepare("UPDATE tasks SET task = :task WHERE createdTime = :cT AND status = :status");
+    query.bindValue(":task", taskText[0]);
+    query.bindValue(":cT", *cT);
+    query.bindValue(":status", *status);
+
+    if (!query.exec())
     {
         qDebug() << "" << query.lastError();
     }
@@ -43,8 +47,12 @@ void MainWindow::updateTaskStatus(QString *task, QString *status, QString *cT)
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("UPDATE tasks SET status = '" + *status + "' WHERE createdTime = '" + *cT + "' AND task = '" +
-                    taskText[0] + "'"))
+    query.prepare("UPDATE tasks SET status = :status WHERE createdTime = :cT AND task = :task");
+    query.bindValue(":status", *status);
+    query.bindValue(":cT", *cT);
+    query.bindValue(":task", taskText[0]);
+
+    if (!query.exec())
     {
         qDebug() << "" << query.lastError();
     }
@@ -56,8 +64,12 @@ void MainWindow::saveTaskToDB(QString *task, QString *status)
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("INSERT INTO tasks (task, status, createdTime) VALUES('" + taskText[0] + "', '" + *status + "', '" +
-                    taskText[1] + "');"))
+    query.prepare("INSERT INTO tasks (task, status, createdTime) VALUES(:task, :status, :createdTime)");
+    query.bindValue(":task", taskText[0]);
+    query.bindValue(":status", *status);
+    query.bindValue(":createdTime", taskText[1]);
+
+    if (!query.exec())
     {
         qDebug() << "" << query.lastError();
     }
@@ -73,14 +85,18 @@ void MainWindow::removeTaskFromDB(QString *task, QString *status)
 
     QStringList taskText = task->split("\n");
 
-    if (!query.exec("DELETE FROM tasks WHERE task = '" + taskText[0] + "' AND status = '" + *status +
-                    "' AND createdTime = '" + taskText[1] + "'"))
+    query.prepare("DELETE FROM tasks WHERE task = :task AND status = :status AND createdTime = :createdTime");
+    query.bindValue(":task", taskText[0]);
+    query.bindValue(":status", *status);
+    query.bindValue(":createdTime", taskText[1]);
+
+    if (!query.exec())
     {
         qDebug() << "" << query.lastError();
     }
     else
     {
-        qDebug() << "Sucsessfull removed";
+        qDebug() << "Successfully removed";
     }
 }
 
@@ -120,7 +136,7 @@ void MainWindow::loadTasks()
         }
         else
         {
-            qDebug() << "🟠 Unknown status: " << status;
+            qDebug() << "Unknown status: " << status;
         }
     }
 

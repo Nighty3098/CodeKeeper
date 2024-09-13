@@ -406,7 +406,7 @@ class MainWindow : public QMainWindow
     QAction *addTaskA;
     QAction *rmTaskA;
     QAction *editTaskA;
-    
+
     QAction *newProject;
     QAction *openProjectInGit;
     QAction *rmProject;

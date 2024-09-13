@@ -2,7 +2,6 @@
 #include <QDateTime>
 #include <QGraphicsOpacityEffect>
 #include <QNetworkAccessManager>
-#include <QNetworkConfigurationManager>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSyntaxHighlighter>
