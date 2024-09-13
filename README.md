@@ -2,16 +2,14 @@
     <h1 align="center">CodeKeeper</h1>
     <h3 align="center">Projects manager for developers</h3>
     <br><br>    
-    <img src="imgs/1.png" />
+    <img src="https://github.com/user-attachments/assets/dd5d3577-9322-46be-aeb0-10539e66b863" />
     <br><br>
 </div>
 
 <br><br>
 <div align="center">
     <a href="./LICENSE.md"><img  class="badge" src="https://img.shields.io/github/license/Nighty3098/CodeKeeper?style=for-the-badge&color=a6e0b8&logoColor=ffffff&labelColor=1c1c29"  style="border-radius: 5px;"/></a><br>
-    <img src="https://wakatime.com/badge/user/018e8f78-65a7-4aa8-8c67-51796499853b/project/018e8f7e-5c5a-471e-ba73-04384fbc3cda.svg?&style=for-the-badge&color=f5a7a0&logoColor=FFFFFF&labelColor=1c1c29" style="border-radius: 5px;"/><br>
     <img class="badge" src="https://img.shields.io/github/issues-pr/Nighty3098/CodeKeeper?style=for-the-badge&color=ef9f9c&logoColor=85e185&labelColor=1c1c29" style="border-radius: 5px;" />
-    <img class="badge" src="https://img.shields.io/github/repo-size/Nighty3098/CodeKeeper?style=for-the-badge&color=ea9de7&logoColor=D9E0EE&labelColor=171b22" style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/release/Nighty3098/CodeKeeper?style=for-the-badge&color=7589d5&logoColor=ffffff&labelColor=1c1c29" style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/issues/Nighty3098/CodeKeeper?style=for-the-badge&color=dbb6ed&logoColor=ffffff&labelColor=1c1c29"  style="border-radius: 5px;"/>
     <img class="badge" src="https://img.shields.io/github/downloads/Nighty3098/CodeKeeper/total?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=171b22" style="border-radius: 5px;"/>
@@ -36,16 +34,10 @@
     </p>
     <br>
     <h3>If you have found bugs in our product or have suggestions, please write about them:</h3>
-    <a href="https://t.me/DXS_TechSupport_bot"><img src="https://github.com/Nighty3098/Nighty3098/blob/main/TechSupport.png?raw=true" width="65%" /></a>
+    <a href="https://t.me/DXS_TechSupport_bot"><kbd> <br>Tech Support<br> </kbd></a>  <a href="https://discord.gg/tnHSEc2cZv"><kbd> <br>Discord server<br> </kbd></a>
+    <br><br>
+    </a>  <a href="[https://discord.gg/tnHSEc2cZv](https://github.com/Nighty3098/CodeKeeper/issues/132)"><kbd> <br>Official project roadmap<br> </kbd></a>
 </div>
-
-<br><br>
-
-> [!TIP] 
-> [Official project roadmap](https://github.com/Nighty3098/CodeKeeper/issues/132)
-
-> [!TIP]
-> [Tech Support Bot](https://t.me/DXS_TechSupport_bot)
 
 <br><br>
 
@@ -59,16 +51,6 @@ cd CodeKeeper/src/CodeKeeper
 qmake CodeKeeper.pro
 make
 ```
-<br><br>
-### Screenshots
-
-![](imgs/1.png)
-![](imgs/2,png)
-![](imgs/3,png)
-![](imgs/4,png)
-![](imgs/5,png)
-![](imgs/6,png)
-![](imgs/7,png)
 
 <br><br>
 ### Shortcuts
@@ -100,15 +82,11 @@ make
 
 | Default theme | Custom theme |
 |:--------------|:-------------|
-| ![](imgs/default_theme.png) | ![](imgs/custom_theme.png) |
+| ![](https://github.com/user-attachments/assets/eaabcc3d-8b42-4cc3-8453-313c69833ba0) | ![](https://github.com/user-attachments/assets/dd5d3577-9322-46be-aeb0-10539e66b863) |
 
 <br><br>
-### Stats
 
-![](https://repobeats.axiom.co/api/embed/0d75989e77c487901abc8abe41e46589905ee8af.svg)
-
-<br><br>
-### Support me with TON
-
-`UQCF-sPDO0QqkNtvy5CKSvYWEsZS6l7vzaytV36oYM0SNhKt`
-
+<div align="center">
+<h3>Support me with TON</h3>
+<kbd><br>UQCF-sPDO0QqkNtvy5CKSvYWEsZS6l7vzaytV36oYM0SNhKt<br></kbd>
+</div>
