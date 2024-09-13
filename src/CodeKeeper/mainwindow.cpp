@@ -760,17 +760,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             int incompleteTasksCount = incompleteTasks->count();
 
             int totalTasksCount = completeTasks->count() + inprocessTasks->count() + incompleteTasks->count();
+            int startedProjectsCount = startedProjects->count() + finishlineProjects->count();
+            int notstartedProjectsCount = notStartedProjects->count();
 
             if (incompleteTasksCount >= 1)
             {
                 helloLabel->setText(tr("Welcome, ") + git_user + tr("!\n\nYou have ") +
                                     QString::number(incompleteTasksCount) + tr(" uncompleted tasks out of ") +
-                                    QString::number(totalTasksCount) + "");
+                                    QString::number(totalTasksCount) + tr("\nAnd ") +
+                                    QString::number(startedProjectsCount) + tr(" started projects"));
             }
             else
             {
                 helloLabel->setText(tr("Welcome, ") + git_user +
-                                    tr("!\n\nYou have completed all of your tasks for the day. Good job!"));
+                                    tr("!\n\nYou have completed all of your tasks for the day.\n\nGood job!"));
             }
         });
         tasksTimer->start();
