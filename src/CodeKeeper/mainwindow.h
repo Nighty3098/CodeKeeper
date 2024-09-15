@@ -13,7 +13,6 @@
 #include <QTextBrowser>
 #include <QTextStream>
 #include <QThread>
-#include <QWebEngineView>
 #include <QtConcurrent/QtConcurrent>
 #include <QtWidgets>
 
@@ -185,8 +184,6 @@ class MainWindow : public QMainWindow
     void selectFileInQTreeView(QTreeView *treeView, const QString &fileName);
 
     void hideNotesList();
-    void showPreview();
-    void updateMDPreview();
     void setHeader();
     void createNote();
     void removeNote();
@@ -240,10 +237,6 @@ class MainWindow : public QMainWindow
 
     void create_tasks_connection();
     void create_projects_connection();
-
-    void toPdf(const QString &html, const QString &outputFile);
-    void exportNoteToPdf();
-    void exportNoteToHtml();
 
     void updateTaskStatus(QString *task, QString *status, QString *cT);
     void updateTaskData(QString *task, QString *status, QString *cT);
@@ -343,8 +336,6 @@ class MainWindow : public QMainWindow
     QToolButton *menuButton;
     QLabel *noteNameLabel;
 
-    QWebEngineView *mdPreview;
-
     QPushButton *setH1B;
     QPushButton *setH2B;
     QPushButton *setH3B;
@@ -394,12 +385,7 @@ class MainWindow : public QMainWindow
     QAction *renameItemA;
     QAction *newFolder;
     QAction *showList;
-    QAction *showRender;
 
-    QAction *exportToPdf;
-    QAction *exportToHtml;
-
-    QAction *viewMode;
     QAction *nameAction;
     QAction *dateAction;
 
