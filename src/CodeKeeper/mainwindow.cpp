@@ -1,8 +1,5 @@
 #include "mainwindow.h"
 
-#include <md4c-html.h>
-#include <md4c.h>
-
 #include <QDragEnterEvent>
 #include <QElapsedTimer>
 #include <QInputDialog>
@@ -11,7 +8,6 @@
 #include <QSizeGrip>
 #include <QSystemTrayIcon>
 #include <QThread>
-#include <QWebEngineView>
 #include <QtWidgets>
 
 #include "3rdParty/qmarkdowntextedit/markdownhighlighter.h"
@@ -249,11 +245,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
 
-    mdPreview = new QWebEngineView();
-    mdPreview->setMinimumWidth(300);
-    mdPreview->setAutoFillBackground(true);
-    mdPreview->page()->setBackgroundColor(Qt::transparent);
-
     noteEdit = new NoteEditor();
     noteEdit->setPlaceholderText(tr(" Just start typing"));
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
@@ -264,7 +255,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     noteSplitter->addWidget(notesList);
     noteSplitter->addWidget(noteEdit);
-    noteSplitter->addWidget(mdPreview);
 
     noteSplitter->setStretchFactor(0, 1);
     noteSplitter->setStretchFactor(1, 1);
@@ -370,7 +360,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesCLayout->addWidget(noteSplitter);
 
     notesList->setVisible(isVisibleNotesList);
-    mdPreview->setVisible(isVisiblePreview);
 
     // ========================================================
     QGridLayout *tasksGLayout = new QGridLayout;

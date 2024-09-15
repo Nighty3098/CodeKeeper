@@ -60,28 +60,6 @@ void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
 
     menu->addSeparator();
 
-    QMenu *viewMenu = new QMenu(tr("View"), menu);
-
-    viewMenu->setIcon(
-        QPixmap(":/view.png")
-            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-
-    showList = viewMenu->addAction(tr("Show notes list"), this, SLOT(hideNotesList()),
-                                   QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_L));
-    showList->setCheckable(true);
-    showList->setChecked(isVisibleNotesList);
-    showRender = viewMenu->addAction(tr("Show md preview"), this, SLOT(showPreview()),
-                                     QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P));
-    showRender->setCheckable(true);
-    showRender->setChecked(isVisiblePreview);
-    viewMenu->addSeparator();
-    viewMode = viewMenu->addAction(
-        QPixmap(":/view.png")
-            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        tr("Reading mode"), this, SLOT(toViewMode()), QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_V));
-    viewMode->setCheckable(true);
-    viewMode->setChecked(isViewMode);
-
     QMenu *editMenu = new QMenu(tr("Edit"), menu);
     editMenu->setIcon(
         QPixmap(":/edit.png")
@@ -144,17 +122,8 @@ void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
     nameAction = sortMenu->addAction(tr("Name"), this, SLOT(setSortByName()));
     dateAction = sortMenu->addAction(tr("Date"), this, SLOT(setSortByTime()));
 
-    QMenu *exportMenu = new QMenu(tr("Export as"), menu);
-    exportMenu->setIcon(
-        QPixmap(":/export.png")
-            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    exportToHtml = exportMenu->addAction("HTML", this, SLOT(exportNoteToHtml()));
-    exportToPdf = exportMenu->addAction("Pdf", this, SLOT(exportNoteToPdf()));
-
     menu->addMenu(editMenu);
-    menu->addMenu(viewMenu);
     menu->addMenu(sortMenu);
-    menu->addMenu(exportMenu);
 }
 
 void MainWindow::createProjectMenu(QMenu *menu, QString font_size)

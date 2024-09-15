@@ -67,7 +67,6 @@ void MainWindow::getSettingsData()
     isAutoSyncing = globalSettings->value("isAutoSync").value<bool>();
     isVisibleNotesList = globalSettings->value("isVisibleNotesList", true).toBool();
     isVisibleFolders = globalSettings->value("isVisibleFolders", true).toBool();
-    isVisiblePreview = globalSettings->value("isVisiblePreview", false).toBool();
     isViewMode = globalSettings->value("isViewMode", false).toBool();
     git_repo = globalSettings->value("git_repo").value<QString>();
     git_user = globalSettings->value("git_user").value<QString>();
@@ -91,8 +90,8 @@ void MainWindow::getSettingsData()
     appLang = globalSettings->value("lang").value<int>();
 
     qDebug() << " " << dir << selectedFont << font_size << theme << isCustomTitlebar << sortNotesRole << isAutoSyncing
-             << isVisibleNotesList << isVisibleFolders << isVisiblePreview << isViewMode << git_repo << git_user
-             << git_token << isAutoSyncB << isCustomTheme << isAutoCheckUpdates;
+             << isVisibleNotesList << isVisibleFolders << isViewMode << git_repo << git_user << git_token << isAutoSyncB
+             << isCustomTheme << isAutoCheckUpdates;
     qDebug() << "App Language: " << appLang;
 }
 
@@ -387,8 +386,6 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     menuButton->setFont(*selectedFont);
 
     tasksMenuBtn->setFont(*selectedFont);
-
-    mdPreview->setFont(*selectedFont);
 
     noteEdit->setFont(*selectedFont);
     noteEdit->setStyleSheet("font-size: " + font_size + "pt;");

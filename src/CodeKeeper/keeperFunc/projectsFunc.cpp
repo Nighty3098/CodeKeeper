@@ -9,7 +9,6 @@
 #include <QPixmap>
 #include <QTableWidget>
 #include <QUrl>
-#include <QWebEngineView>
 
 #include "getProjectInfo.cpp"
 

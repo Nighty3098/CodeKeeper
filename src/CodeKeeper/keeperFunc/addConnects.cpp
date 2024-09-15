@@ -132,8 +132,6 @@ void MainWindow::createConnects()
     connect(inprocessTasks, &QListWidget::itemPressed, this, &MainWindow::on_listWidget_itemClicked);
     connect(completeTasks, &QListWidget::itemPressed, this, &MainWindow::on_listWidget_itemClicked);
 
-    connect(noteEdit, &QMarkdownTextEdit::textChanged, this, &MainWindow::updateMDPreview);
-
     connect(completeTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) { editTask(); });
 
     connect(incompleteTasks, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) { editTask(); });
