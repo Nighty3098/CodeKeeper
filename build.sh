@@ -1,8 +1,9 @@
 #!/bin/bash
 
-cd src/CodeKeeper || { echo Failed to go to src/CodeKeeper directory; exit 1; }
+mkdir src/CodeKeeper/build || { echo Failed to create build directory; }
+cd src/CodeKeeper/build || { echo Failed to go to src/CodeKeeper directory; }
 
-qmake CodeKeeper.pro
+qmake ../CodeKeeper.pro
 
 echo Start compilation...
 make
@@ -10,4 +11,4 @@ make
 notify-send "CodeKeeper" "Build complete!"
 echo Compilation complete.
 
-cd ../.. || { echo “Failed to go to root directory”; exit 1; }
+cd ../../.. || { echo “Failed to go to root directory”; exit 1; }

@@ -1,3 +1,5 @@
+#include "mainwindow.h"
+
 QString formatFileSize(qint64 bytes)
 {
     static const char *suffixes[] = {"KB", "MB", "GB", "TB", "PB", "..."};

@@ -3,6 +3,8 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
+#include "mainwindow.h"
+
 QStringList MainWindow::getAllReposUrl()
 {
     QStringList reposUrls;

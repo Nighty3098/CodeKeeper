@@ -7,6 +7,8 @@
 #include <QSyntaxHighlighter>
 #include <QThread>
 
+#include "mainwindow.h"
+
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason)

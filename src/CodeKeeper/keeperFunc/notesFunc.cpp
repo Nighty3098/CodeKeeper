@@ -1,3 +1,4 @@
+#include "mainwindow.h"
 #include <QFile>
 
 QModelIndex indexFromItem(QTreeWidgetItem *item, int column)

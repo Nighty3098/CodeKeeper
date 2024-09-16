@@ -2,6 +2,7 @@
 
 #include "mainwindow.h"
 #include "settingsFunc/GitHubReleaseDownloader.h"
+#include "settingswindow.h"
 
 void SettingsWindow::QuitW()
 {

@@ -21,27 +21,6 @@
 #include "settingswindow.h"
 #include "syncwindow.h"
 
-class CustomIconProvider : public QFileIconProvider
-{
-  public:
-    QIcon icon(IconType type) const override
-    {
-        switch (type)
-        {
-        case QFileIconProvider::IconType::Computer:
-            return QIcon(":/home_dir.png");
-        case QFileIconProvider::IconType::Trashcan:
-            return QIcon(":/trash.png");
-        case QFileIconProvider::IconType::File:
-            return QIcon(":/document.png");
-        case QFileIconProvider::IconType::Folder:
-            return QIcon(":/folder.png");
-        default:
-            return QFileIconProvider::icon(type);
-        }
-    }
-};
-
 class notesTree : public QTreeView
 {
   protected:
@@ -331,7 +310,6 @@ class MainWindow : public QMainWindow
 
     // ========================================================
     // notes tab
-    CustomIconProvider *iconProvider;
     MarkdownHighlighter *highlighter;
     QToolButton *menuButton;
     QLabel *noteNameLabel;

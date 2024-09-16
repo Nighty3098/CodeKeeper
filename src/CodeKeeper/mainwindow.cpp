@@ -226,13 +226,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     filters << ""
             << "*.md";
 
-    iconProvider = new CustomIconProvider();
-
     notesDirModel = new QFileSystemModel();
     notesDirModel->setNameFilters(filters);
     notesDirModel->setNameFilterDisables(false);
-    notesDirModel->iconProvider();
-    notesDirModel->setIconProvider(iconProvider);
 
     notesList = new notesTree();
     notesList->setAnimated(true);

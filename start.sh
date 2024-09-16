@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd src/CodeKeeper
+cd src/CodeKeeper/build
 chmod +x CodeKeeper
 ./CodeKeeper
