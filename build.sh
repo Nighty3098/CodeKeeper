@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd src/CodeKeeper || { echo Failed to go to src/CodeKeeper directory; exit 1; }
+cd src/CodeKeeper/ || { echo Failed to go to src/CodeKeeper directory; }
 
 qmake CodeKeeper.pro
 

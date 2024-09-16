@@ -11,6 +11,7 @@
 #include <QUrl>
 
 #include "getProjectInfo.cpp"
+#include "mainwindow.h"
 
 void MainWindow::activateProjectContextMenu(const QPoint &pos, QListWidget *listWidget)
 {

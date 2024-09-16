@@ -3,6 +3,8 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
+#include "mainwindow.h"
+
 void MainWindow::create_tasks_connection()
 {
     QSqlQuery query;

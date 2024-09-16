@@ -16,6 +16,7 @@
 #include "custom/circleChart/CircleChart.h"
 #include "custom/circleProgressbar/ProgressCircle.h"
 
+#include "accountwindow.h"
 #include "mainwindow.h"
 
 QStringList AccountWindow::getAllGitReposUrls(const QString &username)

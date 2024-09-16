@@ -1,3 +1,5 @@
+#include "mainwindow.h"
+
 void MainWindow::activateTasksContextMenu(const QPoint &pos, QListWidget *listWidget)
 {
     QPoint item = listWidget->mapToGlobal(pos);

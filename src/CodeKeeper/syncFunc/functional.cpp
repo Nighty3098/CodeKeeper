@@ -1,6 +1,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
+#include "syncwindow.h"
+
 void SyncWindow::setFontStyle()
 {
     appName->setFont(selectedFont);
