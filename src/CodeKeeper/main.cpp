@@ -22,19 +22,23 @@ int main(int argc, char *argv[])
     }
     if (appLang == 0)
     {
-        qDebug() << "Loading " << "English";
+        qDebug() << "Loading "
+                 << "English";
     }
     if (appLang == 2)
     {
-        qDebug() << "Loading " << "Japanese";
+        qDebug() << "Loading "
+                 << "Japanese";
     }
     if (appLang == 3)
     {
-        qDebug() << "Loading " << "Germany";
+        qDebug() << "Loading "
+                 << "Germany";
     }
     if (appLang == 4)
     {
-        qDebug() << "Loading " << "Spanish";
+        qDebug() << "Loading "
+                 << "Spanish";
     }
     qApp->installTranslator(&translator);
 

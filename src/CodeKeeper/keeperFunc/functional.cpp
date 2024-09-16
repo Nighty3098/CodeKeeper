@@ -134,15 +134,16 @@ void MainWindow::setConnectionStatus()
 
 void MainWindow::createCustomTitlebar()
 {
-    closeBtn->setFixedSize(16, 16);
-    minimizeBtn->setFixedSize(16, 16);
-    maximizeBtn->setFixedSize(16, 16);
+    closeBtn->setFixedSize(14, 14);
+    minimizeBtn->setFixedSize(14, 14);
+    maximizeBtn->setFixedSize(14, 14);
 
     closeBtn->setStyleSheet("QPushButton {"
                             "    border-radius: 0px;"
                             "    border-color: rgba(0, 0, 0, 0);"
                             "    background-color: rgba(0, 0, 0, 0);"
                             "    background-image: url(':/red.png');"
+                            "    background-size: cover;"
                             "    background-repeat: no-repeat;"
                             "    background-attachment: fixed;"
                             "}"
@@ -152,6 +153,7 @@ void MainWindow::createCustomTitlebar()
                             "    border-color: rgba(0, 0, 0, 0);"
                             "    background-image: url(':/redHovered.png');"
                             "    background-repeat: no-repeat;"
+                            "    background-size: cover;"
                             "    background-color: rgba(0, 0, 0, 0);"
                             "    background-attachment: fixed;"
                             "}");
@@ -162,6 +164,7 @@ void MainWindow::createCustomTitlebar()
                                "    background-color: rgba(0, 0, 0, 0);"
                                "    background-image: url(':/yellow.png');"
                                "    background-repeat: no-repeat;"
+                               "    background-size: cover;"
                                "    background-attachment: fixed;"
                                "}"
 
@@ -170,6 +173,7 @@ void MainWindow::createCustomTitlebar()
                                "    border-color: rgba(0, 0, 0, 0);"
                                "    background-image: url(':/yellowHovered.png');"
                                "    background-repeat: no-repeat;"
+                               "    background-size: cover;"
                                "    background-color: rgba(0, 0, 0, 0);"
                                "    background-attachment: fixed;"
                                "}");
@@ -180,6 +184,7 @@ void MainWindow::createCustomTitlebar()
                                "    background-color: rgba(0, 0, 0, 0);"
                                "    background-image: url(':/green.png');"
                                "    background-repeat: no-repeat;"
+                               "    background-size: cover;"
                                "    background-attachment: fixed;"
                                "}"
 
@@ -189,6 +194,7 @@ void MainWindow::createCustomTitlebar()
                                "    background-image: url(':/greenHovered.png');"
                                "    background-color: rgba(0, 0, 0, 0);"
                                "    background-repeat: no-repeat;"
+                               "    background-size: cover;"
                                "    background-attachment: fixed;"
                                "}");
 
