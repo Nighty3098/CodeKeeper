@@ -51,7 +51,7 @@ QString MainWindow::getCurrentDateTimeString()
 void MainWindow::updateTime()
 {
     QString currentTime = QTime::currentTime().toString("hh:mm");
-    QString currentDate = QDate::currentDate().toString("dd MM yyyy");
+    QString currentDate = QDate::currentDate().toString("   dd MM yyyy");
 
     timeLabel->setText(currentTime);
     dateLabel->setText(currentDate);
@@ -134,9 +134,9 @@ void MainWindow::setConnectionStatus()
 
 void MainWindow::createCustomTitlebar()
 {
-    closeBtn->setFixedSize(16, 16);
-    minimizeBtn->setFixedSize(16, 16);
-    maximizeBtn->setFixedSize(16, 16);
+    closeBtn->setFixedSize(14, 14);
+    minimizeBtn->setFixedSize(14, 14);
+    maximizeBtn->setFixedSize(14, 14);
 
     closeBtn->setStyleSheet("QPushButton {"
                             "    border-radius: 0px;"
@@ -152,6 +152,7 @@ void MainWindow::createCustomTitlebar()
                             "    border-color: rgba(0, 0, 0, 0);"
                             "    background-image: url(':/redHovered.png');"
                             "    background-repeat: no-repeat;"
+
                             "    background-color: rgba(0, 0, 0, 0);"
                             "    background-attachment: fixed;"
                             "}");
