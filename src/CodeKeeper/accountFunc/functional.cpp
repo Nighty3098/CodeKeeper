@@ -26,13 +26,18 @@ QStringList AccountWindow::getAllGitReposUrls(const QString &username)
     QNetworkAccessManager manager;
 
     QString reposUrl = QString("https://api.github.com/users/%1/repos").arg(username);
-
     QString eventsUrl = QString("https://api.github.com/users/%1/events").arg(username);
+
     auto fetchUrls = [&](const QString &url) {
         QNetworkRequest request;
         request.setUrl(QUrl(url));
+
         request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
         request.setRawHeader("Accept", "application/vnd.github.v3+json");
+
+        QUrlQuery query;
+        query.addQueryItem("login", git_user);
+        request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
 
         QNetworkReply *reply = manager.get(request);
         QEventLoop eventLoop;
@@ -55,7 +60,6 @@ QStringList AccountWindow::getAllGitReposUrls(const QString &username)
                     }
                     else
                     {
-                        // Обработка событий для получения репозиториев
                         QJsonObject repoObject = value.toObject().value("repo").toObject();
                         repoUrl = repoObject.value("html_url").toString();
                     }
@@ -75,7 +79,6 @@ QStringList AccountWindow::getAllGitReposUrls(const QString &username)
     };
 
     fetchUrls(reposUrl);
-
     fetchUrls(eventsUrl);
 
     qDebug() << "User repos: " << repoUrls;
@@ -102,10 +105,14 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
         apiUrl.prepend("https://api.github.com/repos/");
 
         apiUrl += "/languages";
-        QNetworkRequest request{QUrl(apiUrl)};
 
+        QUrl url(apiUrl);
+        QUrlQuery query;
+        query.addQueryItem("login", git_user);
+        url.setQuery(query);
+
+        QNetworkRequest request(url);
         request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
-        request.setRawHeader("Authorization", ("Bearer " + git_token).toUtf8());
         request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
         request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
@@ -137,6 +144,7 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
         }
         reply->deleteLater();
     }
+
     QVector<QPair<QString, double>> languagePercentages;
     for (const QString &lang : languageCounts.keys())
     {
@@ -151,8 +159,8 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
     for (int i = 0; i < std::min(5, static_cast<int>(languagePercentages.size())); ++i)
     {
         result += QString("%1 %2 ")
-                      .arg(languagePercentages[i].first)
-                      .arg(QString::number(languagePercentages[i].second, 'f', 2));
+        .arg(languagePercentages[i].first)
+            .arg(QString::number(languagePercentages[i].second, 'f', 2));
     }
 
     return result.trimmed();
@@ -373,7 +381,7 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
         qDebug() << "Company:" << obj["company"].toString();
         qDebug() << "Login:" << obj["login"].toString();
 
-        label->setText("\n\n" + obj["bio"].toString() + tr("\nPublic repos: ") +
+        label->setText("\n\n" + obj["bio"].toString() + tr("\n\nPublic repos: ") +
                        QString::number(obj["public_repos"].toInt()) + tr("\n\nFollowing: ") +
                        QString::number(obj["following"].toInt()) + tr("\n\nFollowers: ") +
                        QString::number(obj["followers"].toInt()) + tr("\n\nStars: ") +

@@ -51,7 +51,7 @@ QString MainWindow::getCurrentDateTimeString()
 void MainWindow::updateTime()
 {
     QString currentTime = QTime::currentTime().toString("hh:mm");
-    QString currentDate = QDate::currentDate().toString("dd MM yyyy");
+    QString currentDate = QDate::currentDate().toString("   dd MM yyyy");
 
     timeLabel->setText(currentTime);
     dateLabel->setText(currentDate);
@@ -143,7 +143,6 @@ void MainWindow::createCustomTitlebar()
                             "    border-color: rgba(0, 0, 0, 0);"
                             "    background-color: rgba(0, 0, 0, 0);"
                             "    background-image: url(':/red.png');"
-                            "    background-size: cover;"
                             "    background-repeat: no-repeat;"
                             "    background-attachment: fixed;"
                             "}"
@@ -153,7 +152,7 @@ void MainWindow::createCustomTitlebar()
                             "    border-color: rgba(0, 0, 0, 0);"
                             "    background-image: url(':/redHovered.png');"
                             "    background-repeat: no-repeat;"
-                            "    background-size: cover;"
+
                             "    background-color: rgba(0, 0, 0, 0);"
                             "    background-attachment: fixed;"
                             "}");
@@ -164,7 +163,6 @@ void MainWindow::createCustomTitlebar()
                                "    background-color: rgba(0, 0, 0, 0);"
                                "    background-image: url(':/yellow.png');"
                                "    background-repeat: no-repeat;"
-                               "    background-size: cover;"
                                "    background-attachment: fixed;"
                                "}"
 
@@ -173,7 +171,6 @@ void MainWindow::createCustomTitlebar()
                                "    border-color: rgba(0, 0, 0, 0);"
                                "    background-image: url(':/yellowHovered.png');"
                                "    background-repeat: no-repeat;"
-                               "    background-size: cover;"
                                "    background-color: rgba(0, 0, 0, 0);"
                                "    background-attachment: fixed;"
                                "}");
@@ -184,7 +181,6 @@ void MainWindow::createCustomTitlebar()
                                "    background-color: rgba(0, 0, 0, 0);"
                                "    background-image: url(':/green.png');"
                                "    background-repeat: no-repeat;"
-                               "    background-size: cover;"
                                "    background-attachment: fixed;"
                                "}"
 
@@ -194,7 +190,6 @@ void MainWindow::createCustomTitlebar()
                                "    background-image: url(':/greenHovered.png');"
                                "    background-color: rgba(0, 0, 0, 0);"
                                "    background-repeat: no-repeat;"
-                               "    background-size: cover;"
                                "    background-attachment: fixed;"
                                "}");
 
