@@ -149,7 +149,6 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     QObject::connect(GitLangsStatsThread, &QThread::started, this, [this]() {
         MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
 
-        // QStringList urls = mainWindow->getAllReposUrl();
         QStringList urls = getAllGitReposUrls(git_user);
         QString langsStatsS = getLangByRepo(urls);
 
@@ -165,7 +164,6 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
         MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
 
         QStringList urls = mainWindow->getAllReposUrl();
-        // QStringList urls = getAllGitReposUrls(git_user);
         QString langsStatsS = getLangByRepo(urls);
 
         qDebug() << langsStatsS;

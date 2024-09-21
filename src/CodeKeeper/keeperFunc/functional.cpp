@@ -352,7 +352,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     qDebug() << "Applying preferences";
 
     QString font_size = QString::number(*font_size_int);
-    QString font_size_clock = QString::number(*font_size_int * 7);
+    QString font_size_clock = QString::number(*font_size_int * 10);
     QString font_size_date = QString::number(*font_size_int * 1.6);
     QString font_size_hello = QString::number(*font_size_int * 1.4);
 

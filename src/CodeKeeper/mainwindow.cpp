@@ -182,7 +182,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     decorationLabel = new QLabel();
     decorationLabel->setAlignment(Qt::AlignHCenter);
-    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(350, 350, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(400, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     openSettingsBtn = new QPushButton(
         QPixmap(":/settings.png")
@@ -563,10 +563,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QWidget *mainTab = new QWidget();
     QGridLayout *firstLayout = new QGridLayout(mainTab);
 
-    firstLayout->addWidget(decorationLabel, 4, 0, 2, 8, Qt::AlignBottom | Qt::AlignRight);
+    firstLayout->addWidget(decorationLabel, 5, 0, 3, 8, Qt::AlignBottom | Qt::AlignRight);
     firstLayout->addWidget(timeLabel, 0, 1, 2, 4, Qt::AlignBottom);
     firstLayout->addWidget(dateLabel, 2, 1, 1, 4, Qt::AlignTop);
-    firstLayout->addWidget(helloLabel, 3, 1, 3, 7, Qt::AlignLeft | Qt::AlignVCenter);
+    firstLayout->addWidget(helloLabel, 5, 1, 3, 7, Qt::AlignLeft | Qt::AlignHCenter);
 
     tabs->addTab(mainTab, tr("Homepage"));
 
