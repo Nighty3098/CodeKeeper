@@ -1,7 +1,7 @@
 <div class="header" align="center">
     <h1 align="center">CodeKeeper</h1>
     <h3 align="center">Projects manager for developers</h3>
-    <br><br>    
+    <br><br>
     <img src="https://github.com/user-attachments/assets/dd5d3577-9322-46be-aeb0-10539e66b863" />
     <br><br>
 </div>
@@ -46,7 +46,7 @@
 > The program requires qt and other third-party modules to run. This will be fixed in the nearest future
 
 ```
-git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules 
+git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
 cd CodeKeeper/src/CodeKeeper
 qmake CodeKeeper.pro
 make

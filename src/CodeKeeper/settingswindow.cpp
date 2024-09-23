@@ -79,14 +79,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     BtnsL->addWidget(saveBtn);
 
     // main
-    QVBoxLayout *appInfoL = new QVBoxLayout();
-    QVBoxLayout *subAppInfoL = new QVBoxLayout();
-    QHBoxLayout *checkUpdatesBtnL = new QHBoxLayout();
-    QHBoxLayout *updatesL = new QHBoxLayout();
+    QGridLayout *subAppInfoL = new QGridLayout();
 
     appName = new QLabel("CodeKeeper");
     appName->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
-    appName->setStyleSheet("font-size: 32px;");
+    appName->setStyleSheet("font-size: 42px;");
 
     urlToRepo = new QLabel();
     urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size +
@@ -95,7 +92,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     urlToRepo->setTextFormat(Qt::RichText);
     urlToRepo->setTextInteractionFlags(Qt::TextBrowserInteraction);
     urlToRepo->setOpenExternalLinks(true);
-    urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
+    urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignCenter);
 
     versionInfo = new QLabel();
     versionInfo->setText("0.2.0");
@@ -106,21 +103,15 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr(" Check for updates"));
     checkUpdatesBtn->setFixedSize(200, 30);
-    checkUpdatesBtnL->addWidget(checkUpdatesBtn);
 
     autoUpdates = new QCheckBox(tr("Check for updates automatically"));
     autoUpdates->setChecked(isAutoCheckUpdates);
 
-    updatesL->addWidget(autoUpdates);
-    updatesL->setAlignment(Qt::AlignCenter);
-
-    subAppInfoL->addWidget(appName);
-    subAppInfoL->addWidget(urlToRepo);
-    subAppInfoL->addWidget(versionInfo);
-    subAppInfoL->addLayout(checkUpdatesBtnL);
-    subAppInfoL->addLayout(updatesL);
-
-    appInfoL->addLayout(subAppInfoL);
+    subAppInfoL->addWidget(appName, 0, 0, 2, 2, Qt::AlignCenter);
+    subAppInfoL->addWidget(urlToRepo, 3, 0, 1, 2, Qt::AlignCenter);
+    subAppInfoL->addWidget(versionInfo, 4, 0, 1, 2, Qt::AlignHCenter | Qt::AlignBottom);
+    subAppInfoL->addWidget(checkUpdatesBtn, 5, 0, 1, 2, Qt::AlignCenter);
+    subAppInfoL->addWidget(autoUpdates, 6, 0, 1, 2, Qt::AlignCenter | Qt::AlignTop);
 
     // sync
     QGridLayout *mainSyncLayout = new QGridLayout();
@@ -340,7 +331,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     QWidget *aboutTab = new QWidget();
     QVBoxLayout *aboutTabLayout = new QVBoxLayout(aboutTab);
 
-    aboutTabLayout->addLayout(appInfoL);
+    aboutTabLayout->addLayout(subAppInfoL);
 
     tabs->addTab(aboutTab, tr("About"));
 
