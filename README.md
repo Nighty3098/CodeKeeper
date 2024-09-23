@@ -88,5 +88,5 @@ make
 
 <div align="center">
 <h3>Support me with TON</h3>
-<kbd><br>UQCF-sPDO0QqkNtvy5CKSvYWEsZS6l7vzaytV36oYM0SNhKt<br></kbd>
+<kbd><br>UQBz1zAJyn9j87nHPyAkmbOsjC6ag7gIwKIXpgAeCIv-YW3O<br></kbd>
 </div>
