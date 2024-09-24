@@ -1,7 +1,5 @@
 #include "accountwindow.h"
 
-#include <git2.h>
-
 #include <QHBoxLayout>
 #include <QtWidgets>
 
@@ -148,38 +146,44 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     QThread *GitLangsStatsThread = new QThread;
     QObject::connect(GitLangsStatsThread, &QThread::started, this, [this]() {
-        MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
+        auto gitLangsWidget = this->gitLangsWidget;
+        auto langsWidget = this->LangsWidget;
+        auto langsCard = this->langsCard;
+        auto langsTitle = this->langsTitle;
 
-        QStringList git_urls = getAllGitReposUrls(git_user);
-        QString gitLangsStatsS = getLangByRepo(git_urls);
+        auto git_urls = getAllGitReposUrls(git_user);
+        auto gitLangsStatsS = getLangByRepo(git_urls);
 
         if (gitLangsStatsS.isEmpty())
         {
-            this->gitLangsWidget->hide();
+            gitLangsWidget->hide();
+        }
+        else
+        {
+            qDebug() << gitLangsStatsS;
+            setLangsStats(gitLangsStatsS, GitLangsChart, GitLangsValuesDisplay);
+            qDebug() << "gitLangsStats started";
         }
 
-        qDebug() << gitLangsStatsS;
-        setLangsStats(gitLangsStatsS, GitLangsChart, GitLangsValuesDisplay);
-
-        qDebug() << "langsStats started";
-
-        QStringList urls = mainWindow->getAllReposUrl();
-        QString langsStatsS = getLangByRepo(urls);
+        MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
+        auto urls = mainWindow->getAllReposUrl();
+        auto langsStatsS = getLangByRepo(urls);
 
         if (langsStatsS.isEmpty())
         {
-            this->LangsWidget->hide();
+            langsWidget->hide();
+        }
+        else
+        {
+            qDebug() << langsStatsS;
+            setLangsStats(langsStatsS, langsChart, langsValuesDisplay);
+            qDebug() << "langsStats started";
         }
 
-        qDebug() << langsStatsS;
-        setLangsStats(langsStatsS, langsChart, langsValuesDisplay);
-
-        qDebug() << "langsStats started";
-
-        if (gitLangsStatsS.isEmpty() and langsStatsS.isEmpty())
+        if (gitLangsStatsS.isEmpty() && langsStatsS.isEmpty())
         {
-            this->langsCard->hide();
-            this->langsTitle->hide();
+            langsCard->hide();
+            langsTitle->hide();
         }
     });
     GitLangsStatsThread->start();
