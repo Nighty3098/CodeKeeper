@@ -215,10 +215,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     QSplitter *noteSplitter = new QSplitter(Qt::Horizontal);
 
-    contentLayout->setSpacing(0);
-    notesCLayout->setSpacing(0);
+    contentLayout->setSpacing(5);
+    notesCLayout->setSpacing(5);
 
-    menuLayout->setSpacing(0);
+    menuLayout->setSpacing(5);
     menuLayout->setSizeConstraint(QLayout::SetFixedSize);
     menuLayout->setAlignment(Qt::AlignHCenter);
 
@@ -393,7 +393,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksStatsL->addItem(spacer2);
 
     label_1 = new QLabel(tr("Incomplete"));
-    label_1->setFixedHeight(30);
+    label_1->setFixedHeight(25);
     label_1->setAlignment(Qt::AlignCenter);
 
     incompleteTasks = new QListWidget();
@@ -406,7 +406,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     incompleteTasks->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     label_2 = new QLabel(tr("Inprocess"));
-    label_2->setFixedHeight(30);
+    label_2->setFixedHeight(25);
     label_2->setAlignment(Qt::AlignCenter);
 
     inprocessTasks = new QListWidget();
@@ -419,7 +419,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     inprocessTasks->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     label_3 = new QLabel(tr("Complete"));
-    label_3->setFixedHeight(30);
+    label_3->setFixedHeight(25);
     label_3->setAlignment(Qt::AlignCenter);
 
     completeTasks = new QListWidget();
@@ -486,7 +486,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsMainLabel->setAlignment(Qt::AlignCenter);
 
     totalProjectsL = new QLabel();
-    totalProjectsL->setFixedHeight(30);
+    totalProjectsL->setFixedHeight(25);
     totalProjectsL->setAlignment(Qt::AlignCenter);
 
     nsProjects = new QLabel(tr("Not started"));

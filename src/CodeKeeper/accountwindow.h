@@ -33,6 +33,12 @@ class AccountWindow : public QMainWindow
     bool isCustomTheme;
 
   private:
+    QHBoxLayout *langsStatsLayout;
+    QHBoxLayout *GitLangsStatsLayout;
+
+    QWidget *gitLangsWidget;
+    QWidget *LangsWidget;
+
     QWidget *centralWidget;
     QGridLayout *mainLayout;
 

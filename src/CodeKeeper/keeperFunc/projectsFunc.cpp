@@ -271,7 +271,7 @@ void MainWindow::openProject()
             git_stats->setAlternatingRowColors(true);
 
             QLabel *descriptionL = new QLabel();
-            descriptionL->setFixedHeight(30);
+            descriptionL->setFixedHeight(25);
             descriptionL->setAlignment(Qt::AlignCenter);
             descriptionL->setFont(selectedFont);
             descriptionL->setStyleSheet("font-size: " + font_size + "pt;");

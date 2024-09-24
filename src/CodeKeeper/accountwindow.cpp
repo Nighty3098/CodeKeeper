@@ -63,7 +63,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     tasksStatsLayout->addWidget(tasksStatsProgress);
     tasksStatsLayout->addWidget(tasksChartValuesDisplay);
-    tasksStatsLayout->setSpacing(20);
+    tasksStatsLayout->setSpacing(5);
 
     userName = new QLabel();
     userName->setText(git_user);
@@ -76,7 +76,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     closeWindow->setFixedSize(15, 15);
 
     QHBoxLayout *projectsStatsLayout = new QHBoxLayout();
-    projectsStatsLayout->setSpacing(20);
+    projectsStatsLayout->setSpacing(5);
 
     projectsChart = new CircleChart();
     projectsChart->setAlignment(Qt::AlignCenter);
@@ -89,8 +89,8 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     projectsStatsLayout->addWidget(projectsChart);
     projectsStatsLayout->addWidget(chartValuesDisplay);
 
-    QHBoxLayout *langsStatsLayout = new QHBoxLayout();
-    langsStatsLayout->setSpacing(20);
+    langsStatsLayout = new QHBoxLayout();
+    langsStatsLayout->setSpacing(5);
 
     langsChart = new CircleChart();
     langsChart->setFixedSize(100, 100);
@@ -102,9 +102,10 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     langsStatsLayout->addWidget(langsChart);
     langsStatsLayout->addWidget(langsValuesDisplay);
+    langsStatsLayout->setSpacing(5);
 
-    QHBoxLayout *GitLangsStatsLayout = new QHBoxLayout();
-    GitLangsStatsLayout->setSpacing(20);
+    GitLangsStatsLayout = new QHBoxLayout();
+    GitLangsStatsLayout->setSpacing(5);
 
     GitLangsChart = new CircleChart();
     GitLangsChart->setFixedSize(100, 100);
@@ -117,10 +118,10 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     GitLangsStatsLayout->addWidget(GitLangsChart);
     GitLangsStatsLayout->addWidget(GitLangsValuesDisplay);
 
-    QWidget *gitLangsWidget = new QWidget;
+    gitLangsWidget = new QWidget;
     gitLangsWidget->setLayout(GitLangsStatsLayout);
 
-    QWidget *LangsWidget = new QWidget;
+    LangsWidget = new QWidget;
     LangsWidget->setLayout(langsStatsLayout);
 
     langsCard = new QToolBox();
@@ -149,29 +150,39 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     QObject::connect(GitLangsStatsThread, &QThread::started, this, [this]() {
         MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
 
-        QStringList urls = getAllGitReposUrls(git_user);
-        QString langsStatsS = getLangByRepo(urls);
+        QStringList git_urls = getAllGitReposUrls(git_user);
+        QString gitLangsStatsS = getLangByRepo(git_urls);
 
-        qDebug() << langsStatsS;
-        setLangsStats(langsStatsS, GitLangsChart, GitLangsValuesDisplay);
+        if (gitLangsStatsS.isEmpty())
+        {
+            this->gitLangsWidget->hide();
+        }
+
+        qDebug() << gitLangsStatsS;
+        setLangsStats(gitLangsStatsS, GitLangsChart, GitLangsValuesDisplay);
 
         qDebug() << "langsStats started";
-    });
-    GitLangsStatsThread->start();
-
-    QThread *langsStatsThread = new QThread;
-    QObject::connect(langsStatsThread, &QThread::started, this, [this]() {
-        MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
 
         QStringList urls = mainWindow->getAllReposUrl();
         QString langsStatsS = getLangByRepo(urls);
+
+        if (langsStatsS.isEmpty())
+        {
+            this->LangsWidget->hide();
+        }
 
         qDebug() << langsStatsS;
         setLangsStats(langsStatsS, langsChart, langsValuesDisplay);
 
         qDebug() << "langsStats started";
+
+        if (gitLangsStatsS.isEmpty() and langsStatsS.isEmpty())
+        {
+            this->langsCard->hide();
+            this->langsTitle->hide();
+        }
     });
-    langsStatsThread->start();
+    GitLangsStatsThread->start();
 
     QThread *styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {

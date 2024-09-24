@@ -67,7 +67,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     QHBoxLayout *BtnsL = new QHBoxLayout();
 
     saveBtn = new QPushButton(tr("Apply"));
-    saveBtn->setFixedSize(100, 30);
+    saveBtn->setFixedSize(100, 25);
 
     quitBtn = new QPushButton();
     quitBtn->setFixedSize(15, 15);
@@ -102,7 +102,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
         QPixmap(":/retry.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr(" Check for updates"));
-    checkUpdatesBtn->setFixedSize(200, 30);
+    checkUpdatesBtn->setFixedSize(200, 25);
 
     autoUpdates = new QCheckBox(tr("Check for updates automatically"));
     autoUpdates->setChecked(isAutoCheckUpdates);
@@ -127,20 +127,20 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     gitToken = new QLineEdit();
     gitToken->setPlaceholderText(tr("GitHub token"));
     gitToken->setAlignment(Qt::AlignCenter);
-    gitToken->setFixedSize(300, 30);
+    gitToken->setFixedSize(300, 25);
     gitToken->setText(git_token);
     gitToken->setEchoMode(QLineEdit::Password);
 
     gitUser = new QLineEdit();
     gitUser->setPlaceholderText(tr("GitHub user"));
     gitUser->setAlignment(Qt::AlignCenter);
-    gitUser->setFixedSize(300, 30);
+    gitUser->setFixedSize(300, 25);
     gitUser->setText(git_user);
 
     gitRepo = new QLineEdit();
     gitRepo->setPlaceholderText(tr("GitHub repo"));
     gitRepo->setAlignment(Qt::AlignCenter);
-    gitRepo->setFixedSize(300, 30);
+    gitRepo->setFixedSize(300, 25);
     gitRepo->setText(git_repo);
 
     autoSyncAfterStart = new QCheckBox(tr("Auto sync after start"));
@@ -157,7 +157,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     repoAvailability = new QLabel(tr("Repo"));
     repoAvailability->setAlignment(Qt::AlignHCenter);
 
-    mainSyncLayout->setSpacing(10);
+    mainSyncLayout->setSpacing(5);
     mainSyncLayout->addWidget(gitLabel, 0, 2, 1, 1);
     mainSyncLayout->addWidget(gitToken, 1, 2, 1, 1);
     mainSyncLayout->addWidget(gitUser, 2, 2, 1, 1);
@@ -184,11 +184,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     themeLabel->setAlignment(Qt::AlignCenter);
 
     fontSize = new QSpinBox();
-    fontSize->setFixedHeight(30);
+    fontSize->setFixedHeight(25);
     fontSelector = new QFontComboBox();
-    fontSelector->setFixedHeight(30);
+    fontSelector->setFixedHeight(25);
     themeSelector = new QComboBox();
-    themeSelector->setFixedHeight(30);
+    themeSelector->setFixedHeight(25);
 
     customTitleBar = new QCheckBox();
     customTitleBar->setText(tr("Use custom titlebar"));
@@ -214,7 +214,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     themeSelector->setCurrentIndex(theme);
 
     langSelector = new QComboBox();
-    langSelector->setFixedHeight(30);
+    langSelector->setFixedHeight(25);
     langSelector->addItem(QIcon(":/usa.png"), tr("English"));
     langSelector->addItem(QIcon(":/russian.png"), tr("Russian"));
     // langSelector->addItem(QIcon(":/japan.png"), tr("Japanese"));
@@ -226,6 +226,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     langLabel = new QLabel(tr("Language:"));
     langLabel->setAlignment(Qt::AlignCenter);
 
+    layout1->setSpacing(5);
     layout1->addWidget(mainTitle, 0, 2, 0, 4);
     layout1->addWidget(customTheme, 1, 2, 1, 4, Qt::AlignHCenter);
     layout1->addWidget(customTitleBar, 2, 2, 1, 4, Qt::AlignHCenter);
@@ -240,7 +241,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
 
     // storage tab
     QGridLayout *storageL = new QGridLayout;
-    storageL->setSpacing(10);
+    storageL->setSpacing(5);
 
     storageLabel = new QLabel();
     storageLabel->setText(tr("Storage settings"));
@@ -250,7 +251,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     pathToFolder = new QLineEdit();
     pathToFolder->setText(tr("Directory"));
     pathToFolder->setPlaceholderText(tr("Directory"));
-    pathToFolder->setMaximumHeight(30);
+    pathToFolder->setMaximumHeight(25);
     pathToFolder->setText(path);
     pathToFolder->setAlignment(Qt::AlignCenter);
 
@@ -258,16 +259,16 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
         QPixmap(":/open.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         " Browse");
-    openFolder->setMaximumHeight(30);
+    openFolder->setMaximumHeight(25);
 
-    storageL->setSpacing(10);
+    storageL->setSpacing(5);
     storageL->addWidget(storageLabel, 0, 1, 0, 4);
     storageL->addWidget(pathToFolder, 1, 3);
     storageL->addWidget(openFolder, 2, 3);
 
     // projects content tab
     QGridLayout *projectsContentL = new QGridLayout;
-    projectsContentL->setSpacing(10);
+    projectsContentL->setSpacing(5);
     projectsContentL->setAlignment(Qt::AlignCenter);
 
     projectsContentLabel = new QLabel(tr("Projects content"));
@@ -306,6 +307,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     QSpacerItem *checkBoxSpacer2 = new QSpacerItem(30, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
     QVBoxLayout *checkboxLayout = new QVBoxLayout();
+    checkboxLayout->setSpacing(5);
     checkboxLayout->setAlignment(Qt::AlignCenter);
 
     checkboxLayout->addItem(checkBoxSpacer1);
