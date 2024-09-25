@@ -412,6 +412,9 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
     fontSizeLabel->setFont(*selectedFont);
     fontSizeLabel->setStyleSheet("font-size: " + font_size + "pt;");
 
+    warningLabel->setFont(*selectedFont);
+    warningLabel->setStyleSheet("font-size: " + font_size + "pt;");
+
     themeLabel->setFont(*selectedFont);
     themeLabel->setStyleSheet("font-size: " + font_size + "pt;");
 
