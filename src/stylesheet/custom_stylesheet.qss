@@ -16,7 +16,7 @@ QTableWidget::item {
 }
 
 QWidget {
-    background-color: #222d3a;
+    background-color: #303743;
     border-width: 0px;
     border-color: #fff;
     border-radius: 0px;
