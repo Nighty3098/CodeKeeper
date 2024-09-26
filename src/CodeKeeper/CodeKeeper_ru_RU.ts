@@ -912,108 +912,107 @@ You have completed all of your tasks for the day. Good job!</source>
         <translation>Проверять обновления автоматически</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="110"/>
         <source>Some chips are in development and may not work properly. If you notice a bug, please write about it to the developer or to the support bot.</source>
-        <translation>Некоторые фичи находятся в разработке и могут работать неправильно. Если вы заметели ошибку, напишите об этом разработчику либо в бот техподдержки.</translation>
+        <translation type="vanished">Некоторые фичи находятся в разработке и могут работать неправильно. Если вы заметели ошибку, напишите об этом разработчику либо в бот техподдержки.</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="123"/>
+        <location filename="settingswindow.cpp" line="125"/>
         <source>Sync settings</source>
         <translation>Синхронизация</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="127"/>
+        <location filename="settingswindow.cpp" line="129"/>
         <source>Data in commit</source>
         <translation>Данные</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="132"/>
+        <location filename="settingswindow.cpp" line="134"/>
         <source>GitHub token</source>
         <translation>GIT Токен</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="139"/>
+        <location filename="settingswindow.cpp" line="141"/>
         <source>GitHub user</source>
         <translation>GIT имя пользователя</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="145"/>
+        <location filename="settingswindow.cpp" line="147"/>
         <source>GitHub repo</source>
         <translation>GIT репозиторий</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="150"/>
-        <location filename="settingswindow.cpp" line="158"/>
+        <location filename="settingswindow.cpp" line="152"/>
+        <location filename="settingswindow.cpp" line="160"/>
         <source>Auto sync after start</source>
         <translation>Синхронизация при запуске</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="152"/>
+        <location filename="settingswindow.cpp" line="154"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="154"/>
+        <location filename="settingswindow.cpp" line="156"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="156"/>
+        <location filename="settingswindow.cpp" line="158"/>
         <source>Host</source>
         <translation>Устройство</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="161"/>
+        <location filename="settingswindow.cpp" line="163"/>
         <source>Repo</source>
         <translation>Репозиторий</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="179"/>
+        <location filename="settingswindow.cpp" line="181"/>
         <source>App settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="183"/>
+        <location filename="settingswindow.cpp" line="185"/>
         <source>Font:</source>
         <translation>Шрифт</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="185"/>
+        <location filename="settingswindow.cpp" line="187"/>
         <source>Font size:</source>
         <translation>Размер шрифта</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="187"/>
+        <location filename="settingswindow.cpp" line="189"/>
         <source>Theme:</source>
         <translation>Оформление</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="198"/>
+        <location filename="settingswindow.cpp" line="200"/>
         <source>Use custom titlebar</source>
         <translation>Кастомный заголовок</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="204"/>
+        <location filename="settingswindow.cpp" line="206"/>
         <source>Use custom theme</source>
         <translation>Кастомная тема</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="216"/>
+        <location filename="settingswindow.cpp" line="218"/>
         <source>Dark</source>
         <translation>Темная</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="217"/>
+        <location filename="settingswindow.cpp" line="219"/>
         <source>Light</source>
         <translation>Светлая</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="222"/>
+        <location filename="settingswindow.cpp" line="224"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="223"/>
+        <location filename="settingswindow.cpp" line="225"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
@@ -1030,113 +1029,119 @@ You have completed all of your tasks for the day. Good job!</source>
         <translation type="vanished">Испанский</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="230"/>
+        <location filename="settingswindow.cpp" line="111"/>
+        <source>Some chips are in development and may not work properly.
+If you notice a bug, please write about it to the developer or to the support bot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="settingswindow.cpp" line="232"/>
         <source>Language:</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="251"/>
+        <location filename="settingswindow.cpp" line="253"/>
         <source>Storage settings</source>
         <translation>Параметры хранилища</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="256"/>
-        <location filename="settingswindow.cpp" line="257"/>
+        <location filename="settingswindow.cpp" line="258"/>
+        <location filename="settingswindow.cpp" line="259"/>
         <source>Directory</source>
         <translation>Директория</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="278"/>
+        <location filename="settingswindow.cpp" line="280"/>
         <source>Projects content</source>
         <translation>Проект</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="283"/>
+        <location filename="settingswindow.cpp" line="285"/>
         <source>Created time</source>
         <translation>Дата создания</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="285"/>
+        <location filename="settingswindow.cpp" line="287"/>
         <source>Last release time</source>
         <translation>Дата релиза</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="287"/>
+        <location filename="settingswindow.cpp" line="289"/>
         <source>Last commit time</source>
         <translation>Дата последней выгрузки</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="289"/>
+        <location filename="settingswindow.cpp" line="291"/>
         <source>Total pull requests</source>
         <translation>Количество prs</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="291"/>
+        <location filename="settingswindow.cpp" line="293"/>
         <source>License</source>
         <translation>Лицензия</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="293"/>
+        <location filename="settingswindow.cpp" line="295"/>
         <source>Release</source>
         <translation>Релиз</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="295"/>
+        <location filename="settingswindow.cpp" line="297"/>
         <source>Issues</source>
         <translation>Проблемы</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="297"/>
+        <location filename="settingswindow.cpp" line="299"/>
         <source>Downloads</source>
         <translation>Скачивания</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="299"/>
+        <location filename="settingswindow.cpp" line="301"/>
         <source>Commits</source>
         <translation>Commits</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="301"/>
+        <location filename="settingswindow.cpp" line="303"/>
         <source>Langs</source>
         <translation>Языки</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="303"/>
+        <location filename="settingswindow.cpp" line="305"/>
         <source>Stars</source>
         <translation>Звёзды</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="305"/>
+        <location filename="settingswindow.cpp" line="307"/>
         <source>Forks</source>
         <translation>Форки</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="307"/>
+        <location filename="settingswindow.cpp" line="309"/>
         <source>Repo size</source>
         <translation>Размер репозитория</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="342"/>
+        <location filename="settingswindow.cpp" line="344"/>
         <source>About</source>
         <translation>О приложении</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="350"/>
+        <location filename="settingswindow.cpp" line="352"/>
         <source>Sync</source>
         <translation>Синхронизация</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="358"/>
+        <location filename="settingswindow.cpp" line="360"/>
         <source>Storage</source>
         <translation>Хранилище</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="366"/>
+        <location filename="settingswindow.cpp" line="368"/>
         <source>Appereance</source>
         <translation>Оформление</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="371"/>
+        <location filename="settingswindow.cpp" line="373"/>
         <source>Projects</source>
         <translation>Проекты</translation>
     </message>
