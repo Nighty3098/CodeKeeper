@@ -2,13 +2,13 @@
 #define SETTINGSWINDOW_H
 
 #include <QMainWindow>
-#include <QtWidgets>
 #include <QSettings>
+#include <QtWidgets>
 
 class SettingsWindow : public QMainWindow
 {
     Q_OBJECT
-public:
+  public:
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
     QSettings *globalSettings;
@@ -50,28 +50,34 @@ public:
     bool isForks;
     bool isRepoSize;
 
-protected:
+  protected:
     void mousePressEvent(QMouseEvent *event) override
     {
-        if (event->button() == Qt::LeftButton) {
+        if (event->button() == Qt::LeftButton)
+        {
             m_dragPosition = event->globalPos() - frameGeometry().topLeft();
             event->accept();
-        } else {
+        }
+        else
+        {
             QMainWindow::mousePressEvent(event);
         }
     }
 
     void mouseMoveEvent(QMouseEvent *event) override
     {
-        if (event->buttons() & Qt::LeftButton) {
+        if (event->buttons() & Qt::LeftButton)
+        {
             move(event->globalPos() - m_dragPosition);
             event->accept();
-        } else {
+        }
+        else
+        {
             QMainWindow::mouseMoveEvent(event);
         }
     }
 
-private slots:
+  private slots:
     void closeEvent(QCloseEvent *event);
     void QuitW();
     void saveData();
@@ -82,7 +88,7 @@ private slots:
     void setStyle2(QFont *selectedFont, int *font_size_int);
     void checkRepo();
 
-private:
+  private:
     QPoint m_dragPosition;
 
     QSizeGrip *sizeGrip;
@@ -155,6 +161,8 @@ private:
     QCheckBox *CisStars;
     QCheckBox *CisForks;
     QCheckBox *CisRepoSize;
+
+    QLabel *warningLabel;
 };
 
 #endif // SETTINGSWINDOW_H

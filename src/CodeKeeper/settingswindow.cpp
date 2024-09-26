@@ -107,11 +107,17 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     autoUpdates = new QCheckBox(tr("Check for updates automatically"));
     autoUpdates->setChecked(isAutoCheckUpdates);
 
+    warningLabel =
+        new QLabel(tr("Some chips are in development and may not work properly.\nIf you notice a bug, please "
+                      "write about it to the developer or to the support bot."));
+    warningLabel->setAlignment(Qt::AlignCenter);
+
     subAppInfoL->addWidget(appName, 0, 0, 2, 2, Qt::AlignCenter);
     subAppInfoL->addWidget(urlToRepo, 3, 0, 1, 2, Qt::AlignCenter);
     subAppInfoL->addWidget(versionInfo, 4, 0, 1, 2, Qt::AlignHCenter | Qt::AlignBottom);
     subAppInfoL->addWidget(checkUpdatesBtn, 5, 0, 1, 2, Qt::AlignCenter);
     subAppInfoL->addWidget(autoUpdates, 6, 0, 1, 2, Qt::AlignCenter | Qt::AlignTop);
+    subAppInfoL->addWidget(warningLabel, 7, 0, 1, 2, Qt::AlignCenter);
 
     // sync
     QGridLayout *mainSyncLayout = new QGridLayout();

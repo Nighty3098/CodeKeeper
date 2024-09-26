@@ -8,8 +8,6 @@ INCLUDEPATH += "3rdParty/qmarkdowntextedit"
 LIBS += -L3rdParty/qmarkdowntextedit -L$$OUT_PWD
 win32: LIBS +=  -L$$OUT_PWD/release -L$$OUT_PWD/debug
 
-LIBS += -lmd4c-html
-
 SOURCES += \
     accountwindow.cpp \
     main.cpp \
@@ -39,7 +37,7 @@ HEADERS += \
     syncwindow.h \
     custom/circleProgressbar/ProgressCircle.h \
     custom/circleChart/CircleChart.h \
-    custom/ColorValueDisplay/ColorValueDisplay.h 
+    custom/ColorValueDisplay/ColorValueDisplay.h
 
 RESOURCES += \
     ../resources/resources.qrc \
