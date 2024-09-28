@@ -27,6 +27,7 @@
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_codekeeper.png?raw=true" height="40px" />
     <br><br>
     If you have found bugs in our product or have suggestions, please write about them:
+    <br>
     <a href="https://t.me/DXS_TechSupport_bot"><kbd> <br>Tech Support<br> </kbd></a>  <a href="https://discord.gg/tnHSEc2cZv"><kbd> <br>Discord server<br> </kbd></a>
     <br><br>
     </a>  <a href="[https://discord.gg/tnHSEc2cZv](https://github.com/Nighty3098/CodeKeeper/issues/132)"><kbd> <br>Official project roadmap<br> </kbd></a>
@@ -36,7 +37,7 @@
 
 <div align="center">
     <br><br><br>
-    <h3>Support me with TON</h3>
+    <h3>Support me</h3>
     <img src="imgs/toncoin.png" width="40px"/>
     <br>
     <kbd><br>UQCF-sPDO0QqkNtvy5CKSvYWEsZS6l7vzaytV36oYM0SNhKt<br></kbd>
