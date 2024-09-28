@@ -39,7 +39,6 @@
         <file>main.png</file>
         <file>project.png</file>
         <file>task.png</file>
-        <file>about.png</file>
         <file>refresh.png</file>
         <file>storage.png</file>
         <file>palette.png</file>
@@ -78,5 +77,6 @@
         <file>git.png</file>
         <file>tea.svg</file>
         <file>resize.png</file>
+        <file>about.png</file>
     </qresource>
 </RCC>

@@ -105,7 +105,7 @@ void MainWindow::setConnectionStatus()
             QPixmap(":/connected.png")
                 .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip(tr("Connected"));
-        sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
+        sizeGrip2->setStyleSheet("background-color: #a9bf85; border-radius: 6px;");
     }
     else
     {
@@ -121,7 +121,7 @@ void MainWindow::setConnectionStatus()
             QPixmap(":/auto_sync_on.png")
                 .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip(tr("Auto sync on"));
-        sizeGrip2->setStyleSheet("background-color: #37d442; border-radius: 5px;");
+        sizeGrip2->setStyleSheet("background-color: #a9bf85; border-radius: 6px;");
     }
     else
     {
@@ -357,13 +357,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     QString font_size_hello = QString::number(*font_size_int * 1.4);
 
     timeLabel->setFont(*selectedFont);
-    timeLabel->setStyleSheet("background: transparent; font-size: " + font_size_clock + "pt; color: #799987;");
+    timeLabel->setStyleSheet("background: transparent; font-size: " + font_size_clock + "pt; color: #a9bf85;");
 
     dateLabel->setFont(*selectedFont);
-    dateLabel->setStyleSheet("background: transparent; font-size: " + font_size_date + "pt; color: #799987;");
+    dateLabel->setStyleSheet("background: transparent; font-size: " + font_size_date + "pt; color: #a9bf85;");
 
     helloLabel->setFont(*selectedFont);
-    helloLabel->setStyleSheet("background: transparent; font-size: " + font_size_hello + "pt; color: #799987;");
+    helloLabel->setStyleSheet("background: transparent; font-size: " + font_size_hello + "pt; color: #a9bf85;");
 
     projectsMainLabel->setFont(*selectedFont);
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt;");
@@ -409,8 +409,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "}"
                                    "QListWidget::Item {"
                                    "margin: 0px;"
-                                   "background-color: rgba(211, 102, 107, 250); color: #000000; "
-                                   "border-width: 0px; border-color: rgba(211, 102, 107, 250); "
+                                   "background-color: #e08581; color: #000000; "
+                                   "border-width: 0px; border-color: #e08581; "
                                    "border-radius: 5px;"
                                    "font-size: " +
                                    font_size +
@@ -427,7 +427,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                   "}"
                                   "QListWidget::Item {"
                                   "margin: 0px;"
-                                  "background-color: rgba(231, 232, 141, 250); "
+                                  "background-color: #d8bd85; "
                                   "color: #000000; text-decoration: underline; "
                                   "border-width: 0px; "
                                   "border-radius: 5px;"
@@ -446,7 +446,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                  "}"
                                  "QListWidget::Item {"
                                  "margin: 0px;"
-                                 "background-color: rgba(195, 232, 141, 250); "
+                                 "background-color: #a9bf85; "
                                  "color: #000000;"
                                  "border-radius: 5px;"
                                  "line-through; border-width: 0px; "
@@ -465,7 +465,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "}"
                                       "QListWidget::Item {"
                                       "margin: 0px;"
-                                      "background-color: rgba(211, 102, 107, 250);"
+                                      "background-color: #e08581;"
                                       "color: #000000; border-width: 0px; "
                                       "border-radius: 5px;"
                                       "border-color: #ff757f; "
@@ -484,7 +484,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "}"
                                    "QListWidget::Item {"
                                    "margin: 0px;"
-                                   "background-color: rgba(231, 232, 141, 250); color: #000000; "
+                                   "background-color: #d8bd85; color: #000000; "
                                    "border-radius: 5px;"
                                    "border-width: 0px; border-color: #ffc777; "
                                    "font-size: " +
@@ -502,8 +502,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "}"
                                       "QListWidget::Item {"
                                       "margin: 0px;"
-                                      "background-color: rgba(126, 156, 216, 250 "
-                                      "); color: #000000; border-width: 0px; "
+                                      "background-color: #85b9b3; "
+                                      "color: #000000; border-width: 0px; "
                                       "border-radius: 5px;"
                                       "border-color: #82aaff; "
                                       "font-size: " +
@@ -521,7 +521,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                     "}"
                                     "QListWidget::Item {"
                                     "margin: 0px;"
-                                    "background-color: rgba(195, 232, 141, 250); color: #000000; "
+                                    "background-color: #a9bf85; color: #000000; "
                                     "border-radius: 5px;"
                                     "border-width: 0px; border-color: #c3e88d; "
                                     "font-size: " +
@@ -569,8 +569,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     windowTitle->setStyleSheet("font-size: " + font_size + "pt;");
 
     tasksProgress->setFont(*selectedFont);
-    tasksProgress->setStyleSheet("background-color: rgba(211, 102, 107, 250); selection-background-color: "
-                                 "rgba(195, 232, 141, 250); color: #222436; font-size: " +
+    tasksProgress->setStyleSheet("background-color: #e08581; selection-background-color: "
+                                 "#a9bf85; color: #222436; font-size: " +
                                  font_size + "pt;");
 
     menu->setStyleSheet("font-size: " + font_size + "pt;");

@@ -338,6 +338,7 @@ class MainWindow : public QMainWindow
     QLabel *label_3;
 
     QLineEdit *taskText;
+    QComboBox *projectsList;
 
     // ========================================================
 
