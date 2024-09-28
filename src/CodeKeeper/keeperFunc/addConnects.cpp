@@ -202,5 +202,5 @@ void MainWindow::createShortcuts()
     toThirdTab = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_3), this);
     toFourthTab = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_4), this);
 
-    openSettingsWindowQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_S), this);
+    openSettingsWindowQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P), this);
 }
