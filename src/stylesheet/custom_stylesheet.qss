@@ -195,7 +195,7 @@ QTabWidget::pane {
 }
 
 QMenu {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #505a6a;
     color: #FFFFFF;
     border: 1px solid #FFFFFF;
     border-radius: 10px;

@@ -447,7 +447,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksGLayout->addLayout(tasksStatsL, 0, 0, 1, 3);
 
     QSplitter *tasksSplitter = new QSplitter(Qt::Horizontal);
-    tasksSplitter->setStyleSheet("QSplitter::handle:horizontal {background-color: transparent; color: transparent;} QSplitter::handle:vertical {background-color: transparent; color: transparent;}");
+    tasksSplitter->setStyleSheet("QSplitter::handle:horizontal {background-color: transparent; color: transparent;} "
+                                 "QSplitter::handle:vertical {background-color: transparent; color: transparent;}");
 
     tasksSplitter->addWidget(incompleteTasks);
     tasksSplitter->addWidget(inprocessTasks);
