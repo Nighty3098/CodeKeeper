@@ -2,7 +2,7 @@
     <h1 align="center">CodeKeeper</h1>
     <h3 align="center">Projects manager for developers</h3>
     <br><br>
-    <img src="https://github.com/user-attachments/assets/dd5d3577-9322-46be-aeb0-10539e66b863" />
+    <img src="imgs/1.png" />
     <br><br>
 </div>
 
@@ -26,13 +26,6 @@
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_api.png?raw=true" height="50px" />
     <img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_codekeeper.png?raw=true" height="50px" />
     <br><br>
-    <h3>Developers:</h3>
-    <p align="center">
-        <a href = "https://github.com/iinsertNameHere/catnap/graphs/contributors">
-            <img src = "https://contrib.rocks/image?repo=Nighty3098/CodeKeeper">
-        </a>
-    </p>
-    <br>
     <h3>If you have found bugs in our product or have suggestions, please write about them:</h3>
     <a href="https://t.me/DXS_TechSupport_bot"><kbd> <br>Tech Support<br> </kbd></a>  <a href="https://discord.gg/tnHSEc2cZv"><kbd> <br>Discord server<br> </kbd></a>
     <br><br>
@@ -90,3 +83,17 @@ make
 <h3>Support me with TON</h3>
 <kbd><br>UQCF-sPDO0QqkNtvy5CKSvYWEsZS6l7vzaytV36oYM0SNhKt<br></kbd>
 </div>
+
+<br><br>
+
+<details align="center">
+    <summary>Screenshots</summary>
+    <img src="imgs/1.png" />
+    <img src="imgs/2.png" />
+    <img src="imgs/3.png" />
+    <img src="imgs/4.png" />
+    <img src="imgs/5.png" />
+    <img src="imgs/6.png" />
+    <img src="imgs/7.png" />
+    <img src="imgs/8.png" />
+</details>
