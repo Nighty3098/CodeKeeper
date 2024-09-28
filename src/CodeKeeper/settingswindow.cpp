@@ -86,7 +86,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     appName->setStyleSheet("font-size: 42px;");
 
     urlToRepo = new QLabel();
-    urlToRepo->setText("<a style='color: #84a0bf; text-decoration: none; font-size: " + font_size +
+    urlToRepo->setText("<a style='color: #a9bf85; text-decoration: none; font-size: " + font_size +
                        "' "
                        "href=\"https://github.com/DXS-GROUP/CodeKeeper\">Source</a>");
     urlToRepo->setTextFormat(Qt::RichText);

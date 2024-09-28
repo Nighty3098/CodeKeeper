@@ -381,15 +381,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tasksMenuBtn->setMenu(tasksMenu);
 
+    projectsList = new QComboBox();
+    projectsList->setFixedSize(300, 25);
+    projectsList->setPlaceholderText("Select your project ... ");
+
+    projectsList->addItem("CodeKeeper");
+    projectsList->addItem("SDash");
+
     tasksProgress = new QProgressBar();
     tasksProgress->setMaximum(100);
     tasksProgress->setMaximumWidth(300);
-    tasksProgress->setFixedHeight(20);
+    tasksProgress->setFixedHeight(25);
     tasksProgress->setAlignment(Qt::AlignCenter);
 
     tasksStatsL->addItem(spacer1);
     tasksStatsL->addWidget(tasksMenuBtn);
-    tasksStatsL->addWidget(tasksProgress);
+    tasksStatsL->addWidget(projectsList);
+    // tasksStatsL->addWidget(tasksProgress);
     tasksStatsL->addItem(spacer2);
 
     label_1 = new QLabel(tr("Incomplete"));
@@ -434,10 +442,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     taskText = new QLineEdit();
     taskText->setPlaceholderText(tr(" Task..."));
     taskText->setFixedHeight(25);
+    taskText->setMaximumWidth(400);
 
     tasksGLayout->addLayout(tasksStatsL, 0, 0, 1, 3);
 
     QSplitter *tasksSplitter = new QSplitter(Qt::Horizontal);
+    tasksSplitter->setStyleSheet("QSplitter::handle:horizontal {background-color: transparent; color: transparent;} QSplitter::handle:vertical {background-color: transparent; color: transparent;}");
 
     tasksSplitter->addWidget(incompleteTasks);
     tasksSplitter->addWidget(inprocessTasks);
@@ -450,9 +460,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksGLayout->addWidget(label_1, 1, 0, Qt::AlignHCenter);
     tasksGLayout->addWidget(label_2, 1, 1, Qt::AlignHCenter);
     tasksGLayout->addWidget(label_3, 1, 2, Qt::AlignHCenter);
-
     tasksGLayout->addWidget(tasksSplitter, 2, 0, 1, 3);
-
     tasksGLayout->addWidget(taskText, 4, 1);
 
     // ========================================================

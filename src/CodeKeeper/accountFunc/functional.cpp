@@ -424,7 +424,7 @@ void AccountWindow::setTasksProgress()
                             calculatePercentage(incompleteTasksCount, totalTasks)};
 
     QString labels[] = {tr("Completed"), tr("Started"), tr("Not Started")};
-    QColor colors[] = {QColor("#78b3ba"), QColor("#b1e032"), QColor("#c75d5e")};
+    QColor colors[] = {QColor("#85b9b3"), QColor("#a9bf85"), QColor("#e08581")};
 
     for (int i = 0; i < 3; ++i)
     {
@@ -434,15 +434,15 @@ void AccountWindow::setTasksProgress()
     QColor progressColor;
     if (percentage < 26)
     {
-        progressColor = QColor("#c75d5e");
+        progressColor = QColor("#e08581");
     }
     else if (percentage < 51)
     {
-        progressColor = QColor("#e09132");
+        progressColor = QColor("#d8bd85");
     }
     else
     {
-        progressColor = QColor("#78b3ba");
+        progressColor = QColor("#85b9b3");
     }
     tasksStatsProgress->setProgressColor(progressColor);
 }
@@ -477,7 +477,7 @@ void AccountWindow::setProjectsStats()
 
     float values[] = {ns_p, s_p, fl_p, f_p};
     QString labels[] = {tr("Not started"), tr("In Dev"), tr("On Review"), tr("Finished")};
-    QColor colors[] = {QColor("#c75d5e"), QColor("#e09132"), QColor("#b1e032"), QColor("#78b3ba")};
+    QColor colors[] = {QColor("#e08581"), QColor("#d8bd85"), QColor("#a9bf85"), QColor("#85b9b3")};
 
     for (int i = 0; i < 4; ++i)
     {
@@ -490,10 +490,10 @@ void AccountWindow::setLangsStats(const QString langsData, CircleChart *langsCha
                                   ColorValueDisplay *langsValuesDisplay)
 {
     QStringList langsColors;
-    langsColors << "#c75d5e"
-                << "#e09132"
-                << "#b1e032"
-                << "#78b3ba"
+    langsColors << "#e08581"
+                << "#d8bd85"
+                << "#a9bf85"
+                << "#85b9b3"
                 << "#5dc7c3"
                 << "#c75da9"
                 << "#c7c25d"
