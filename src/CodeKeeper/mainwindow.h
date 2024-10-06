@@ -283,9 +283,6 @@ class MainWindow : public QMainWindow
     QHBoxLayout *winControlL;
 
     QSizeGrip *sizeGrip;
-    QSizeGrip *sizeGrip2;
-    QSizeGrip *sizeGrip3;
-    QSizeGrip *sizeGrip4;
 
     QLabel *timeLabel;
     QLabel *dateLabel;

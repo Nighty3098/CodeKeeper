@@ -68,33 +68,37 @@ void MainWindow::createConnects()
         if (isFullScreen)
         {
             maximizeBtn->setStyleSheet("QPushButton {"
+                                       "    border-radius: 6px;"
                                        "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-color: rgba(0, 0, 0, 0);"
-                                       "    background-image: url(':/green.png');"
+                                       "    background-color: #9bbf60;"
                                        "    background-repeat: no-repeat;"
+                                       "    background-attachment: fixed;"
                                        "}"
 
                                        "QPushButton:hover {"
+                                       "    border-radius: 6px;"
                                        "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-image: url(':/greenInHovered.png');"
-                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-color: #9bbf60;"
                                        "    background-repeat: no-repeat;"
+                                       "    background-attachment: fixed;"
                                        "}");
         }
         else
         {
             maximizeBtn->setStyleSheet("QPushButton {"
+                                       "    border-radius: 6px;"
                                        "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-color: rgba(0, 0, 0, 0);"
-                                       "    background-image: url(':/green.png');"
+                                       "    background-color: #a9bf85;"
                                        "    background-repeat: no-repeat;"
+                                       "    background-attachment: fixed;"
                                        "}"
 
                                        "QPushButton:hover {"
+                                       "    border-radius: 6px;"
                                        "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-image: url(':/greenHovered.png');"
-                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-color: #9bbf60;"
                                        "    background-repeat: no-repeat;"
+                                       "    background-attachment: fixed;"
                                        "}");
         }
     });

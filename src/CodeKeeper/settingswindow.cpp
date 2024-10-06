@@ -70,7 +70,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     saveBtn->setFixedSize(100, 25);
 
     quitBtn = new QPushButton();
-    quitBtn->setFixedSize(15, 15);
+    quitBtn->setFixedSize(13, 13);
 
     QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
