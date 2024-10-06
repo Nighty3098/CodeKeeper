@@ -126,6 +126,18 @@ void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
     menu->addMenu(sortMenu);
 }
 
+void MainWindow::createNotesContextMenu(QMenu *menu, QString font_size) {
+    mRenameNoteA = menu->addAction(
+        QPixmap(":/edit.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        tr("Rename"), this, SLOT(renameItem()));
+
+    mDeleteItemA = menu->addAction(
+        QPixmap(":/delete.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        tr("Remove"), this, SLOT(removeNote()), QKeySequence(Qt::Key_Delete));
+}
+
 void MainWindow::createProjectMenu(QMenu *menu, QString font_size)
 {
     newProject = menu->addAction(

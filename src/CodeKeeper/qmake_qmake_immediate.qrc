@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+<file alias="../stylesheet/stylesheet.qss">/home/user/Desktop/CodeKeeper/src/stylesheet/stylesheet.qss</file>
+<file alias="../stylesheet/custom_stylesheet.qss">/home/user/Desktop/CodeKeeper/src/stylesheet/custom_stylesheet.qss</file>
+<file alias="../stylesheet/custom_stylesheet_light.qss">/home/user/Desktop/CodeKeeper/src/stylesheet/custom_stylesheet_light.qss</file>
+</qresource>
+</RCC>

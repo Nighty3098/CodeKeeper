@@ -225,7 +225,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesList->setHeaderHidden(true);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
-
+    notesList->setContextMenuPolicy(Qt::CustomContextMenu);
+    
     noteEdit = new NoteEditor();
     noteEdit->setPlaceholderText(tr(" Just start typing"));
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);

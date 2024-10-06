@@ -96,6 +96,7 @@ class MainWindow : public QMainWindow
 
     void activateProjectContextMenu(const QPoint &pos, QListWidget *listWidget);
     void activateTasksContextMenu(const QPoint &pos, QListWidget *listWidget);
+    void activateNotesContextMenu(const QPoint &pos, notesTree *notesList);
 
     QStringList getAllReposUrl();
 
@@ -238,6 +239,7 @@ class MainWindow : public QMainWindow
     void createProjectMenu(QMenu *menu, QString font_size);
     void createTaskMenu(QMenu *menu, QString font_size);
     void createTrayMenu(QMenu *menu, QString font_size);
+    void createNotesContextMenu(QMenu *menu, QString font_size);
 
   protected:
     void mousePressEvent(QMouseEvent *event) override
@@ -386,6 +388,9 @@ class MainWindow : public QMainWindow
     QAction *setNumListA;
     QAction *setTableA;
     QAction *setQuoteA;
+
+    QAction *mRenameNoteA;
+    QAction *mDeleteItemA;
 
     QAction *closeAppA;
     QAction *openNotesA;
