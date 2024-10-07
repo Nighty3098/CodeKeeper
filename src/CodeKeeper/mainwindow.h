@@ -18,6 +18,7 @@
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "accountwindow.h"
+#include "commandPalette.h"
 #include "settingswindow.h"
 #include "syncwindow.h"
 
@@ -397,6 +398,8 @@ class MainWindow : public QMainWindow
     QAction *openProjectsA;
     QAction *openTasksA;
 
+    QShortcut *openCommandPalette;
+
     QMenu *menu;
     QMenu *tasksMenu;
     QMenu *projectsMenu;
@@ -404,6 +407,7 @@ class MainWindow : public QMainWindow
     AccountWindow *accountWindow;
     SettingsWindow *settingsWindow;
     SyncWindow *syncWindow;
+    CommandPalette *commandPalette;
 };
 
 #endif // MAINWINDOW_H

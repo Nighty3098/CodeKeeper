@@ -14,6 +14,7 @@ SOURCES += \
     mainwindow.cpp \
     settingswindow.cpp \
     syncwindow.cpp \
+    commandPalette.cpp \
     settingsFunc/functional.cpp \
     keeperFunc/functional.cpp \
     keeperFunc/tasksFunc.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     mainwindow.h \
     settingswindow.h \
     syncwindow.h \
+    commandPalette.h \
     custom/circleProgressbar/ProgressCircle.h \
     custom/circleChart/CircleChart.h \
     custom/ColorValueDisplay/ColorValueDisplay.h

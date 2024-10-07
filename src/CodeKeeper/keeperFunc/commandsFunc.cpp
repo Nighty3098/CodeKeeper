@@ -1,0 +1,59 @@
+void CommandPalette::getSettingsData()
+{
+    selectedFont = globalSettings->value("font").value<QFont>();
+    font_size = globalSettings->value("fontSize").value<QString>();
+}
+
+void CommandPalette::setWindowSize()
+{
+    MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
+    int width = mainWindow->width();
+    if (width < 1920)
+    {
+        width = width - 200;
+    }
+    if (width > 1920)
+    {
+        width = 1500;
+    }
+
+    int height = 400;
+
+    setFixedSize(width, height);
+    qDebug() << "Set commands window size";
+}
+
+void CommandPalette::setWindowPosition()
+{
+    QThread *commandsWindowThread = new QThread;
+    QObject::connect(commandsWindowThread, &QThread::started, this, [this]() {
+        MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
+        QRect geo = mainWindow->geometry();
+        int x = geo.x();
+        int y = geo.y();
+        int width = geo.width();
+        int height = geo.height();
+
+        QRect geo2 = this->geometry();
+
+        int width2 = geo2.width();
+        int height2 = geo2.height();
+
+        int new_x = x + (width - width2) / 2;
+        int new_y = y + (height - height2) / 4;
+
+        this->move(new_x, new_y);
+
+        qDebug() << "Set commands window position";
+    });
+    commandsWindowThread->start();
+}
+
+void CommandPalette::filterList(const QString &text)
+{
+    for (int i = 0; i < listItems->count(); ++i)
+    {
+        QListWidgetItem *item = listItems->item(i);
+        item->setHidden(!item->text().contains(text, Qt::CaseInsensitive));
+    }
+}
