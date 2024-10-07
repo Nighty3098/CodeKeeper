@@ -1,17 +1,17 @@
 #ifndef SYNCWINDOW_H
 #define SYNCWINDOW_H
 
-#include <QtWidgets>
-#include <QSettings>
 #include <QGridLayout>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QSettings>
+#include <QtWidgets>
 
 class SyncWindow : public QMainWindow
 {
     Q_OBJECT;
 
-public:
+  public:
     void setFontStyle();
 
     QSettings *globalSettings;
@@ -27,13 +27,13 @@ public:
     QString git_user;
     QString git_token;
 
-private slots:
+  private slots:
     bool checkConnection();
     void startSyncingFunc();
     void cancelSyncingFunc();
 
-protected:
-private:
+  protected:
+  private:
     QWidget *centralWidget;
     QGridLayout *mainLayout;
 
@@ -47,4 +47,4 @@ private:
     QPushButton *stopSyncing;
 };
 
-#endif // MAINWINDOW_H
+#endif // SYNCWINDOW_H

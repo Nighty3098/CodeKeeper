@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     {
         if (theme == 0)
         {
-            QFile custom_theme(":/stylesheet/custom_stylesheet.qss");
+            QFile custom_theme(":/custom_stylesheet.qss");
             if (custom_theme.open(QFile::ReadOnly))
             {
                 QString customStyleSheet = custom_theme.readAll();
@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         }
         else if (theme == 1)
         {
-            QFile custom_light_theme(":/stylesheet/custom_stylesheet_light.qss");
+            QFile custom_light_theme(":/custom_stylesheet_light.qss");
             if (custom_light_theme.open(QFile::ReadOnly))
             {
                 QString customStyleSheetLight = custom_light_theme.readAll();
@@ -87,7 +87,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     }
     else
     {
-        QFile theme_file(":/stylesheet/stylesheet.qss");
+        QFile theme_file(":/stylesheet.qss");
         if (theme_file.open(QFile::ReadOnly))
         {
             QString defaultStyleSheet = theme_file.readAll();
@@ -226,7 +226,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
     notesList->setContextMenuPolicy(Qt::CustomContextMenu);
-    
+
     noteEdit = new NoteEditor();
     noteEdit->setPlaceholderText(tr(" Just start typing"));
     noteEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);

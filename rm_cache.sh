@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm -rf src/CodeKeeper/.qt/
 rm -rf src/CodeKeeper/.qtc_clangd
 rm -rf src/CodeKeeper/build
 rm src/CodeKeeper/CodeKeeper.pro.user

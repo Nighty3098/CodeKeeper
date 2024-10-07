@@ -126,7 +126,8 @@ void MainWindow::createNotesMenu(QMenu *menu, QString font_size)
     menu->addMenu(sortMenu);
 }
 
-void MainWindow::createNotesContextMenu(QMenu *menu, QString font_size) {
+void MainWindow::createNotesContextMenu(QMenu *menu, QString font_size)
+{
     mRenameNoteA = menu->addAction(
         QPixmap(":/edit.png")
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),

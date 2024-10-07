@@ -198,7 +198,7 @@ void MainWindow::createConnects()
         setWindowTitle(tr("Projects"));
     });
 
-connect(notesList, &QListWidget::customContextMenuRequested, this,
+    connect(notesList, &QListWidget::customContextMenuRequested, this,
             [this](const QPoint &pos) { activateNotesContextMenu(pos, notesList); });
 }
 
