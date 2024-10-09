@@ -84,7 +84,7 @@ void MainWindow::createProject()
 {
     QString date = getCurrentDateTimeString();
     QString status = "NotStartedProjects";
-    QString title = "Teamplate";
+    QString title = "New project";
     QString git = "https://github.com/";
     QString newProjectTeamplate = title + "\n" + git + "\n" + date;
 
@@ -195,18 +195,21 @@ void MainWindow::openProject()
             saveDataBtn->setFont(selectedFont);
 
             QPushButton *cancelBtn = new QPushButton("");
-            cancelBtn->setFixedSize(15, 15);
+            cancelBtn->setFixedSize(13, 13);
             cancelBtn->setStyleSheet("QPushButton {"
+                                     "    border-radius: 6px;"
                                      "    border-color: rgba(0, 0, 0, 0);"
-                                     "    background-color: rgba(0, 0, 0, 0);"
-                                     "    background-image: url(':/red.png');"
+                                     "    background-color: #e08581;"
                                      "    background-repeat: no-repeat;"
+                                     "    background-attachment: fixed;"
                                      "}"
+
                                      "QPushButton:hover {"
+                                     "    border-radius: 6px;"
                                      "    border-color: rgba(0, 0, 0, 0);"
-                                     "    background-image: url(':/redHovered.png');"
                                      "    background-repeat: no-repeat;"
-                                     "    background-color: rgba(0, 0, 0, 0);"
+                                     "    background-color: #e06a65;"
+                                     "    background-attachment: fixed;"
                                      "}");
 
             QVBoxLayout *centralLayout = new QVBoxLayout(&dialog);

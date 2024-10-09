@@ -51,7 +51,7 @@ QString MainWindow::getCurrentDateTimeString()
 void MainWindow::updateTime()
 {
     QString currentTime = QTime::currentTime().toString("hh:mm");
-    QString currentDate = QDate::currentDate().toString("   dd MM yyyy");
+    QString currentDate = QDate::currentDate().toString("   dd.MM.yyyy");
 
     timeLabel->setText(currentTime);
     dateLabel->setText(currentDate);
@@ -101,94 +101,82 @@ void MainWindow::setConnectionStatus()
 {
     if (checkConnection())
     {
-        isConnected->setIcon(
-            QPixmap(":/connected.png")
-                .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isConnected->setIcon(QPixmap(":/connected.png").scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip(tr("Connected"));
-        sizeGrip2->setStyleSheet("background-color: #a9bf85; border-radius: 6px;");
+        sizeGrip->setStyleSheet("background-color: #a9bf85; border-radius: 6px;");
     }
     else
     {
         isConnected->setIcon(
-            QPixmap(":/disconnected.png")
-                .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            QPixmap(":/disconnected.png").scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip(tr("Disconnected"));
     }
 
     if (isAutoSyncing)
     {
         isAutoSync->setIcon(
-            QPixmap(":/auto_sync_on.png")
-                .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            QPixmap(":/auto_sync_on.png").scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip(tr("Auto sync on"));
-        sizeGrip2->setStyleSheet("background-color: #a9bf85; border-radius: 6px;");
+        sizeGrip->setStyleSheet("background-color: #a9bf85; border-radius: 6px;");
     }
     else
     {
         isAutoSync->setIcon(
-            QPixmap(":/auto_sync_off.png")
-                .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            QPixmap(":/auto_sync_off.png").scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip(tr("Auto sync off"));
     }
 }
 
 void MainWindow::createCustomTitlebar()
 {
-    closeBtn->setFixedSize(14, 14);
-    minimizeBtn->setFixedSize(14, 14);
-    maximizeBtn->setFixedSize(14, 14);
+    closeBtn->setFixedSize(13, 13);
+    minimizeBtn->setFixedSize(13, 13);
+    maximizeBtn->setFixedSize(13, 13);
 
     closeBtn->setStyleSheet("QPushButton {"
-                            "    border-radius: 0px;"
+                            "    border-radius: 6px;"
                             "    border-color: rgba(0, 0, 0, 0);"
-                            "    background-color: rgba(0, 0, 0, 0);"
-                            "    background-image: url(':/red.png');"
+                            "    background-color: #e08581;"
                             "    background-repeat: no-repeat;"
                             "    background-attachment: fixed;"
                             "}"
 
                             "QPushButton:hover {"
-                            "    border-radius: 0px;"
+                            "    border-radius: 6px;"
                             "    border-color: rgba(0, 0, 0, 0);"
-                            "    background-image: url(':/redHovered.png');"
                             "    background-repeat: no-repeat;"
-
-                            "    background-color: rgba(0, 0, 0, 0);"
+                            "    background-color: #e06a65;"
                             "    background-attachment: fixed;"
                             "}");
 
     minimizeBtn->setStyleSheet("QPushButton {"
-                               "    border-radius: 0px;"
+                               "    border-radius: 6px;"
                                "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/yellow.png');"
+                               "    background-color: #d8bd85;"
                                "    background-repeat: no-repeat;"
                                "    background-attachment: fixed;"
                                "}"
 
                                "QPushButton:hover {"
-                               "    border-radius: 0px;"
+                               "    border-radius: 6px;"
                                "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/yellowHovered.png');"
                                "    background-repeat: no-repeat;"
-                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-color: #d8b772;"
                                "    background-attachment: fixed;"
                                "}");
 
     maximizeBtn->setStyleSheet("QPushButton {"
-                               "    border-radius: 0px;"
+                               "    border-radius: 6px;"
                                "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/green.png');"
+                               "    background-color: #a9bf85;"
                                "    background-repeat: no-repeat;"
                                "    background-attachment: fixed;"
                                "}"
 
                                "QPushButton:hover {"
-                               "    border-radius: 0px;"
+                               "    border-radius: 6px;"
                                "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/greenHovered.png');"
-                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-color: #9bbf60;"
                                "    background-repeat: no-repeat;"
                                "    background-attachment: fixed;"
                                "}");
@@ -200,6 +188,32 @@ void MainWindow::createCustomTitlebar()
         winControlL->addWidget(closeBtn);
         winControlL->addWidget(minimizeBtn);
         winControlL->addWidget(maximizeBtn);
+    }
+}
+
+void MainWindow::deleteAllData() {
+    QMessageBox reply;
+    reply.setWindowFlags(Qt::FramelessWindowHint);
+    reply.setText(tr("Do you really want to delete all the data?"));
+    reply.setWindowTitle(tr("CodeKeeper"));
+    reply.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    reply.setDefaultButton(QMessageBox::No);
+
+    if (reply.exec() == QMessageBox::Yes) {
+        if (QFile::exists(dir)) {
+            if (QFile::remove(dir)) {
+                qDebug() << "File" << dir << "deleted";
+            } else {
+                qDebug() << "Error: " << dir;
+            }
+        } else {
+            qDebug() << "File" << dir << "not found.";
+        }
+
+        globalSettings->clear();
+        qDebug() << "Data deleted";
+    } else {
+        qDebug() << "Data deletion cancelled by user.";
     }
 }
 
@@ -268,7 +282,7 @@ void MainWindow::setSettingsData()
 bool MainWindow::checkConnection()
 {
     QNetworkAccessManager nam;
-    QNetworkRequest req(QUrl("https://google.com/"));
+    QNetworkRequest req(QUrl("https://github.com/"));
     QNetworkReply *reply = nam.get(req);
     QEventLoop loop;
     QObject::connect(reply, SIGNAL(readyRead()), &loop, SLOT(quit()));
@@ -389,6 +403,9 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     menuButton->setFont(*selectedFont);
 
     tasksMenuBtn->setFont(*selectedFont);
+
+    projectsList->setFont(*selectedFont);
+    projectsList->setStyleSheet("font-size: " + font_size + "pt;");
 
     noteEdit->setFont(*selectedFont);
     noteEdit->setStyleSheet("font-size: " + font_size + "pt;");

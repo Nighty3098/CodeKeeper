@@ -2,7 +2,7 @@
 
 cd src/CodeKeeper/ || { echo Failed to go to src/CodeKeeper directory; }
 
-qmake CodeKeeper.pro
+qmake6 CodeKeeper.pro
 
 echo Start compilation...
 make

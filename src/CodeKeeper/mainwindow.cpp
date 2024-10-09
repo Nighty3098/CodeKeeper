@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     {
         if (theme == 0)
         {
-            QFile custom_theme(":/stylesheet/custom_stylesheet.qss");
+            QFile custom_theme(":/custom_stylesheet.qss");
             if (custom_theme.open(QFile::ReadOnly))
             {
                 QString customStyleSheet = custom_theme.readAll();
@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         }
         else if (theme == 1)
         {
-            QFile custom_light_theme(":/stylesheet/custom_stylesheet_light.qss");
+            QFile custom_light_theme(":/custom_stylesheet_light.qss");
             if (custom_light_theme.open(QFile::ReadOnly))
             {
                 QString customStyleSheetLight = custom_light_theme.readAll();
@@ -87,7 +87,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     }
     else
     {
-        QFile theme_file(":/stylesheet/stylesheet.qss");
+        QFile theme_file(":/stylesheet.qss");
         if (theme_file.open(QFile::ReadOnly))
         {
             QString defaultStyleSheet = theme_file.readAll();
@@ -139,24 +139,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     isFullScreen = false;
 
     sizeGrip = new QSizeGrip(this);
-    sizeGrip->setFixedSize(7, 7);
+    sizeGrip->setFixedSize(13, 13);
     sizeGrip->setVisible(true);
-    sizeGrip->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
-
-    sizeGrip2 = new QSizeGrip(this);
-    sizeGrip2->setFixedSize(13, 13);
-    sizeGrip2->setVisible(true);
-    sizeGrip2->setStyleSheet("background-color: #febe30; border-radius: 6px;");
-
-    sizeGrip3 = new QSizeGrip(this);
-    sizeGrip3->setFixedSize(7, 7);
-    sizeGrip3->setVisible(true);
-    sizeGrip3->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
-
-    sizeGrip4 = new QSizeGrip(this);
-    sizeGrip4->setFixedSize(7, 7);
-    sizeGrip4->setVisible(true);
-    sizeGrip4->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+    sizeGrip->setStyleSheet("background-color: #febe30; border-radius: 6px;");
 
     windowTitle = new QLabel(tr(" ~ CodeKeeper ~ "));
 
@@ -182,7 +167,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     decorationLabel = new QLabel();
     decorationLabel->setAlignment(Qt::AlignHCenter);
-    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(400, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(320, 320, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     openSettingsBtn = new QPushButton(
         QPixmap(":/settings.png")
@@ -240,6 +225,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesList->setHeaderHidden(true);
     notesList->setColumnHidden(1, true);
     notesList->setSortingEnabled(true);
+    notesList->setContextMenuPolicy(Qt::CustomContextMenu);
 
     noteEdit = new NoteEditor();
     noteEdit->setPlaceholderText(tr(" Just start typing"));
@@ -447,7 +433,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksGLayout->addLayout(tasksStatsL, 0, 0, 1, 3);
 
     QSplitter *tasksSplitter = new QSplitter(Qt::Horizontal);
-    tasksSplitter->setStyleSheet("QSplitter::handle:horizontal {background-color: transparent; color: transparent;} QSplitter::handle:vertical {background-color: transparent; color: transparent;}");
+    tasksSplitter->setStyleSheet("QSplitter::handle:horizontal {background-color: transparent; color: transparent;} "
+                                 "QSplitter::handle:vertical {background-color: transparent; color: transparent;}");
 
     tasksSplitter->addWidget(incompleteTasks);
     tasksSplitter->addWidget(inprocessTasks);
@@ -629,7 +616,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     }
     else
     {
-        sizeGrip2->hide();
+        sizeGrip->hide();
     }
 
     isConnected = new QPushButton("");
@@ -642,13 +629,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    winControlL->addWidget(windowTitle);
+    // winControlL->addWidget(windowTitle);
 
     winControlL->addItem(headerSp);
 
     winControlL->addWidget(isConnected);
     winControlL->addWidget(isAutoSync);
-    winControlL->addWidget(sizeGrip2);
+    winControlL->addWidget(sizeGrip);
 
     QVBoxLayout *tabButtons = new QVBoxLayout();
 

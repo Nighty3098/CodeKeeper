@@ -160,26 +160,35 @@ void MainWindow::editTask()
             QStringList oldData = oldText.split("\n");
 
             QDialog dialog(this);
-            dialog.setFixedSize(220, 200);
+            dialog.setFixedSize(220, 250);
             dialog.setWindowTitle(tr("Edit task"));
             dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
             QVBoxLayout layout(&dialog);
             QLineEdit lineEdit(&dialog);
             lineEdit.setFont(selectedFont);
+            lineEdit.setStyleSheet("font-size: " + font_size + "px;");
             lineEdit.setFixedSize(200, 100);
             lineEdit.setAlignment(Qt::AlignCenter);
 
-            layout.addWidget(&lineEdit);
-
             lineEdit.setText(oldData[0]);
+
+            QComboBox projectList;
+            projectList.setFont(selectedFont);
+            projectList.setStyleSheet("font-size: " + font_size + "px;");
+            projectList.setFixedSize(200, 25);
 
             QPushButton okButton(tr("Save"), &dialog);
             okButton.setFont(selectedFont);
+            okButton.setStyleSheet("font-size: " + font_size + "px;");
             okButton.setFixedSize(200, 25);
             QPushButton cancelButton(tr("Cancel"), &dialog);
             cancelButton.setFont(selectedFont);
             cancelButton.setFixedSize(200, 25);
+            cancelButton.setStyleSheet("font-size: " + font_size + "px;");
+
+            layout.addWidget(&projectList);
+            layout.addWidget(&lineEdit);
             layout.addWidget(&okButton);
             layout.addWidget(&cancelButton);
 

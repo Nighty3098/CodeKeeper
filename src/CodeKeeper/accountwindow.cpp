@@ -71,7 +71,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     openRepo->setFixedSize(100, 25);
 
     closeWindow = new QPushButton("");
-    closeWindow->setFixedSize(15, 15);
+    closeWindow->setFixedSize(13, 13);
 
     QHBoxLayout *projectsStatsLayout = new QHBoxLayout();
     projectsStatsLayout->setSpacing(5);

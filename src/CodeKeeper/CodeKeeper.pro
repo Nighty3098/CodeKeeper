@@ -14,6 +14,8 @@ SOURCES += \
     mainwindow.cpp \
     settingswindow.cpp \
     syncwindow.cpp \
+    commandPalette.cpp \
+    keeperFunc/commandsFunc.cpp \
     settingsFunc/functional.cpp \
     keeperFunc/functional.cpp \
     keeperFunc/tasksFunc.cpp \
@@ -35,15 +37,16 @@ HEADERS += \
     mainwindow.h \
     settingswindow.h \
     syncwindow.h \
+    commandPalette.h \
     custom/circleProgressbar/ProgressCircle.h \
     custom/circleChart/CircleChart.h \
     custom/ColorValueDisplay/ColorValueDisplay.h
 
 RESOURCES += \
     ../resources/resources.qrc \
-    ../stylesheet/stylesheet.qss \
-    ../stylesheet/custom_stylesheet.qss \
-    ../stylesheet/custom_stylesheet_light.qss
+    stylesheet.qss \
+    custom_stylesheet.qss \
+    custom_stylesheet_light.qss
 
 include(3rdParty/qmarkdowntextedit/qmarkdowntextedit.pri)
 

@@ -268,6 +268,9 @@ void AccountWindow::setFontStyle()
     langsValuesDisplay->setFont(selectedFont);
     langsValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
 
+    GitLangsValuesDisplay->setFont(selectedFont);
+    GitLangsValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
+
     langsTitle->setFont(selectedFont);
     langsTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
 
@@ -291,17 +294,23 @@ void AccountWindow::setFontStyle()
     tasksStatsProgress->setFont(selectedFont);
     tasksStatsProgress->setStyleSheet("font-size: " + font_size + "pt;");
 
+    langsCard->setFont(selectedFont);
+    langsCard->setStyleSheet("font-size: " + font_size + "pt;");
+
     closeWindow->setStyleSheet("QPushButton {"
+                               "    border-radius: 6px;"
                                "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/red.png');"
+                               "    background-color: #e08581;"
                                "    background-repeat: no-repeat;"
+                               "    background-attachment: fixed;"
                                "}"
+
                                "QPushButton:hover {"
+                               "    border-radius: 6px;"
                                "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/redHovered.png');"
                                "    background-repeat: no-repeat;"
-                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-color: #e06a65;"
+                               "    background-attachment: fixed;"
                                "}");
 }
 

@@ -18,6 +18,7 @@
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "accountwindow.h"
+#include "commandPalette.h"
 #include "settingswindow.h"
 #include "syncwindow.h"
 
@@ -79,6 +80,11 @@ class MainWindow : public QMainWindow
 
     QTabWidget *tabs;
 
+    void openSyncWindow();
+    void openSettingsWindow();
+    void fOpenAccountWindow();
+    void deleteAllData();
+
     void setSettingsData();
     void getSettingsData();
 
@@ -96,6 +102,7 @@ class MainWindow : public QMainWindow
 
     void activateProjectContextMenu(const QPoint &pos, QListWidget *listWidget);
     void activateTasksContextMenu(const QPoint &pos, QListWidget *listWidget);
+    void activateNotesContextMenu(const QPoint &pos, notesTree *notesList);
 
     QStringList getAllReposUrl();
 
@@ -154,10 +161,6 @@ class MainWindow : public QMainWindow
     QString getRepositoryData(QString git_url, QTableWidget *table, QLabel *label);
     QString getProjectIssues(QString git_url);
 
-    void openSettingsWindow();
-    void fOpenAccountWindow();
-
-    void openSyncWindow();
     void openFolder();
 
     void selectFileInQTreeView(QTreeView *treeView, const QString &fileName);
@@ -238,6 +241,7 @@ class MainWindow : public QMainWindow
     void createProjectMenu(QMenu *menu, QString font_size);
     void createTaskMenu(QMenu *menu, QString font_size);
     void createTrayMenu(QMenu *menu, QString font_size);
+    void createNotesContextMenu(QMenu *menu, QString font_size);
 
   protected:
     void mousePressEvent(QMouseEvent *event) override
@@ -283,9 +287,6 @@ class MainWindow : public QMainWindow
     QHBoxLayout *winControlL;
 
     QSizeGrip *sizeGrip;
-    QSizeGrip *sizeGrip2;
-    QSizeGrip *sizeGrip3;
-    QSizeGrip *sizeGrip4;
 
     QLabel *timeLabel;
     QLabel *dateLabel;
@@ -390,10 +391,15 @@ class MainWindow : public QMainWindow
     QAction *setTableA;
     QAction *setQuoteA;
 
+    QAction *mRenameNoteA;
+    QAction *mDeleteItemA;
+
     QAction *closeAppA;
     QAction *openNotesA;
     QAction *openProjectsA;
     QAction *openTasksA;
+
+    QShortcut *openCommandPalette;
 
     QMenu *menu;
     QMenu *tasksMenu;
@@ -402,6 +408,7 @@ class MainWindow : public QMainWindow
     AccountWindow *accountWindow;
     SettingsWindow *settingsWindow;
     SyncWindow *syncWindow;
+    CommandPalette *commandPalette;
 };
 
 #endif // MAINWINDOW_H

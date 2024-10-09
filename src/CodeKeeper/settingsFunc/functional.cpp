@@ -75,19 +75,22 @@ void SettingsWindow::checkUpdates()
     QGridLayout *layout = new QGridLayout(&dialog);
 
     QPushButton *closeWindow = new QPushButton("");
-    closeWindow->setFixedSize(15, 15);
+    closeWindow->setFixedSize(13, 13);
 
     closeWindow->setStyleSheet("QPushButton {"
+                               "    border-radius: 6px;"
                                "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/red.png');"
+                               "    background-color: #e08581;"
                                "    background-repeat: no-repeat;"
+                               "    background-attachment: fixed;"
                                "}"
+
                                "QPushButton:hover {"
+                               "    border-radius: 6px;"
                                "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-image: url(':/redHovered.png');"
                                "    background-repeat: no-repeat;"
-                               "    background-color: rgba(0, 0, 0, 0);"
+                               "    background-color: #e06a65;"
+                               "    background-attachment: fixed;"
                                "}");
 
     QLabel *iconLabel = new QLabel();
@@ -467,15 +470,18 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
     fontSize->setValue(font_size.toInt());
 
     quitBtn->setStyleSheet("QPushButton {"
+                           "    border-radius: 6px;"
                            "    border-color: rgba(0, 0, 0, 0);"
-                           "    background-color: rgba(0, 0, 0, 0);"
-                           "    background-image: url(':/red.png');"
+                           "    background-color: #e08581;"
                            "    background-repeat: no-repeat;"
+                           "    background-attachment: fixed;"
                            "}"
+
                            "QPushButton:hover {"
+                           "    border-radius: 6px;"
                            "    border-color: rgba(0, 0, 0, 0);"
-                           "    background-image: url(':/redHovered.png');"
                            "    background-repeat: no-repeat;"
-                           "    background-color: rgba(0, 0, 0, 0);"
+                           "    background-color: #e06a65;"
+                           "    background-attachment: fixed;"
                            "}");
 }

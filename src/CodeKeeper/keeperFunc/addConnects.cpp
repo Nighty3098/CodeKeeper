@@ -9,6 +9,12 @@ void MainWindow::createConnects()
     connect(toThirdTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(2); });
     connect(toFourthTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(3); });
 
+    connect(openCommandPalette, &QShortcut::activated, this, [this]() {
+        qDebug() << "Opening command palette...";
+        commandPalette = new CommandPalette(this);
+        commandPalette->show();
+    });
+
     connect(incompleteTasks, &QListWidget::itemChanged, this,
             [=](QListWidgetItem *item) { onMovingTaskTo(item, incompleteTasks); });
     connect(inprocessTasks, &QListWidget::itemChanged, this,
@@ -68,33 +74,37 @@ void MainWindow::createConnects()
         if (isFullScreen)
         {
             maximizeBtn->setStyleSheet("QPushButton {"
+                                       "    border-radius: 6px;"
                                        "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-color: rgba(0, 0, 0, 0);"
-                                       "    background-image: url(':/green.png');"
+                                       "    background-color: #9bbf60;"
                                        "    background-repeat: no-repeat;"
+                                       "    background-attachment: fixed;"
                                        "}"
 
                                        "QPushButton:hover {"
+                                       "    border-radius: 6px;"
                                        "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-image: url(':/greenInHovered.png');"
-                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-color: #9bbf60;"
                                        "    background-repeat: no-repeat;"
+                                       "    background-attachment: fixed;"
                                        "}");
         }
         else
         {
             maximizeBtn->setStyleSheet("QPushButton {"
+                                       "    border-radius: 6px;"
                                        "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-color: rgba(0, 0, 0, 0);"
-                                       "    background-image: url(':/green.png');"
+                                       "    background-color: #a9bf85;"
                                        "    background-repeat: no-repeat;"
+                                       "    background-attachment: fixed;"
                                        "}"
 
                                        "QPushButton:hover {"
+                                       "    border-radius: 6px;"
                                        "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-image: url(':/greenHovered.png');"
-                                       "    background-color: rgba(0, 0, 0, 0);"
+                                       "    background-color: #9bbf60;"
                                        "    background-repeat: no-repeat;"
+                                       "    background-attachment: fixed;"
                                        "}");
         }
     });
@@ -193,6 +203,9 @@ void MainWindow::createConnects()
         windowTitle->setText(" ~ Projects ~ ");
         setWindowTitle(tr("Projects"));
     });
+
+    connect(notesList, &QListWidget::customContextMenuRequested, this,
+            [this](const QPoint &pos) { activateNotesContextMenu(pos, notesList); });
 }
 
 void MainWindow::createShortcuts()
@@ -202,5 +215,7 @@ void MainWindow::createShortcuts()
     toThirdTab = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_3), this);
     toFourthTab = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_4), this);
 
-    openSettingsWindowQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P), this);
+    openCommandPalette = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P), this);
+
+    openSettingsWindowQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_P), this);
 }
