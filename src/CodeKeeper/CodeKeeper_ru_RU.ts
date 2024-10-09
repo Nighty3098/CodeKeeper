@@ -10,7 +10,7 @@ Public repos: </source>
 Публичные репозитории: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="384"/>
+        <location filename="accountFunc/functional.cpp" line="393"/>
         <source>
 
 Public repos: </source>
@@ -19,7 +19,7 @@ Public repos: </source>
 Публичные репозитории: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="385"/>
+        <location filename="accountFunc/functional.cpp" line="394"/>
         <source>
 
 Following: </source>
@@ -28,7 +28,7 @@ Following: </source>
 Подписки: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="386"/>
+        <location filename="accountFunc/functional.cpp" line="395"/>
         <source>
 
 Followers: </source>
@@ -37,7 +37,7 @@ Followers: </source>
 Подписчики: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="387"/>
+        <location filename="accountFunc/functional.cpp" line="396"/>
         <source>
 
 Stars: </source>
@@ -46,22 +46,22 @@ Stars: </source>
 Звёзды: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="412"/>
+        <location filename="accountFunc/functional.cpp" line="421"/>
         <source>No tasks found</source>
         <translation>Задачи не найдены</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="426"/>
+        <location filename="accountFunc/functional.cpp" line="435"/>
         <source>Completed</source>
         <translation>Выполнено</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="426"/>
+        <location filename="accountFunc/functional.cpp" line="435"/>
         <source>Started</source>
         <translation>Начато</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="426"/>
+        <location filename="accountFunc/functional.cpp" line="435"/>
         <source>Not Started</source>
         <translation>Не начато</translation>
     </message>
@@ -74,12 +74,12 @@ No languages found</source>
 Статистика языков не найдена</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="526"/>
+        <location filename="accountFunc/functional.cpp" line="535"/>
         <source>None</source>
         <translation>Отсутствуют</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="530"/>
+        <location filename="accountFunc/functional.cpp" line="539"/>
         <source>Other</source>
         <translation>Другие</translation>
     </message>
@@ -100,22 +100,22 @@ No languages found</source>
         <translation type="vanished">Закончено: </translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="479"/>
+        <location filename="accountFunc/functional.cpp" line="488"/>
         <source>Not started</source>
         <translation>Не начато</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="479"/>
+        <location filename="accountFunc/functional.cpp" line="488"/>
         <source>In Dev</source>
         <translation>В разработке</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="479"/>
+        <location filename="accountFunc/functional.cpp" line="488"/>
         <source>On Review</source>
         <translation>На ревью</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="479"/>
+        <location filename="accountFunc/functional.cpp" line="488"/>
         <source>Finished</source>
         <translation>Закончено</translation>
     </message>
@@ -151,7 +151,7 @@ Projects</oldsource>
         <translation>Из данных CodeKeeper</translation>
     </message>
     <message>
-        <location filename="accountFunc/functional.cpp" line="521"/>
+        <location filename="accountFunc/functional.cpp" line="530"/>
         <source>
 
 Languages</source>
@@ -172,28 +172,71 @@ Languages</source>
     </message>
 </context>
 <context>
+    <name>CommandPalette</name>
+    <message>
+        <location filename="commandPalette.cpp" line="24"/>
+        <source>CodeKeeper</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="commandPalette.cpp" line="54"/>
+        <source>Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <location filename="commandPalette.cpp" line="55"/>
+        <source>Sync</source>
+        <translation>Синхронизация</translation>
+    </message>
+    <message>
+        <location filename="commandPalette.cpp" line="56"/>
+        <source>Help</source>
+        <translation>Помощь</translation>
+    </message>
+    <message>
+        <location filename="commandPalette.cpp" line="57"/>
+        <source>About</source>
+        <translation>О приложении</translation>
+    </message>
+    <message>
+        <location filename="commandPalette.cpp" line="58"/>
+        <source>Check for updates</source>
+        <translation>Проверить обновления</translation>
+    </message>
+    <message>
+        <location filename="commandPalette.cpp" line="59"/>
+        <source>Remove all data</source>
+        <translation>Удалить все данные</translation>
+    </message>
+    <message>
+        <location filename="commandPalette.cpp" line="60"/>
+        <source>User account</source>
+        <translation>Профиль пользователя</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
-        <location filename="keeperFunc/addConnects.cpp" line="189"/>
+        <location filename="keeperFunc/addConnects.cpp" line="199"/>
         <location filename="keeperFunc/createMenu.cpp" line="31"/>
-        <location filename="mainwindow.cpp" line="669"/>
+        <location filename="mainwindow.cpp" line="664"/>
         <source>Notes</source>
         <translation>Заметки</translation>
     </message>
     <message>
-        <location filename="keeperFunc/addConnects.cpp" line="184"/>
+        <location filename="keeperFunc/addConnects.cpp" line="194"/>
         <location filename="keeperFunc/createMenu.cpp" line="15"/>
-        <location filename="mainwindow.cpp" line="587"/>
-        <location filename="mainwindow.cpp" line="661"/>
+        <location filename="mainwindow.cpp" line="582"/>
+        <location filename="mainwindow.cpp" line="656"/>
         <source>Tasks</source>
         <translation>Задачи</translation>
     </message>
     <message>
-        <location filename="keeperFunc/addConnects.cpp" line="194"/>
+        <location filename="keeperFunc/addConnects.cpp" line="204"/>
         <location filename="keeperFunc/createMenu.cpp" line="23"/>
-        <location filename="mainwindow.cpp" line="485"/>
-        <location filename="mainwindow.cpp" line="595"/>
-        <location filename="mainwindow.cpp" line="677"/>
+        <location filename="mainwindow.cpp" line="480"/>
+        <location filename="mainwindow.cpp" line="590"/>
+        <location filename="mainwindow.cpp" line="672"/>
         <source>Projects</source>
         <translation>Проекты</translation>
     </message>
@@ -224,7 +267,8 @@ Languages</source>
     </message>
     <message>
         <location filename="keeperFunc/createMenu.cpp" line="44"/>
-        <location filename="keeperFunc/createMenu.cpp" line="138"/>
+        <location filename="keeperFunc/createMenu.cpp" line="139"/>
+        <location filename="keeperFunc/createMenu.cpp" line="151"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -235,6 +279,7 @@ Languages</source>
     </message>
     <message>
         <location filename="keeperFunc/createMenu.cpp" line="52"/>
+        <location filename="keeperFunc/createMenu.cpp" line="134"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
@@ -301,7 +346,7 @@ Languages</source>
     </message>
     <message>
         <location filename="keeperFunc/createMenu.cpp" line="99"/>
-        <location filename="keeperFunc/createMenu.cpp" line="157"/>
+        <location filename="keeperFunc/createMenu.cpp" line="170"/>
         <source>Add task</source>
         <translation>Добавить задачу</translation>
     </message>
@@ -332,8 +377,8 @@ Languages</source>
     </message>
     <message>
         <location filename="keeperFunc/createMenu.cpp" line="122"/>
-        <location filename="keeperFunc/notesFunc.cpp" line="164"/>
-        <location filename="keeperFunc/notesFunc.cpp" line="179"/>
+        <location filename="keeperFunc/notesFunc.cpp" line="202"/>
+        <location filename="keeperFunc/notesFunc.cpp" line="217"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
@@ -347,17 +392,17 @@ Languages</source>
         <translation type="vanished">Экспортировать как</translation>
     </message>
     <message>
-        <location filename="keeperFunc/createMenu.cpp" line="134"/>
+        <location filename="keeperFunc/createMenu.cpp" line="147"/>
         <source>New</source>
         <translation>Создать</translation>
     </message>
     <message>
-        <location filename="keeperFunc/createMenu.cpp" line="149"/>
+        <location filename="keeperFunc/createMenu.cpp" line="162"/>
         <source>Open in git</source>
         <translation>Открыть GIT проекта</translation>
     </message>
     <message>
-        <location filename="keeperFunc/createMenu.cpp" line="161"/>
+        <location filename="keeperFunc/createMenu.cpp" line="174"/>
         <source>Delete task</source>
         <translation>Удалить</translation>
     </message>
@@ -382,87 +427,87 @@ Languages</source>
         <translation type="vanished">Законченные проекты: </translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="107"/>
+        <location filename="keeperFunc/functional.cpp" line="105"/>
         <source>Connected</source>
         <translation>Подключено</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="115"/>
+        <location filename="keeperFunc/functional.cpp" line="112"/>
         <source>Disconnected</source>
         <translation>Нет подключения</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="123"/>
+        <location filename="keeperFunc/functional.cpp" line="119"/>
         <source>Auto sync on</source>
         <translation>Авто синхронизация включена</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="131"/>
+        <location filename="keeperFunc/functional.cpp" line="126"/>
         <source>Auto sync off</source>
         <translation>Авто синхронизация отключена</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="323"/>
+        <location filename="keeperFunc/functional.cpp" line="311"/>
         <source>Select a directory</source>
         <translation>Выбрать директорию</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="607"/>
+        <location filename="keeperFunc/functional.cpp" line="598"/>
         <source>Set heading 1</source>
         <translation>Установить заголовок 1</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="608"/>
+        <location filename="keeperFunc/functional.cpp" line="599"/>
         <source>Set heading 2</source>
         <translation>Установить заголовок 2</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="609"/>
+        <location filename="keeperFunc/functional.cpp" line="600"/>
         <source>Set heading 3</source>
         <translation>Установить заголовок 3</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="610"/>
+        <location filename="keeperFunc/functional.cpp" line="601"/>
         <source>List</source>
         <translation>Список</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="611"/>
+        <location filename="keeperFunc/functional.cpp" line="602"/>
         <source>Link</source>
         <translation>Ссылка</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="612"/>
+        <location filename="keeperFunc/functional.cpp" line="603"/>
         <source>Bold text</source>
         <translation>Жирный</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="613"/>
+        <location filename="keeperFunc/functional.cpp" line="604"/>
         <source>Italic text</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="614"/>
+        <location filename="keeperFunc/functional.cpp" line="605"/>
         <source>Strikethrough text</source>
         <translation>Зачёркивание</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="615"/>
+        <location filename="keeperFunc/functional.cpp" line="606"/>
         <source>Task</source>
         <translation>Задача</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="616"/>
+        <location filename="keeperFunc/functional.cpp" line="607"/>
         <source>Numbered list</source>
         <translation>Пронумерованный список</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="617"/>
+        <location filename="keeperFunc/functional.cpp" line="608"/>
         <source>Insert table</source>
         <translation>Вставить таблицу</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="618"/>
+        <location filename="keeperFunc/functional.cpp" line="609"/>
         <source>Set quote</source>
         <translation>Вставить выноску</translation>
     </message>
@@ -471,27 +516,27 @@ Languages</source>
         <translation type="vanished">Введите название</translation>
     </message>
     <message>
-        <location filename="keeperFunc/notesFunc.cpp" line="110"/>
+        <location filename="keeperFunc/notesFunc.cpp" line="148"/>
         <source>### File format not supported.</source>
         <translation>### Формат не поддерживается.</translation>
     </message>
     <message>
-        <location filename="keeperFunc/notesFunc.cpp" line="164"/>
+        <location filename="keeperFunc/notesFunc.cpp" line="202"/>
         <source>Folder name</source>
         <translation>Имя директории</translation>
     </message>
     <message>
-        <location filename="keeperFunc/notesFunc.cpp" line="179"/>
+        <location filename="keeperFunc/notesFunc.cpp" line="217"/>
         <source>Note name</source>
         <translation>Название заметки</translation>
     </message>
     <message>
-        <location filename="keeperFunc/notesFunc.cpp" line="224"/>
+        <location filename="keeperFunc/notesFunc.cpp" line="262"/>
         <source>Rename File or Folder</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="keeperFunc/notesFunc.cpp" line="224"/>
+        <location filename="keeperFunc/notesFunc.cpp" line="262"/>
         <source>Enter the new name:</source>
         <translation>Введите новое название:</translation>
     </message>
@@ -562,51 +607,51 @@ Languages</source>
     </message>
     <message>
         <location filename="keeperFunc/projectsFunc.cpp" line="186"/>
-        <location filename="keeperFunc/projectsFunc.cpp" line="308"/>
+        <location filename="keeperFunc/projectsFunc.cpp" line="311"/>
         <source>Project</source>
         <translation>Проект</translation>
     </message>
     <message>
         <location filename="keeperFunc/projectsFunc.cpp" line="190"/>
-        <location filename="keeperFunc/tasksFunc.cpp" line="177"/>
+        <location filename="keeperFunc/tasksFunc.cpp" line="181"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="keeperFunc/projectsFunc.cpp" line="245"/>
+        <location filename="keeperFunc/projectsFunc.cpp" line="248"/>
         <source> Project name: </source>
         <translation> Название проекта: </translation>
     </message>
     <message>
-        <location filename="keeperFunc/projectsFunc.cpp" line="252"/>
+        <location filename="keeperFunc/projectsFunc.cpp" line="255"/>
         <source> Link to GIT</source>
         <translation> Ссылка на GIT</translation>
     </message>
     <message>
-        <location filename="keeperFunc/projectsFunc.cpp" line="258"/>
-        <location filename="keeperFunc/projectsFunc.cpp" line="288"/>
+        <location filename="keeperFunc/projectsFunc.cpp" line="261"/>
+        <location filename="keeperFunc/projectsFunc.cpp" line="291"/>
         <source>Last mod: </source>
         <translation>Последнее изменение: </translation>
     </message>
     <message>
-        <location filename="keeperFunc/createMenu.cpp" line="145"/>
+        <location filename="keeperFunc/createMenu.cpp" line="158"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="keeperFunc/projectsFunc.cpp" line="301"/>
-        <location filename="keeperFunc/projectsFunc.cpp" line="309"/>
+        <location filename="keeperFunc/projectsFunc.cpp" line="304"/>
+        <location filename="keeperFunc/projectsFunc.cpp" line="312"/>
         <source>Issues</source>
         <translation>Проблемы</translation>
     </message>
     <message>
-        <location filename="keeperFunc/createMenu.cpp" line="165"/>
+        <location filename="keeperFunc/createMenu.cpp" line="178"/>
         <location filename="keeperFunc/tasksFunc.cpp" line="164"/>
         <source>Edit task</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="keeperFunc/tasksFunc.cpp" line="180"/>
+        <location filename="keeperFunc/tasksFunc.cpp" line="185"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -616,98 +661,98 @@ Languages</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="161"/>
+        <location filename="mainwindow.cpp" line="146"/>
         <source> ~ CodeKeeper ~ </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="191"/>
+        <location filename="mainwindow.cpp" line="176"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="199"/>
+        <location filename="mainwindow.cpp" line="184"/>
         <source>Sync</source>
         <translation>Синхронизация</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="207"/>
+        <location filename="mainwindow.cpp" line="192"/>
         <source>Account</source>
         <translation>Аккаунт</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="245"/>
+        <location filename="mainwindow.cpp" line="231"/>
         <source> Just start typing</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="260"/>
+        <location filename="mainwindow.cpp" line="246"/>
         <source>Note</source>
         <translation>Заметка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="395"/>
+        <location filename="mainwindow.cpp" line="389"/>
         <source>Incomplete</source>
         <translation>Незавершенные</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="408"/>
+        <location filename="mainwindow.cpp" line="402"/>
         <source>Inprocess</source>
         <translation>В процессе</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="421"/>
+        <location filename="mainwindow.cpp" line="415"/>
         <source>Complete</source>
         <translation>Выполнено</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="435"/>
+        <location filename="mainwindow.cpp" line="429"/>
         <source> Task...</source>
         <translation> Задача...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="492"/>
+        <location filename="mainwindow.cpp" line="487"/>
         <source>Not started</source>
         <translation>Не начато</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="504"/>
+        <location filename="mainwindow.cpp" line="499"/>
         <source>Started</source>
         <translation>Начато</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="516"/>
+        <location filename="mainwindow.cpp" line="511"/>
         <source>For review</source>
         <translation>На ревью</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="528"/>
+        <location filename="mainwindow.cpp" line="523"/>
         <source>Finished</source>
         <translation>Закончено</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="571"/>
+        <location filename="mainwindow.cpp" line="566"/>
         <source>Homepage</source>
         <translation>Домашняя страница</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="579"/>
+        <location filename="mainwindow.cpp" line="574"/>
         <source>Doc</source>
         <translation>Документация</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="653"/>
+        <location filename="mainwindow.cpp" line="648"/>
         <source>Home</source>
         <translation>Домашняя страница</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="753"/>
-        <location filename="mainwindow.cpp" line="760"/>
+        <location filename="mainwindow.cpp" line="748"/>
+        <location filename="mainwindow.cpp" line="755"/>
         <source>Welcome, </source>
         <translation>Добро пожаловать, </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="753"/>
+        <location filename="mainwindow.cpp" line="748"/>
         <source>!
 
 You have </source>
@@ -716,24 +761,24 @@ You have </source>
 У тебя </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="754"/>
+        <location filename="mainwindow.cpp" line="749"/>
         <source> uncompleted tasks out of </source>
         <translation> невыполненных задач из </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="755"/>
+        <location filename="mainwindow.cpp" line="750"/>
         <source>
 And </source>
         <translation>
 И </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="756"/>
+        <location filename="mainwindow.cpp" line="751"/>
         <source> started projects</source>
         <translation> начатых проектов</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="761"/>
+        <location filename="mainwindow.cpp" line="756"/>
         <source>!
 
 You have completed all of your tasks for the day.
@@ -850,48 +895,48 @@ You have completed all of your tasks for the day. Good job!</source>
         <translation>Изменить проект</translation>
     </message>
     <message>
-        <location filename="settingsFunc/functional.cpp" line="112"/>
+        <location filename="settingsFunc/functional.cpp" line="115"/>
         <source>What&apos;s new</source>
         <translation>Что нового</translation>
     </message>
     <message>
-        <location filename="settingsFunc/functional.cpp" line="127"/>
+        <location filename="settingsFunc/functional.cpp" line="130"/>
         <source>You are running the latest version of the app.</source>
         <translation>Запущена последняя версия приложения.</translation>
     </message>
     <message>
-        <location filename="settingsFunc/functional.cpp" line="128"/>
-        <location filename="settingsFunc/functional.cpp" line="134"/>
+        <location filename="settingsFunc/functional.cpp" line="131"/>
+        <location filename="settingsFunc/functional.cpp" line="137"/>
         <source>Current version: </source>
         <translation>Текущая версия: </translation>
     </message>
     <message>
-        <location filename="settingsFunc/functional.cpp" line="133"/>
+        <location filename="settingsFunc/functional.cpp" line="136"/>
         <source>A new version of the application is available.</source>
         <translation>Доступна новая версия.</translation>
     </message>
     <message>
-        <location filename="settingsFunc/functional.cpp" line="134"/>
+        <location filename="settingsFunc/functional.cpp" line="137"/>
         <source>New version: </source>
         <translation>Новая версия: </translation>
     </message>
     <message>
-        <location filename="settingsFunc/functional.cpp" line="169"/>
+        <location filename="settingsFunc/functional.cpp" line="172"/>
         <source>Repository is available</source>
         <translation>Репозиторий доступен</translation>
     </message>
     <message>
-        <location filename="settingsFunc/functional.cpp" line="175"/>
+        <location filename="settingsFunc/functional.cpp" line="178"/>
         <source>The repository isn&apos;t available</source>
         <translation>Репозитроий не доступен</translation>
     </message>
     <message>
-        <location filename="settingsFunc/functional.cpp" line="183"/>
+        <location filename="settingsFunc/functional.cpp" line="186"/>
         <source>Select Folder</source>
         <translation>Выбрать папку</translation>
     </message>
     <message>
-        <location filename="settingsFunc/functional.cpp" line="195"/>
+        <location filename="settingsFunc/functional.cpp" line="198"/>
         <source>To apply the settings, restart the application.</source>
         <translation>Для применения параметров, перезапустите приложение.</translation>
     </message>
@@ -1032,7 +1077,8 @@ You have completed all of your tasks for the day. Good job!</source>
         <location filename="settingswindow.cpp" line="111"/>
         <source>Some chips are in development and may not work properly.
 If you notice a bug, please write about it to the developer or to the support bot.</source>
-        <translation type="unfinished"></translation>
+        <translation>Некоторые фишки находятся в разработке и могут работать некорректно.
+Если вы заметили ошибку, напишите об этом разработчику или в службу поддержки.</translation>
     </message>
     <message>
         <location filename="settingswindow.cpp" line="232"/>

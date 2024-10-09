@@ -191,6 +191,32 @@ void MainWindow::createCustomTitlebar()
     }
 }
 
+void MainWindow::deleteAllData() {
+    QMessageBox reply;
+    reply.setWindowFlags(Qt::FramelessWindowHint);
+    reply.setText(tr("Do you really want to delete all the data?"));
+    reply.setWindowTitle(tr("CodeKeeper"));
+    reply.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    reply.setDefaultButton(QMessageBox::No);
+
+    if (reply.exec() == QMessageBox::Yes) {
+        if (QFile::exists(dir)) {
+            if (QFile::remove(dir)) {
+                qDebug() << "File" << dir << "deleted";
+            } else {
+                qDebug() << "Error: " << dir;
+            }
+        } else {
+            qDebug() << "File" << dir << "not found.";
+        }
+
+        globalSettings->clear();
+        qDebug() << "Data deleted";
+    } else {
+        qDebug() << "Data deletion cancelled by user.";
+    }
+}
+
 void MainWindow::fOpenAccountWindow()
 {
     QThread *accountWindowThread = new QThread;
@@ -256,7 +282,7 @@ void MainWindow::setSettingsData()
 bool MainWindow::checkConnection()
 {
     QNetworkAccessManager nam;
-    QNetworkRequest req(QUrl("https://google.com/"));
+    QNetworkRequest req(QUrl("https://github.com/"));
     QNetworkReply *reply = nam.get(req);
     QEventLoop loop;
     QObject::connect(reply, SIGNAL(readyRead()), &loop, SLOT(quit()));

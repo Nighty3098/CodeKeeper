@@ -15,6 +15,7 @@ SOURCES += \
     settingswindow.cpp \
     syncwindow.cpp \
     commandPalette.cpp \
+    keeperFunc/commandsFunc.cpp \
     settingsFunc/functional.cpp \
     keeperFunc/functional.cpp \
     keeperFunc/tasksFunc.cpp \

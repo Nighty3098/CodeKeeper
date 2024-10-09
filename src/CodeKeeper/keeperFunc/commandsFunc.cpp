@@ -57,3 +57,32 @@ void CommandPalette::filterList(const QString &text)
         item->setHidden(!item->text().contains(text, Qt::CaseInsensitive));
     }
 }
+
+void CommandPalette::activateCommand(QListWidgetItem *item)
+{
+    MainWindow *mainWindow = static_cast<MainWindow *>(parent());
+    SettingsWindow *settingsWindow = static_cast<SettingsWindow *>(parent());
+
+    if (item == settingsItem) {
+        qDebug() << "Run settings action";
+        mainWindow->openSettingsWindow();
+    } else if (item == syncItem) {
+        qDebug() << "Run sync action";
+        mainWindow->openSyncWindow();
+    } else if (item == helpItem) {
+        qDebug() << "Run help action";
+        QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper/wiki"));
+    } else if (item == aboutItem) {
+        qDebug() << "Run about action";
+        QDesktopServices::openUrl(QUrl("https://github.com/Nighty3098/CodeKeeper"));
+    } else if (item == checkUpdatesItem) {
+        qDebug() << "Run updates action";
+        settingsWindow->checkUpdates();
+    } else if (item == clearAllDataItem) {
+        qDebug() << "Run rm_data action";
+        mainWindow->deleteAllData();
+    } else if (item == userProfileItem) {
+        qDebug() << "Run account action";
+        mainWindow->fOpenAccountWindow();
+    }
+}

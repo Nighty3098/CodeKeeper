@@ -5,6 +5,10 @@
 #include <QObject>
 #include <QtWidgets>
 
+#include "accountwindow.h"
+#include "settingswindow.h"
+#include "syncwindow.h"
+
 class CommandPalette : public QMainWindow
 {
     Q_OBJECT
@@ -27,11 +31,20 @@ class CommandPalette : public QMainWindow
     QListWidget *listItems;
     QPushButton *closeBtn;
 
+    QListWidgetItem *settingsItem;
+    QListWidgetItem *syncItem;
+    QListWidgetItem *helpItem;
+    QListWidgetItem *aboutItem;
+    QListWidgetItem *checkUpdatesItem;
+    QListWidgetItem *clearAllDataItem;
+    QListWidgetItem *userProfileItem;
+
   private slots:
     void getSettingsData();
     void setWindowSize();
     void setWindowPosition();
     void filterList(const QString &text);
+    void activateCommand(QListWidgetItem *item);
 };
 
 #endif // COMMANDPALETTE_H

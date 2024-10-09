@@ -80,6 +80,11 @@ class MainWindow : public QMainWindow
 
     QTabWidget *tabs;
 
+    void openSyncWindow();
+    void openSettingsWindow();
+    void fOpenAccountWindow();
+    void deleteAllData();
+
     void setSettingsData();
     void getSettingsData();
 
@@ -156,10 +161,6 @@ class MainWindow : public QMainWindow
     QString getRepositoryData(QString git_url, QTableWidget *table, QLabel *label);
     QString getProjectIssues(QString git_url);
 
-    void openSettingsWindow();
-    void fOpenAccountWindow();
-
-    void openSyncWindow();
     void openFolder();
 
     void selectFileInQTreeView(QTreeView *treeView, const QString &fileName);

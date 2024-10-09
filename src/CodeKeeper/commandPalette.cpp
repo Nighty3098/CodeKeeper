@@ -14,12 +14,14 @@ CommandPalette::CommandPalette(QWidget *parent) : QMainWindow{parent}
     mainLayout = new QGridLayout(centralWidget);
     mainLayout->setSpacing(10);
 
+    int font_size_int = font_size.toInt();
+
     getSettingsData();
     setWindowSize();
     setWindowPosition();
 
     searchBar = new QLineEdit();
-    searchBar->setPlaceholderText("Search...");
+    searchBar->setPlaceholderText(tr("CodeKeeper"));
     searchBar->setFixedHeight(30);
     searchBar->setAlignment(Qt::AlignCenter);
 
@@ -46,13 +48,24 @@ CommandPalette::CommandPalette(QWidget *parent) : QMainWindow{parent}
     listItems = new QListWidget();
     listItems->setSelectionMode(QAbstractItemView::SingleSelection);
     listItems->setStyleSheet(
-        "QListWidget::item:selected {    color: #000000;background-color: #a9bf85;border-radius: 5px; font-size: " +
+        "QListWidget::item:selected {color: #000000; background-color: #a9bf85;border-radius: 5px; font-size: " +
         font_size + "pt;} QListWidget {font-size: " + font_size + "pt;}");
-    listItems->addItem("Settings");
-    listItems->addItem("Sync");
-    listItems->addItem("Help");
-    listItems->addItem("About");
-    listItems->addItem("Check for updates");
+
+    settingsItem = new QListWidgetItem(tr("Settings"));
+    syncItem = new QListWidgetItem(tr("Sync"));
+    helpItem = new QListWidgetItem(tr("Help"));
+    aboutItem = new QListWidgetItem(tr("About"));
+    checkUpdatesItem = new QListWidgetItem(tr("Check for updates"));
+    clearAllDataItem = new QListWidgetItem(tr("Remove all data"));
+    userProfileItem = new QListWidgetItem(tr("User account"));
+
+    listItems->addItem(settingsItem);
+    listItems->addItem(syncItem);
+    listItems->addItem(aboutItem);
+    listItems->addItem(helpItem);
+    listItems->addItem(checkUpdatesItem);
+    listItems->addItem(clearAllDataItem);
+    listItems->addItem(userProfileItem);
 
     searchBar->setFont(selectedFont);
     searchBar->setStyleSheet("font-size: " + font_size + "pt;");
@@ -65,6 +78,7 @@ CommandPalette::CommandPalette(QWidget *parent) : QMainWindow{parent}
 
     connect(closeBtn, &QPushButton::clicked, this, [this]() { close(); });
     connect(searchBar, &QLineEdit::textChanged, this, &CommandPalette::filterList);
+    connect(listItems, &QListWidget::itemDoubleClicked, this, &CommandPalette::activateCommand);
 }
 
 CommandPalette::~CommandPalette() {};
