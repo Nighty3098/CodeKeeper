@@ -55,7 +55,6 @@ CommandPalette::CommandPalette(QWidget *parent) : QMainWindow{parent}
     syncItem = new QListWidgetItem(tr("Sync"));
     helpItem = new QListWidgetItem(tr("Help"));
     aboutItem = new QListWidgetItem(tr("About"));
-    checkUpdatesItem = new QListWidgetItem(tr("Check for updates"));
     clearAllDataItem = new QListWidgetItem(tr("Remove all data"));
     userProfileItem = new QListWidgetItem(tr("User account"));
 
@@ -63,7 +62,6 @@ CommandPalette::CommandPalette(QWidget *parent) : QMainWindow{parent}
     listItems->addItem(syncItem);
     listItems->addItem(aboutItem);
     listItems->addItem(helpItem);
-    listItems->addItem(checkUpdatesItem);
     listItems->addItem(clearAllDataItem);
     listItems->addItem(userProfileItem);
 
