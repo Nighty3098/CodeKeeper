@@ -447,67 +447,72 @@ Languages</source>
         <translation>Авто синхронизация отключена</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="311"/>
+        <location filename="keeperFunc/functional.cpp" line="197"/>
+        <source>Do you really want to delete all the data?</source>
+        <translation>Вы действительно хотите удалить данные?</translation>
+    </message>
+    <message>
+        <location filename="keeperFunc/functional.cpp" line="337"/>
         <source>Select a directory</source>
         <translation>Выбрать директорию</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="598"/>
+        <location filename="keeperFunc/functional.cpp" line="624"/>
         <source>Set heading 1</source>
         <translation>Установить заголовок 1</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="599"/>
+        <location filename="keeperFunc/functional.cpp" line="625"/>
         <source>Set heading 2</source>
         <translation>Установить заголовок 2</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="600"/>
+        <location filename="keeperFunc/functional.cpp" line="626"/>
         <source>Set heading 3</source>
         <translation>Установить заголовок 3</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="601"/>
+        <location filename="keeperFunc/functional.cpp" line="627"/>
         <source>List</source>
         <translation>Список</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="602"/>
+        <location filename="keeperFunc/functional.cpp" line="628"/>
         <source>Link</source>
         <translation>Ссылка</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="603"/>
+        <location filename="keeperFunc/functional.cpp" line="629"/>
         <source>Bold text</source>
         <translation>Жирный</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="604"/>
+        <location filename="keeperFunc/functional.cpp" line="630"/>
         <source>Italic text</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="605"/>
+        <location filename="keeperFunc/functional.cpp" line="631"/>
         <source>Strikethrough text</source>
         <translation>Зачёркивание</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="606"/>
+        <location filename="keeperFunc/functional.cpp" line="632"/>
         <source>Task</source>
         <translation>Задача</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="607"/>
+        <location filename="keeperFunc/functional.cpp" line="633"/>
         <source>Numbered list</source>
         <translation>Пронумерованный список</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="608"/>
+        <location filename="keeperFunc/functional.cpp" line="634"/>
         <source>Insert table</source>
         <translation>Вставить таблицу</translation>
     </message>
     <message>
-        <location filename="keeperFunc/functional.cpp" line="609"/>
+        <location filename="keeperFunc/functional.cpp" line="635"/>
         <source>Set quote</source>
         <translation>Вставить выноску</translation>
     </message>
@@ -656,6 +661,7 @@ Languages</source>
         <translation>Отмена</translation>
     </message>
     <message>
+        <location filename="keeperFunc/functional.cpp" line="198"/>
         <location filename="mainwindow.cpp" line="44"/>
         <source>CodeKeeper</source>
         <translation></translation>

@@ -191,7 +191,8 @@ void MainWindow::createCustomTitlebar()
     }
 }
 
-void MainWindow::deleteAllData() {
+void MainWindow::deleteAllData()
+{
     QMessageBox reply;
     reply.setWindowFlags(Qt::FramelessWindowHint);
     reply.setText(tr("Do you really want to delete all the data?"));
@@ -199,20 +200,29 @@ void MainWindow::deleteAllData() {
     reply.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     reply.setDefaultButton(QMessageBox::No);
 
-    if (reply.exec() == QMessageBox::Yes) {
-        if (QFile::exists(dir)) {
-            if (QFile::remove(dir)) {
+    if (reply.exec() == QMessageBox::Yes)
+    {
+        if (QFile::exists(dir))
+        {
+            if (QFile::remove(dir))
+            {
                 qDebug() << "File" << dir << "deleted";
-            } else {
+            }
+            else
+            {
                 qDebug() << "Error: " << dir;
             }
-        } else {
+        }
+        else
+        {
             qDebug() << "File" << dir << "not found.";
         }
 
         globalSettings->clear();
         qDebug() << "Data deleted";
-    } else {
+    }
+    else
+    {
         qDebug() << "Data deletion cancelled by user.";
     }
 }
