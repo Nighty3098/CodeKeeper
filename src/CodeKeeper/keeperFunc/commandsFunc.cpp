@@ -93,4 +93,6 @@ void CommandPalette::activateCommand(QListWidgetItem *item)
         qDebug() << "Run account action";
         mainWindow->fOpenAccountWindow();
     }
+
+    this->close();
 }

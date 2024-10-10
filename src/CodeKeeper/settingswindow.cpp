@@ -95,7 +95,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     urlToRepo->setAlignment(Qt::AlignHCenter | Qt::AlignCenter);
 
     versionInfo = new QLabel();
-    versionInfo->setText("0.2.0");
+    versionInfo->setText("0.2.3");
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn = new QPushButton(
