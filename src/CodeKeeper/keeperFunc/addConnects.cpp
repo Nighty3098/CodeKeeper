@@ -119,9 +119,9 @@ void MainWindow::createConnects()
         getTotalProjects(tabs, notStartedProjects, startedProjects, finishedProjects, finishlineProjects);
     });
 
-    connect(openSettingsBtn, SIGNAL(clicked()), this, SLOT(openSettingsWindow()));
-    connect(openAccountWindow, SIGNAL(clicked()), this, SLOT(fOpenAccountWindow()));
-    connect(syncDataBtn, SIGNAL(clicked()), this, SLOT(openSyncWindow()));
+    connect(openSettingsBtn, &QPushButton::clicked, this, &MainWindow::openSettingsWindow);
+    connect(openAccountWindow, &QPushButton::clicked, this, &MainWindow::fOpenAccountWindow);
+    connect(syncDataBtn, &QPushButton::clicked, this, &MainWindow::openSyncWindow);
 
     // fix
     connect(notStartedProjects, &QListWidget::itemClicked, this, &MainWindow::on_listWidget_itemClicked);
