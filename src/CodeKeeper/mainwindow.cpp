@@ -115,8 +115,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             qDebug() << "Current app version:" << currentAppVersion;
             qDebug() << "New app version:" << newAppVersion;
 
-            if (currentAppVersion == newAppVersion)
+            QStringList currentParts = currentAppVersion.split('.');
+            QStringList newParts = newAppVersion.split('.');
+
+            bool isDevVersion = false;
+
+            for (int i = 0; i < qMin(currentParts.size(), newParts.size()); ++i)
             {
+                int currentPart = currentParts[i].toInt();
+                int newPart = newParts[i].toInt();
+
+                if (currentPart > newPart)
+                {
+                    isDevVersion = true;
+                    break;
+                }
+                else if (currentPart < newPart)
+                {
+                    break;
+                }
+            }
+
+            if (isDevVersion)
+            {
+                qDebug() << "You are using the developer version. It's not stable";
             }
             else
             {

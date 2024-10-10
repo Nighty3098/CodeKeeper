@@ -122,13 +122,30 @@ void SettingsWindow::checkUpdates()
 
     whatsNewButton->hide();
 
-    if (newAppVersion == currentAppVersion)
+    QStringList currentParts = currentAppVersion.split('.');
+    QStringList newParts = newAppVersion.split('.');
+
+    bool isDevVersion = false;
+
+    for (int i = 0; i < qMin(currentParts.size(), newParts.size()); ++i)
     {
-        whatsNewButton->show();
-        iconLabel->setPixmap(
-            QPixmap(":/check-mark.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        updateInfoLabel->setText(tr("You are running the latest version of the app."));
-        verInfoLabel->setText(tr("Current version: ") + currentAppVersion);
+        int currentPart = currentParts[i].toInt();
+        int newPart = newParts[i].toInt();
+
+        if (currentPart > newPart)
+        {
+            isDevVersion = true;
+            break;
+        }
+        else if (currentPart < newPart)
+        {
+            break;
+        }
+    }
+
+    if (isDevVersion)
+    {
+        updateInfoLabel->setText(tr("You are using the developer version. It's not stable"));
     }
     else
     {
