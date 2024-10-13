@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include <QDateTime>
+#include <QFontDatabase>
 #include <QGraphicsOpacityEffect>
 #include <QNetworkAccessManager>
 #include <QSqlDatabase>
@@ -375,18 +376,28 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
 {
     qDebug() << "Applying preferences";
 
+    int fontId = QFontDatabase::addApplicationFont(":/CartographCF-HeavyItalic.ttf");
+    QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
+
+    if (fontFamilies.isEmpty())
+    {
+        qWarning("Не удалось загрузить шрифт.");
+    }
+
+    QFont custom_font(fontFamilies.at(0), 12);
+
     QString font_size = QString::number(*font_size_int);
     QString font_size_clock = QString::number(*font_size_int * 10);
     QString font_size_date = QString::number(*font_size_int * 1.6);
     QString font_size_hello = QString::number(*font_size_int * 1.4);
 
-    timeLabel->setFont(*selectedFont);
+    timeLabel->setFont(custom_font);
     timeLabel->setStyleSheet("background: transparent; font-size: " + font_size_clock + "pt; color: #a9bf85;");
 
-    dateLabel->setFont(*selectedFont);
+    dateLabel->setFont(custom_font);
     dateLabel->setStyleSheet("background: transparent; font-size: " + font_size_date + "pt; color: #a9bf85;");
 
-    helloLabel->setFont(*selectedFont);
+    helloLabel->setFont(custom_font);
     helloLabel->setStyleSheet("background: transparent; font-size: " + font_size_hello + "pt; color: #a9bf85;");
 
     projectsMainLabel->setFont(*selectedFont);
@@ -586,10 +597,11 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                  font_size + "pt;");
 
     openSettingsBtn->setFont(*selectedFont);
-    openSettingsBtn->setStyleSheet("QPushButton {border: none; margin: 7px; font-size: " + font_size + "pt;} ");
+    openSettingsBtn->setStyleSheet(
+        "QPushButton {background-color: transparent; border: none; margin: 7px; font-size: " + font_size + "pt;} ");
 
     syncDataBtn->setFont(*selectedFont);
-    syncDataBtn->setStyleSheet("QPushButton { margin: 7px; "
+    syncDataBtn->setStyleSheet("QPushButton {background-color: transparent; margin: 7px; "
                                "border: none; color: #ffffff; font-size: " +
                                font_size + "pt;}");
 
@@ -603,12 +615,17 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     projectsMenu->setStyleSheet("font-size: " + font_size + "pt;");
 
     openAccountWindow->setFont(*selectedFont);
-    openAccountWindow->setStyleSheet("QPushButton {border: none; margin: 7px; font-size: " + font_size + "pt;} ");
+    openAccountWindow->setStyleSheet(
+        "QPushButton {background-color: transparent; border: none; margin: 7px; font-size: " + font_size + "pt;} ");
 
-    mainTabButton->setStyleSheet("QPushButton { margin: 7px; border: none;}");
-    tasksTabButton->setStyleSheet("QPushButton { margin: 7px; border: none;}");
-    notesTabButton->setStyleSheet("QPushButton { margin: 7px; border: none;}");
-    projectsTabButton->setStyleSheet("QPushButton { margin: 7px; border: none;}");
+    mainTabButton->setStyleSheet("QPushButton { margin: 7px; border-width: 2px; border-color: transparent;} "
+                                 "QPushButton:hover {border-color: #a9bf85;}");
+    tasksTabButton->setStyleSheet("QPushButton { margin: 7px; border-width: 2px; border-color: transparent;} "
+                                  "QPushButton::hover {border-color: #a9bf85;}");
+    notesTabButton->setStyleSheet("QPushButton { margin: 7px; border-width: 2px; border-color: transparent;} "
+                                  "QPushButton::hover {border-color: #a9bf85;}");
+    projectsTabButton->setStyleSheet("QPushButton { margin: 7px; border-width: 2px; border-color: transparent;} "
+                                     "QPushButton::hover {border-color: #a9bf85;}");
 
     setH1B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
     setH2B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
