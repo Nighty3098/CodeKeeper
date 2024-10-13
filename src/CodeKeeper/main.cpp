@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     QTranslator translator;
     if (appLang == 1)
     {
-        QString file = "CodeKeeper_ru_RU.qm";
+        QString file = ":/CodeKeeper_ru_RU.qm";
         qDebug() << "Loading " << file;
         translator.load(file);
     }

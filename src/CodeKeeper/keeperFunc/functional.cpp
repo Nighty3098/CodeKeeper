@@ -387,7 +387,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     QFont custom_font(fontFamilies.at(0), 12);
 
     QString font_size = QString::number(*font_size_int);
-    QString font_size_clock = QString::number(*font_size_int * 10);
+    QString font_size_clock = QString::number(*font_size_int * 11);
     QString font_size_date = QString::number(*font_size_int * 1.6);
     QString font_size_hello = QString::number(*font_size_int * 1.4);
 
@@ -429,11 +429,11 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "}"
                                    "QListWidget::item:selected {"
                                    "background-color: rgba(211, 102, 107, 75);"
+                                   "border-width: 2px; border-color: #a9bf85;"
                                    "}"
                                    "QListWidget::Item {"
                                    "margin: 0px;"
                                    "background-color: #e08581; color: #000000; "
-                                   "border-width: 0px; border-color: #e08581; "
                                    "border-radius: 5px;"
                                    "font-size: " +
                                    font_size +
@@ -447,12 +447,12 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                   "}"
                                   "QListWidget::item:selected {"
                                   "background-color: rgba(231, 232, 141, 75);"
+                                  "border-width: 2px; border-color: #a9bf85;"
                                   "}"
                                   "QListWidget::Item {"
                                   "margin: 0px;"
                                   "background-color: #d8bd85; "
                                   "color: #000000; text-decoration: underline; "
-                                  "border-width: 0px; "
                                   "border-radius: 5px;"
                                   "font-size: " +
                                   font_size +
@@ -466,13 +466,14 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                  "}"
                                  "QListWidget::item:selected {"
                                  "background-color: rgba(195, 232, 141, 75);"
+                                 "border-width: 2px; border-color: #a9bf85;"
                                  "}"
                                  "QListWidget::Item {"
                                  "margin: 0px;"
                                  "background-color: #a9bf85; "
                                  "color: #000000;"
                                  "border-radius: 5px;"
-                                 "line-through; border-width: 0px; "
+                                 "line-through;"
                                  "font-size: " +
                                  font_size +
                                  "pt;"
@@ -484,12 +485,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "pt;"
                                       "}"
                                       "QListWidget::item:selected {"
+                                      "border-width: 2px; border-color: #a9bf85;"
                                       "background-color: rgba(211, 102, 107, 75);"
                                       "}"
                                       "QListWidget::Item {"
                                       "margin: 0px;"
                                       "background-color: #e08581;"
-                                      "color: #000000; border-width: 0px; "
+                                      "color: #000000; "
                                       "border-radius: 5px;"
                                       "border-color: #ff757f; "
                                       "font-size: " +
@@ -503,13 +505,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "pt;"
                                    "}"
                                    "QListWidget::item:selected {"
+                                   "border-width: 2px; border-color: #a9bf85;"
                                    "background-color: rgba(231, 232, 141, 75);"
                                    "}"
                                    "QListWidget::Item {"
                                    "margin: 0px;"
                                    "background-color: #d8bd85; color: #000000; "
                                    "border-radius: 5px;"
-                                   "border-width: 0px; border-color: #ffc777; "
                                    "font-size: " +
                                    font_size +
                                    "pt;"
@@ -521,14 +523,14 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "pt;"
                                       "}"
                                       "QListWidget::item:selected {"
+                                      "border-width: 2px; border-color: #a9bf85;"
                                       "background-color: rgba(126, 156, 216, 75)"
                                       "}"
                                       "QListWidget::Item {"
                                       "margin: 0px;"
                                       "background-color: #85b9b3; "
-                                      "color: #000000; border-width: 0px; "
+                                      "color: #000000;"
                                       "border-radius: 5px;"
-                                      "border-color: #82aaff; "
                                       "font-size: " +
                                       font_size +
                                       "pt;"
@@ -540,13 +542,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                     "pt;"
                                     "}"
                                     "QListWidget::item:selected {"
+                                    "border-width: 2px; border-color: #a9bf85;"
                                     "background-color: rgba(195, 232, 141, 75);"
                                     "}"
                                     "QListWidget::Item {"
                                     "margin: 0px;"
                                     "background-color: #a9bf85; color: #000000; "
                                     "border-radius: 5px;"
-                                    "border-width: 0px; border-color: #c3e88d; "
                                     "font-size: " +
                                     font_size +
                                     "pt;"

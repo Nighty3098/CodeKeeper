@@ -411,9 +411,15 @@ QListWidget {
     alternate-background-color: rgba(255, 255, 255, 0.1);
 }
 
+QListWidget::item {
+    border-width: 2px;
+}
+
 QListWidget::item:selected {
     color: #FFFFFF;
     outline: none;
+    border-width: 2px;
+    border-color: #a9bf85;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
 }

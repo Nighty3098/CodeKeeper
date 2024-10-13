@@ -152,5 +152,6 @@
     "ios": "cpp",
     "regex": "cpp",
     "__locale": "cpp"
-  }
+  },
+  "cmake.sourceDirectory": "/home/nighty/Dev/Git/CodeKeeper/src/CodeKeeper"
 }

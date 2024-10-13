@@ -1,6 +1,6 @@
 QT += core gui widgets sql network
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 6): QT += widgets
 
 CONFIG += c++17
 

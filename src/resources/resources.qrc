@@ -79,5 +79,6 @@
         <file>tea.svg</file>
         <file>resize.png</file>
         <file>about.png</file>
+        <file>CodeKeeper_ru_RU.ts</file>
     </qresource>
 </RCC>
