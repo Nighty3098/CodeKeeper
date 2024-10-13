@@ -139,9 +139,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             if (isDevVersion)
             {
                 qDebug() << "You are using the developer version. It's not stable";
+                windowTitle->setStyleSheet("color: #e08581;");
             }
             else
             {
+                windowTitle->setStyleSheet("color: #a9bf85;");
                 settingsWindow->checkUpdates();
             }
         }
@@ -156,7 +158,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     maximizeBtn = new QPushButton();
 
     winControlL = new QHBoxLayout;
-    winControlL->setSpacing(7);
+    winControlL->setSpacing(10);
 
     isFullScreen = false;
 

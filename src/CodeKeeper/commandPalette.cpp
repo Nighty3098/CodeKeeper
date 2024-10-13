@@ -76,7 +76,7 @@ CommandPalette::CommandPalette(QWidget *parent) : QMainWindow{parent}
 
     connect(closeBtn, &QPushButton::clicked, this, [this]() { close(); });
     connect(searchBar, &QLineEdit::textChanged, this, &CommandPalette::filterList);
-    connect(listItems, &QListWidget::itemDoubleClicked, this, &CommandPalette::activateCommand);
+    connect(listItems, &QListWidget::itemActivated, this, &CommandPalette::activateCommand);
 }
 
 CommandPalette::~CommandPalette() {};
