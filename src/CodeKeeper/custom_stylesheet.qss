@@ -2,6 +2,7 @@ QDialog {
     background-color: transparent;
     border-width: 0px;
     border-radius: 0px;
+    outline: none;
 }
 
 QTableWidget {
@@ -10,6 +11,7 @@ QTableWidget {
     show-decoration-selected: 0;
     border: 0px;
     border-radius: 5px;
+    outline: none;
 }
 QTableWidget::item {
     border-radius: 5px;
@@ -20,22 +22,26 @@ QWidget {
     border-width: 0px;
     border-color: #FFFFFF;
     border-radius: 0px;
+    outline: none;
 }
 QMainWindow {
     border: none;
     background: transparent;
     color: #FFFFFF;
+    outline: none;
     border-radius: 0px;
 }
 
 QCheckBox {
     color: #FFFFFF;
+    outline: none;
 }
 
 QCheckBox::indicator {
     border-radius: 6px;
     width: 13px;
     height: 13px;
+    outline: none;
 }
 QCheckBox::indicator:unchecked {
     border-radius: 6px;
@@ -82,10 +88,12 @@ QStatusBar {
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
+    outline: none;
 }
 
 QStatusBar::QSizeGrip {
     background-color: transparent;
+    outline: none;
 }
 
 QSizeGrip {
@@ -93,17 +101,20 @@ QSizeGrip {
     background-image: url(':/resize.png');
     border-radius: 6px;
     background-repeat: no-repeat;
+    outline: none;
 }
 
 QMarkdownTextEdit {
     line-height: 10px;
     background-color: transparent;
     border-radius: 10px;
+    outline: none;
 }
 
 QMarkdownTextEdit::lineNumber {
     background-color: #5260bb;
     border-radius: 10px;
+    outline: none;
 }
 
 QMarkdownTextEdit::lineNumber:selected {
@@ -120,12 +131,14 @@ QMarkdownTextEdit::lineNumber::selected:active {
 
 QFontComboBox {
     color: #FFFFFF;
+    outline: none;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.1);
     alternate-background-color: rgba(255, 255, 255, 0.1);
 }
 
 QComboBox {
+    outline: none;
     color: #FFFFFF;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.1);
@@ -139,11 +152,13 @@ QComboBox::down-arrow {
     background-color: transparent;
     image: url(":/expand.png");
     border: none;
+    outline: none;
 }
 
 QComboBox::drop-down {
     background-color: transparent;
     border: none;
+    outline: none;
 }
 
 QSpinBox {
@@ -151,11 +166,13 @@ QSpinBox {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     alternate-background-color: rgba(255, 255, 255, 0.1);
+    outline: none;
 }
 
 QSpinBox::up-button {
     background-color: transparent;
     border: none;
+    outline: none;
 }
 
 QSpinBox::up-arrow {
@@ -165,11 +182,13 @@ QSpinBox::up-arrow {
     background-color: transparent;
     image: url(":/up-arrow.png");
     border: none;
+    outline: none;
 }
 
 QSpinBox::down-button {
     background-color: transparent;
     border: none;
+    outline: none;
 }
 
 QSpinBox::down-arrow {
@@ -179,19 +198,21 @@ QSpinBox::down-arrow {
     background-color: transparent;
     image: url(":/down-arrow.png");
     border: none;
+    outline: none;
 }
 
 
 QTabWidget {
     background-color: transparent;
     font-size: 9px;
+    outline: none;
 }
 
 QTabWidget::pane {
     border: 0px solid lightgray;
     border-radius: 10px;
     top:-1px;
-    background: transparent;;
+    background: transparent;
 }
 
 QMenu {
@@ -199,6 +220,7 @@ QMenu {
     color: #FFFFFF;
     border: 1px solid #FFFFFF;
     border-radius: 10px;
+    outline: none;
 }
 
 QMenu::separator {
@@ -260,7 +282,9 @@ QMenu::indicator:indeterminate:pressed {
 
 QToolButton:pressed {
     background-color: #505a6a;
+    outline: none;
 }
+
 QToolButton {
     background-color: transparent;
     selection-background-color: rgba(255, 255, 255, 0.1);
@@ -270,6 +294,7 @@ QToolButton {
     border-radius: 10px;
     alignment: center;
     border-color: #26333f;
+    outline: none;
 }
 
 QTabWidget::tab-bar { alignment: center; }
@@ -285,6 +310,7 @@ QTabBar::tab {
     margin: 5px;
     padding: 5px 5px;
     margin-bottom: 1px;
+    outline: none;
 }
 
 QTabBar::tab:selected {
@@ -296,6 +322,7 @@ QTabBar::tab:selected {
     padding: 5px 5px;
     border-radius: 5px;
     margin-bottom: 1px;
+    outline: none;
 }
 
 
@@ -308,6 +335,7 @@ QPushButton {
     border-radius: 10px;
     alignment: center;
     border-color: #26333f;
+    outline: none;
 }
 
 QPushButton:after {
@@ -319,6 +347,7 @@ QPushButton:after {
     border-radius: 10px;
     alignment: center;
     border-color: #26333f;
+    outline: none;
 }
 
 QPushButton::ToolTip {
@@ -338,6 +367,7 @@ QLineEdit {
     border-style: solid;
     border-radius: 10px;
     border-color: #26333f;
+    outline: none;
     alternate-background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -349,6 +379,7 @@ QPlainTextEdit {
     border-width: 0px;
     border-style: solid;
     border-radius: 10px;
+    outline: none;
     border-color: #26333f;
     alternate-background-color: rgba(255, 255, 255, 0.1);
 }
@@ -363,6 +394,7 @@ QTextBrowser {
     border-style: solid;
     border-radius: 10px;
     border-color: #26333f;
+    outline: none;
     alternate-background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -373,6 +405,7 @@ QListWidget {
     selection-color: #FFFFFF;
     border-width: 0px;
     border-style: solid;
+    outline: none;
     border-radius: 5px;
     border-color: #26333f;
     alternate-background-color: rgba(255, 255, 255, 0.1);
@@ -380,12 +413,14 @@ QListWidget {
 
 QListWidget::item:selected {
     color: #FFFFFF;
+    outline: none;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
 }
 
 QGroupBox {
     color: #FFFFFF;
+    outline: none;
     background-color: transparent;
     border-radius: 10px;
 }
@@ -397,6 +432,7 @@ QTreeView {
     color: #FFFFFF;
     border-width: 0px;
     border-style: solid;
+    outline: none;
     border-radius: 10px;
     border-color: rgba(255, 255, 255, 0.1);
     alternate-background-color: rgba(255, 255, 255, 0.1);
@@ -438,6 +474,7 @@ QTreeView::item:hover {
 QHeaderView {
     border: 1px solid #26333f;
     background-color: transparent;
+    outline: none;
     color: #FFFFFF;
 }
 
@@ -468,6 +505,7 @@ QHeaderView::section:checked:vertical {
 QProgressBar {
     color: #26333f;
     background-color: #ff757f;
+    outline: none;
     border-radius: 5px;
 }
 
@@ -552,4 +590,5 @@ QToolTip {
     border: 10px rgba(255, 255, 255, 0.1);
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.1);
+    outline: none;
 }

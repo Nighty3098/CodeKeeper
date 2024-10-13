@@ -1,37 +1,44 @@
 QTreeView {
     background-color: transparent;
     border: none;
+    outline: none;
 }
 
 QMarkdownTextEdit {
     background-color: transparent;
     border: none;
+    outline: none;
 }
 
 QMarkdownTextEdit::lineNumber {
     background-color: #5260bb;
     border-radius: 10px;
+    outline: none;
 }
 
 QMarkdownTextEdit::lineNumber:selected {
     color: #fff;
     background-color: #0d1117;
     border-radius: 10px;
+    outline: none;
 }
 
 QMarkdownTextEdit::lineNumber::selected:active {
     color: #05ff00;
     background-color: #0d1117;
     border-radius: 10px;
+    outline: none;
 }
 
 QListWidget {
     background-color: transparent;
     border: none;
+    outline: none;
 }
 
 QLineEdit {
     border-radius: 10px;
+    outline: none;
 }
 
 QProgressBar {
@@ -39,11 +46,13 @@ QProgressBar {
     height: auto;
     background-color: #ff757f;
     border-radius: 5px;
+    outline: none;
 }
 QProgressBar::chunk {
     color: #0D1117;
     background-color: #c3e88d;
     border-radius: 5px;
+    outline: none;
 }
 
 QScrollBar:vertical {
@@ -51,6 +60,7 @@ QScrollBar:vertical {
     border-radius: 3px;
     width: 6px;
     margin: 3px 0px 3px 0px;
+    outline: none;
 }
 
 QScrollBar:horizontal {
@@ -58,18 +68,21 @@ QScrollBar:horizontal {
     border-radius: 3px;
     height: 6px;
     margin: 0px 0px 0px 0px;
+    outline: none;
 }
 
 QScrollBar::handle:vertical {
     border-radius: 3px;
     background: #666c72;
     height: 6px;
+    outline: none;
 }
 
 QScrollBar::handle:horizontal {
     border-radius: 3px;
     background: #666c72;
     min-width: 20px;
+    outline: none;
 }
 
 QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {

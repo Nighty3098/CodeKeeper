@@ -392,21 +392,6 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     projectsMainLabel->setFont(*selectedFont);
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "pt;");
 
-    openSettingsBtn->setFont(*selectedFont);
-    openSettingsBtn->setStyleSheet("QPushButton {border: none; background-color: transparent; font-size: " + font_size +
-                                   "pt;} ");
-
-    syncDataBtn->setFont(*selectedFont);
-    syncDataBtn->setStyleSheet("QPushButton {background-color: transparent; "
-                               "border: none; color: #ffffff; font-size: " +
-                               font_size +
-                               "pt;} "
-                               "QPushButton:hover{text-decoration: none; border: "
-                               "none; background-color: "
-                               "transparent; color: "
-                               "#37d442; font-size: " +
-                               font_size + "pt;}");
-
     notesList->setFont(*selectedFont);
     notesList->setStyleSheet("font-size: " + font_size + "pt; background-color: rgba(47, 51, 77, 0);");
 
@@ -600,6 +585,14 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                  "#a9bf85; color: #222436; font-size: " +
                                  font_size + "pt;");
 
+    openSettingsBtn->setFont(*selectedFont);
+    openSettingsBtn->setStyleSheet("QPushButton {border: none; margin: 7px; font-size: " + font_size + "pt;} ");
+
+    syncDataBtn->setFont(*selectedFont);
+    syncDataBtn->setStyleSheet("QPushButton { margin: 7px; "
+                               "border: none; color: #ffffff; font-size: " +
+                               font_size + "pt;}");
+
     menu->setStyleSheet("font-size: " + font_size + "pt;");
     menu->setFont(*selectedFont);
 
@@ -610,13 +603,12 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     projectsMenu->setStyleSheet("font-size: " + font_size + "pt;");
 
     openAccountWindow->setFont(*selectedFont);
-    openAccountWindow->setStyleSheet(
-        "QPushButton {border: none; background-color: transparent; font-size: " + font_size + "pt;} ");
+    openAccountWindow->setStyleSheet("QPushButton {border: none; margin: 7px; font-size: " + font_size + "pt;} ");
 
-    mainTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
-    tasksTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
-    notesTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
-    projectsTabButton->setStyleSheet("QPushButton {background-color: transparent; border: none;}");
+    mainTabButton->setStyleSheet("QPushButton { margin: 7px; border: none;}");
+    tasksTabButton->setStyleSheet("QPushButton { margin: 7px; border: none;}");
+    notesTabButton->setStyleSheet("QPushButton { margin: 7px; border: none;}");
+    projectsTabButton->setStyleSheet("QPushButton { margin: 7px; border: none;}");
 
     setH1B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
     setH2B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
