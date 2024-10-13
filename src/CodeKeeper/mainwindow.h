@@ -282,6 +282,7 @@ class MainWindow : public QMainWindow
 
     // other
     QLabel *windowTitle;
+    QLabel *verLabel;
     QWidget *centralWidget;
     QGridLayout *mainLayout;
     QHBoxLayout *winControlL;

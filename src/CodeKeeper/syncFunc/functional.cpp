@@ -8,15 +8,15 @@ void SyncWindow::setFontStyle()
     appName->setFont(selectedFont);
 
     infoLabel->setFont(selectedFont);
-    infoLabel->setStyleSheet("font-size: " + font_size + "pt;");
+    infoLabel->setStyleSheet("font-size: " + font_size + "px;");
 
     syncingProgress->setFont(selectedFont);
 
     startSyncing->setFont(selectedFont);
-    startSyncing->setStyleSheet("font-size: " + font_size + "pt;");
+    startSyncing->setStyleSheet("font-size: " + font_size + "px;");
 
     stopSyncing->setFont(selectedFont);
-    stopSyncing->setStyleSheet("font-size: " + font_size + "pt;");
+    stopSyncing->setStyleSheet("font-size: " + font_size + "px;");
 }
 
 void SyncWindow::startSyncingFunc()

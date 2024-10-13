@@ -97,12 +97,12 @@ void SettingsWindow::checkUpdates()
     iconLabel->setPixmap(QPixmap(":/refresh.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     QLabel *updateInfoLabel = new QLabel();
-    updateInfoLabel->setStyleSheet("font-size: " + font_size + "pt;");
+    updateInfoLabel->setStyleSheet("font-size: " + font_size + "px;");
     updateInfoLabel->setFont(selectedFont);
     updateInfoLabel->setAlignment(Qt::AlignCenter);
 
     QLabel *verInfoLabel = new QLabel();
-    verInfoLabel->setStyleSheet("font-size: " + font_size + "pt;");
+    verInfoLabel->setStyleSheet("font-size: " + font_size + "px;");
     verInfoLabel->setFont(selectedFont);
     verInfoLabel->setAlignment(Qt::AlignCenter);
 
@@ -116,7 +116,7 @@ void SettingsWindow::checkUpdates()
     whatsNewButton->setFixedSize(100, 25);
     whatsNewButton->setFont(selectedFont);
     whatsNewButton->setStyleSheet("font-size: " + font_size +
-                                  "pt; border: none; background-color: transparent; color: #55b27d;");
+                                  "px; border: none; background-color: transparent; color: #55b27d;");
 
     qDebug() << newAppVersion << "  " << currentAppVersion;
 
@@ -360,69 +360,69 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
     // set font
     tabs->setFont(*selectedFont);
     tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size +
-                        "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
+                        "px;} QTabBar::tab:selected {font-size: " + font_size + "px;}");
 
     saveBtn->setFont(*selectedFont);
     saveBtn->setStyleSheet("QPushButton {border: none; background-color: "
                            "transparent; font-size: " +
                            font_size +
-                           "pt;} QPushButton:hover {border: none; "
+                           "px;} QPushButton:hover {border: none; "
                            "background-color: transparent; font-size: " +
-                           font_size + "pt;}");
+                           font_size + "px;}");
 
     appName->setFont(*selectedFont);
 
     urlToRepo->setFont(*selectedFont);
-    urlToRepo->setStyleSheet("font-size: " + font_size_2 + "pt;");
+    urlToRepo->setStyleSheet("font-size: " + font_size_2 + "px;");
 
     versionInfo->setFont(*selectedFont);
-    versionInfo->setStyleSheet("font-size: " + font_size_2 + "pt;");
+    versionInfo->setStyleSheet("font-size: " + font_size_2 + "px;");
 
     checkUpdatesBtn->setFont(*selectedFont);
-    checkUpdatesBtn->setStyleSheet("font-size: " + font_size + "pt;");
+    checkUpdatesBtn->setStyleSheet("font-size: " + font_size + "px;");
 
     fontSize->setFont(*selectedFont);
-    fontSize->setStyleSheet("font-size: " + font_size + "pt;");
+    fontSize->setStyleSheet("font-size: " + font_size + "px;");
 
     fontSelector->setFont(*selectedFont);
-    fontSelector->setStyleSheet("font-size: " + font_size + "pt;");
+    fontSelector->setStyleSheet("font-size: " + font_size + "px;");
 
     themeSelector->setFont(*selectedFont);
-    themeSelector->setStyleSheet("font-size: " + font_size + "pt;");
+    themeSelector->setStyleSheet("font-size: " + font_size + "px;");
 
     gitLabel->setFont(*selectedFont);
 
     gitLabel2->setFont(*selectedFont);
 
     gitToken->setFont(*selectedFont);
-    gitToken->setStyleSheet("font-size: " + font_size + "pt;");
+    gitToken->setStyleSheet("font-size: " + font_size + "px;");
 
     autoUpdates->setFont(*selectedFont);
-    autoUpdates->setStyleSheet("font-size: " + font_size + "pt;");
+    autoUpdates->setStyleSheet("font-size: " + font_size + "px;");
 
     gitUser->setFont(*selectedFont);
-    gitUser->setStyleSheet("font-size: " + font_size + "pt;");
+    gitUser->setStyleSheet("font-size: " + font_size + "px;");
 
     gitRepo->setFont(*selectedFont);
-    gitRepo->setStyleSheet("font-size: " + font_size + "pt;");
+    gitRepo->setStyleSheet("font-size: " + font_size + "px;");
 
     langLabel->setFont(*selectedFont);
-    langLabel->setStyleSheet("font-size: " + font_size + "pt;");
+    langLabel->setStyleSheet("font-size: " + font_size + "px;");
 
     langSelector->setFont(*selectedFont);
-    langSelector->setStyleSheet("font-size: " + font_size + "pt;");
+    langSelector->setStyleSheet("font-size: " + font_size + "px;");
 
     autoSyncAfterStart->setFont(*selectedFont);
-    autoSyncAfterStart->setStyleSheet("font-size: " + font_size + "pt;");
+    autoSyncAfterStart->setStyleSheet("font-size: " + font_size + "px;");
 
     isDate->setFont(*selectedFont);
-    isDate->setStyleSheet("font-size: " + font_size + "pt;");
+    isDate->setStyleSheet("font-size: " + font_size + "px;");
 
     isTime->setFont(*selectedFont);
-    isTime->setStyleSheet("font-size: " + font_size + "pt;");
+    isTime->setStyleSheet("font-size: " + font_size + "px;");
 
     isHost->setFont(*selectedFont);
-    isHost->setStyleSheet("font-size: " + font_size + "pt;");
+    isHost->setStyleSheet("font-size: " + font_size + "px;");
 
     mainTitle->setFont(*selectedFont);
 
@@ -430,30 +430,30 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
     fontSizeLabel->setFont(*selectedFont);
 
     fontSizeLabel->setFont(*selectedFont);
-    fontSizeLabel->setStyleSheet("font-size: " + font_size + "pt;");
+    fontSizeLabel->setStyleSheet("font-size: " + font_size + "px;");
 
     warningLabel->setFont(*selectedFont);
-    warningLabel->setStyleSheet("font-size: " + font_size + "pt;");
+    warningLabel->setStyleSheet("font-size: " + font_size + "px;");
 
     themeLabel->setFont(*selectedFont);
-    themeLabel->setStyleSheet("font-size: " + font_size + "pt;");
+    themeLabel->setStyleSheet("font-size: " + font_size + "px;");
 
     storageLabel->setFont(*selectedFont);
 
     pathToFolder->setFont(*selectedFont);
-    pathToFolder->setStyleSheet("font-size: " + font_size + "pt;");
+    pathToFolder->setStyleSheet("font-size: " + font_size + "px;");
 
     openFolder->setFont(*selectedFont);
-    openFolder->setStyleSheet("font-size: " + font_size + "pt;");
+    openFolder->setStyleSheet("font-size: " + font_size + "px;");
 
     customTitleBar->setFont(*selectedFont);
-    customTitleBar->setStyleSheet("font-size: " + font_size + "pt;");
+    customTitleBar->setStyleSheet("font-size: " + font_size + "px;");
 
     customTheme->setFont(*selectedFont);
-    customTheme->setStyleSheet("font-size: " + font_size + "pt;");
+    customTheme->setStyleSheet("font-size: " + font_size + "px;");
 
     repoAvailability->setFont(*selectedFont);
-    repoAvailability->setStyleSheet("font-size: " + font_size + "pt;");
+    repoAvailability->setStyleSheet("font-size: " + font_size + "px;");
 
     projectsContentLabel->setFont(*selectedFont);
 
@@ -470,18 +470,18 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
     CisStars->setFont(*selectedFont);
     CisForks->setFont(*selectedFont);
 
-    CisCreated->setStyleSheet("font-size: " + font_size + "pt;");
-    CisReleaseDate->setStyleSheet("font-size: " + font_size + "pt;");
-    CisLastCommit->setStyleSheet("font-size: " + font_size + "pt;");
-    CisPullReq->setStyleSheet("font-size: " + font_size + "pt;");
-    CisLicense->setStyleSheet("font-size: " + font_size + "pt;");
-    CisRelease->setStyleSheet("font-size: " + font_size + "pt;");
-    CisIssue->setStyleSheet("font-size: " + font_size + "pt;");
-    CisDownloads->setStyleSheet("font-size: " + font_size + "pt;");
-    CisCommit->setStyleSheet("font-size: " + font_size + "pt;");
-    CisLang->setStyleSheet("font-size: " + font_size + "pt;");
-    CisStars->setStyleSheet("font-size: " + font_size + "pt;");
-    CisForks->setStyleSheet("font-size: " + font_size + "pt;");
+    CisCreated->setStyleSheet("font-size: " + font_size + "px;");
+    CisReleaseDate->setStyleSheet("font-size: " + font_size + "px;");
+    CisLastCommit->setStyleSheet("font-size: " + font_size + "px;");
+    CisPullReq->setStyleSheet("font-size: " + font_size + "px;");
+    CisLicense->setStyleSheet("font-size: " + font_size + "px;");
+    CisRelease->setStyleSheet("font-size: " + font_size + "px;");
+    CisIssue->setStyleSheet("font-size: " + font_size + "px;");
+    CisDownloads->setStyleSheet("font-size: " + font_size + "px;");
+    CisCommit->setStyleSheet("font-size: " + font_size + "px;");
+    CisLang->setStyleSheet("font-size: " + font_size + "px;");
+    CisStars->setStyleSheet("font-size: " + font_size + "px;");
+    CisForks->setStyleSheet("font-size: " + font_size + "px;");
 
     fontSelector->setCurrentFont(*selectedFont);
     fontSize->setValue(font_size.toInt());
