@@ -138,8 +138,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
             if (isDevVersion)
             {
+                verLabel->setText("You are using the dev version !");
+                verLabel->setStyleSheet("color: #e08581;");
                 qDebug() << "You are using the developer version. It's not stable";
-                windowTitle->setStyleSheet("color: #e08581;");
             }
             else
             {
@@ -189,6 +190,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     helloLabel = new QLabel();
     helloLabel->setAlignment(Qt::AlignLeft);
 
+    verLabel = new QLabel();
+    verLabel->setAlignment(Qt::AlignBottom);
+
     decorationLabel = new QLabel();
     decorationLabel->setAlignment(Qt::AlignHCenter);
     decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(320, 320, Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -227,7 +231,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     contentLayout->setSpacing(5);
     notesCLayout->setSpacing(5);
 
-    menuLayout->setSpacing(5);
+    menuLayout->setSpacing(10);
     menuLayout->setSizeConstraint(QLayout::SetFixedSize);
     menuLayout->setAlignment(Qt::AlignHCenter);
 
@@ -274,8 +278,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuButton = new QToolButton;
     menuButton->setIcon(
         QPixmap(":/main.png")
-            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    menuButton->setIconSize(QSize(10, 10));
+            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    menuButton->setIconSize(QSize(50, 50));
+    menuButton->setFixedSize(30, 30);
     menuButton->setPopupMode(QToolButton::InstantPopup);
 
     menu = new QMenu(menuButton);
@@ -286,15 +291,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     setH1B = new QPushButton(
         QPixmap(":/h1.png")
-            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt() + 4, font_size.toInt() + 4, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setH2B = new QPushButton(
         QPixmap(":/h2.png")
-            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt() + 4, font_size.toInt() + 4, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setH3B = new QPushButton(
         QPixmap(":/h3.png")
-            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt() + 4, font_size.toInt() + 4, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setListB = new QPushButton(
         QPixmap(":/list.png")
@@ -372,7 +377,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksGLayout->setSpacing(0);
 
     QHBoxLayout *tasksStatsL = new QHBoxLayout;
-    tasksStatsL->setSpacing(10);
+    tasksStatsL->setSpacing(20);
 
     QSpacerItem *spacer1 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *spacer2 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -380,7 +385,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksMenuBtn = new QToolButton;
     tasksMenuBtn->setIcon(
         QPixmap(":/main.png")
-            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     tasksMenuBtn->setIconSize(QSize(50, 50));
     tasksMenuBtn->setFixedSize(30, 30);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
@@ -406,8 +411,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tasksStatsL->addItem(spacer1);
     tasksStatsL->addWidget(tasksMenuBtn);
-    tasksStatsL->addWidget(projectsList);
-    // tasksStatsL->addWidget(tasksProgress);
+    // tasksStatsL->addWidget(projectsList);
+    tasksStatsL->addWidget(tasksProgress);
     tasksStatsL->addItem(spacer2);
 
     label_1 = new QLabel(tr("Incomplete"));
@@ -481,7 +486,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsGLayout->setSpacing(0);
 
     QHBoxLayout *projectsStatsL = new QHBoxLayout();
-    projectsStatsL->setSpacing(0);
+    projectsStatsL->setSpacing(20);
 
     QSpacerItem *spacer3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *spacer4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -490,7 +495,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsMenuButton = new QToolButton();
     projectsMenuButton->setIcon(
         QPixmap(":/main.png")
-            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
     projectsMenuButton->setFixedSize(30, 25);
     projectsMenuButton->setIconSize(QSize(40, 40));
@@ -582,10 +587,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QWidget *mainTab = new QWidget();
     QGridLayout *firstLayout = new QGridLayout(mainTab);
 
-    firstLayout->addWidget(decorationLabel, 5, 0, 3, 8, Qt::AlignBottom | Qt::AlignRight);
+    firstLayout->addWidget(decorationLabel, 6, 0, 3, 8, Qt::AlignBottom | Qt::AlignRight);
     firstLayout->addWidget(timeLabel, 0, 1, 2, 4, Qt::AlignBottom);
     firstLayout->addWidget(dateLabel, 2, 1, 1, 4, Qt::AlignTop);
-    firstLayout->addWidget(helloLabel, 5, 1, 3, 7, Qt::AlignLeft | Qt::AlignHCenter);
+    firstLayout->addWidget(verLabel, 9, 1, 1, 7, Qt::AlignLeft);
+    firstLayout->addWidget(helloLabel, 7, 1, 2, 7, Qt::AlignLeft | Qt::AlignHCenter);
 
     tabs->addTab(mainTab, tr("Homepage"));
 
@@ -636,7 +642,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
         QTimer *connectionTimer = new QTimer(this);
         connect(connectionTimer, &QTimer::timeout, this, &MainWindow::setConnectionStatus);
-        connectionTimer->start(1000); // 1000ms = 1s
+        connectionTimer->start(1000);
     }
     else
     {

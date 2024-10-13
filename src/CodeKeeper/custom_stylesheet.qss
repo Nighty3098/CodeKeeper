@@ -13,6 +13,7 @@ QTableWidget {
     border-radius: 5px;
     outline: none;
 }
+
 QTableWidget::item {
     border-radius: 5px;
 }
@@ -218,8 +219,8 @@ QTabWidget::pane {
 QMenu {
     background-color: #505a6a;
     color: #FFFFFF;
-    border: 1px solid #FFFFFF;
-    border-radius: 10px;
+    border: 0px solid #FFFFFF;
+    border-radius: 0px;
     outline: none;
 }
 

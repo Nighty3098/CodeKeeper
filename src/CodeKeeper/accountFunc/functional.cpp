@@ -260,16 +260,16 @@ void AccountWindow::setFontStyle()
     userName->setFont(selectedFont);
 
     chartValuesDisplay->setFont(selectedFont);
-    chartValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
+    chartValuesDisplay->setStyleSheet("font-size: " + font_size + "px;");
 
     tasksChartValuesDisplay->setFont(selectedFont);
-    tasksChartValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
+    tasksChartValuesDisplay->setStyleSheet("font-size: " + font_size + "px;");
 
     langsValuesDisplay->setFont(selectedFont);
-    langsValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
+    langsValuesDisplay->setStyleSheet("font-size: " + font_size + "px;");
 
     GitLangsValuesDisplay->setFont(selectedFont);
-    GitLangsValuesDisplay->setStyleSheet("font-size: " + font_size + "pt;");
+    GitLangsValuesDisplay->setStyleSheet("font-size: " + font_size + "px;");
 
     langsTitle->setFont(selectedFont);
     langsTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
@@ -283,19 +283,19 @@ void AccountWindow::setFontStyle()
     userName->setStyleSheet("font-size: 36pt;");
 
     profilePicture->setFont(selectedFont);
-    profilePicture->setStyleSheet("font-size: " + font_size + "pt;");
+    profilePicture->setStyleSheet("font-size: " + font_size + "px;");
 
     openRepo->setFont(selectedFont);
-    openRepo->setStyleSheet("font-size: " + font_size + "pt;");
+    openRepo->setStyleSheet("font-size: " + font_size + "px;");
 
     profileInfo->setFont(selectedFont);
-    profileInfo->setStyleSheet("font-size: " + font_size + "pt;");
+    profileInfo->setStyleSheet("font-size: " + font_size + "px;");
 
     tasksStatsProgress->setFont(selectedFont);
-    tasksStatsProgress->setStyleSheet("font-size: " + font_size + "pt;");
+    tasksStatsProgress->setStyleSheet("font-size: " + font_size + "px;");
 
     langsCard->setFont(selectedFont);
-    langsCard->setStyleSheet("font-size: " + font_size + "pt;");
+    langsCard->setStyleSheet("font-size: " + font_size + "px;");
 
     closeWindow->setStyleSheet("QPushButton {"
                                "    border-radius: 6px;"

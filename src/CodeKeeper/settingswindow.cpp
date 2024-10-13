@@ -223,6 +223,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     langSelector->setFixedHeight(25);
     langSelector->addItem(QIcon(":/usa.png"), tr("English"));
     langSelector->addItem(QIcon(":/russian.png"), tr("Russian"));
+    langSelector->setEnabled(false);
     // langSelector->addItem(QIcon(":/japan.png"), tr("Japanese"));
     // langSelector->addItem(QIcon(":/german.png"), tr("Germany"));
     // langSelector->addItem(QIcon(":/spanish.png"), tr("Spanish"));
