@@ -49,7 +49,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
-    setMinimumSize(650, 650);
+    setMinimumSize(650, 700);
 
     mainLayout = new QVBoxLayout(centralWidget);
 
@@ -83,7 +83,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
 
     appName = new QLabel("CodeKeeper");
     appName->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
-    appName->setStyleSheet("font-size: 42px;");
+    appName->setStyleSheet("font-size: 40px;");
 
     urlToRepo = new QLabel();
     urlToRepo->setText("<a style='color: #a9bf85; text-decoration: none; font-size: " + font_size +
@@ -123,11 +123,9 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     QGridLayout *mainSyncLayout = new QGridLayout();
 
     gitLabel = new QLabel(tr("Sync settings"));
-    gitLabel->setStyleSheet("font-size: 24px;");
     gitLabel->setAlignment(Qt::AlignCenter);
 
     gitLabel2 = new QLabel(tr("Data in commit"));
-    gitLabel2->setStyleSheet("font-size: 24px;");
     gitLabel2->setAlignment(Qt::AlignCenter);
 
     gitToken = new QLineEdit();
@@ -180,7 +178,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
 
     mainTitle = new QLabel(tr("App settings"));
     mainTitle->setAlignment(Qt::AlignCenter);
-    mainTitle->setStyleSheet("font-size: 32px;");
 
     fontLabel = new QLabel(tr("Font:"));
     fontLabel->setAlignment(Qt::AlignCenter);
@@ -281,7 +278,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     projectsContentLabel = new QLabel(tr("Projects content"));
     projectsContentLabel->setStyleSheet("font-size: 32px;");
     projectsContentLabel->setAlignment(Qt::AlignCenter);
-    projectsContentLabel->setFixedHeight(150);
 
     CisCreated = new QCheckBox(tr("Created time"));
     CisCreated->setChecked(isCreated);
