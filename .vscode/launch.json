@@ -18,7 +18,8 @@
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         }
-      ]
+      ],
+      "visualizerFile": "/home/nighty/.config/Code/User/workspaceStorage/3092fd482ba6162c53717f261664f911/tonka3000.qtvsctools/qt.natvis.xml"
     }
   ]
 }

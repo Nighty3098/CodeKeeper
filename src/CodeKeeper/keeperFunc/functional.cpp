@@ -52,7 +52,7 @@ QString MainWindow::getCurrentDateTimeString()
 void MainWindow::updateTime()
 {
     QString currentTime = QTime::currentTime().toString("hh:mm");
-    QString currentDate = QDate::currentDate().toString("dd.MM.yyyy");
+    QString currentDate = QDate::currentDate().toString("   dd.MM.yyyy");
 
     timeLabel->setText(currentTime);
     dateLabel->setText(currentDate);
@@ -381,15 +381,15 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
 
     if (fontFamilies.isEmpty())
     {
-        qWarning("Error while loading custom font");
+        qWarning("Не удалось загрузить шрифт.");
     }
 
     QFont custom_font(fontFamilies.at(0), 12);
 
     QString font_size = QString::number(*font_size_int);
-    QString font_size_clock = QString::number(*font_size_int * 7);
-    QString font_size_date = QString::number(*font_size_int * 1.3);
-    QString font_size_hello = QString::number(*font_size_int * 1);
+    QString font_size_clock = QString::number(*font_size_int * 11);
+    QString font_size_date = QString::number(*font_size_int * 1.6);
+    QString font_size_hello = QString::number(*font_size_int * 1.4);
 
     timeLabel->setFont(custom_font);
     timeLabel->setStyleSheet("background: transparent; font-size: " + font_size_clock + "pt; color: #a9bf85;");
@@ -404,10 +404,11 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "px;");
 
     notesList->setFont(*selectedFont);
-    notesList->setStyleSheet("font-size: " + font_size + "pt; background-color: rgba(47, 51, 77, 0);");
+    notesList->setStyleSheet("font-size: " + font_size + "px; background-color: rgba(47, 51, 77, 0);");
 
-    verLabel->setFont(*selectedFont);
-    verLabel->setStyleSheet("font-size: " + font_size + "px;");
+    menuButton->setFont(*selectedFont);
+
+    tasksMenuBtn->setFont(*selectedFont);
 
     projectsList->setFont(*selectedFont);
     projectsList->setStyleSheet("font-size: " + font_size + "px;");
@@ -416,7 +417,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     noteEdit->setStyleSheet("font-size: " + font_size + "px;");
 
     noteNameLabel->setFont(*selectedFont);
-    noteNameLabel->setStyleSheet("font-size: " + font_size + "pt; color: #8ebecf;");
+    noteNameLabel->setStyleSheet("font-size: " + font_size + "px; color: #8ebecf;");
 
     taskText->setFont(*selectedFont);
     taskText->setStyleSheet("font-size: " + font_size + "px;");
@@ -424,7 +425,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     incompleteTasks->setStyleSheet("QListWidget {"
                                    "font-size: " +
                                    font_size +
-                                   "px;"
+                                   "pt;"
                                    "}"
                                    "QListWidget::item:selected {"
                                    "background-color: rgba(211, 102, 107, 75);"
@@ -436,13 +437,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "border-radius: 5px;"
                                    "font-size: " +
                                    font_size +
-                                   "px;"
+                                   "pt;"
                                    "}");
 
     inprocessTasks->setStyleSheet("QListWidget {"
                                   "font-size: " +
                                   font_size +
-                                  "px;"
+                                  "pt;"
                                   "}"
                                   "QListWidget::item:selected {"
                                   "background-color: rgba(231, 232, 141, 75);"
@@ -455,13 +456,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                   "border-radius: 5px;"
                                   "font-size: " +
                                   font_size +
-                                  "px;"
+                                  "pt;"
                                   "}");
 
     completeTasks->setStyleSheet("QListWidget {"
                                  "font-size: " +
                                  font_size +
-                                 "px;"
+                                 "pt;"
                                  "}"
                                  "QListWidget::item:selected {"
                                  "background-color: rgba(195, 232, 141, 75);"
@@ -475,13 +476,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                  "line-through;"
                                  "font-size: " +
                                  font_size +
-                                 "px;"
+                                 "pt;"
                                  "}");
 
     notStartedProjects->setStyleSheet("QListWidget {"
                                       "font-size: " +
                                       font_size +
-                                      "px;"
+                                      "pt;"
                                       "}"
                                       "QListWidget::item:selected {"
                                       "border-width: 2px; border-color: #a9bf85;"
@@ -495,13 +496,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "border-color: #ff757f; "
                                       "font-size: " +
                                       font_size +
-                                      "px;"
+                                      "pt;"
                                       "}");
 
     startedProjects->setStyleSheet("QListWidget {"
                                    "font-size: " +
                                    font_size +
-                                   "px;"
+                                   "pt;"
                                    "}"
                                    "QListWidget::item:selected {"
                                    "border-width: 2px; border-color: #a9bf85;"
@@ -513,13 +514,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "border-radius: 5px;"
                                    "font-size: " +
                                    font_size +
-                                   "px;"
+                                   "pt;"
                                    "}");
 
     finishlineProjects->setStyleSheet("QListWidget {"
                                       "font-size: " +
                                       font_size +
-                                      "px;"
+                                      "pt;"
                                       "}"
                                       "QListWidget::item:selected {"
                                       "border-width: 2px; border-color: #a9bf85;"
@@ -532,13 +533,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "border-radius: 5px;"
                                       "font-size: " +
                                       font_size +
-                                      "px;"
+                                      "pt;"
                                       "}");
 
     finishedProjects->setStyleSheet("QListWidget {"
                                     "font-size: " +
                                     font_size +
-                                    "px;"
+                                    "pt;"
                                     "}"
                                     "QListWidget::item:selected {"
                                     "border-width: 2px; border-color: #a9bf85;"
@@ -550,7 +551,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                     "border-radius: 5px;"
                                     "font-size: " +
                                     font_size +
-                                    "px;"
+                                    "pt;"
                                     "}");
 
     fProjects->setFont(*selectedFont);
@@ -569,17 +570,11 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     finishlineProjects->setFont(*selectedFont);
     finishedProjects->setFont(*selectedFont);
 
-    projectsMainLabel->setStyleSheet("font-size: " + font_size + "px;");
-    notStartedProjects->setStyleSheet("font-size: " + font_size + "px;");
-    startedProjects->setStyleSheet("font-size: " + font_size + "px;");
-    finishlineProjects->setStyleSheet("font-size: " + font_size + "px;");
-    finishedProjects->setStyleSheet("font-size: " + font_size + "px;");
-
     projectsMenu->setFont(*selectedFont);
 
     tabs->setFont(*selectedFont);
     tabs->setStyleSheet("QTabBar::tab { font-size: " + font_size +
-                        "pt;} QTabBar::tab:selected {font-size: " + font_size + "pt;}");
+                        "pt;} QTabBar::tab:selected {font-size: " + font_size + "px;}");
 
     totalProjectsL->setFont(*selectedFont);
     totalProjectsL->setStyleSheet("font-size: " + font_size + "px;");
@@ -601,11 +596,11 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     tasksProgress->setFont(*selectedFont);
     tasksProgress->setStyleSheet("background-color: #e08581; selection-background-color: "
                                  "#a9bf85; color: #222436; font-size: " +
-                                 font_size + "px;");
+                                 font_size + "pt;");
 
     openSettingsBtn->setFont(*selectedFont);
     openSettingsBtn->setStyleSheet(
-        "QPushButton {background-color: transparent; border: none; margin: 7px; font-size: " + font_size + "pt;} ");
+        "QPushButton {background-color: transparent; border: none; margin: 7px; font-size: " + font_size + "px;} ");
 
     syncDataBtn->setFont(*selectedFont);
     syncDataBtn->setStyleSheet("QPushButton {background-color: transparent; margin: 7px; "
@@ -615,6 +610,9 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     menu->setStyleSheet("font-size: " + font_size + "px;");
     menu->setFont(*selectedFont);
 
+    verLabel->setStyleSheet("font-size: " + font_size + "px; color: #e08581;");
+    verLabel->setFont(custom_font);
+
     tasksMenu->setFont(*selectedFont);
     tasksMenu->setStyleSheet("font-size: " + font_size + "px;");
 
@@ -623,7 +621,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
 
     openAccountWindow->setFont(*selectedFont);
     openAccountWindow->setStyleSheet(
-        "QPushButton {background-color: transparent; border: none; margin: 7px; font-size: " + font_size + "pt;} ");
+        "QPushButton {background-color: transparent; border: none; margin: 7px; font-size: " + font_size + "px;} ");
 
     mainTabButton->setStyleSheet("QPushButton { margin: 7px; border-width: 2px; border-color: transparent;} "
                                  "QPushButton:hover {border-color: #a9bf85;}");
@@ -660,28 +658,19 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     setTableB->setToolTip(tr("Insert table"));
     setQuoteB->setToolTip(tr("Set quote"));
 
-    menuButton->setStyleSheet("font-size: " + font_size + "px;");
-    menuButton->setFont(*selectedFont);
-    tasksMenuBtn->setStyleSheet("font-size: " + font_size + "px;");
-    tasksMenuBtn->setFont(*selectedFont);
-    projectsMenuButton->setStyleSheet("font-size: " + font_size + "px;");
-    projectsMenuButton->setFont(*selectedFont);
+    menuButton->setStyleSheet("border: 5px; border-radius: 10px;");
+    tasksMenuBtn->setStyleSheet("border: 5px; border-radius: 10px;");
+    projectsMenuButton->setStyleSheet("border: 5px; border-radius: 10px;");
 
     isAutoSync->setStyleSheet("border: 0px; background-color: transparent;");
-
     isConnected->setStyleSheet("border: 0px; background-color: transparent;");
 
     fProjects->setStyleSheet("font-size: " + font_size + "px;");
-
     flProjects->setStyleSheet("font-size: " + font_size + "px;");
-
     sProjects->setStyleSheet("font-size: " + font_size + "px;");
-
     nsProjects->setStyleSheet("font-size: " + font_size + "px;");
 
     label_3->setStyleSheet("font-size: " + font_size + "px;");
-
     label_2->setStyleSheet("font-size: " + font_size + "px;");
-
     label_1->setStyleSheet("font-size: " + font_size + "px;");
 }

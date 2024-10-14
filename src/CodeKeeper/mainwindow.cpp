@@ -139,12 +139,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             if (isDevVersion)
             {
                 verLabel->setText("You are using the dev version !");
-                verLabel->setStyleSheet("color: #e08581;");
                 qDebug() << "You are using the developer version. It's not stable";
             }
             else
             {
-                windowTitle->setStyleSheet("color: #a9bf85;");
                 settingsWindow->checkUpdates();
             }
         }

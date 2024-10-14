@@ -355,7 +355,7 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
     qDebug() << "Applying preferences";
 
     QString font_size = QString::number(*font_size_int);
-    QString font_size_2 = QString::number(*font_size_int * 1.2);
+    QString font_size_2 = QString::number((*font_size_int) * 3);
 
     // set font
     tabs->setFont(*selectedFont);
@@ -373,10 +373,10 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
     appName->setFont(*selectedFont);
 
     urlToRepo->setFont(*selectedFont);
-    urlToRepo->setStyleSheet("font-size: " + font_size_2 + "px;");
+    urlToRepo->setStyleSheet("font-size: " + font_size + "px;");
 
     versionInfo->setFont(*selectedFont);
-    versionInfo->setStyleSheet("font-size: " + font_size_2 + "px;");
+    versionInfo->setStyleSheet("font-size: " + font_size + "px;");
 
     checkUpdatesBtn->setFont(*selectedFont);
     checkUpdatesBtn->setStyleSheet("font-size: " + font_size + "px;");
@@ -391,8 +391,10 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
     themeSelector->setStyleSheet("font-size: " + font_size + "px;");
 
     gitLabel->setFont(*selectedFont);
+    gitLabel->setStyleSheet("font-size: " + font_size_2 + "px;");
 
     gitLabel2->setFont(*selectedFont);
+    gitLabel2->setStyleSheet("font-size: " + font_size_2 + "px;");
 
     gitToken->setFont(*selectedFont);
     gitToken->setStyleSheet("font-size: " + font_size + "px;");
@@ -425,6 +427,7 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
     isHost->setStyleSheet("font-size: " + font_size + "px;");
 
     mainTitle->setFont(*selectedFont);
+    mainTitle->setStyleSheet("font-size: " + font_size_2 + "px;");
 
     fontLabel->setFont(*selectedFont);
     fontSizeLabel->setFont(*selectedFont);
