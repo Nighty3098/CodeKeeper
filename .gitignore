@@ -11,3 +11,5 @@ src/CodeKeeper/CodeKeeper.asc
 src/CodeKeeper/build/
 /src/CodeKeeper/CMakeFiles
 /src/CodeKeeper/CodeKeeper_autogen
+/build
+/.cache
