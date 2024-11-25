@@ -418,6 +418,7 @@ void AccountWindow::setTasksProgress()
     if (totalTasks <= 0)
     {
         tasksStatsProgress->hide();
+        tasksStatsProgress->setFixedSize(0, 0);
         tasksTitle->setText(tr("No tasks found"));
         return;
     }
@@ -471,6 +472,7 @@ void AccountWindow::setProjectsStats()
     if (totalProjects == 0)
     {
         projectsChart->hide();
+        projectsChart->setFixedSize(0, 0);
         projectTitle->setText("\n\nNo projects found");
         return;
     }
