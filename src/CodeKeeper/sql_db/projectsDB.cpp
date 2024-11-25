@@ -207,3 +207,16 @@ void MainWindow::loadProjects()
     }
     qDebug() << "Projects was loaded";
 }
+
+QStringList MainWindow::getProjectsList()
+{
+    QSqlQuery query;
+
+    query.exec("SELECT * FROM projects");
+    QStringList projectsList;
+    while (query.next())
+    {
+        projectsList << query.value("title").toString();
+    }
+    return projectsList;
+}

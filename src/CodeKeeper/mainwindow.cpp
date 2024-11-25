@@ -788,6 +788,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     });
     checkTasks->start();
 
+    // QStringList projectsList = getProjectsList();
+    // qDebug() << projectsList;
+
     qDebug() << "" << dir;
     qDebug() << "Load time:" << startup.elapsed() << "ms";
 }

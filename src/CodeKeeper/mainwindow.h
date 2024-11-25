@@ -243,6 +243,8 @@ class MainWindow : public QMainWindow
     void createTrayMenu(QMenu *menu, QString font_size);
     void createNotesContextMenu(QMenu *menu, QString font_size);
 
+    QStringList getProjectsList();
+
   protected:
     void mousePressEvent(QMouseEvent *event) override
     {
