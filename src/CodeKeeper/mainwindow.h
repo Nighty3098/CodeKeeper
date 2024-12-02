@@ -84,6 +84,7 @@ class MainWindow : public QMainWindow
     void openSettingsWindow();
     void fOpenAccountWindow();
     void deleteAllData();
+    void hideMenu();
 
     void setSettingsData();
     void getSettingsData();
@@ -274,6 +275,11 @@ class MainWindow : public QMainWindow
 
   private:
     QSystemTrayIcon *trayIcon;
+
+    QWidget *tabButtonsWidget = new QWidget();
+    QVBoxLayout *tabButtons;
+    QShortcut *hideMenuQS;
+    bool isHideMenu;
 
     // shortcuts
     QShortcut *toFirstTab;

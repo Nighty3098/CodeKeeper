@@ -38,6 +38,7 @@ class CommandPalette : public QMainWindow
     QListWidgetItem *checkUpdatesItem;
     QListWidgetItem *clearAllDataItem;
     QListWidgetItem *userProfileItem;
+    QListWidgetItem *hideMenuItem;
 
   private slots:
     void getSettingsData();

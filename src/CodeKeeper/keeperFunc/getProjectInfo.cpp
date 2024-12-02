@@ -52,7 +52,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
 
     QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
     QJsonObject obj = doc.object();
-    qDebug() << doc;
+    // qDebug() << doc;
 
     name = obj["name"].toString();
 
@@ -111,7 +111,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
     QJsonDocument commitDoc = QJsonDocument::fromJson(commitReply->readAll());
     QJsonObject commitObj = commitDoc.object();
     QJsonArray commits = commitDoc.array();
-    qDebug() << commitDoc;
+    // qDebug() << commitDoc;
 
     if (commits.isEmpty())
     {
@@ -147,7 +147,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
 
     QJsonDocument releaseDoc = QJsonDocument::fromJson(releaseReply->readAll());
     QJsonArray releases = releaseDoc.array();
-    qDebug() << releaseDoc;
+    // qDebug() << releaseDoc;
 
     int iTotalDownloads = 0;
     for (const QJsonValue &release : releases)
@@ -182,7 +182,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
 
     QJsonDocument releasesDoc = QJsonDocument::fromJson(releasesReply->readAll());
     QJsonObject releasesObj = releasesDoc.object();
-    qDebug() << releasesDoc;
+    // qDebug() << releasesDoc;
 
     release = releasesObj["name"].toString();
 
@@ -217,7 +217,7 @@ QString MainWindow::getRepositoryData(QString git_url, QTableWidget *table, QLab
 
     QJsonDocument langDoc = QJsonDocument::fromJson(langReply->readAll());
     QJsonObject langObj = langDoc.object();
-    qDebug() << langDoc;
+    // qDebug() << langDoc;
 
     QString languages;
     for (const QString &lang : langObj.keys())
@@ -385,7 +385,7 @@ QString MainWindow::getProjectIssues(QString git_url)
         QJsonDocument json = QJsonDocument::fromJson(data);
         QJsonArray issues = json.array();
 
-        qDebug() << json;
+        // qDebug() << json;
 
         foreach (const QJsonValue &issue, issues)
         {

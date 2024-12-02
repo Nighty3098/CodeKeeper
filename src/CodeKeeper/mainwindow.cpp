@@ -193,7 +193,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     decorationLabel = new QLabel();
     decorationLabel->setAlignment(Qt::AlignHCenter);
-    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(320, 320, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(260, 260, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     openSettingsBtn = new QPushButton(
         QPixmap(":/settings.png")
@@ -657,15 +657,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    // winControlL->addWidget(windowTitle);
-
+    winControlL->addWidget(windowTitle);
     winControlL->addItem(headerSp);
-
     winControlL->addWidget(isConnected);
     winControlL->addWidget(isAutoSync);
     winControlL->addWidget(sizeGrip);
 
-    QVBoxLayout *tabButtons = new QVBoxLayout();
+    tabButtonsWidget = new QWidget();
+    tabButtons = new QVBoxLayout();
+
+    tabButtonsWidget->setStyleSheet("margin: 0px; padding: 0px;");
+    tabButtonsWidget->setMaximumWidth(55);
+
+    tabButtonsWidget->setLayout(tabButtons);
 
     mainTabButton = new QPushButton(
         QPixmap(":/main.png")
@@ -712,10 +716,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tabButtons->addWidget(syncDataBtn);
     tabButtons->addWidget(openSettingsBtn);
 
+    isHideMenu = false;
+
     // open homepage
     tabs->setCurrentIndex(0);
 
-    mainLayout->addLayout(tabButtons, 1, 0);
+    mainLayout->addWidget(tabButtonsWidget, 1, 0);
     mainLayout->addWidget(tabs, 1, 1);
 
     QThread *dbThread = new QThread;

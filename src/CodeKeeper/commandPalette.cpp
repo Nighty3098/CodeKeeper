@@ -49,7 +49,7 @@ CommandPalette::CommandPalette(QWidget *parent) : QMainWindow{parent}
     listItems->setSelectionMode(QAbstractItemView::SingleSelection);
     listItems->setStyleSheet(
         "QListWidget::item:selected {color: #000000; background-color: #a9bf85;border-radius: 5px; font-size: " +
-        font_size + "pt;} QListWidget {font-size: " + font_size + "pt;}");
+        font_size + "pt;} QListWidget {font-size: " + font_size + "pt; background-color: transparent;}");
 
     settingsItem = new QListWidgetItem(tr("Settings"));
     syncItem = new QListWidgetItem(tr("Sync"));
@@ -57,6 +57,7 @@ CommandPalette::CommandPalette(QWidget *parent) : QMainWindow{parent}
     aboutItem = new QListWidgetItem(tr("About"));
     clearAllDataItem = new QListWidgetItem(tr("Remove all data"));
     userProfileItem = new QListWidgetItem(tr("User account"));
+    hideMenuItem = new QListWidgetItem(tr("Hide menu"));
 
     listItems->addItem(settingsItem);
     listItems->addItem(syncItem);
@@ -64,6 +65,7 @@ CommandPalette::CommandPalette(QWidget *parent) : QMainWindow{parent}
     listItems->addItem(helpItem);
     listItems->addItem(clearAllDataItem);
     listItems->addItem(userProfileItem);
+    listItems->addItem(hideMenuItem);
 
     searchBar->setFont(selectedFont);
     searchBar->setStyleSheet("font-size: " + font_size + "pt;");

@@ -15,6 +15,8 @@ void MainWindow::createConnects()
         commandPalette->show();
     });
 
+    connect(hideMenuQS, &QShortcut::activated, this, [this]() { hideMenu(); });
+
     connect(incompleteTasks, &QListWidget::itemChanged, this,
             [=](QListWidgetItem *item) { onMovingTaskTo(item, incompleteTasks); });
     connect(inprocessTasks, &QListWidget::itemChanged, this,
@@ -218,4 +220,6 @@ void MainWindow::createShortcuts()
     openCommandPalette = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P), this);
 
     openSettingsWindowQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_P), this);
+
+    hideMenuQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_B), this);
 }

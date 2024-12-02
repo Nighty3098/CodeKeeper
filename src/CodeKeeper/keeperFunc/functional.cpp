@@ -10,6 +10,22 @@
 
 #include "mainwindow.h"
 
+void MainWindow::hideMenu()
+{
+    if (isHideMenu)
+    {
+        tabButtonsWidget->show();
+
+        isHideMenu = false;
+    }
+    else
+    {
+        tabButtonsWidget->hide();
+
+        isHideMenu = true;
+    }
+}
+
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason)

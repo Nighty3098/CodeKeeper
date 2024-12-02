@@ -93,6 +93,11 @@ void CommandPalette::activateCommand(QListWidgetItem *item)
         qDebug() << "Run account action";
         mainWindow->fOpenAccountWindow();
     }
+    else if (item == hideMenuItem)
+    {
+        qDebug() << "Run hide menu action";
+        mainWindow->hideMenu();
+    }
 
     this->close();
 }
