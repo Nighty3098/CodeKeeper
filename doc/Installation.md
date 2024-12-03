@@ -1,7 +1,7 @@
 <div align="center">
 
-![](imgs/display-arrow-down.png)
-
+<br><br><br>
+<img src="../imgs/display-arrow-down.png" width="30%"/>
 <br><br><br>
 </div>
 
@@ -12,7 +12,6 @@
 
 ```
 git clone https://github.com/Nighty3098/CodeKeeper --recurse-submodules
-cd CodeKeeper/src/CodeKeeper
-qmake CodeKeeper.pro
-make
+cd CodeKeeper/
+bash build.sh
 ```

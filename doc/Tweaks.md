@@ -1,4 +1,3 @@
-<div align="center">
 
 ### Tweaks
 
@@ -7,12 +6,10 @@
 
 | Default theme | Custom theme |
 |:--------------|:-------------|
-| ![](https://github.com/user-attachments/assets/eaabcc3d-8b42-4cc3-8453-313c69833ba0) | ![](imgs/dark.png) |
+| ![](https://github.com/user-attachments/assets/eaabcc3d-8b42-4cc3-8453-313c69833ba0) | ![](../imgs/dark.png) |
 
 <br><br>
 
 | Light theme | Dark theme |
 |:--------------|:-------------|
-| ![](imgs/light.png) | ![](imgs/dark.png) |
-
-</div>
+| ![](../imgs/light.png) | ![](../imgs/dark.png) |
