@@ -2,8 +2,10 @@
 <br><br>
 
 # Security Policy
+
 > [!WARNING]
 > Supported Versions
+> Only Latest Version is Supported
 
 <br>
 <a href="https://t.me/DXS_TechSupport_bot"><img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_TechSupport.png?raw=true" height="30px"/></a>
