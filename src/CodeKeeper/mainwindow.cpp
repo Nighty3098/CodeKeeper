@@ -372,7 +372,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // ========================================================
     QGridLayout *tasksGLayout = new QGridLayout;
-    tasksGLayout->setSpacing(0);
+    tasksGLayout->setSpacing(5);
 
     QHBoxLayout *tasksStatsL = new QHBoxLayout;
     tasksStatsL->setSpacing(20);
@@ -398,19 +398,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsList->setFixedSize(300, 25);
     projectsList->setPlaceholderText("Select your project ... ");
 
-    projectsList->addItem("CodeKeeper");
-    projectsList->addItem("SDash");
-
     tasksProgress = new QProgressBar();
     tasksProgress->setMaximum(100);
-    tasksProgress->setMaximumWidth(300);
-    tasksProgress->setFixedHeight(25);
+    tasksProgress->setMaximumWidth(400);
+    tasksProgress->setFixedHeight(20);
     tasksProgress->setAlignment(Qt::AlignCenter);
+
+    refreshProjectsListB = new QPushButton(QPixmap(":/retry.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
 
     tasksStatsL->addItem(spacer1);
     tasksStatsL->addWidget(tasksMenuBtn);
-    // tasksStatsL->addWidget(projectsList);
-    tasksStatsL->addWidget(tasksProgress);
+    tasksStatsL->addWidget(projectsList);
+    tasksStatsL->addWidget(refreshProjectsListB);
     tasksStatsL->addItem(spacer2);
 
     label_1 = new QLabel(tr("Incomplete"));
@@ -476,6 +475,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksGLayout->addWidget(label_3, 1, 2, Qt::AlignHCenter);
     tasksGLayout->addWidget(tasksSplitter, 2, 0, 1, 3);
     tasksGLayout->addWidget(taskText, 4, 1);
+    tasksGLayout->addWidget(tasksProgress, 5, 1);
 
     // ========================================================
 
@@ -732,6 +732,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         create_projects_connection();
 
         loadNotes();
+        loadProjectsList(projectsList);
         loadTasks();
         loadProjects();
 
@@ -793,9 +794,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         tasksTimer->start();
     });
     checkTasks->start();
-
-    // QStringList projectsList = getProjectsList();
-    // qDebug() << projectsList;
 
     qDebug() << "" << dir;
     qDebug() << "Load time:" << startup.elapsed() << "ms";

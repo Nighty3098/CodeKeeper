@@ -180,7 +180,6 @@ void MainWindow::loadProjects()
         QString data = title + "\n" + git_url + "\n" + createdTime;
 
         QListWidgetItem *item = new QListWidgetItem(data);
-        item->setTextAlignment(Qt::AlignCenter);
 
         item->setData(Qt::UserRole, id);
 

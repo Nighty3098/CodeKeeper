@@ -153,8 +153,10 @@ class MainWindow : public QMainWindow
     QFont selectedFont;
     QString font_size;
     int theme;
-
     int appLang;
+
+    QComboBox *projectList;
+    QPushButton *refreshProjectsListB;
 
   private slots:
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -176,7 +178,7 @@ class MainWindow : public QMainWindow
     void renameItem();
 
     void removeTaskFromDB(QString *task, QString *status);
-    void saveTaskToDB(QString *task, QString *status);
+    void saveTaskToDB(QString *task, QString *status, QString *projectLink);
     void addNewTask();
     void removeTask();
 
@@ -222,7 +224,7 @@ class MainWindow : public QMainWindow
     void create_projects_connection();
 
     void updateTaskStatus(QString *task, QString *status, QString *cT);
-    void updateTaskData(QString *task, QString *status, QString *cT);
+    void updateTaskData(QString *task, QString *status, QString *cT, QString *projectLink);
     void onMovingTaskFrom(QListWidgetItem *item, QListWidget *list);
     void onMovingTaskTo(QListWidgetItem *item, QListWidget *list);
 
@@ -243,6 +245,10 @@ class MainWindow : public QMainWindow
     void createTaskMenu(QMenu *menu, QString font_size);
     void createTrayMenu(QMenu *menu, QString font_size);
     void createNotesContextMenu(QMenu *menu, QString font_size);
+
+    void filterTasksByProject(QComboBox* projectList);
+    void loadProjectsList(QComboBox *projectList);
+    QString getProjectByTask(QString *task, QString *status);
 
     QStringList getProjectsList();
 

@@ -19,7 +19,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     setCentralWidget(centralWidget);
 
     mainLayout = new QGridLayout(centralWidget);
-    setFixedSize(800, 650);
+    setMinimumSize(800, 670);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -136,7 +136,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     statsLayout->addWidget(langsCard, Qt::AlignCenter);
 
     statsWidget = new QWidget();
-    statsWidget->setFixedSize(350, 550);
+    statsWidget->setFixedSize(350, 600);
     statsWidget->setLayout(statsLayout);
 
     QVBoxLayout *gitProfileLayout = new QVBoxLayout();
