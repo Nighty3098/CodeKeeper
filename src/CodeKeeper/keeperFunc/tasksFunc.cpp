@@ -51,8 +51,8 @@ void MainWindow::onMovingTaskTo(QListWidgetItem *item, QListWidget *list)
     {
         qDebug() << "Moved task: " << item->text() << " to: " << list->objectName();
 
-        QStringList data = item->text().split("\n");
-        if (data.size() >= 2) // Check if data has at least 2 elements
+        QStringList data = item->text().split("\n――――――――――――――\n");
+        if (data.size() >= 2)
         {
             QString status = list->objectName();
             QString cT = data[1];
@@ -72,16 +72,19 @@ void MainWindow::addNewTask()
     if (!text.isEmpty())
     {
         taskText->clear();
-        QString task = text + "\n" + getCurrentDateTimeString();
+        QString task = text + "\n――――――――――――――\n" + getCurrentDateTimeString();
         qDebug() << "Added new task: " << task;
         incompleteTasks->addItem(task);
         QString status = incompleteTasks->objectName();
-        saveTaskToDB(&task, &status);
+        QString projectLink = "";
+        saveTaskToDB(&task, &status, &projectLink);
     }
     else
     {
         qWarning() << "Task is empty";
     }
+
+    filterTasksByProject(projectList);
 }
 
 void MainWindow::removeTask()
@@ -104,6 +107,8 @@ void MainWindow::removeTask()
             break;
         }
     }
+
+    filterTasksByProject(projectList);
 }
 
 void MainWindow::getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks,
@@ -157,52 +162,80 @@ void MainWindow::editTask()
             qDebug() << font_size;
 
             QString oldText = item->text();
-            QStringList oldData = oldText.split("\n");
+            QStringList oldData = oldText.split("\n――――――――――――――\n");
 
             QDialog dialog(this);
-            dialog.setFixedSize(220, 250);
+            dialog.setMinimumSize(220, 250);
             dialog.setWindowTitle(tr("Edit task"));
             dialog.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
             QVBoxLayout layout(&dialog);
-            QLineEdit lineEdit(&dialog);
-            lineEdit.setFont(selectedFont);
-            lineEdit.setStyleSheet("font-size: " + font_size + "px;");
-            lineEdit.setFixedSize(200, 100);
-            lineEdit.setAlignment(Qt::AlignCenter);
+            QPlainTextEdit taskEdit(&dialog);
+            taskEdit.setFont(selectedFont);
+            taskEdit.setStyleSheet("font-size: " + font_size + "px;");
+            taskEdit.setMinimumSize(200, 100);
+            taskEdit.setPlainText(oldData[0]);
 
-            lineEdit.setText(oldData[0]);
+            QComboBox *projectList = new QComboBox();
+            projectList->setPlaceholderText("Select project ...");
+            projectList->setFont(selectedFont);
+            projectList->setStyleSheet("font-size: " + font_size + "px;");
+            projectList->setMinimumSize(200, 25);
 
-            QComboBox projectList;
-            projectList.setFont(selectedFont);
-            projectList.setStyleSheet("font-size: " + font_size + "px;");
-            projectList.setFixedSize(200, 25);
+            loadProjectsList(projectList);
+
+            QString c_status = listWidget->objectName();
+            QString c_task = oldData[0];
+            qDebug() << "Checking" << c_task << " - " << c_status;
+            QString projectLink = getProjectByTask(&c_task, &c_status);
+
+            qDebug() << "Count: " << projectList->count();
+
+            if (!projectLink.isEmpty() && projectLink != "NULL")
+            {
+                qDebug() << "Found Project link: " << projectLink;
+
+                for (int i = 0; i < projectList->count(); ++i)
+                {
+
+                    QString itemText = projectList->itemText(i);
+                    qDebug() << "Index:" << i << "Text:" << itemText;
+
+                    if (itemText == projectLink)
+                    {
+                        projectList->setCurrentIndex(i);
+                        qDebug() << "Selected project: " << projectList->currentText();
+                    }
+                }
+            }
 
             QPushButton okButton(tr("Save"), &dialog);
             okButton.setFont(selectedFont);
             okButton.setStyleSheet("font-size: " + font_size + "px;");
-            okButton.setFixedSize(200, 25);
+            okButton.setMinimumSize(200, 25);
             QPushButton cancelButton(tr("Cancel"), &dialog);
             cancelButton.setFont(selectedFont);
-            cancelButton.setFixedSize(200, 25);
+            cancelButton.setMinimumSize(200, 25);
             cancelButton.setStyleSheet("font-size: " + font_size + "px;");
 
-            layout.addWidget(&projectList);
-            layout.addWidget(&lineEdit);
+            layout.addWidget(projectList);
+            layout.addWidget(&taskEdit);
             layout.addWidget(&okButton);
             layout.addWidget(&cancelButton);
 
             QObject::connect(&okButton, &QPushButton::clicked, [&]() {
-                QString newText = lineEdit.text();
+                QString newText = taskEdit.toPlainText();
                 if (!newText.isEmpty())
                 {
-                    QString newTask = newText + "\n" + getCurrentDateTimeString();
+                    QString newTask = newText + "\n――――――――――――――\n" + getCurrentDateTimeString();
                     QString status = listWidget->objectName();
                     QString cT = oldData[1];
+                    QString newProjectLink = projectList->currentText();
+                    qDebug() << "New project link: " << newProjectLink;
 
                     item->setText(newTask);
 
-                    updateTaskData(&newTask, &status, &cT);
+                    updateTaskData(&newTask, &status, &cT, &newProjectLink);
                 }
                 dialog.close();
             });
@@ -212,5 +245,54 @@ void MainWindow::editTask()
             dialog.exec();
             break;
         }
+    }
+}
+void MainWindow::loadProjectsList(QComboBox *projectList)
+{
+    qDebug() << "Load projects list";
+
+    projectList->clear();
+    QStringList projectsStringList = getProjectsList();
+    for (const QString &project : projectsStringList)
+    {
+        projectList->addItem(project);
+    }
+
+    projectList->addItem("All");
+}
+
+void MainWindow::filterTasksByProject(QComboBox *projectList)
+{
+    qDebug() << "Activated: " << projectList->currentText();
+    QString selectedProject = projectList->currentText();
+
+    for (int i = 0; i < incompleteTasks->count(); ++i)
+    {
+        QListWidgetItem *item = incompleteTasks->item(i);
+        QStringList task = item->text().split("\n――――――――――――――\n");
+        QString status = incompleteTasks->objectName();
+        QString projectLink = getProjectByTask(&task[0], &status);
+
+        item->setHidden(selectedProject != "All" && projectLink != selectedProject);
+    }
+
+    for (int i = 0; i < inprocessTasks->count(); ++i)
+    {
+        QListWidgetItem *item = inprocessTasks->item(i);
+        QStringList task = item->text().split("\n――――――――――――――\n");
+        QString status = inprocessTasks->objectName();
+        QString projectLink = getProjectByTask(&task[0], &status);
+
+        item->setHidden(selectedProject != "All" && projectLink != selectedProject);
+    }
+
+    for (int i = 0; i < completeTasks->count(); ++i)
+    {
+        QListWidgetItem *item = completeTasks->item(i);
+        QStringList task = item->text().split("\n――――――――――――――\n");
+        QString status = completeTasks->objectName();
+        QString projectLink = getProjectByTask(&task[0], &status);
+
+        item->setHidden(selectedProject != "All" && projectLink != selectedProject);
     }
 }

@@ -15,6 +15,10 @@ void MainWindow::createConnects()
         commandPalette->show();
     });
 
+    connect(projectsList, &QComboBox::currentTextChanged, this, [this]() { filterTasksByProject(projectsList); });
+
+    connect(hideMenuQS, &QShortcut::activated, this, [this]() { hideMenu(); });
+
     connect(incompleteTasks, &QListWidget::itemChanged, this,
             [=](QListWidgetItem *item) { onMovingTaskTo(item, incompleteTasks); });
     connect(inprocessTasks, &QListWidget::itemChanged, this,
@@ -192,6 +196,7 @@ void MainWindow::createConnects()
         tabs->setCurrentIndex(2);
         windowTitle->setText(" ~ Tasks ~ ");
         setWindowTitle(tr("Tasks"));
+        loadProjectsList(projectsList);
     });
     connect(notesTabButton, &QPushButton::clicked, [=]() {
         tabs->setCurrentIndex(1);
@@ -218,4 +223,6 @@ void MainWindow::createShortcuts()
     openCommandPalette = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P), this);
 
     openSettingsWindowQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_P), this);
+
+    hideMenuQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_B), this);
 }

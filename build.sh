@@ -31,6 +31,10 @@ echo -e "${GREEN}Compilation successful, sending notification...${RESET}"
 notify-send "CodeKeeper" "Build complete!"
 echo -e "${GREEN}Compilation complete.${RESET}"
 
+echo -e "${GREEN}Copying bin file to main directory...${RESET}"
+chmod +x CodeKeeper
+cp CodeKeeper ../../ || { echo -e "${RED}Error: Failed to copy bin file to the root directory.${RESET}"; exit 1; }
+
 # Return to the root directory
 echo -e "${GREEN}Navigating back to the root directory...${RESET}"
 cd ../.. || { echo -e "${RED}Error: Failed to return to the root directory.${RESET}"; exit 1; }

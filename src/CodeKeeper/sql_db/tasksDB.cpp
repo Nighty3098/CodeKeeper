@@ -13,7 +13,8 @@ void MainWindow::create_tasks_connection()
                   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                   "task TEXT,"
                   "status VARCHAR(50),"
-                  "createdTime VARCHAR(50)"
+                  "createdTime VARCHAR(50),"
+                  "projectLink TEXT"
                   ");";
 
     if (!query.exec(str))
@@ -26,28 +27,33 @@ void MainWindow::create_tasks_connection()
     }
 }
 
-void MainWindow::updateTaskData(QString *task, QString *status, QString *cT)
+void MainWindow::updateTaskData(QString *task, QString *status, QString *cT, QString *projectLink)
 {
     QSqlQuery query;
 
-    QStringList taskText = task->split("\n");
+    QStringList taskText = task->split("\n――――――――――――――\n");
+    QString task_s = taskText[0];
 
-    query.prepare("UPDATE tasks SET task = :task WHERE createdTime = :cT AND status = :status");
-    query.bindValue(":task", taskText[0]);
+    query.prepare(
+        "UPDATE tasks SET task = :task, projectLink = :projectLink WHERE createdTime = :cT AND status = :status");
+    query.bindValue(":task", task_s);
     query.bindValue(":cT", *cT);
     query.bindValue(":status", *status);
+    query.bindValue(":projectLink", *projectLink);
 
     if (!query.exec())
     {
         qDebug() << "" << query.lastError();
     }
+
+    qDebug() << task_s << *status << *cT << *projectLink;
 }
 
 void MainWindow::updateTaskStatus(QString *task, QString *status, QString *cT)
 {
     QSqlQuery query;
 
-    QStringList taskText = task->split("\n");
+    QStringList taskText = task->split("\n――――――――――――――\n");
 
     query.prepare("UPDATE tasks SET status = :status WHERE createdTime = :cT AND task = :task");
     query.bindValue(":status", *status);
@@ -60,16 +66,18 @@ void MainWindow::updateTaskStatus(QString *task, QString *status, QString *cT)
     }
 }
 
-void MainWindow::saveTaskToDB(QString *task, QString *status)
+void MainWindow::saveTaskToDB(QString *task, QString *status, QString *projectLink)
 {
     QSqlQuery query;
 
-    QStringList taskText = task->split("\n");
+    QStringList taskText = task->split("\n――――――――――――――\n");
 
-    query.prepare("INSERT INTO tasks (task, status, createdTime) VALUES(:task, :status, :createdTime)");
+    query.prepare("INSERT INTO tasks (task, status, createdTime, projectLink) VALUES(:task, :status, :createdTime, "
+                  ":projectLink)");
     query.bindValue(":task", taskText[0]);
     query.bindValue(":status", *status);
     query.bindValue(":createdTime", taskText[1]);
+    query.bindValue(":projectLink", *projectLink);
 
     if (!query.exec())
     {
@@ -85,7 +93,7 @@ void MainWindow::removeTaskFromDB(QString *task, QString *status)
 {
     QSqlQuery query;
 
-    QStringList taskText = task->split("\n");
+    QStringList taskText = task->split("\n――――――――――――――\n");
 
     query.prepare("DELETE FROM tasks WHERE task = :task AND status = :status AND createdTime = :createdTime");
     query.bindValue(":task", taskText[0]);
@@ -118,7 +126,7 @@ void MainWindow::loadTasks()
         QString status = query.value("status").toString();
         QString createdTime = query.value("createdTime").toString();
 
-        QString text = task + "\n" + createdTime;
+        QString text = task + "\n――――――――――――――\n" + createdTime;
 
         QListWidgetItem *item = new QListWidgetItem(text);
 
@@ -143,4 +151,34 @@ void MainWindow::loadTasks()
     }
 
     qDebug() << "Tasks loaded";
+}
+
+QString MainWindow::getProjectByTask(QString *task, QString *status)
+{
+    if (task == nullptr || status == nullptr)
+    {
+        qWarning() << "Null pointer passed to getProjectByTask";
+        return "";
+    }
+
+    QSqlQuery query;
+    query.prepare("SELECT projectLink FROM tasks WHERE task = :task AND status = :status");
+
+    query.bindValue(":task", *task);
+    query.bindValue(":status", *status);
+
+    QString projectLink = "";
+    if (query.exec())
+    {
+        if (query.next())
+        {
+            projectLink = query.value("projectLink").toString();
+            return projectLink;
+        }
+    }
+    else
+    {
+        qWarning() << "Error querying projects database:" << query.lastError();
+        return "";
+    }
 }

@@ -66,7 +66,7 @@ void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
     {
         qDebug() << "Moved project: " << item->text() << " to: " << list->objectName();
         QStringList data = item->text().split("\n");
-        if (data.size() >= 3) // Check if data has at least 3 elements
+        if (data.size() >= 3)
         {
             QString status = list->objectName();
             QString date = getCurrentDateTimeString();
@@ -86,13 +86,12 @@ void MainWindow::createProject()
     QString status = "NotStartedProjects";
     QString title = "New project";
     QString git = "https://github.com/";
-    QString newProjectTeamplate = title + "\n" + git + "\n" + date;
 
-    qDebug() << "New project: " << newProjectTeamplate;
+    QString newProjectTemplate = QString("%1\n%2\n%3").arg(title).arg(git).arg(date);
 
-    QListWidgetItem *item = new QListWidgetItem(newProjectTeamplate);
-    item->setTextAlignment(Qt::AlignCenter);
+    qDebug() << "New project: " << newProjectTemplate;
 
+    QListWidgetItem *item = new QListWidgetItem(newProjectTemplate);
     notStartedProjects->addItem(item);
 
     saveProjectToDB(&title, &git, &status, &date);

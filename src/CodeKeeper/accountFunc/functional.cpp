@@ -140,7 +140,7 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
         }
         else
         {
-            qDebug() << "Ошибка при запросе:" << reply->errorString();
+            qDebug() << "Error:" << reply->errorString();
         }
         reply->deleteLater();
     }
@@ -156,7 +156,7 @@ QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
               [](const QPair<QString, double> &a, const QPair<QString, double> &b) { return a.second > b.second; });
 
     QString result;
-    for (int i = 0; i < std::min(5, static_cast<int>(languagePercentages.size())); ++i)
+    for (int i = 0; i < std::min(4, static_cast<int>(languagePercentages.size())); ++i)
     {
         result += QString("%1 %2 ")
                       .arg(languagePercentages[i].first)
@@ -418,6 +418,7 @@ void AccountWindow::setTasksProgress()
     if (totalTasks <= 0)
     {
         tasksStatsProgress->hide();
+        tasksStatsProgress->setFixedSize(0, 0);
         tasksTitle->setText(tr("No tasks found"));
         return;
     }
@@ -471,6 +472,7 @@ void AccountWindow::setProjectsStats()
     if (totalProjects == 0)
     {
         projectsChart->hide();
+        projectsChart->setFixedSize(0, 0);
         projectTitle->setText("\n\nNo projects found");
         return;
     }

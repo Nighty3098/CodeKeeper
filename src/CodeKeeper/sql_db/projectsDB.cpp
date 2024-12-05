@@ -180,7 +180,6 @@ void MainWindow::loadProjects()
         QString data = title + "\n" + git_url + "\n" + createdTime;
 
         QListWidgetItem *item = new QListWidgetItem(data);
-        item->setTextAlignment(Qt::AlignCenter);
 
         item->setData(Qt::UserRole, id);
 
@@ -206,4 +205,17 @@ void MainWindow::loadProjects()
         }
     }
     qDebug() << "Projects was loaded";
+}
+
+QStringList MainWindow::getProjectsList()
+{
+    QSqlQuery query;
+
+    query.exec("SELECT * FROM projects");
+    QStringList projectsList;
+    while (query.next())
+    {
+        projectsList << query.value("title").toString();
+    }
+    return projectsList;
 }

@@ -193,7 +193,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     decorationLabel = new QLabel();
     decorationLabel->setAlignment(Qt::AlignHCenter);
-    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(320, 320, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(260, 260, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     openSettingsBtn = new QPushButton(
         QPixmap(":/settings.png")
@@ -372,7 +372,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // ========================================================
     QGridLayout *tasksGLayout = new QGridLayout;
-    tasksGLayout->setSpacing(0);
+    tasksGLayout->setSpacing(5);
 
     QHBoxLayout *tasksStatsL = new QHBoxLayout;
     tasksStatsL->setSpacing(20);
@@ -398,19 +398,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     projectsList->setFixedSize(300, 25);
     projectsList->setPlaceholderText("Select your project ... ");
 
-    projectsList->addItem("CodeKeeper");
-    projectsList->addItem("SDash");
-
     tasksProgress = new QProgressBar();
     tasksProgress->setMaximum(100);
-    tasksProgress->setMaximumWidth(300);
-    tasksProgress->setFixedHeight(25);
+    tasksProgress->setMaximumWidth(400);
+    tasksProgress->setFixedHeight(20);
     tasksProgress->setAlignment(Qt::AlignCenter);
+
+    refreshProjectsListB = new QPushButton(
+        QPixmap(":/retry.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        "");
+    refreshProjectsListB->setFixedSize(30, 30);
+    refreshProjectsListB->setStyleSheet("background-color: transparent;");
 
     tasksStatsL->addItem(spacer1);
     tasksStatsL->addWidget(tasksMenuBtn);
-    // tasksStatsL->addWidget(projectsList);
-    tasksStatsL->addWidget(tasksProgress);
+    tasksStatsL->addWidget(projectsList);
+    tasksStatsL->addWidget(refreshProjectsListB);
     tasksStatsL->addItem(spacer2);
 
     label_1 = new QLabel(tr("Incomplete"));
@@ -476,6 +480,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksGLayout->addWidget(label_3, 1, 2, Qt::AlignHCenter);
     tasksGLayout->addWidget(tasksSplitter, 2, 0, 1, 3);
     tasksGLayout->addWidget(taskText, 4, 1);
+    tasksGLayout->addWidget(tasksProgress, 5, 1);
 
     // ========================================================
 
@@ -657,15 +662,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *headerSp4 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    // winControlL->addWidget(windowTitle);
-
+    winControlL->addWidget(windowTitle);
     winControlL->addItem(headerSp);
-
     winControlL->addWidget(isConnected);
     winControlL->addWidget(isAutoSync);
     winControlL->addWidget(sizeGrip);
 
-    QVBoxLayout *tabButtons = new QVBoxLayout();
+    tabButtonsWidget = new QWidget();
+    tabButtons = new QVBoxLayout();
+
+    tabButtonsWidget->setStyleSheet("margin: 0px; padding: 0px;");
+    tabButtonsWidget->setMaximumWidth(55);
+
+    tabButtonsWidget->setLayout(tabButtons);
 
     mainTabButton = new QPushButton(
         QPixmap(":/main.png")
@@ -712,10 +721,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tabButtons->addWidget(syncDataBtn);
     tabButtons->addWidget(openSettingsBtn);
 
+    isHideMenu = false;
+
     // open homepage
     tabs->setCurrentIndex(0);
 
-    mainLayout->addLayout(tabButtons, 1, 0);
+    mainLayout->addWidget(tabButtonsWidget, 1, 0);
     mainLayout->addWidget(tabs, 1, 1);
 
     QThread *dbThread = new QThread;
@@ -728,6 +739,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         loadNotes();
         loadTasks();
         loadProjects();
+        loadProjectsList(projectsList);
 
         qDebug() << "dbThread started";
     });

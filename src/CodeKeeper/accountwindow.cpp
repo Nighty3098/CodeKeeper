@@ -19,7 +19,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     setCentralWidget(centralWidget);
 
     mainLayout = new QGridLayout(centralWidget);
-    setFixedSize(800, 650);
+    setMinimumSize(800, 670);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -48,7 +48,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     MainWindow *mainWindow = static_cast<MainWindow *>(parent);
 
-    QHBoxLayout *tasksStatsLayout = new QHBoxLayout();
+    tasksStatsLayout = new QHBoxLayout();
 
     tasksStatsProgress = new CircleProgressBar();
     tasksStatsProgress->setFixedSize(60, 60);
@@ -73,12 +73,12 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     closeWindow = new QPushButton("");
     closeWindow->setFixedSize(13, 13);
 
-    QHBoxLayout *projectsStatsLayout = new QHBoxLayout();
+    projectsStatsLayout = new QHBoxLayout();
     projectsStatsLayout->setSpacing(5);
 
     projectsChart = new CircleChart();
     projectsChart->setAlignment(Qt::AlignCenter);
-    projectsChart->setFixedSize(90, 90);
+    projectsChart->setFixedSize(120, 120);
     projectsChart->setHeight(90);
 
     chartValuesDisplay = new ColorValueDisplay();
@@ -111,7 +111,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     GitLangsChart->setHeight(90);
 
     GitLangsValuesDisplay = new ColorValueDisplay();
-    GitLangsValuesDisplay->setFixedSize(160, 100);
+    GitLangsValuesDisplay->setFixedSize(160, 140);
 
     GitLangsStatsLayout->addWidget(GitLangsChart);
     GitLangsStatsLayout->addWidget(GitLangsValuesDisplay);
@@ -136,7 +136,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     statsLayout->addWidget(langsCard, Qt::AlignCenter);
 
     statsWidget = new QWidget();
-    statsWidget->setFixedSize(350, 550);
+    statsWidget->setFixedSize(350, 600);
     statsWidget->setLayout(statsLayout);
 
     QVBoxLayout *gitProfileLayout = new QVBoxLayout();

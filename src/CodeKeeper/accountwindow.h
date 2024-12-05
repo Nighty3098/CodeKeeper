@@ -36,6 +36,9 @@ class AccountWindow : public QMainWindow
     QHBoxLayout *langsStatsLayout;
     QHBoxLayout *GitLangsStatsLayout;
 
+    QHBoxLayout *tasksStatsLayout;
+    QHBoxLayout *projectsStatsLayout;
+
     QWidget *gitLangsWidget;
     QWidget *LangsWidget;
 
