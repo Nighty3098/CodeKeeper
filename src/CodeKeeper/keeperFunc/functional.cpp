@@ -10,6 +10,40 @@
 
 #include "mainwindow.h"
 
+void MainWindow::showWelcomeMessage()
+{
+    QVBoxLayout *layout = new QVBoxLayout();
+    QDialog *dialogW = new QDialog();
+    dialogW->setModal(true);
+    dialogW->setFixedSize(450, 180);
+    dialogW->setWindowFlags(Qt::FramelessWindowHint);
+    dialogW->setStyleSheet("outline: none; background-color: #2d2d2d; color: #ffffff;");
+
+    dialogW->setLayout(layout);
+
+    QLabel *label =
+        new QLabel(tr("\n\nThank you for downloading our program.\nAs this is the first run, please configure the "
+                      "program and select the folder to save the data in the settings\n\n"));
+    label->setStyleSheet("font-size: 11px;");
+    label->setAlignment(Qt::AlignCenter);
+    label->setWordWrap(true);
+
+    QPushButton *okButton = new QPushButton(tr("OK"));
+    QObject::connect(okButton, &QPushButton::clicked, dialogW, &QDialog::accept);
+    okButton->setFixedSize(100, 30);
+    okButton->setStyleSheet(
+        "outline: none; background-color: #3e8de6; color: #ffffff; border-radius: 7px; font-size: 11px;");
+
+    layout->addWidget(label, 0, Qt::AlignCenter);
+    layout->addWidget(okButton, 1, Qt::AlignCenter);
+
+    dialogW->show();
+
+    settingsWindow = new SettingsWindow(this);
+    settingsWindow->show();
+    globalSettings->setValue("firstRun", false);
+}
+
 void MainWindow::hideMenu()
 {
     if (isHideMenu)
@@ -93,6 +127,8 @@ void MainWindow::getSettingsData()
     git_user = globalSettings->value("git_user").value<QString>();
     git_token = globalSettings->value("git_token").value<QString>();
     isAutoSyncB = globalSettings->value("isAutoSync").value<bool>();
+
+    firstRun = globalSettings->value("firstRun", true).value<bool>();
 
     isCreated = globalSettings->value("isCreated").value<bool>();
     isReleaseDate = globalSettings->value("isReleaseDate").value<bool>();
@@ -641,14 +677,18 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     openAccountWindow->setStyleSheet(
         "QPushButton {background-color: transparent; border: none; margin: 7px; font-size: " + font_size + "px;} ");
 
-    mainTabButton->setStyleSheet("QPushButton { margin: 7px; border-width: 2px; border-color: transparent;} "
-                                 "QPushButton:hover {border-color: #a9bf85;}");
-    tasksTabButton->setStyleSheet("QPushButton { margin: 7px; border-width: 2px; border-color: transparent;} "
-                                  "QPushButton::hover {border-color: #a9bf85;}");
-    notesTabButton->setStyleSheet("QPushButton { margin: 7px; border-width: 2px; border-color: transparent;} "
-                                  "QPushButton::hover {border-color: #a9bf85;}");
-    projectsTabButton->setStyleSheet("QPushButton { margin: 7px; border-width: 2px; border-color: transparent;} "
-                                     "QPushButton::hover {border-color: #a9bf85;}");
+    mainTabButton->setStyleSheet(
+        "QPushButton { margin: 7px; border-width: 2px; border-color: transparent; background-color: transparent;} "
+        "QPushButton:hover {border-color: #a9bf85; background-color: transparent;}");
+    tasksTabButton->setStyleSheet(
+        "QPushButton { margin: 7px; border-width: 2px; border-color: transparent; background-color: transparent;} "
+        "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}");
+    notesTabButton->setStyleSheet(
+        "QPushButton { margin: 7px; border-width: 2px; border-color: transparent; background-color: transparent;} "
+        "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}");
+    projectsTabButton->setStyleSheet(
+        "QPushButton { margin: 7px; border-width: 2px; border-color: transparent; background-color: transparent;} "
+        "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}");
 
     setH1B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
     setH2B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");

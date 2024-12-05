@@ -116,6 +116,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         }
     }
 
+    if (firstRun)
+    {
+        showWelcomeMessage();
+    }
+
     QThread *updatesThread = new QThread;
     QObject::connect(updatesThread, &QThread::started, this, [this]() {
         qDebug() << "updatesThread started";

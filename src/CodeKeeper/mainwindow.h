@@ -149,6 +149,8 @@ class MainWindow : public QMainWindow
     QString git_user;
     QString git_token;
 
+    bool firstRun;
+
     QString dir;
     QFont selectedFont;
     QString font_size;
@@ -164,6 +166,7 @@ class MainWindow : public QMainWindow
     QString getProjectIssues(QString git_url);
 
     void openFolder();
+    void showWelcomeMessage();
 
     void selectFileInQTreeView(QTreeView *treeView, const QString &fileName);
 
