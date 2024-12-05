@@ -76,7 +76,16 @@ void MainWindow::addNewTask()
         qDebug() << "Added new task: " << task;
         incompleteTasks->addItem(task);
         QString status = incompleteTasks->objectName();
-        QString projectLink = "";
+        QString projectLink = projectsList->currentText();
+        if (projectLink.isEmpty())
+        {
+            projectLink = "NULL";
+        }
+        if (projectLink == "ALL")
+        {
+            projectLink = "NULL";
+        }
+
         saveTaskToDB(&task, &status, &projectLink);
     }
     else
@@ -84,7 +93,7 @@ void MainWindow::addNewTask()
         qWarning() << "Task is empty";
     }
 
-    filterTasksByProject(projectList);
+    filterTasksByProject(projectsList);
 }
 
 void MainWindow::removeTask()
