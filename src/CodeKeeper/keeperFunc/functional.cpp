@@ -15,12 +15,14 @@ void MainWindow::hideMenu()
     if (isHideMenu)
     {
         tabButtonsWidget->show();
+        winControlW->show();
 
         isHideMenu = false;
     }
     else
     {
         tabButtonsWidget->hide();
+        winControlW->hide();
 
         isHideMenu = true;
     }

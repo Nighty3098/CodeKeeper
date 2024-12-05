@@ -156,7 +156,6 @@ class MainWindow : public QMainWindow
     int appLang;
 
     QComboBox *projectList;
-    QPushButton *refreshProjectsListB;
 
   private slots:
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -246,7 +245,7 @@ class MainWindow : public QMainWindow
     void createTrayMenu(QMenu *menu, QString font_size);
     void createNotesContextMenu(QMenu *menu, QString font_size);
 
-    void filterTasksByProject(QComboBox* projectList);
+    void filterTasksByProject(QComboBox *projectList);
     void loadProjectsList(QComboBox *projectList);
     QString getProjectByTask(QString *task, QString *status);
 
@@ -282,7 +281,8 @@ class MainWindow : public QMainWindow
   private:
     QSystemTrayIcon *trayIcon;
 
-    QWidget *tabButtonsWidget = new QWidget();
+    QWidget *winControlW;
+    QWidget *tabButtonsWidget;
     QVBoxLayout *tabButtons;
     QShortcut *hideMenuQS;
     bool isHideMenu;

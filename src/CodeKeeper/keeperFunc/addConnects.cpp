@@ -224,5 +224,5 @@ void MainWindow::createShortcuts()
 
     openSettingsWindowQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_P), this);
 
-    hideMenuQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_B), this);
+    hideMenuQS = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_M), this);
 }
