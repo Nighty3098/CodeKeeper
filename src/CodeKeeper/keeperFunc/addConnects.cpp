@@ -15,7 +15,7 @@ void MainWindow::createConnects()
         commandPalette->show();
     });
 
-    connect(projectsList, &QComboBox::activated, this, [this]() {filterTasksByProject(projectsList);});
+    connect(projectsList, &QComboBox::currentTextChanged, this, [this]() { filterTasksByProject(projectsList); });
 
     connect(hideMenuQS, &QShortcut::activated, this, [this]() { hideMenu(); });
 
@@ -196,6 +196,7 @@ void MainWindow::createConnects()
         tabs->setCurrentIndex(2);
         windowTitle->setText(" ~ Tasks ~ ");
         setWindowTitle(tr("Tasks"));
+        loadProjectsList(projectsList);
     });
     connect(notesTabButton, &QPushButton::clicked, [=]() {
         tabs->setCurrentIndex(1);
@@ -207,12 +208,6 @@ void MainWindow::createConnects()
         windowTitle->setText(" ~ Projects ~ ");
         setWindowTitle(tr("Projects"));
     });
-
-
-    connect(refreshProjectsListB, &QPushButton::clicked, [=]() {
-        loadProjectsList(projectList);
-    });
-
 
     connect(notesList, &QListWidget::customContextMenuRequested, this,
             [this](const QPoint &pos) { activateNotesContextMenu(pos, notesList); });

@@ -83,6 +83,8 @@ void MainWindow::addNewTask()
     {
         qWarning() << "Task is empty";
     }
+
+    filterTasksByProject(projectList);
 }
 
 void MainWindow::removeTask()
@@ -105,6 +107,8 @@ void MainWindow::removeTask()
             break;
         }
     }
+
+    filterTasksByProject(projectList);
 }
 
 void MainWindow::getTotalTasks(QTabWidget *tasksTab, QListWidget *incompleteTasks, QListWidget *inprocessTasks,
@@ -243,9 +247,11 @@ void MainWindow::editTask()
         }
     }
 }
-
 void MainWindow::loadProjectsList(QComboBox *projectList)
 {
+    qDebug() << "Load projects list";
+
+    projectList->clear();
     QStringList projectsStringList = getProjectsList();
     for (const QString &project : projectsStringList)
     {
@@ -255,6 +261,38 @@ void MainWindow::loadProjectsList(QComboBox *projectList)
     projectList->addItem("All");
 }
 
-void MainWindow::filterTasksByProject(QComboBox* projectList) {
-    qDebug() << "Activated: " << projectList->currentIndex();
+void MainWindow::filterTasksByProject(QComboBox *projectList)
+{
+    qDebug() << "Activated: " << projectList->currentText();
+    QString selectedProject = projectList->currentText();
+
+    for (int i = 0; i < incompleteTasks->count(); ++i)
+    {
+        QListWidgetItem *item = incompleteTasks->item(i);
+        QStringList task = item->text().split("\n――――――――――――――\n");
+        QString status = incompleteTasks->objectName();
+        QString projectLink = getProjectByTask(&task[0], &status);
+
+        item->setHidden(selectedProject != "All" && projectLink != selectedProject);
+    }
+
+    for (int i = 0; i < inprocessTasks->count(); ++i)
+    {
+        QListWidgetItem *item = inprocessTasks->item(i);
+        QStringList task = item->text().split("\n――――――――――――――\n");
+        QString status = inprocessTasks->objectName();
+        QString projectLink = getProjectByTask(&task[0], &status);
+
+        item->setHidden(selectedProject != "All" && projectLink != selectedProject);
+    }
+
+    for (int i = 0; i < completeTasks->count(); ++i)
+    {
+        QListWidgetItem *item = completeTasks->item(i);
+        QStringList task = item->text().split("\n――――――――――――――\n");
+        QString status = completeTasks->objectName();
+        QString projectLink = getProjectByTask(&task[0], &status);
+
+        item->setHidden(selectedProject != "All" && projectLink != selectedProject);
+    }
 }

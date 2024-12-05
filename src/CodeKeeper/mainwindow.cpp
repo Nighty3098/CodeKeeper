@@ -404,7 +404,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksProgress->setFixedHeight(20);
     tasksProgress->setAlignment(Qt::AlignCenter);
 
-    refreshProjectsListB = new QPushButton(QPixmap(":/retry.png").scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation), "");
+    refreshProjectsListB = new QPushButton(
+        QPixmap(":/retry.png")
+            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+        "");
+    refreshProjectsListB->setFixedSize(30, 30);
+    refreshProjectsListB->setStyleSheet("background-color: transparent;");
 
     tasksStatsL->addItem(spacer1);
     tasksStatsL->addWidget(tasksMenuBtn);
@@ -732,9 +737,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         create_projects_connection();
 
         loadNotes();
-        loadProjectsList(projectsList);
         loadTasks();
         loadProjects();
+        loadProjectsList(projectsList);
 
         qDebug() << "dbThread started";
     });
