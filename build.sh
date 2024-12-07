@@ -6,6 +6,8 @@ YELLOW="\e[1;33m"
 RED="\e[1;31m"
 RESET="\e[0m"
 
+bash clang_format.sh
+
 # Change to the CodeKeeper source directory
 echo -e "${GREEN}Navigating to the CodeKeeper source directory...${RESET}"
 cd src/CodeKeeper/ || { echo -e "${RED}Error: Failed to change directory to src/CodeKeeper.${RESET}"; exit 1; }

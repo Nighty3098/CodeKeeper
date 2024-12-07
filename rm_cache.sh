@@ -1,56 +1,56 @@
 #!/bin/bash
 
-rm -rf src/CodeKeeper/.qt/
-rm -rf src/CodeKeeper/.qtc_clangd
-rm -rf src/CodeKeeper/build
-rm src/CodeKeeper/CodeKeeper.pro.user
-rm src/CodeKeeper/CodeKeeper.pro.user.1f90c22
-rm src/CodeKeeper/main.o
-rm src/CodeKeeper/Makefile
-rm src/CodeKeeper/markdownhighlighter.o
-rm src/CodeKeeper/moc_linenumberarea.cpp
-rm src/CodeKeeper/moc_linenumberarea.o
-rm src/CodeKeeper/moc_mainwindow.cpp
-rm src/CodeKeeper/moc_mainwindow.o
-rm src/CodeKeeper/moc_markdownhighlighter.cpp
-rm src/CodeKeeper/moc_markdownhighlighter.o
-rm src/CodeKeeper/moc_predefs.h
-rm src/CodeKeeper/moc_qmarkdowntextedit.cpp
-rm src/CodeKeeper/moc_qmarkdowntextedit.o
-rm src/CodeKeeper/moc_qplaintexteditsearchwidget.cpp
-rm src/CodeKeeper/moc_qplaintexteditsearchwidget.o
-rm src/CodeKeeper/moc_settingswindow.cpp
-rm src/CodeKeeper/moc_settingswindow.o
-rm src/CodeKeeper/moc_syncwindow.cpp
-rm src/CodeKeeper/moc_syncwindow.o
-rm src/CodeKeeper/qmake_qmake_immediate.qrc
-rm src/CodeKeeper/qmarkdowntextedit.o
-rm src/CodeKeeper/qownlanguagedata.o
-rm src/CodeKeeper/qplaintexteditsearchwidget.o
-rm src/CodeKeeper/qrc_media.cpp
-rm src/CodeKeeper/qrc_media.o
-rm src/CodeKeeper/qrc_qmake_qmake_immediate.cpp
-rm src/CodeKeeper/qrc_qmake_qmake_immediate.o
-rm src/CodeKeeper/qrc_resources.cpp
-rm src/CodeKeeper/qrc_resources.o
-rm src/CodeKeeper/settings.json
-rm src/CodeKeeper/settingswindow.o
-rm src/CodeKeeper/syncwindow.o
-rm src/CodeKeeper/ui_qplaintexteditsearchwidget.h
-rm src/CodeKeeper/accountwindow.o
-rm src/CodeKeeper/moc_accountwindow.cpp
-rm src/CodeKeeper/moc_accountwindow.o
-rm src/CodeKeeper/object_script.CodeKeeper.Debug
-rm src/CodeKeeper/object_script.CodeKeeper.Release
-rm src/CodeKeeper/CircledProgressBar.o
-rm src/CodeKeeper/moc_CircledProgressBar.o
-rm src/CodeKeeper/moc_CircledProgressBar.cpp
-rm src/CodeKeeper/moc_ProgressCircle.cpp
-rm src/CodeKeeper/moc_ProgressCircle.o
-rm src/CodeKeeper/ProgressCircle.o
-rm src/CodeKeeper/moc_CircleChart.cpp
-rm src/CodeKeeper/moc_ColorValueDisplay.cpp
-rm src/CodeKeeper/moc_CircleChart.o
-rm src/CodeKeeper/moc_ColorValueDisplay.o
+rm -rf src/CodeKeeper/.qt/ \
+       src/CodeKeeper/.qtc_clangd \
+       src/CodeKeeper/build \
+       src/CodeKeeper/CodeKeeper.pro.user \
+       src/CodeKeeper/CodeKeeper.pro.user.1f90c22 \
+       src/CodeKeeper/main.o \
+       src/CodeKeeper/Makefile \
+       src/CodeKeeper/markdownhighlighter.o \
+       src/CodeKeeper/moc_linenumberarea.cpp \
+       src/CodeKeeper/moc_linenumberarea.o \
+       src/CodeKeeper/moc_mainwindow.cpp \
+       src/CodeKeeper/moc_mainwindow.o \
+       src/CodeKeeper/moc_markdownhighlighter.cpp \
+       src/CodeKeeper/moc_markdownhighlighter.o \
+       src/CodeKeeper/moc_predefs.h \
+       src/CodeKeeper/moc_qmarkdowntextedit.cpp \
+       src/CodeKeeper/moc_qmarkdowntextedit.o \
+       src/CodeKeeper/moc_qplaintexteditsearchwidget.cpp \
+       src/CodeKeeper/moc_qplaintexteditsearchwidget.o \
+       src/CodeKeeper/moc_settingswindow.cpp \
+       src/CodeKeeper/moc_settingswindow.o \
+       src/CodeKeeper/moc_syncwindow.cpp \
+       src/CodeKeeper/moc_syncwindow.o \
+       src/CodeKeeper/qmake_qmake_immediate.qrc \
+       src/CodeKeeper/qmarkdowntextedit.o \
+       src/CodeKeeper/qownlanguagedata.o \
+       src/CodeKeeper/qplaintexteditsearchwidget.o \
+       src/CodeKeeper/qrc_media.cpp \
+       src/CodeKeeper/qrc_media.o \
+       src/CodeKeeper/qrc_qmake_qmake_immediate.cpp \
+       src/CodeKeeper/qrc_qmake_qmake_immediate.o \
+       src/CodeKeeper/qrc_resources.cpp \
+       src/CodeKeeper/qrc_resources.o \
+       src/CodeKeeper/settings.json \
+       src/CodeKeeper/settingswindow.o \
+       src/CodeKeeper/syncwindow.o \
+       src/CodeKeeper/ui_qplaintexteditsearchwidget.h \
+       src/CodeKeeper/accountwindow.o \
+       src/CodeKeeper/moc_accountwindow.cpp \
+       src/CodeKeeper/moc_accountwindow.o \
+       src/CodeKeeper/object_script.CodeKeeper.Debug \
+       src/CodeKeeper/object_script.CodeKeeper.Release \
+       src/CodeKeeper/CircledProgressBar.o \
+       src/CodeKeeper/moc_CircledProgressBar.o \
+       src/CodeKeeper/moc_CircledProgressBar.cpp \
+       src/CodeKeeper/moc_ProgressCircle.cpp \
+       src/CodeKeeper/moc_ProgressCircle.o \
+       src/CodeKeeper/ProgressCircle.o \
+       src/CodeKeeper/moc_CircleChart.cpp \
+       src/CodeKeeper/moc_ColorValueDisplay.cpp \
+       src/CodeKeeper/moc_CircleChart.o \
+       src/CodeKeeper/moc_ColorValueDisplay.o
 
 echo "Done!"
