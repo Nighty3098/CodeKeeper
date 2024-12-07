@@ -14,8 +14,7 @@ void MainWindow::create_tasks_connection()
                   "task TEXT,"
                   "status VARCHAR(50),"
                   "createdTime VARCHAR(50),"
-                  "projectLink TEXT",
-            ");";
+                  "projectLink TEXT);";
 
     if (!query.exec(str))
     {
