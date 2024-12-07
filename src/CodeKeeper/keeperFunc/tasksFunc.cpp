@@ -9,9 +9,9 @@ void MainWindow::activateTasksContextMenu(const QPoint &pos, QListWidget *listWi
     if (isCustomTheme)
     {
         submenu->setStyleSheet("QMenu {"
-                               "    background-color: #2b3d4c;"
+                               "    background-color: #505a6a;"
                                "    color: #fff;"
-                               "    border: 1px solid #fff;"
+                               "    border: 0px solid #fff;"
                                "    border-radius: 10px;"
                                "}"
                                "QMenu::separator {"
