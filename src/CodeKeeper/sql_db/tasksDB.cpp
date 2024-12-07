@@ -14,8 +14,7 @@ void MainWindow::create_tasks_connection()
                   "task TEXT,"
                   "status VARCHAR(50),"
                   "createdTime VARCHAR(50),"
-                  "projectLink TEXT"
-                  ");";
+                  "projectLink TEXT);";
 
     if (!query.exec(str))
     {
@@ -118,7 +117,7 @@ void MainWindow::loadTasks()
 
     QSqlQuery query;
 
-    query.exec("SELECT * FROM tasks");
+    query.exec("SELECT * FROM tasks ORDER BY createdTime DESC");
     while (query.next())
     {
         int id = query.value("id").toInt();
@@ -129,18 +128,17 @@ void MainWindow::loadTasks()
         QString text = task + "\n――――――――――――――\n" + createdTime;
 
         QListWidgetItem *item = new QListWidgetItem(text);
-
         item->setData(Qt::UserRole, id);
 
         if (status == "IncompleteTasks")
         {
             incompleteTasks->addItem(item);
         }
-        if (status == "InprocessTasks")
+        else if (status == "InprocessTasks")
         {
             inprocessTasks->addItem(item);
         }
-        if (status == "CompleteTasks")
+        else if (status == "CompleteTasks")
         {
             completeTasks->addItem(item);
         }
@@ -162,7 +160,8 @@ QString MainWindow::getProjectByTask(QString *task, QString *status)
     }
 
     QSqlQuery query;
-    query.prepare("SELECT projectLink FROM tasks WHERE task = :task AND status = :status");
+    query.prepare(
+        "SELECT projectLink FROM tasks WHERE task = :task AND status = :status ORDER BY createdTime DESC LIMIT 1");
 
     query.bindValue(":task", *task);
     query.bindValue(":status", *status);
