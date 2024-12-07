@@ -4,21 +4,33 @@
 ### *Projects manager for developers*
 ![](imgs/1.png)
 
+<br>
+
+<a href="LICENSE.md"><kbd> <br>**License**<br><br> </kbd></a>
+<a href="doc/Shortcuts.md"><kbd> <br>**Shortcuts**<br><br> </kbd></a>
+<a href="doc/Installation.md"><kbd> <br>**Installation**<br><br> </kbd></a>
+<a href="doc/Tweaks.md"><kbd> <br>**Tweaks**<br><br> </kbd></a>
+<a href="doc/Screenshots.md"><kbd> <br>**Screenshots**<br><br> </kbd></a>
+
+<br>
+
+---
+
+<br>
+
 ![](https://img.shields.io/github/forks/Nighty3098/CodeKeeper?style=for-the-badge&color=9dc3ea&logoColor=D9E0EE&labelColor=1c1c29)
 ![](https://img.shields.io/github/downloads/Nighty3098/CodeKeeper/total?style=for-the-badge&color=e0ea9d&logoColor=D9E0EE&labelColor=171b22)
-![](https://img.shields.io/github/last-commit/Nighty3098/CodeKeeper?style=for-the-badge&color=7dc4e4&logoColor=D9E0EE&labelColor=1c1c29)
-![](https://img.shields.io/github/commit-activity/t/Nighty3098/CodeKeeper?style=for-the-badge&color=a6e0b8&logoColor=D9E0EE&labelColor=171b22)
 ![](https://img.shields.io/github/stars/Nighty3098/CodeKeeper?style=for-the-badge&color=eed49f&logoColor=D9E0EE&labelColor=1c1c29)
+<br><br>
+<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_cpp.png?raw=true" height="45px" />
+<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_c.png?raw=true" height="45px" />
+<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_qt.png?raw=true" height="45px" />
+<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_sqlite.png?raw=true" height="45px" />
+<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_git.png?raw=true" height="45px" />
 
-<br><br>
-<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_cpp.png?raw=true" height="40px" />
-<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_c.png?raw=true" height="40px" />
-<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_qt.png?raw=true" height="40px" />
-<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_sqlite.png?raw=true" height="40px" />
-<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_git.png?raw=true" height="40px" />
-<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_api.png?raw=true" height="40px" />
-<img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_codekeeper.png?raw=true" height="40px" />
-<br><br>
+<br>
+
+---
 
 ***🛠️ If you have found bugs in our product or have suggestions, please write about them:***
 
@@ -29,12 +41,10 @@
 <a href="https://www.reddit.com/user/DEVELOPER0x31/" target="blank"><img src="https://github.com/Nighty3098/DevIcons/blob/main/badges/badges_reddit.png?raw=true" width="45px"/></a>
 <br><br>
 
-[Shortcuts](doc/Shortcuts.md) | [Installation](doc/Installation.md) | [Tweaks](doc/Tweaks.md) | [Screenshots](doc/Screenshots.md) | [License](LICENSE.md) 
-
-<br><br>
+---
 
 ### **`💵 Support me`**
-<img src="imgs/toncoin.png" width="40px"/>
+<img src="imgs/toncoin.png" width="45px"/>
 <br>
 
 ***`UQCF-sPDO0QqkNtvy5CKSvYWEsZS6l7vzaytV36oYM0SNhKt`***
