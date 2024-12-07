@@ -84,6 +84,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                 qDebug() << "Failed to open custom light stylesheet file";
             }
         }
+        else if (theme == 2)
+        {
+            QFile custom_light_theme(":/mac_dark_stylesheet.qss");
+            if (custom_light_theme.open(QFile::ReadOnly))
+            {
+                QString customStyleSheetLight = custom_light_theme.readAll();
+                qDebug() << "Loading mac dark stylesheet";
+                setStyleSheet(customStyleSheetLight);
+                custom_light_theme.close();
+            }
+            else
+            {
+                qDebug() << "Failed to open mac dark stylesheet file";
+            }
+        }
     }
     else
     {
@@ -99,6 +114,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         {
             qDebug() << "Failed to open default stylesheet file";
         }
+    }
+
+    if (firstRun)
+    {
+        showWelcomeMessage();
     }
 
     QThread *updatesThread = new QThread;
@@ -404,17 +424,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksProgress->setFixedHeight(20);
     tasksProgress->setAlignment(Qt::AlignCenter);
 
-    refreshProjectsListB = new QPushButton(
-        QPixmap(":/retry.png")
-            .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
-        "");
-    refreshProjectsListB->setFixedSize(30, 30);
-    refreshProjectsListB->setStyleSheet("background-color: transparent;");
-
     tasksStatsL->addItem(spacer1);
     tasksStatsL->addWidget(tasksMenuBtn);
     tasksStatsL->addWidget(projectsList);
-    tasksStatsL->addWidget(refreshProjectsListB);
     tasksStatsL->addItem(spacer2);
 
     label_1 = new QLabel(tr("Incomplete"));
@@ -639,24 +651,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tabs->setTabVisible(2, false);
     tabs->setTabVisible(3, false);
 
-    if (isCustomTitlebar)
-    {
-        mainLayout->addLayout(winControlL, 0, 0, 1, 2);
-
-        QTimer *connectionTimer = new QTimer(this);
-        connect(connectionTimer, &QTimer::timeout, this, &MainWindow::setConnectionStatus);
-        connectionTimer->start(1000);
-    }
-    else
-    {
-        sizeGrip->hide();
-    }
-
     isConnected = new QPushButton("");
-    isConnected->setFixedSize(16, 30);
+    isConnected->setFixedSize(14, 14);
 
     isAutoSync = new QPushButton("");
-    isAutoSync->setFixedSize(16, 30);
+    isAutoSync->setFixedSize(14, 14);
 
     QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -667,6 +666,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     winControlL->addWidget(isConnected);
     winControlL->addWidget(isAutoSync);
     winControlL->addWidget(sizeGrip);
+
+    winControlL->setAlignment(Qt::AlignVCenter);
+
+    winControlW = new QWidget();
+    winControlW->setFixedHeight(30);
+    winControlW->setLayout(winControlL);
+
+    if (isCustomTitlebar)
+    {
+        mainLayout->addWidget(winControlW, 0, 0, 1, 2);
+
+        QTimer *connectionTimer = new QTimer(this);
+        connect(connectionTimer, &QTimer::timeout, this, &MainWindow::setConnectionStatus);
+        connectionTimer->start(1000);
+    }
+    else
+    {
+        sizeGrip->hide();
+    }
 
     tabButtonsWidget = new QWidget();
     tabButtons = new QVBoxLayout();

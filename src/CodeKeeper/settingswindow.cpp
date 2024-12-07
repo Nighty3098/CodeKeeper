@@ -214,6 +214,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
 
     themeSelector->addItem(tr("Dark"));
     themeSelector->addItem(tr("Light"));
+    themeSelector->addItem(tr("Mac Dark"));
     themeSelector->setCurrentIndex(theme);
 
     langSelector = new QComboBox();
@@ -221,9 +222,9 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     langSelector->addItem(QIcon(":/usa.png"), tr("English"));
     langSelector->addItem(QIcon(":/russian.png"), tr("Russian"));
     langSelector->setEnabled(false);
-    // langSelector->addItem(QIcon(":/japan.png"), tr("Japanese"));
-    // langSelector->addItem(QIcon(":/german.png"), tr("Germany"));
-    // langSelector->addItem(QIcon(":/spanish.png"), tr("Spanish"));
+    langSelector->addItem(QIcon(":/japan.png"), tr("Japanese"));
+    langSelector->addItem(QIcon(":/german.png"), tr("Germany"));
+    langSelector->addItem(QIcon(":/spanish.png"), tr("Spanish"));
 
     langSelector->setCurrentIndex(appLang);
 
