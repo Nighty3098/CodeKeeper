@@ -15,10 +15,14 @@
 
 void MainWindow::activateProjectContextMenu(const QPoint &pos, QListWidget *listWidget)
 {
-    QPoint item = listWidget->mapToGlobal(pos);
-    QMenu *submenu = new QMenu;
+    if (!listWidget || listWidget->count() == 0)
+    {
+        return;
+    }
 
-    // ! Trash - need fixed
+    QPoint globalPos = listWidget->mapToGlobal(pos);
+    QMenu *submenu = new QMenu(this);
+
     if (isCustomTheme)
     {
         submenu->setStyleSheet("QMenu {"
@@ -43,13 +47,10 @@ void MainWindow::activateProjectContextMenu(const QPoint &pos, QListWidget *list
                                "    text-decoration: none;"
                                "}");
     }
-    else
-    {
-    }
 
     createProjectMenu(submenu, font_size);
 
-    QAction *rightClickItem = submenu->exec(item);
+    QAction *rightClickItem = submenu->exec(globalPos);
 }
 
 void MainWindow::onMovingProjectFrom(QListWidgetItem *item, QListWidget *list)
@@ -65,17 +66,33 @@ void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
     if (item && list)
     {
         qDebug() << "Moved project: " << item->text() << " to: " << list->objectName();
+
+        // Разбиваем текст элемента на строки
         QStringList data = item->text().split("\n");
+
+        // Проверяем, что у нас достаточно данных
         if (data.size() >= 3)
         {
-            QString status = list->objectName();
-            QString date = getCurrentDateTimeString();
+            QString status = list->objectName();       // Получаем статус из имени списка
+            QString date = getCurrentDateTimeString(); // Получаем текущую дату и время
 
-            updateProjectStatus(&status, &date, &data[2]);
+            // Обновляем статус проекта
+            updateProjectStatus(&status, &date, &data[2]); // Передаем данные в функцию обновления статуса
+
+            // Перемещаем элемент в новый список
+            QListWidget *currentList = item->listWidget();
+            if (currentList)
+            {
+                currentList->takeItem(currentList->row(item)); // Удаляем элемент из текущего списка
+            }
+            list->addItem(new QListWidgetItem(item->text())); // Добавляем элемент в новый список
+
+            // Удаляем оригинальный элемент, так как он был перемещен
+            delete item;
         }
         else
         {
-            qWarning() << "Invalid project data format";
+            qWarning() << "Invalid project data format"; // Логируем предупреждение, если данные некорректны
         }
     }
 }
@@ -115,33 +132,42 @@ void MainWindow::removeProject()
             removeProjectFromDB(&data[1], &status, &data[2]);
 
             qDebug() << "Removed project: " << item->text();
-            delete item;
             break;
         }
     }
 }
-
 void MainWindow::getTotalProjects(QTabWidget *projectsTab, QListWidget *notStartedProjects,
                                   QListWidget *startedProjects, QListWidget *finishedProjects,
                                   QListWidget *finishlineProjects)
 {
     static QTimer *timer3 = new QTimer(this);
 
-    connect(timer3, &QTimer::timeout, this, [=]() {
-        int totalProjects = notStartedProjects->count() + finishlineProjects->count() + startedProjects->count() +
-                            finishedProjects->count();
+    connect(timer3, &QTimer::timeout, this,
+            [this, notStartedProjects, finishlineProjects, startedProjects, finishedProjects]() {
+                int totalProjects = notStartedProjects->count() + finishlineProjects->count() +
+                                    startedProjects->count() + finishedProjects->count();
 
-        totalProjectsL->setText(tr("Total projects: ") + QString::number(totalProjects) + " ");
-    });
+                totalProjectsL->setText(tr("Total projects: ") + QString::number(totalProjects) + " ");
+            });
 
     if (projectsTab->currentIndex() == 3)
     {
-        timer3->start(500);
+        if (!timer3->isActive())
+        {
+            timer3->start(500);
+        }
     }
     else
     {
-        timer3->stop();
+        if (timer3->isActive())
+        {
+            timer3->stop();
+        }
     }
+
+    int totalProjects = notStartedProjects->count() + finishlineProjects->count() + startedProjects->count() +
+                        finishedProjects->count();
+    totalProjectsL->setText(tr("Total projects: ") + QString::number(totalProjects) + " ");
 }
 
 void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileName)
@@ -150,21 +176,42 @@ void MainWindow::selectFileInQTreeView(QTreeView *treeView, const QString &fileN
 
 void MainWindow::openGitProject()
 {
-    QList<QListWidget *> listWidgets = {notStartedProjects, startedProjects, finishlineProjects, finishedProjects};
+    QVector<QListWidget *> listWidgets = {notStartedProjects, startedProjects, finishlineProjects, finishedProjects};
+
+    QString git_url;
 
     for (QListWidget *listWidget : listWidgets)
     {
         QListWidgetItem *item = listWidget->currentItem();
         if (item)
         {
-            QString git_url = item->text().split("\n").value(1);
-            qDebug() << git_url;
+            QStringList lines = item->text().split('\n');
+            if (lines.size() > 1)
+            {
+                git_url = lines[1].trimmed();
+                qDebug() << "Opening URL:" << git_url;
 
-            QUrl url(git_url);
-            QDesktopServices::openUrl(url);
-            return;
+                QUrl url(git_url);
+                if (url.isValid() && (url.scheme() == "http" || url.scheme() == "https"))
+                {
+                    QDesktopServices::openUrl(url);
+                    return;
+                }
+                else
+                {
+                    QMessageBox::warning(this, "Invalid URL", "The URL is not valid.");
+                    return;
+                }
+            }
+            else
+            {
+                QMessageBox::warning(this, "Invalid Item", "The selected item does not contain a valid URL.");
+                return;
+            }
         }
     }
+
+    QMessageBox::information(this, "No Selection", "Please select a project to open.");
 }
 
 void MainWindow::openProject()

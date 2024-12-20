@@ -15,33 +15,62 @@ void MainWindow::showWelcomeMessage()
     QVBoxLayout *layout = new QVBoxLayout();
     QDialog *dialogW = new QDialog();
     dialogW->setModal(true);
-    dialogW->setFixedSize(450, 180);
+    dialogW->setMinimumWidth(700);
     dialogW->setWindowFlags(Qt::FramelessWindowHint);
-    dialogW->setStyleSheet("outline: none; background-color: #2d2d2d; color: #ffffff;");
+    dialogW->setStyleSheet("outline: none; background-color: #1e1e1e; color: #ffffff;");
 
     dialogW->setLayout(layout);
 
-    QLabel *label =
-        new QLabel(tr("\n\nThank you for downloading our program.\nAs this is the first run, please configure the "
-                      "program and select the folder to save the data in the settings\n\n"));
+    QLabel *label = new QLabel(tr(
+        "\n\nThank you for downloading our program.\nAs this is the first run, please configure the "
+        "program and select the folder to save the data in the settings\n\nPlease refer to the product license\n\n"));
     label->setStyleSheet("font-size: 11px;");
     label->setAlignment(Qt::AlignCenter);
     label->setWordWrap(true);
 
-    QPushButton *okButton = new QPushButton(tr("OK"));
+    QFile file(":/license.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qWarning() << "Could not open license.txt for reading.";
+        return;
+    }
+
+    QPlainTextEdit *licenseText = new QPlainTextEdit();
+    licenseText->setReadOnly(true);
+    licenseText->setMinimumHeight(300);
+    licenseText->setMinimumWidth(600);
+    licenseText->setMaximumWidth(1600);
+    licenseText->setStyleSheet(
+        "padding: 20px; background-color: #2b2d2e; color: #ffffff; border:none; border-radius: 15px;");
+
+    QTextStream in(&file);
+    QString fileContent = in.readAll();
+    licenseText->setPlainText(fileContent);
+    file.close();
+
+    QPushButton *okButton = new QPushButton(tr("   I agree to the terms and conditions   "));
     QObject::connect(okButton, &QPushButton::clicked, dialogW, &QDialog::accept);
-    okButton->setFixedSize(100, 30);
+    okButton->setFixedHeight(30);
     okButton->setStyleSheet(
         "outline: none; background-color: #3e8de6; color: #ffffff; border-radius: 7px; font-size: 11px;");
 
+    QPushButton *cancelButton = new QPushButton(tr("   Cancel   "));
+    QObject::connect(cancelButton, &QPushButton::clicked, dialogW, &QDialog::reject);
+    this->close();
+    cancelButton->setFixedHeight(30);
+    cancelButton->setStyleSheet(
+        "outline: none; background-color: #e06a65; color: #ffffff; border-radius: 7px; font-size: 11px;");
+    QObject::connect(cancelButton, &QPushButton::clicked, dialogW, &QDialog::reject);
+    QObject::connect(cancelButton, &QPushButton::clicked, this, &MainWindow::close);
+
     layout->addWidget(label, 0, Qt::AlignCenter);
-    layout->addWidget(okButton, 1, Qt::AlignCenter);
+    layout->addWidget(licenseText, 1, Qt::AlignCenter);
+    layout->addWidget(okButton, 2, Qt::AlignCenter);
+    layout->addWidget(cancelButton, 3, Qt::AlignCenter);
 
     dialogW->show();
 
-    settingsWindow = new SettingsWindow(this);
-    settingsWindow->show();
-    globalSettings->setValue("firstRun", false);
+    // globalSettings->setValue("firstRun", false);
 }
 
 void MainWindow::hideMenu()

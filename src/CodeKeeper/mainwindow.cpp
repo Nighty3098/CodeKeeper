@@ -52,6 +52,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     trayIcon->showMessage("CodeKeeper", "Welcome back, " + git_user + "!", QSystemTrayIcon::Information, 3000);
 
+    if (firstRun)
+    {
+        globalSettings->setValue("isCustomTheme", true);
+        globalSettings->setValue("isCustomTitlebar", true);
+        globalSettings->setValue("theme", 0);
+        showWelcomeMessage();
+    }
+
     if (isCustomTheme)
     {
         if (theme == 0)
@@ -114,11 +122,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         {
             qDebug() << "Failed to open default stylesheet file";
         }
-    }
-
-    if (firstRun)
-    {
-        showWelcomeMessage();
     }
 
     QThread *updatesThread = new QThread;
