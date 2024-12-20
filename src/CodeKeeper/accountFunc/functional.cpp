@@ -224,13 +224,15 @@ void AccountWindow::get_image_url(const QString &username, QLabel *label)
     });
 
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
-        if (reply->error()) {
+        if (reply->error())
+        {
             qWarning() << "Error:" << reply->errorString();
             reply->deleteLater();
             return;
         }
 
-        if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() != 200) {
+        if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() != 200)
+        {
             qWarning() << "HTTP error:" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
             reply->deleteLater();
             return;

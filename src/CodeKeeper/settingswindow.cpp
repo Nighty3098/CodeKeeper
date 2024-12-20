@@ -49,7 +49,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
-    setMinimumSize(650, 700);
+    setMinimumSize(700, 600);
 
     mainLayout = new QVBoxLayout(centralWidget);
 

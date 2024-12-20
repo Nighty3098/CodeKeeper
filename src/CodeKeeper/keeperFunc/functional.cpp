@@ -38,9 +38,19 @@ void MainWindow::setupAdaptiveUI()
 {
     int current_width = this->width();
 
-    if (current_width < 1000)
+    if (current_width < 1400)
     {
         tasksSplitter->setOrientation(Qt::Vertical);
+        decorationLabel->setPixmap(
+            QPixmap(":/tea.svg").scaled(250, 250, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        timeLabel->setStyleSheet("font-size: 100px; color: #a9bf85;");
+    }
+
+    else if (current_width > 1500)
+    {
+        timeLabel->setStyleSheet("font-size: 170px; color: #a9bf85;");
+        decorationLabel->setPixmap(
+            QPixmap(":/tea.svg").scaled(350, 350, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
 
     else
@@ -560,12 +570,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "border-radius: 15px;"
                                    "}"
                                    "QListWidget::item:selected {"
-                                   "background-color: rgba(211, 102, 107, 75);"
-                                   "border-width: 2px; border-color: #a9bf85;"
+                                   // "border: 2px solid rgb(211, 102, 107);"
+                                   "background-color: rgba(211, 102, 107, 100); color: #000000;"
                                    "}"
                                    "QListWidget::Item {"
-                                   "margin: 0px;"
-                                   "background-color: #e08581; color: #000000; "
+                                   "margin: 0px; color: #000000;"
+                                   //"border: 2px solid rgb(211, 102, 107);"
+                                   "background-color: #e08581;"
                                    "border-radius: 5px;"
                                    "font-size: " +
                                    font_size +
@@ -581,7 +592,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                   "}"
                                   "QListWidget::item:selected {"
                                   "background-color: rgba(231, 232, 141, 75);"
-                                  "border-width: 2px; border-color: #a9bf85;"
+                                  // "border: 2px solid rgb(231, 232, 141);"
                                   "}"
                                   "QListWidget::Item {"
                                   "margin: 0px;"
@@ -609,7 +620,6 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                  "background-color: #a9bf85; "
                                  "color: #000000;"
                                  "border-radius: 5px;"
-                                 "line-through;"
                                  "font-size: " +
                                  font_size +
                                  "pt;"

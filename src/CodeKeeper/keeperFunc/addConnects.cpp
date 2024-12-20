@@ -7,7 +7,7 @@ void MainWindow::createConnects()
     connect(openSettingsWindowQS, &QShortcut::activated, this, [this]() { openSettingsWindow(); });
 
     connect(label_1, &ClickableLabel::clicked, [=]() {
-        if (this->width() < 1000)
+        if (this->width() < 1400)
         {
             incompleteTasks->setVisible(!incompleteTasks->isVisible());
             if (incompleteWidget->height() > font_size_int * 2.5)
@@ -21,7 +21,7 @@ void MainWindow::createConnects()
         }
     });
     connect(label_2, &ClickableLabel::clicked, [=]() {
-        if (this->width() < 1000)
+        if (this->width() < 1400)
         {
             inprocessTasks->setVisible(!inprocessTasks->isVisible());
             if (inprocessWidget->height() > font_size_int * 2.5)
@@ -35,7 +35,7 @@ void MainWindow::createConnects()
         }
     });
     connect(label_3, &ClickableLabel::clicked, [=]() {
-        if (this->width() < 1000)
+        if (this->width() < 1400)
         {
             completeTasks->setVisible(!completeTasks->isVisible());
             if (completeWidget->height() > font_size_int * 2.5)

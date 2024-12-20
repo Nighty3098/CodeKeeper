@@ -28,40 +28,42 @@ class notesTree : public QTreeView
   protected:
 };
 
+// Not working !!!! WTF !!!!
 class NoteEditor : public QMarkdownTextEdit
 {
-  protected:
-    // ! Why it doesn't work right. WTF
+    Q_OBJECT
 
-    void dropEvent(QDropEvent *event)
+  public:
+    NoteEditor(QWidget *parent = nullptr) : QMarkdownTextEdit(parent)
     {
-        QString filePath = event->mimeData()->text();
-        QFileInfo fileInfo(filePath);
-        QString fileSuffix = fileInfo.suffix();
+        setAcceptDrops(true);
+    }
 
-        qDebug() << "[Dropped file]:" << filePath;
-
-        if (fileSuffix == "txt" || fileSuffix == "html" || fileSuffix == "md")
+  protected:
+    void dragEnterEvent(QDragEnterEvent *event) override
+    {
+        if (event->mimeData()->hasUrls())
         {
-            QString newLine = "[Dropped document](" + filePath + ")";
-
-            QTextCursor cursor = this->textCursor();
-            int lineNumber = cursor.blockNumber();
-            QTextBlock block = this->document()->findBlockByNumber(lineNumber);
-            cursor.movePosition(QTextCursor::EndOfLine);
-            cursor.insertText(newLine);
-            this->setTextCursor(cursor);
+            event->acceptProposedAction();
         }
-        else
-        {
-            QString newLine = "![Dropped file](" + filePath + ")";
+    }
 
-            QTextCursor cursor = this->textCursor();
-            int lineNumber = cursor.blockNumber();
-            QTextBlock block = this->document()->findBlockByNumber(lineNumber);
-            cursor.movePosition(QTextCursor::EndOfLine);
-            cursor.insertText(newLine);
-            this->setTextCursor(cursor);
+    void dropEvent(QDropEvent *event) override
+    {
+        if (event->mimeData()->hasUrls())
+        {
+            QStringList filePaths;
+            foreach (const QUrl &url, event->mimeData()->urls())
+            {
+                filePaths << url.toLocalFile();
+            }
+            insertPlainText(filePaths.join("\n"));
+
+            QTextCursor cursor = textCursor();
+            cursor.movePosition(QTextCursor::End);
+            setTextCursor(cursor);
+
+            event->acceptProposedAction();
         }
     }
 };

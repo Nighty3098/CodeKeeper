@@ -67,32 +67,27 @@ void MainWindow::onMovingProjectTo(QListWidgetItem *item, QListWidget *list)
     {
         qDebug() << "Moved project: " << item->text() << " to: " << list->objectName();
 
-        // Разбиваем текст элемента на строки
-        QStringList data = item->text().split("\n");
+        QStringList data = item->text().split("\n\n");
 
-        // Проверяем, что у нас достаточно данных
         if (data.size() >= 3)
         {
-            QString status = list->objectName();       // Получаем статус из имени списка
-            QString date = getCurrentDateTimeString(); // Получаем текущую дату и время
+            QString status = list->objectName();
+            QString date = getCurrentDateTimeString();
 
-            // Обновляем статус проекта
-            updateProjectStatus(&status, &date, &data[2]); // Передаем данные в функцию обновления статуса
+            updateProjectStatus(&status, &date, &data[2]);
 
-            // Перемещаем элемент в новый список
             QListWidget *currentList = item->listWidget();
             if (currentList)
             {
-                currentList->takeItem(currentList->row(item)); // Удаляем элемент из текущего списка
+                currentList->takeItem(currentList->row(item));
             }
-            list->addItem(new QListWidgetItem(item->text())); // Добавляем элемент в новый список
+            list->addItem(new QListWidgetItem(item->text()));
 
-            // Удаляем оригинальный элемент, так как он был перемещен
             delete item;
         }
         else
         {
-            qWarning() << "Invalid project data format"; // Логируем предупреждение, если данные некорректны
+            qWarning() << "Invalid project data format";
         }
     }
 }
@@ -104,7 +99,7 @@ void MainWindow::createProject()
     QString title = "New project";
     QString git = "https://github.com/";
 
-    QString newProjectTemplate = QString("%1\n%2\n%3").arg(title).arg(git).arg(date);
+    QString newProjectTemplate = QString("%1\n\n%2\n\n%3").arg(title).arg(git).arg(date);
 
     qDebug() << "New project: " << newProjectTemplate;
 
@@ -123,7 +118,7 @@ void MainWindow::removeProject()
         QListWidgetItem *item = listWidget->currentItem();
         if (item)
         {
-            QStringList data = item->text().split("\n");
+            QStringList data = item->text().split("\n\n");
             QString status = listWidget->objectName();
 
             int row = listWidget->row(item);
@@ -185,7 +180,7 @@ void MainWindow::openGitProject()
         QListWidgetItem *item = listWidget->currentItem();
         if (item)
         {
-            QStringList lines = item->text().split('\n');
+            QStringList lines = item->text().split("\n\n");
             if (lines.size() > 1)
             {
                 git_url = lines[1].trimmed();
@@ -225,6 +220,7 @@ void MainWindow::openProject()
         if (item)
         {
             QDialog dialog(this);
+
             QSizeGrip *dialogSizeGrip = new QSizeGrip(this);
 
             dialog.setFixedWidth(570);
@@ -278,7 +274,7 @@ void MainWindow::openProject()
             QGridLayout mainLayout(projectTab);
 
             QString data = item->text();
-            QStringList splitData = data.split("\n");
+            QStringList splitData = data.split("\n\n");
 
             QString PTitle = splitData[0];
             QString PGit = splitData[1];
@@ -373,7 +369,7 @@ void MainWindow::openProject()
                 QString projectLink = linkToGit->text();
                 QString projectCreatedTime = getCurrentDateTimeString();
 
-                QString itemText = projectTitle + "\n" + projectLink + "\n" + projectCreatedTime;
+                QString itemText = projectTitle + "\n\n" + projectLink + "\n\n" + projectCreatedTime;
                 item->setText(itemText);
                 qDebug() << itemText;
 

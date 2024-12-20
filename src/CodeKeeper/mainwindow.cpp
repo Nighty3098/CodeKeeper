@@ -416,13 +416,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksMenuBtn->setMenu(tasksMenu);
 
     projectsList = new QComboBox();
-    projectsList->setFixedSize(300, 25);
+    projectsList->setFixedSize(450, 25);
     projectsList->setPlaceholderText("Select your project ... ");
 
     tasksProgress = new QProgressBar();
     tasksProgress->setMaximum(100);
-    tasksProgress->setMaximumWidth(400);
-    tasksProgress->setFixedHeight(20);
+    tasksProgress->setFixedWidth(500);
+    tasksProgress->setFixedHeight(25);
     tasksProgress->setAlignment(Qt::AlignCenter);
 
     tasksStatsL->addItem(spacer1);
@@ -509,9 +509,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksSplitter->setStretchFactor(1, 1);
     tasksSplitter->setStretchFactor(2, 1);
 
+    tasksGLayout->addWidget(tasksProgress, 1, 1);
     tasksGLayout->addWidget(tasksSplitter, 2, 0, 1, 3);
     tasksGLayout->addWidget(taskText, 4, 1);
-    tasksGLayout->addWidget(tasksProgress, 5, 1);
 
     // ========================================================
 

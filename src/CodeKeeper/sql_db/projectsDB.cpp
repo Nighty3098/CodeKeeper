@@ -177,7 +177,7 @@ void MainWindow::loadProjects()
         QString createdTime = query.value("createdTime").toString();
         QString status = query.value("status").toString();
 
-        QString data = title + "\n" + git_url + "\n" + createdTime;
+        QString data = title + "\n\n" + git_url + "\n\n" + createdTime;
 
         QListWidgetItem *item = new QListWidgetItem(data);
 
