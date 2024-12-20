@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QtWidgets>
 
+#include <QCache>
+#include <QSettings>
+#include <QDateTime>
+
 class AccountWindow : public QMainWindow
 {
     Q_OBJECT
@@ -31,6 +35,8 @@ class AccountWindow : public QMainWindow
 
     bool isAutoSyncB;
     bool isCustomTheme;
+
+    QCache<QString, QPixmap> imageCache;
 
   private:
     QHBoxLayout *langsStatsLayout;

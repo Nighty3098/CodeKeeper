@@ -32,7 +32,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
-    setMinimumSize(1000, 900);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -194,7 +193,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createCustomTitlebar();
 
     this->setMouseTracking(true);
-    this->setMinimumSize(560, 400);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setWindowIcon(QPixmap(":/icon.png"));
 
@@ -432,8 +430,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksStatsL->addWidget(projectsList);
     tasksStatsL->addItem(spacer2);
 
-    label_1 = new QLabel(tr("Incomplete"));
-    label_1->setFixedHeight(25);
+    inprocessWidget = new QWidget();
+    inprocessWidget->setStyleSheet("padding: 0px; margin: 0px;");
+    incompleteWidget = new QWidget();
+    incompleteWidget->setStyleSheet("padding: 0px; margin: 0px;");
+    completeWidget = new QWidget();
+    completeWidget->setStyleSheet("padding: 0px; margin: 0px;");
+
+    QVBoxLayout *incompleteLayout = new QVBoxLayout(incompleteWidget);
+    QVBoxLayout *inprocessLayout = new QVBoxLayout(inprocessWidget);
+    QVBoxLayout *completeLayout = new QVBoxLayout(completeWidget);
+
+    label_1 = new ClickableLabel(tr("Incomplete"));
+    label_1->setFixedHeight(15);
     label_1->setAlignment(Qt::AlignCenter);
 
     incompleteTasks = new QListWidget();
@@ -445,8 +454,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     incompleteTasks->setContextMenuPolicy(Qt::CustomContextMenu);
     incompleteTasks->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    label_2 = new QLabel(tr("Inprocess"));
-    label_2->setFixedHeight(25);
+    incompleteLayout->addWidget(label_1);
+    incompleteLayout->addWidget(incompleteTasks);
+
+    label_2 = new ClickableLabel(tr("Inprocess"));
+    label_2->setFixedHeight(15);
     label_2->setAlignment(Qt::AlignCenter);
 
     inprocessTasks = new QListWidget();
@@ -458,8 +470,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     inprocessTasks->setContextMenuPolicy(Qt::CustomContextMenu);
     inprocessTasks->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    label_3 = new QLabel(tr("Complete"));
-    label_3->setFixedHeight(25);
+    inprocessLayout->addWidget(label_2);
+    inprocessLayout->addWidget(inprocessTasks);
+
+    label_3 = new ClickableLabel(tr("Complete"));
+    label_3->setFixedHeight(15);
     label_3->setAlignment(Qt::AlignCenter);
 
     completeTasks = new QListWidget();
@@ -471,6 +486,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     completeTasks->setContextMenuPolicy(Qt::CustomContextMenu);
     completeTasks->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
+    completeLayout->addWidget(label_3);
+    completeLayout->addWidget(completeTasks);
+
     taskText = new QLineEdit();
     taskText->setPlaceholderText(tr(" Task..."));
     taskText->setFixedHeight(25);
@@ -478,21 +496,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tasksGLayout->addLayout(tasksStatsL, 0, 0, 1, 3);
 
-    QSplitter *tasksSplitter = new QSplitter(Qt::Horizontal);
+    tasksSplitter = new QSplitter();
+    tasksSplitter->setOrientation(Qt::Horizontal);
     tasksSplitter->setStyleSheet("QSplitter::handle:horizontal {background-color: transparent; color: transparent;} "
                                  "QSplitter::handle:vertical {background-color: transparent; color: transparent;}");
 
-    tasksSplitter->addWidget(incompleteTasks);
-    tasksSplitter->addWidget(inprocessTasks);
-    tasksSplitter->addWidget(completeTasks);
+    tasksSplitter->addWidget(incompleteWidget);
+    tasksSplitter->addWidget(inprocessWidget);
+    tasksSplitter->addWidget(completeWidget);
 
     tasksSplitter->setStretchFactor(0, 1);
     tasksSplitter->setStretchFactor(1, 1);
     tasksSplitter->setStretchFactor(2, 1);
 
-    tasksGLayout->addWidget(label_1, 1, 0, Qt::AlignHCenter);
-    tasksGLayout->addWidget(label_2, 1, 1, Qt::AlignHCenter);
-    tasksGLayout->addWidget(label_3, 1, 2, Qt::AlignHCenter);
     tasksGLayout->addWidget(tasksSplitter, 2, 0, 1, 3);
     tasksGLayout->addWidget(taskText, 4, 1);
     tasksGLayout->addWidget(tasksProgress, 5, 1);

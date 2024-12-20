@@ -203,7 +203,7 @@ void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
 void AccountWindow::get_image_url(const QString &username, QLabel *label)
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("https://api.github.com/users/" + git_user);
+    QUrl url("https://api.github.com/users/" + username);
 
     QUrlQuery query;
     query.addQueryItem("login", username);
@@ -216,10 +216,22 @@ void AccountWindow::get_image_url(const QString &username, QLabel *label)
     request.setRawHeader("Accept", "application/vnd.github.v3+json");
 
     QNetworkReply *reply = manager->get(request);
+
+    connect(reply, &QNetworkReply::errorOccurred, [=](QNetworkReply::NetworkError error) {
+        qWarning() << "Network error occurred:" << error;
+        qWarning() << "Error string:" << reply->errorString();
+        reply->deleteLater();
+    });
+
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
-        if (reply->error())
-        {
+        if (reply->error()) {
             qWarning() << "Error:" << reply->errorString();
+            reply->deleteLater();
+            return;
+        }
+
+        if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() != 200) {
+            qWarning() << "HTTP error:" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
             reply->deleteLater();
             return;
         }
@@ -227,7 +239,7 @@ void AccountWindow::get_image_url(const QString &username, QLabel *label)
         QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
         QJsonObject obj = doc.object();
 
-        qDebug() << obj["avatar_url"].toString();
+        qDebug() << "Avatar URL:" << obj["avatar_url"].toString();
 
         setImageFromUrl(obj["avatar_url"].toString(), label);
 

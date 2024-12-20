@@ -10,6 +10,53 @@
 
 #include "mainwindow.h"
 
+void MainWindow::updateButtonStyles(QPushButton *activeButton)
+{
+    QString activeStyle =
+        "QPushButton { margin: 7px; border-width: 2px; border-color: #a9bf85; background-color: transparent;} "
+        "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}";
+    QString inactiveStyle =
+        "QPushButton { margin: 7px; border-width: 2px; border-color: transparent; background-color: transparent;} "
+        "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}";
+
+    QList<QPushButton *> buttons = {mainTabButton, tasksTabButton, notesTabButton, projectsTabButton};
+
+    for (QPushButton *button : buttons)
+    {
+        if (button == activeButton)
+        {
+            button->setStyleSheet(activeStyle);
+        }
+        else
+        {
+            button->setStyleSheet(inactiveStyle);
+        }
+    }
+}
+
+void MainWindow::setupAdaptiveUI()
+{
+    int current_width = this->width();
+
+    if (current_width < 1000)
+    {
+        tasksSplitter->setOrientation(Qt::Vertical);
+    }
+
+    else
+    {
+        tasksSplitter->setOrientation(Qt::Horizontal);
+
+        incompleteWidget->setMaximumHeight(1000000);
+        inprocessWidget->setMaximumHeight(10000000);
+        completeWidget->setMaximumHeight(10000000);
+
+        inprocessTasks->setVisible(true);
+        completeTasks->setVisible(true);
+        incompleteTasks->setVisible(true);
+    }
+}
+
 void MainWindow::showWelcomeMessage()
 {
     QVBoxLayout *layout = new QVBoxLayout();
@@ -70,7 +117,7 @@ void MainWindow::showWelcomeMessage()
 
     dialogW->show();
 
-    // globalSettings->setValue("firstRun", false);
+    globalSettings->setValue("firstRun", false);
 }
 
 void MainWindow::hideMenu()
@@ -509,6 +556,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "font-size: " +
                                    font_size +
                                    "pt;"
+                                   "padding: 0px;"
+                                   "border-radius: 15px;"
                                    "}"
                                    "QListWidget::item:selected {"
                                    "background-color: rgba(211, 102, 107, 75);"
@@ -527,6 +576,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                   "font-size: " +
                                   font_size +
                                   "pt;"
+                                  "padding: 0px;"
+                                  "border-radius: 15px;"
                                   "}"
                                   "QListWidget::item:selected {"
                                   "background-color: rgba(231, 232, 141, 75);"
@@ -546,6 +597,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                  "font-size: " +
                                  font_size +
                                  "pt;"
+                                 "padding: 0px;"
+                                 "border-radius: 15px;"
                                  "}"
                                  "QListWidget::item:selected {"
                                  "background-color: rgba(195, 232, 141, 75);"
@@ -566,6 +619,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "font-size: " +
                                       font_size +
                                       "pt;"
+                                      "padding: 0px;"
+                                      "border-radius: 15px;"
                                       "}"
                                       "QListWidget::item:selected {"
                                       "border-width: 2px; border-color: #a9bf85;"
@@ -586,6 +641,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "font-size: " +
                                    font_size +
                                    "pt;"
+                                   "padding: 0px;"
+                                   "border-radius: 15px;"
                                    "}"
                                    "QListWidget::item:selected {"
                                    "border-width: 2px; border-color: #a9bf85;"
@@ -604,6 +661,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "font-size: " +
                                       font_size +
                                       "pt;"
+                                      "padding: 0px;"
+                                      "border-radius: 15px;"
                                       "}"
                                       "QListWidget::item:selected {"
                                       "border-width: 2px; border-color: #a9bf85;"
@@ -623,6 +682,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                     "font-size: " +
                                     font_size +
                                     "pt;"
+                                    "border-radius: 15px;"
+                                    "padding: 0px;"
                                     "}"
                                     "QListWidget::item:selected {"
                                     "border-width: 2px; border-color: #a9bf85;"
@@ -667,11 +728,14 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     completeTasks->setFont(*selectedFont);
 
     label_1->setFont(*selectedFont);
-    label_1->setStyleSheet("font-size: " + font_size + "px;");
+    label_1->setPixmapSize(*font_size_int);
+    label_1->setCustomStyleSheet("font-size: " + font_size + "px; color: #a9bf85;");
     label_2->setFont(*selectedFont);
-    label_2->setStyleSheet("font-size: " + font_size + "px;");
+    label_2->setPixmapSize(*font_size_int);
+    label_2->setCustomStyleSheet("font-size: " + font_size + "px; color: #a9bf85;");
     label_3->setFont(*selectedFont);
-    label_3->setStyleSheet("font-size: " + font_size + "px;");
+    label_3->setPixmapSize(*font_size_int);
+    label_3->setCustomStyleSheet("font-size: " + font_size + "px; color: #a9bf85;");
 
     windowTitle->setFont(*selectedFont);
     windowTitle->setStyleSheet("font-size: " + font_size + "px;");
@@ -707,7 +771,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
         "QPushButton {background-color: transparent; border: none; margin: 7px; font-size: " + font_size + "px;} ");
 
     mainTabButton->setStyleSheet(
-        "QPushButton { margin: 7px; border-width: 2px; border-color: transparent; background-color: transparent;} "
+        "QPushButton { margin: 7px; border-width: 2px; border-color: #a9bf85; background-color: transparent;} "
         "QPushButton:hover {border-color: #a9bf85; background-color: transparent;}");
     tasksTabButton->setStyleSheet(
         "QPushButton { margin: 7px; border-width: 2px; border-color: transparent; background-color: transparent;} "
@@ -756,8 +820,4 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     flProjects->setStyleSheet("font-size: " + font_size + "px;");
     sProjects->setStyleSheet("font-size: " + font_size + "px;");
     nsProjects->setStyleSheet("font-size: " + font_size + "px;");
-
-    label_3->setStyleSheet("font-size: " + font_size + "px;");
-    label_2->setStyleSheet("font-size: " + font_size + "px;");
-    label_1->setStyleSheet("font-size: " + font_size + "px;");
 }

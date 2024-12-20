@@ -2,6 +2,7 @@
 
 #include <QHBoxLayout>
 #include <QtWidgets>
+#include <qt/QtWidgets/qgridlayout.h>
 
 #include "accountFunc/functional.cpp"
 #include "custom/ColorValueDisplay/ColorValueDisplay.h"
@@ -19,7 +20,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     setCentralWidget(centralWidget);
 
     mainLayout = new QGridLayout(centralWidget);
-    setMinimumSize(800, 670);
+    setFixedSize(800, 670);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -38,7 +39,8 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     langsTitle->setAlignment(Qt::AlignCenter);
 
     profilePicture = new QLabel();
-    profilePicture->setText(tr("Loading..."));
+    profilePicture->setAlignment(Qt::AlignCenter);
+    profilePicture->setPixmap(QPixmap(":/user.png").scaled(250, 250, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     profilePicture->setFixedSize(300, 300);
     profilePicture->setStyleSheet("border-radius: 145px;");
 
@@ -128,12 +130,12 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     QVBoxLayout *statsLayout = new QVBoxLayout();
     statsLayout->setSpacing(20);
-    statsLayout->addWidget(tasksTitle, Qt::AlignHCenter);
+    statsLayout->addWidget(tasksTitle, Qt::AlignHCenter | Qt::AlignBottom);
     statsLayout->addLayout(tasksStatsLayout);
-    statsLayout->addWidget(projectTitle, Qt::AlignHCenter);
+    statsLayout->addWidget(projectTitle, Qt::AlignHCenter | Qt::AlignBottom);
     statsLayout->addLayout(projectsStatsLayout);
-    statsLayout->addWidget(langsTitle, Qt::AlignHCenter);
-    statsLayout->addWidget(langsCard, Qt::AlignCenter);
+    // statsLayout->addWidget(langsTitle, Qt::AlignHCenter);
+    // statsLayout->addWidget(langsCard, Qt::AlignCenter);
 
     statsWidget = new QWidget();
     statsWidget->setFixedSize(350, 600);
@@ -144,6 +146,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     gitProfileLayout->addWidget(profilePicture, Qt::AlignCenter);
     gitProfileLayout->addWidget(profileInfo, Qt::AlignCenter);
 
+    /*
     QThread *GitLangsStatsThread = new QThread;
     QObject::connect(GitLangsStatsThread, &QThread::started, this, [this]() {
         auto gitLangsWidget = this->gitLangsWidget;
@@ -186,7 +189,10 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
             langsTitle->hide();
         }
     });
+
     GitLangsStatsThread->start();
+
+    */
 
     QThread *styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {

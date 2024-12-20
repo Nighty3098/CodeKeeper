@@ -2,12 +2,101 @@
 
 void MainWindow::createConnects()
 {
+    int font_size_int = globalSettings->value("fontSize").value<int>();
+
     connect(openSettingsWindowQS, &QShortcut::activated, this, [this]() { openSettingsWindow(); });
 
-    connect(toFirstTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(0); });
-    connect(toSecondTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(1); });
-    connect(toThirdTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(2); });
-    connect(toFourthTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(3); });
+    connect(label_1, &ClickableLabel::clicked, [=]() {
+        if (this->width() < 1000)
+        {
+            incompleteTasks->setVisible(!incompleteTasks->isVisible());
+            if (incompleteWidget->height() > font_size_int * 2.5)
+            {
+                incompleteWidget->setMaximumHeight(font_size_int * 2.5);
+            }
+            else
+            {
+                incompleteWidget->setMaximumHeight(1000000);
+            };
+        }
+    });
+    connect(label_2, &ClickableLabel::clicked, [=]() {
+        if (this->width() < 1000)
+        {
+            inprocessTasks->setVisible(!inprocessTasks->isVisible());
+            if (inprocessWidget->height() > font_size_int * 2.5)
+            {
+                inprocessWidget->setMaximumHeight(font_size_int * 2.5);
+            }
+            else
+            {
+                inprocessWidget->setMaximumHeight(1000000);
+            };
+        }
+    });
+    connect(label_3, &ClickableLabel::clicked, [=]() {
+        if (this->width() < 1000)
+        {
+            completeTasks->setVisible(!completeTasks->isVisible());
+            if (completeWidget->height() > font_size_int * 2.5)
+            {
+                completeWidget->setMaximumHeight(font_size_int * 2.5);
+            }
+            else
+            {
+                completeWidget->setMaximumHeight(1000000);
+            };
+        }
+    });
+
+    connect(toFirstTab, &QShortcut::activated, tabs, [this]() {
+        tabs->setCurrentIndex(0);
+        updateButtonStyles(mainTabButton);
+    });
+
+    connect(toSecondTab, &QShortcut::activated, tabs, [this]() {
+        tabs->setCurrentIndex(1);
+        updateButtonStyles(notesTabButton);
+    });
+
+    connect(toThirdTab, &QShortcut::activated, tabs, [this]() {
+        tabs->setCurrentIndex(2);
+        updateButtonStyles(tasksTabButton);
+    });
+
+    connect(toFourthTab, &QShortcut::activated, tabs, [this]() {
+        tabs->setCurrentIndex(3);
+        updateButtonStyles(projectsTabButton);
+    });
+
+    connect(mainTabButton, &QPushButton::clicked, [this]() {
+        tabs->setCurrentIndex(0);
+        windowTitle->setText(" ~ CodeKeeper ~ ");
+        setWindowTitle("CodeKeeper");
+        updateButtonStyles(mainTabButton); // Update style for the clicked button
+    });
+
+    connect(tasksTabButton, &QPushButton::clicked, [this]() {
+        tabs->setCurrentIndex(2);
+        windowTitle->setText(" ~ Tasks ~ ");
+        setWindowTitle(tr("Tasks"));
+        loadProjectsList(projectsList);
+        updateButtonStyles(tasksTabButton); // Update style for the clicked button
+    });
+
+    connect(notesTabButton, &QPushButton::clicked, [this]() {
+        tabs->setCurrentIndex(1);
+        windowTitle->setText(" ~ Notes ~ ");
+        setWindowTitle(tr("Notes"));
+        updateButtonStyles(notesTabButton); // Update style for the clicked button
+    });
+
+    connect(projectsTabButton, &QPushButton::clicked, [this]() {
+        tabs->setCurrentIndex(3);
+        windowTitle->setText(" ~ Projects ~ ");
+        setWindowTitle(tr("Projects"));
+        updateButtonStyles(projectsTabButton); // Update style for the clicked button
+    });
 
     connect(openCommandPalette, &QShortcut::activated, this, [this]() {
         qDebug() << "Opening command palette...";
@@ -185,28 +274,6 @@ void MainWindow::createConnects()
                 qDebug() << toolTip;
             }
         }
-    });
-
-    connect(mainTabButton, &QPushButton::clicked, [=]() {
-        tabs->setCurrentIndex(0);
-        windowTitle->setText(" ~ CodeKeeper ~ ");
-        setWindowTitle("CodeKeeper");
-    });
-    connect(tasksTabButton, &QPushButton::clicked, [=]() {
-        tabs->setCurrentIndex(2);
-        windowTitle->setText(" ~ Tasks ~ ");
-        setWindowTitle(tr("Tasks"));
-        loadProjectsList(projectsList);
-    });
-    connect(notesTabButton, &QPushButton::clicked, [=]() {
-        tabs->setCurrentIndex(1);
-        windowTitle->setText(" ~ Notes ~ ");
-        setWindowTitle(tr("Notes"));
-    });
-    connect(projectsTabButton, &QPushButton::clicked, [=]() {
-        tabs->setCurrentIndex(3);
-        windowTitle->setText(" ~ Projects ~ ");
-        setWindowTitle(tr("Projects"));
     });
 
     connect(notesList, &QListWidget::customContextMenuRequested, this,

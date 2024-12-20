@@ -38,6 +38,7 @@ HEADERS += \
     settingswindow.h \
     syncwindow.h \
     commandPalette.h \
+    custom/clickableLabel/clickableLabel.h \
     custom/circleProgressbar/ProgressCircle.h \
     custom/circleChart/CircleChart.h \
     custom/ColorValueDisplay/ColorValueDisplay.h
