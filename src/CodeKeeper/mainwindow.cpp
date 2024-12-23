@@ -442,7 +442,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QVBoxLayout *completeLayout = new QVBoxLayout(completeWidget);
 
     label_1 = new ClickableLabel(tr("Incomplete"));
-    label_1->setFixedHeight(15);
+    label_1->setFixedHeight(13);
     label_1->setAlignment(Qt::AlignCenter);
 
     incompleteTasks = new QListWidget();
@@ -458,7 +458,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     incompleteLayout->addWidget(incompleteTasks);
 
     label_2 = new ClickableLabel(tr("Inprocess"));
-    label_2->setFixedHeight(15);
+    label_2->setFixedHeight(13);
     label_2->setAlignment(Qt::AlignCenter);
 
     inprocessTasks = new QListWidget();
@@ -474,7 +474,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     inprocessLayout->addWidget(inprocessTasks);
 
     label_3 = new ClickableLabel(tr("Complete"));
-    label_3->setFixedHeight(15);
+    label_3->setFixedHeight(13);
     label_3->setAlignment(Qt::AlignCenter);
 
     completeTasks = new QListWidget();

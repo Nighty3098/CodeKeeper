@@ -259,7 +259,7 @@ class MainWindow : public QMainWindow
     QString getProjectByTask(QString *task, QString *status);
 
     QStringList getProjectsList();
-
+    
   protected:
     void resizeEvent(QResizeEvent *event) override
     {

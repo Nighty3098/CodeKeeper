@@ -41,18 +41,14 @@ void MainWindow::setupAdaptiveUI()
     if (current_width < 1400)
     {
         tasksSplitter->setOrientation(Qt::Vertical);
-        decorationLabel->setPixmap(
-            QPixmap(":/tea.svg").scaled(250, 250, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(250, 250, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         timeLabel->setStyleSheet("font-size: 100px; color: #a9bf85;");
     }
-
     else if (current_width > 1500)
     {
-        timeLabel->setStyleSheet("font-size: 170px; color: #a9bf85;");
-        decorationLabel->setPixmap(
-            QPixmap(":/tea.svg").scaled(350, 350, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        timeLabel->setStyleSheet("font-size: 150px; color: #a9bf85;");
+        decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(350, 350, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
-
     else
     {
         tasksSplitter->setOrientation(Qt::Horizontal);
@@ -166,10 +162,6 @@ bool MainWindow::createConnection(QString path)
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName((path) + QStringLiteral("/data.db"));
-
-    db.setUserName("admin");
-    db.setHostName("localhost");
-    db.setPassword("password");
 
     if (!db.open())
     {
@@ -516,15 +508,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
 {
     qDebug() << "Applying preferences";
 
-    int fontId = QFontDatabase::addApplicationFont(":/CartographCF-HeavyItalic.ttf");
+    int fontId = QFontDatabase::addApplicationFont(":/CustomFont.ttf");
     QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
 
     if (fontFamilies.isEmpty())
     {
-        qWarning("Не удалось загрузить шрифт.");
+        qWarning("Failed to load font.");
     }
-
-    QFont custom_font(fontFamilies.at(0), 12);
 
     QString font_size = QString::number(*font_size_int);
     QString font_size_clock = QString::number(*font_size_int * 11);
@@ -570,12 +560,10 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "border-radius: 15px;"
                                    "}"
                                    "QListWidget::item:selected {"
-                                   // "border: 2px solid rgb(211, 102, 107);"
                                    "background-color: rgba(211, 102, 107, 100); color: #000000;"
                                    "}"
                                    "QListWidget::Item {"
                                    "margin: 0px; color: #000000;"
-                                   //"border: 2px solid rgb(211, 102, 107);"
                                    "background-color: #e08581;"
                                    "border-radius: 5px;"
                                    "font-size: " +
@@ -592,7 +580,6 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                   "}"
                                   "QListWidget::item:selected {"
                                   "background-color: rgba(231, 232, 141, 75);"
-                                  // "border: 2px solid rgb(231, 232, 141);"
                                   "}"
                                   "QListWidget::Item {"
                                   "margin: 0px;"
