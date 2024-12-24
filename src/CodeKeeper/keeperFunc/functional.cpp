@@ -7,8 +7,34 @@
 #include <QSqlError>
 #include <QSyntaxHighlighter>
 #include <QThread>
+#include <QColor>
 
 #include "mainwindow.h"
+
+QPixmap MainWindow::changeIconColor(QPixmap pixmap) {
+    QColor color;
+
+    if (isCustomTheme) {
+        if (theme == 0) { // custom dark
+            color = QColor("#c3e88d");
+        } else if (theme == 1) { // solarized
+            color = QColor("#728905");
+        } else if (theme == 2) { // mac dark
+            color = QColor("#d6d6d6");
+        }
+    } else {
+        color = QColor("#d6d6d6");
+    }
+
+    QPixmap coloredPixmap = pixmap; 
+    QPainter painter(&coloredPixmap);
+
+    painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    painter.fillRect(coloredPixmap.rect(), color);
+    painter.end();
+    
+    return coloredPixmap;
+}
 
 void MainWindow::updateButtonStyles(QPushButton *activeButton)
 {
@@ -41,13 +67,15 @@ void MainWindow::setupAdaptiveUI()
     if (current_width < 1400)
     {
         tasksSplitter->setOrientation(Qt::Vertical);
-        decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(250, 250, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        timeLabel->setStyleSheet("font-size: 100px; color: #a9bf85;");
+        decorationLabel->setPixmap(
+            QPixmap(":/tea.svg").scaled(250, 250, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        timeLabel->setStyleSheet("font-size: 100px;");
     }
     else if (current_width > 1500)
     {
-        timeLabel->setStyleSheet("font-size: 150px; color: #a9bf85;");
-        decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(350, 350, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        timeLabel->setStyleSheet("font-size: 150px;");
+        decorationLabel->setPixmap(
+            QPixmap(":/tea.svg").scaled(350, 350, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
     else
     {
@@ -234,9 +262,8 @@ void MainWindow::setConnectionStatus()
 {
     if (checkConnection())
     {
-        isConnected->setIcon(QPixmap(":/connected.png").scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isConnected->setIcon(changeIconColor(QPixmap(":/connected.png")).scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip(tr("Connected"));
-        sizeGrip->setStyleSheet("background-color: #a9bf85; border-radius: 6px;");
     }
     else
     {
@@ -248,9 +275,8 @@ void MainWindow::setConnectionStatus()
     if (isAutoSyncing)
     {
         isAutoSync->setIcon(
-            QPixmap(":/auto_sync_on.png").scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            changeIconColor(QPixmap(":/auto_sync_on.png")).scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip(tr("Auto sync on"));
-        sizeGrip->setStyleSheet("background-color: #a9bf85; border-radius: 6px;");
     }
     else
     {
@@ -265,54 +291,6 @@ void MainWindow::createCustomTitlebar()
     closeBtn->setFixedSize(13, 13);
     minimizeBtn->setFixedSize(13, 13);
     maximizeBtn->setFixedSize(13, 13);
-
-    closeBtn->setStyleSheet("QPushButton {"
-                            "    border-radius: 6px;"
-                            "    border-color: rgba(0, 0, 0, 0);"
-                            "    background-color: #e08581;"
-                            "    background-repeat: no-repeat;"
-                            "    background-attachment: fixed;"
-                            "}"
-
-                            "QPushButton:hover {"
-                            "    border-radius: 6px;"
-                            "    border-color: rgba(0, 0, 0, 0);"
-                            "    background-repeat: no-repeat;"
-                            "    background-color: #e06a65;"
-                            "    background-attachment: fixed;"
-                            "}");
-
-    minimizeBtn->setStyleSheet("QPushButton {"
-                               "    border-radius: 6px;"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: #d8bd85;"
-                               "    background-repeat: no-repeat;"
-                               "    background-attachment: fixed;"
-                               "}"
-
-                               "QPushButton:hover {"
-                               "    border-radius: 6px;"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-repeat: no-repeat;"
-                               "    background-color: #d8b772;"
-                               "    background-attachment: fixed;"
-                               "}");
-
-    maximizeBtn->setStyleSheet("QPushButton {"
-                               "    border-radius: 6px;"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: #a9bf85;"
-                               "    background-repeat: no-repeat;"
-                               "    background-attachment: fixed;"
-                               "}"
-
-                               "QPushButton:hover {"
-                               "    border-radius: 6px;"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: #9bbf60;"
-                               "    background-repeat: no-repeat;"
-                               "    background-attachment: fixed;"
-                               "}");
 
     if (isCustomTitlebar)
     {
@@ -504,6 +482,73 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
     }
 }
 
+void MainWindow::loadStyleSheetFile()
+{
+    if (isCustomTheme)
+    {
+        if (theme == 0)
+        {
+            QFile custom_theme(":/custom_stylesheet.qss");
+            if (custom_theme.open(QFile::ReadOnly))
+            {
+                QString customStyleSheet = custom_theme.readAll();
+                qDebug() << "Loading custom stylesheet";
+                setStyleSheet(customStyleSheet);
+                custom_theme.close();
+            }
+            else
+            {
+                qDebug() << "Failed to open custom stylesheet file";
+            }
+        }
+        else if (theme == 1)
+        {
+            QFile custom_light_theme(":/custom_stylesheet_solarized.qss");
+            if (custom_light_theme.open(QFile::ReadOnly))
+            {
+                QString customStyleSheetLight = custom_light_theme.readAll();
+                qDebug() << "Loading custom light stylesheet";
+                setStyleSheet(customStyleSheetLight);
+                custom_light_theme.close();
+            }
+            else
+            {
+                qDebug() << "Failed to open custom light stylesheet file";
+            }
+        }
+        else if (theme == 2)
+        {
+            QFile custom_light_theme(":/mac_dark_stylesheet.qss");
+            if (custom_light_theme.open(QFile::ReadOnly))
+            {
+                QString customStyleSheetLight = custom_light_theme.readAll();
+                qDebug() << "Loading mac dark stylesheet";
+                setStyleSheet(customStyleSheetLight);
+                custom_light_theme.close();
+            }
+            else
+            {
+                qDebug() << "Failed to open mac dark stylesheet file";
+            }
+        }
+    }
+    else
+    {
+        QFile theme_file(":/stylesheet.qss");
+        if (theme_file.open(QFile::ReadOnly))
+        {
+            QString defaultStyleSheet = theme_file.readAll();
+            qDebug() << "Loading default stylesheet";
+            setStyleSheet(defaultStyleSheet);
+            theme_file.close();
+        }
+        else
+        {
+            qDebug() << "Failed to open default stylesheet file";
+        }
+    }
+}
+
 void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
 {
     qDebug() << "Applying preferences";
@@ -516,19 +561,21 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
         qWarning("Failed to load font.");
     }
 
+    QFont custom_font(fontFamilies.at(0), 12);
+
     QString font_size = QString::number(*font_size_int);
     QString font_size_clock = QString::number(*font_size_int * 11);
     QString font_size_date = QString::number(*font_size_int * 1.6);
     QString font_size_hello = QString::number(*font_size_int * 1.4);
 
     timeLabel->setFont(custom_font);
-    timeLabel->setStyleSheet("background: transparent; font-size: " + font_size_clock + "pt; color: #a9bf85;");
+    timeLabel->setStyleSheet("background: transparent; font-size: " + font_size_clock + "pt;");
 
     dateLabel->setFont(custom_font);
-    dateLabel->setStyleSheet("background: transparent; font-size: " + font_size_date + "pt; color: #a9bf85;");
+    dateLabel->setStyleSheet("background: transparent; font-size: " + font_size_date + "pt;");
 
     helloLabel->setFont(custom_font);
-    helloLabel->setStyleSheet("background: transparent; font-size: " + font_size_hello + "pt; color: #a9bf85;");
+    helloLabel->setStyleSheet("background: transparent; font-size: " + font_size_hello + "pt;");
 
     projectsMainLabel->setFont(*selectedFont);
     projectsMainLabel->setStyleSheet("font-size: " + font_size + "px;");
@@ -556,16 +603,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "font-size: " +
                                    font_size +
                                    "pt;"
-                                   "padding: 0px;"
-                                   "border-radius: 15px;"
                                    "}"
-                                   "QListWidget::item:selected {"
-                                   "background-color: rgba(211, 102, 107, 100); color: #000000;"
-                                   "}"
-                                   "QListWidget::Item {"
-                                   "margin: 0px; color: #000000;"
-                                   "background-color: #e08581;"
-                                   "border-radius: 5px;"
                                    "font-size: " +
                                    font_size +
                                    "pt;"
@@ -575,17 +613,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                   "font-size: " +
                                   font_size +
                                   "pt;"
-                                  "padding: 0px;"
-                                  "border-radius: 15px;"
-                                  "}"
-                                  "QListWidget::item:selected {"
-                                  "background-color: rgba(231, 232, 141, 75);"
                                   "}"
                                   "QListWidget::Item {"
-                                  "margin: 0px;"
-                                  "background-color: #d8bd85; "
-                                  "color: #000000; text-decoration: underline; "
-                                  "border-radius: 5px;"
                                   "font-size: " +
                                   font_size +
                                   "pt;"
@@ -595,18 +624,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                  "font-size: " +
                                  font_size +
                                  "pt;"
-                                 "padding: 0px;"
-                                 "border-radius: 15px;"
                                  "}"
-                                 "QListWidget::item:selected {"
-                                 "background-color: rgba(195, 232, 141, 75);"
-                                 "border-width: 2px; border-color: #a9bf85;"
-                                 "}"
-                                 "QListWidget::Item {"
-                                 "margin: 0px;"
-                                 "background-color: #a9bf85; "
-                                 "color: #000000;"
-                                 "border-radius: 5px;"
                                  "font-size: " +
                                  font_size +
                                  "pt;"
@@ -616,19 +634,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "font-size: " +
                                       font_size +
                                       "pt;"
-                                      "padding: 0px;"
-                                      "border-radius: 15px;"
                                       "}"
-                                      "QListWidget::item:selected {"
-                                      "border-width: 2px; border-color: #a9bf85;"
-                                      "background-color: rgba(211, 102, 107, 75);"
-                                      "}"
-                                      "QListWidget::Item {"
-                                      "margin: 0px;"
-                                      "background-color: #e08581;"
-                                      "color: #000000; "
-                                      "border-radius: 5px;"
-                                      "border-color: #ff757f; "
                                       "font-size: " +
                                       font_size +
                                       "pt;"
@@ -638,17 +644,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                    "font-size: " +
                                    font_size +
                                    "pt;"
-                                   "padding: 0px;"
-                                   "border-radius: 15px;"
-                                   "}"
-                                   "QListWidget::item:selected {"
-                                   "border-width: 2px; border-color: #a9bf85;"
-                                   "background-color: rgba(231, 232, 141, 75);"
                                    "}"
                                    "QListWidget::Item {"
-                                   "margin: 0px;"
-                                   "background-color: #d8bd85; color: #000000; "
-                                   "border-radius: 5px;"
                                    "font-size: " +
                                    font_size +
                                    "pt;"
@@ -658,18 +655,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                       "font-size: " +
                                       font_size +
                                       "pt;"
-                                      "padding: 0px;"
-                                      "border-radius: 15px;"
-                                      "}"
-                                      "QListWidget::item:selected {"
-                                      "border-width: 2px; border-color: #a9bf85;"
-                                      "background-color: rgba(126, 156, 216, 75)"
                                       "}"
                                       "QListWidget::Item {"
-                                      "margin: 0px;"
-                                      "background-color: #85b9b3; "
-                                      "color: #000000;"
-                                      "border-radius: 5px;"
                                       "font-size: " +
                                       font_size +
                                       "pt;"
@@ -679,17 +666,8 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
                                     "font-size: " +
                                     font_size +
                                     "pt;"
-                                    "border-radius: 15px;"
-                                    "padding: 0px;"
-                                    "}"
-                                    "QListWidget::item:selected {"
-                                    "border-width: 2px; border-color: #a9bf85;"
-                                    "background-color: rgba(195, 232, 141, 75);"
                                     "}"
                                     "QListWidget::Item {"
-                                    "margin: 0px;"
-                                    "background-color: #a9bf85; color: #000000; "
-                                    "border-radius: 5px;"
                                     "font-size: " +
                                     font_size +
                                     "pt;"
@@ -738,8 +716,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     windowTitle->setStyleSheet("font-size: " + font_size + "px;");
 
     tasksProgress->setFont(*selectedFont);
-    tasksProgress->setStyleSheet("background-color: #e08581; selection-background-color: "
-                                 "#a9bf85; color: #222436; font-size: " +
+    tasksProgress->setStyleSheet("font-size: " +
                                  font_size + "pt;");
 
     openSettingsBtn->setFont(*selectedFont);
@@ -754,7 +731,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     menu->setStyleSheet("font-size: " + font_size + "px;");
     menu->setFont(*selectedFont);
 
-    verLabel->setStyleSheet("font-size: " + font_size + "px; color: #e08581;");
+    verLabel->setStyleSheet("font-size: " + font_size + "px;");
     verLabel->setFont(custom_font);
 
     tasksMenu->setFont(*selectedFont);
@@ -768,16 +745,16 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
         "QPushButton {background-color: transparent; border: none; margin: 7px; font-size: " + font_size + "px;} ");
 
     mainTabButton->setStyleSheet(
-        "QPushButton { margin: 7px; border-width: 2px; border-color: #a9bf85; background-color: transparent;} "
+        "QPushButton { margin: 7px; border-width: 0px; border-color: #a9bf85; background-color: transparent;} "
         "QPushButton:hover {border-color: #a9bf85; background-color: transparent;}");
     tasksTabButton->setStyleSheet(
-        "QPushButton { margin: 7px; border-width: 2px; border-color: transparent; background-color: transparent;} "
+        "QPushButton { margin: 7px; border-width: 0px; border-color: transparent; background-color: transparent;} "
         "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}");
     notesTabButton->setStyleSheet(
-        "QPushButton { margin: 7px; border-width: 2px; border-color: transparent; background-color: transparent;} "
+        "QPushButton { margin: 7px; border-width: 0px; border-color: transparent; background-color: transparent;} "
         "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}");
     projectsTabButton->setStyleSheet(
-        "QPushButton { margin: 7px; border-width: 2px; border-color: transparent; background-color: transparent;} "
+        "QPushButton { margin: 7px; border-width: 0px; border-color: transparent; background-color: transparent;} "
         "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}");
 
     setH1B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");

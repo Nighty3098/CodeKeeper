@@ -15,6 +15,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
+    MainWindow *mainWindow = static_cast<MainWindow *>(parent);
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
@@ -36,15 +37,13 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     profilePicture = new QLabel();
     profilePicture->setAlignment(Qt::AlignCenter);
-    profilePicture->setPixmap(QPixmap(":/user.png").scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    profilePicture->setPixmap(mainWindow->changeIconColor(QPixmap(":/user.png")).scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     profilePicture->setFixedSize(300, 300);
     profilePicture->setStyleSheet("border-radius: 145px;");
 
     profileInfo = new QLabel();
     profileInfo->setText(tr("Loading..."));
     profileInfo->setAlignment(Qt::AlignHCenter);
-
-    MainWindow *mainWindow = static_cast<MainWindow *>(parent);
 
     tasksStatsLayout = new QHBoxLayout();
 
@@ -70,6 +69,7 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     openRepo->setFixedSize(100, 25);
 
     closeWindow = new QPushButton("");
+    closeWindow->setObjectName("closeBtn");
     closeWindow->setFixedSize(13, 13);
 
     projectsStatsLayout = new QHBoxLayout();

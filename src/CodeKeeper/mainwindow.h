@@ -15,6 +15,7 @@
 #include <QThread>
 #include <QtConcurrent/QtConcurrent>
 #include <QtWidgets>
+#include <QPixmap>
 
 #include "3rdParty/qmarkdowntextedit/qmarkdowntextedit.h"
 #include "accountwindow.h"
@@ -82,6 +83,9 @@ class MainWindow : public QMainWindow
     QFileSystemModel *noteFileModel;
 
     QTabWidget *tabs;
+
+    void loadStyleSheetFile();
+    QPixmap changeIconColor(QPixmap pixmap);
 
     void openSyncWindow();
     void openSettingsWindow();
@@ -163,6 +167,7 @@ class MainWindow : public QMainWindow
     QComboBox *projectList;
 
   private slots:
+
     void updateButtonStyles(QPushButton *activeButton);
     void setupAdaptiveUI();
 
@@ -259,7 +264,7 @@ class MainWindow : public QMainWindow
     QString getProjectByTask(QString *task, QString *status);
 
     QStringList getProjectsList();
-    
+
   protected:
     void resizeEvent(QResizeEvent *event) override
     {

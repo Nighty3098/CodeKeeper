@@ -269,9 +269,8 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
         qDebug() << "Company:" << obj["company"].toString();
         qDebug() << "Login:" << obj["login"].toString();
 
-        label->setText(tr("\n\nPublic repos: ") +
-                       QString::number(obj["public_repos"].toInt()) + tr("  |  Following: ") +
-                       QString::number(obj["following"].toInt()) + tr("  |  Followers: ") +
+        label->setText(tr("\n\nPublic repos: ") + QString::number(obj["public_repos"].toInt()) +
+                       tr("  |  Following: ") + QString::number(obj["following"].toInt()) + tr("  |  Followers: ") +
                        QString::number(obj["followers"].toInt()) + tr("  |  Stars: ") +
                        QString::number(getStarsCount(git_user, git_token)) + "");
 
@@ -376,7 +375,6 @@ void AccountWindow::setProjectsStats()
     }
 }
 
-
 void AccountWindow::setFontStyle()
 {
     userName->setFont(selectedFont);
@@ -406,20 +404,4 @@ void AccountWindow::setFontStyle()
 
     tasksStatsProgress->setFont(selectedFont);
     tasksStatsProgress->setStyleSheet("font-size: " + font_size + "px;");
-
-    closeWindow->setStyleSheet("QPushButton {"
-                               "    border-radius: 6px;"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: #e08581;"
-                               "    background-repeat: no-repeat;"
-                               "    background-attachment: fixed;"
-                               "}"
-
-                               "QPushButton:hover {"
-                               "    border-radius: 6px;"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-repeat: no-repeat;"
-                               "    background-color: #e06a65;"
-                               "    background-attachment: fixed;"
-                               "}");
 }

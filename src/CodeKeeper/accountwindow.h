@@ -10,8 +10,8 @@
 #include <QtWidgets>
 
 #include <QCache>
-#include <QSettings>
 #include <QDateTime>
+#include <QSettings>
 
 class AccountWindow : public QMainWindow
 {

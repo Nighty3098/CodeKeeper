@@ -202,7 +202,6 @@ void MainWindow::filterTasksByProject(QComboBox *projectList)
     }
 }
 
-
 void MainWindow::editTask()
 {
     QListWidget *listWidgets[] = {incompleteTasks, inprocessTasks, completeTasks};
@@ -266,13 +265,17 @@ void MainWindow::editTask()
             }
 
             QPushButton okButton(QPixmap(":/save.png")
-                                     .scaled(font_size.toInt()+5, font_size.toInt()+5, Qt::KeepAspectRatio, Qt::SmoothTransformation),tr(""), &dialog);
+                                     .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio,
+                                             Qt::SmoothTransformation),
+                                 tr(""), &dialog);
             okButton.setFont(selectedFont);
             okButton.setStyleSheet("font-size: " + font_size + "px;");
             okButton.setMinimumSize(30, 30);
 
             QPushButton cancelButton(QPixmap(":/quit.png")
-                .scaled(font_size.toInt()+5, font_size.toInt()+5, Qt::KeepAspectRatio, Qt::SmoothTransformation),tr(""), &dialog);
+                                         .scaled(font_size.toInt() + 5, font_size.toInt() + 5, Qt::KeepAspectRatio,
+                                                 Qt::SmoothTransformation),
+                                     tr(""), &dialog);
             cancelButton.setFont(selectedFont);
             cancelButton.setStyleSheet("font-size: " + font_size + "px;");
             cancelButton.setMinimumSize(30, 30);
