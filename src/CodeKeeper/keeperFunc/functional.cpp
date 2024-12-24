@@ -1,3 +1,4 @@
+#include <QColor>
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QFontDatabase>
@@ -7,32 +8,40 @@
 #include <QSqlError>
 #include <QSyntaxHighlighter>
 #include <QThread>
-#include <QColor>
 
 #include "mainwindow.h"
 
-QPixmap MainWindow::changeIconColor(QPixmap pixmap) {
+QPixmap MainWindow::changeIconColor(QPixmap pixmap)
+{
     QColor color;
 
-    if (isCustomTheme) {
-        if (theme == 0) { // custom dark
+    if (isCustomTheme)
+    {
+        if (theme == 0)
+        { // custom dark
             color = QColor("#c3e88d");
-        } else if (theme == 1) { // solarized
+        }
+        else if (theme == 1)
+        { // solarized
             color = QColor("#728905");
-        } else if (theme == 2) { // mac dark
+        }
+        else if (theme == 2)
+        { // mac dark
             color = QColor("#d6d6d6");
         }
-    } else {
+    }
+    else
+    {
         color = QColor("#d6d6d6");
     }
 
-    QPixmap coloredPixmap = pixmap; 
+    QPixmap coloredPixmap = pixmap;
     QPainter painter(&coloredPixmap);
 
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
     painter.fillRect(coloredPixmap.rect(), color);
     painter.end();
-    
+
     return coloredPixmap;
 }
 
@@ -262,7 +271,8 @@ void MainWindow::setConnectionStatus()
 {
     if (checkConnection())
     {
-        isConnected->setIcon(changeIconColor(QPixmap(":/connected.png")).scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isConnected->setIcon(
+            changeIconColor(QPixmap(":/connected.png")).scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isConnected->setToolTip(tr("Connected"));
     }
     else
@@ -274,8 +284,8 @@ void MainWindow::setConnectionStatus()
 
     if (isAutoSyncing)
     {
-        isAutoSync->setIcon(
-            changeIconColor(QPixmap(":/auto_sync_on.png")).scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        isAutoSync->setIcon(changeIconColor(QPixmap(":/auto_sync_on.png"))
+                                .scaled(14, 14, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         isAutoSync->setToolTip(tr("Auto sync on"));
     }
     else
@@ -716,8 +726,7 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
     windowTitle->setStyleSheet("font-size: " + font_size + "px;");
 
     tasksProgress->setFont(*selectedFont);
-    tasksProgress->setStyleSheet("font-size: " +
-                                 font_size + "pt;");
+    tasksProgress->setStyleSheet("font-size: " + font_size + "pt;");
 
     openSettingsBtn->setFont(*selectedFont);
     openSettingsBtn->setStyleSheet(

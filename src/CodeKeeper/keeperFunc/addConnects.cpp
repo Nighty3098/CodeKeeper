@@ -49,21 +49,13 @@ void MainWindow::createConnects()
         }
     });
 
-    connect(toFirstTab, &QShortcut::activated, tabs, [this]() {
-        tabs->setCurrentIndex(0);
-    });
+    connect(toFirstTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(0); });
 
-    connect(toSecondTab, &QShortcut::activated, tabs, [this]() {
-        tabs->setCurrentIndex(1);
-    });
+    connect(toSecondTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(1); });
 
-    connect(toThirdTab, &QShortcut::activated, tabs, [this]() {
-        tabs->setCurrentIndex(2);
-    });
+    connect(toThirdTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(2); });
 
-    connect(toFourthTab, &QShortcut::activated, tabs, [this]() {
-        tabs->setCurrentIndex(3);
-    });
+    connect(toFourthTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(3); });
 
     connect(mainTabButton, &QPushButton::clicked, [this]() {
         tabs->setCurrentIndex(0);

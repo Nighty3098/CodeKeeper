@@ -585,7 +585,7 @@ QListWidget#IncompleteTasks::item:selected {
   color: #000000;
 }
 QListWidget#IncompleteTasks::item {
-  margin: 0px; 
+  margin: 0px;
   color: #000000;
   background-color: #e08581;
   border-radius: 5px;
@@ -601,8 +601,8 @@ QListWidget#InprocessTasks::item:selected {
 }
 QListWidget#InprocessTasks::Item {
   margin: 0px;
-  background-color: #d8bd85; 
-  color: #000000; text-decoration: underline; 
+  background-color: #d8bd85;
+  color: #000000; text-decoration: underline;
   border-radius: 5px;
 }
 
@@ -617,7 +617,7 @@ QListWidget#CompleteTasks::item:selected {
 }
 QListWidget#CompleteTasks::Item {
   margin: 0px;
-  background-color: #a9bf85; 
+  background-color: #a9bf85;
   color: #000000;
   border-radius: 5px;
 }
@@ -634,7 +634,7 @@ QListWidget#NotStartedProjects::item:selected {
 QListWidget#NotStartedProjects::Item {
   margin: 0px;
   background-color: #e08581;
-  color: #000000; 
+  color: #000000;
   border-radius: 5px;
   border-color: #ff757f;
 }
@@ -650,7 +650,7 @@ QListWidget#StartedProjects::item:selected {
 }
 QListWidget#StartedProjects::Item {
   margin: 0px;
-  background-color: #d8bd85; color: #000000; 
+  background-color: #d8bd85; color: #000000;
   border-radius: 5px;
 }
 
@@ -664,7 +664,7 @@ QListWidget#FinishlineProjects::item:selected {
 }
 QListWidget#FinishlineProjects::Item {
   margin: 0px;
-  background-color: #85b9b3; 
+  background-color: #85b9b3;
   color: #000000;
   border-radius: 5px;
 }
@@ -680,7 +680,7 @@ QListWidget#FinishedProjects::item:selected {
 }
 QListWidget#FinishedProjects::Item {
   margin: 0px;
-  background-color: #a9bf85; color: #000000; 
+  background-color: #a9bf85; color: #000000;
   border-radius: 5px;
 }
 

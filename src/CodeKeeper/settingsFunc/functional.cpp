@@ -3,34 +3,42 @@
 #include "mainwindow.h"
 #include "settingsFunc/GitHubReleaseDownloader.h"
 #include "settingswindow.h"
-#include <QPixmap>
 #include <QColor>
+#include <QPixmap>
 
-QPixmap SettingsWindow::changeIconColor(QPixmap pixmap) {
+QPixmap SettingsWindow::changeIconColor(QPixmap pixmap)
+{
     QColor color;
 
-    if (isCustomTheme) {
-        if (theme == 0) { // custom dark
+    if (isCustomTheme)
+    {
+        if (theme == 0)
+        { // custom dark
             color = QColor("#c3e88d");
-        } else if (theme == 1) { // solarized
+        }
+        else if (theme == 1)
+        { // solarized
             color = QColor("#728905");
-        } else if (theme == 2) { // mac dark
+        }
+        else if (theme == 2)
+        { // mac dark
             color = QColor("#ffffff");
         }
-    } else {
+    }
+    else
+    {
         color = QColor("#ffffff");
     }
 
-    QPixmap coloredPixmap = pixmap; 
+    QPixmap coloredPixmap = pixmap;
     QPainter painter(&coloredPixmap);
 
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
     painter.fillRect(coloredPixmap.rect(), color);
     painter.end();
-    
+
     return coloredPixmap;
 }
-
 
 void SettingsWindow::QuitW()
 {
@@ -107,7 +115,8 @@ void SettingsWindow::checkUpdates()
     closeWindow->setObjectName("closeBtn");
 
     QLabel *iconLabel = new QLabel();
-    iconLabel->setPixmap(changeIconColor(QPixmap(":/refresh.png")).scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    iconLabel->setPixmap(
+        changeIconColor(QPixmap(":/refresh.png")).scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     QLabel *updateInfoLabel = new QLabel();
     updateInfoLabel->setStyleSheet("font-size: " + font_size + "px;");
@@ -162,7 +171,8 @@ void SettingsWindow::checkUpdates()
     }
     else
     {
-        iconLabel->setPixmap(changeIconColor(QPixmap(":/refresh.png")).scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        iconLabel->setPixmap(
+            changeIconColor(QPixmap(":/refresh.png")).scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         updateInfoLabel->setText(tr("A new version of the application is available."));
         verInfoLabel->setText(tr("Current version: ") + currentAppVersion + "\n" + tr("New version: ") + newAppVersion);
         layout->addWidget(downloadUpdate, 6, 0, 1, 2, Qt::AlignCenter);

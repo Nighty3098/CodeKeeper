@@ -37,7 +37,8 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     profilePicture = new QLabel();
     profilePicture->setAlignment(Qt::AlignCenter);
-    profilePicture->setPixmap(mainWindow->changeIconColor(QPixmap(":/user.png")).scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    profilePicture->setPixmap(mainWindow->changeIconColor(QPixmap(":/user.png"))
+                                  .scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     profilePicture->setFixedSize(300, 300);
     profilePicture->setStyleSheet("border-radius: 145px;");
 
