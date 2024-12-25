@@ -567,3 +567,193 @@ QToolTip {
   border-radius: 5px;
   background-color: #20242b;
 }
+
+
+
+
+
+
+
+
+
+QListWidget#IncompleteTasks {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#IncompleteTasks::item:selected {
+  background-color: rgba(211, 102, 107, 255); /* Убедитесь, что альфа-канал корректен */
+  color: #000000;
+}
+QListWidget#IncompleteTasks::item {
+  margin: 0px;
+  color: #000000;
+  background-color: #e08581;
+  border-radius: 5px;
+}
+
+
+QListWidget#InprocessTasks {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#InprocessTasks::item:selected {
+  background-color: rgba(231, 232, 141, 75);
+}
+QListWidget#InprocessTasks::Item {
+  margin: 0px;
+  background-color: #d8bd85;
+  color: #000000; text-decoration: underline;
+  border-radius: 5px;
+}
+
+
+QListWidget#CompleteTasks {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#CompleteTasks::item:selected {
+  background-color: rgba(195, 232, 141, 75);
+  border-width: 2px; border-color: #a9bf85;
+}
+QListWidget#CompleteTasks::Item {
+  margin: 0px;
+  background-color: #a9bf85;
+  color: #000000;
+  border-radius: 5px;
+}
+
+
+QListWidget#NotStartedProjects {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#NotStartedProjects::item:selected {
+  border-width: 2px; border-color: #a9bf85;
+  background-color: rgba(211, 102, 107, 75);
+}
+QListWidget#NotStartedProjects::Item {
+  margin: 0px;
+  background-color: #e08581;
+  color: #000000;
+  border-radius: 5px;
+  border-color: #ff757f;
+}
+
+
+QListWidget#StartedProjects {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#StartedProjects::item:selected {
+  border-width: 2px; border-color: #a9bf85;
+  background-color: rgba(231, 232, 141, 75);
+}
+QListWidget#StartedProjects::Item {
+  margin: 0px;
+  background-color: #d8bd85; color: #000000;
+  border-radius: 5px;
+}
+
+QListWidget#FinishlineProjects {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#FinishlineProjects::item:selected {
+  border-width: 2px; border-color: #a9bf85;
+  background-color: rgba(126, 156, 216, 75)
+}
+QListWidget#FinishlineProjects::Item {
+  margin: 0px;
+  background-color: #85b9b3;
+  color: #000000;
+  border-radius: 5px;
+}
+
+
+QListWidget#FinishedProjects {
+  border-radius: 15px;
+  padding: 0px;
+}
+QListWidget#FinishedProjects::item:selected {
+  border-width: 2px; border-color: #a9bf85;
+  background-color: rgba(195, 232, 141, 75);
+}
+QListWidget#FinishedProjects::Item {
+  margin: 0px;
+  background-color: #a9bf85; color: #000000;
+  border-radius: 5px;
+}
+
+QProgressBar#tasksProgress {
+  background-color: #e08581;
+  selection-background-color: #a9bf85;
+  color: #222436;
+}
+
+
+QLabel#timeLabel {
+  color: #a9bf85;
+}
+QLabel#dateLabel {
+  color: #a9bf85;
+}
+QLabel#helloLabel {
+  color: #a9bf85;
+}
+QLabel#helloLabel {
+  color: #a9bf85;
+}
+
+
+QSizeGrip#indicator {
+  background-color: #a9bf85;
+  border-radius: 6px;
+}
+
+QPushButton#closeBtn {
+  border-radius: 6px;
+  border-color: rgba(0, 0, 0, 0);
+  background-color: #ff757f;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+QPushButton#closeBtn:hover {
+  border-radius: 6px;
+  border-color: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-color: #ff757f;
+  background-attachment: fixed;
+}
+
+QPushButton#minimizeBtn {
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-color: #5260bb;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
+
+QPushButton#minimizeBtn:hover {
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-repeat: no-repeat;
+background-color: #5260bb;
+background-attachment: fixed;
+}
+
+QPushButton#maximizeBtn {
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-color: #c3e88d;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
+
+QPushButton#maximizeBtn:hover {
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-color: #c3e88d;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}

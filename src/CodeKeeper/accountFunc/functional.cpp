@@ -91,81 +91,6 @@ float AccountWindow::calculatePercentage(int count, int total)
     return total > 0 ? static_cast<float>(count) / total * 100.0f : 0.0f;
 }
 
-QString AccountWindow::getLangByRepo(const QStringList &repoUrls)
-{
-    QMap<QString, int> languageCounts;
-    int totalBytes = 0;
-
-    QNetworkAccessManager manager;
-
-    for (const QString &repoUrl : repoUrls)
-    {
-        QString apiUrl = repoUrl;
-        apiUrl.remove("https://github.com/");
-        apiUrl.prepend("https://api.github.com/repos/");
-
-        apiUrl += "/languages";
-
-        QUrl url(apiUrl);
-        QUrlQuery query;
-        query.addQueryItem("login", git_user);
-        url.setQuery(query);
-
-        QNetworkRequest request(url);
-        request.setHeader(QNetworkRequest::UserAgentHeader, "CodeKeeper");
-        request.setRawHeader("X-GitHub-Api-Version", "2022-11-28");
-        request.setRawHeader("Accept", "application/vnd.github.v3+json");
-
-        QNetworkReply *reply = manager.get(request);
-
-        QEventLoop loop;
-        QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
-
-        if (reply->error() == QNetworkReply::NoError)
-        {
-            QByteArray response = reply->readAll();
-            QJsonDocument doc = QJsonDocument::fromJson(response);
-            QJsonObject obj = doc.object();
-
-            for (const QString &lang : obj.keys())
-            {
-                if (lang != "documentation_url" && lang != "message" && lang != "url")
-                {
-                    int bytes = obj.value(lang).toInt();
-                    languageCounts[lang] += bytes;
-                    totalBytes += bytes;
-                }
-            }
-        }
-        else
-        {
-            qDebug() << "Error:" << reply->errorString();
-        }
-        reply->deleteLater();
-    }
-
-    QVector<QPair<QString, double>> languagePercentages;
-    for (const QString &lang : languageCounts.keys())
-    {
-        double percentage = (static_cast<double>(languageCounts[lang]) / totalBytes) * 100;
-        languagePercentages.append(qMakePair(lang, percentage));
-    }
-
-    std::sort(languagePercentages.begin(), languagePercentages.end(),
-              [](const QPair<QString, double> &a, const QPair<QString, double> &b) { return a.second > b.second; });
-
-    QString result;
-    for (int i = 0; i < std::min(4, static_cast<int>(languagePercentages.size())); ++i)
-    {
-        result += QString("%1 %2 ")
-                      .arg(languagePercentages[i].first)
-                      .arg(QString::number(languagePercentages[i].second, 'f', 2));
-    }
-
-    return result.trimmed();
-}
-
 void AccountWindow::setImageFromUrl(const QString &url, QLabel *label)
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
@@ -269,65 +194,6 @@ void AccountWindow::getSettingsData()
     isCustomTheme = globalSettings->value("isCustomTheme").value<bool>();
 }
 
-void AccountWindow::setFontStyle()
-{
-    userName->setFont(selectedFont);
-
-    chartValuesDisplay->setFont(selectedFont);
-    chartValuesDisplay->setStyleSheet("font-size: " + font_size + "px;");
-
-    tasksChartValuesDisplay->setFont(selectedFont);
-    tasksChartValuesDisplay->setStyleSheet("font-size: " + font_size + "px;");
-
-    langsValuesDisplay->setFont(selectedFont);
-    langsValuesDisplay->setStyleSheet("font-size: " + font_size + "px;");
-
-    GitLangsValuesDisplay->setFont(selectedFont);
-    GitLangsValuesDisplay->setStyleSheet("font-size: " + font_size + "px;");
-
-    langsTitle->setFont(selectedFont);
-    langsTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
-
-    tasksTitle->setFont(selectedFont);
-    tasksTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
-
-    projectTitle->setFont(selectedFont);
-    projectTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
-
-    userName->setStyleSheet("font-size: 36pt;");
-
-    profilePicture->setFont(selectedFont);
-    profilePicture->setStyleSheet("font-size: " + font_size + "px;");
-
-    openRepo->setFont(selectedFont);
-    openRepo->setStyleSheet("font-size: " + font_size + "px;");
-
-    profileInfo->setFont(selectedFont);
-    profileInfo->setStyleSheet("font-size: " + font_size + "px;");
-
-    tasksStatsProgress->setFont(selectedFont);
-    tasksStatsProgress->setStyleSheet("font-size: " + font_size + "px;");
-
-    langsCard->setFont(selectedFont);
-    langsCard->setStyleSheet("font-size: " + font_size + "px;");
-
-    closeWindow->setStyleSheet("QPushButton {"
-                               "    border-radius: 6px;"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: #e08581;"
-                               "    background-repeat: no-repeat;"
-                               "    background-attachment: fixed;"
-                               "}"
-
-                               "QPushButton:hover {"
-                               "    border-radius: 6px;"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-repeat: no-repeat;"
-                               "    background-color: #e06a65;"
-                               "    background-attachment: fixed;"
-                               "}");
-}
-
 int AccountWindow::getStarsCount(const QString &username, const QString &token)
 {
     QNetworkAccessManager manager;
@@ -390,7 +256,6 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
         QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
         QJsonObject obj = doc.object();
 
-        // do something with the user data
         qDebug() << "Name:" << obj["name"].toString();
         qDebug() << "Location:" << obj["location"].toString();
         qDebug() << "Avatar_url:" << obj["avatar_url"].toString();
@@ -404,11 +269,10 @@ void AccountWindow::setUserData(const QString &username, QLabel *label)
         qDebug() << "Company:" << obj["company"].toString();
         qDebug() << "Login:" << obj["login"].toString();
 
-        label->setText("\n\n" + obj["bio"].toString() + tr("\n\nPublic repos: ") +
-                       QString::number(obj["public_repos"].toInt()) + tr("\n\nFollowing: ") +
-                       QString::number(obj["following"].toInt()) + tr("\n\nFollowers: ") +
-                       QString::number(obj["followers"].toInt()) + tr("\n\nStars: ") +
-                       QString::number(getStarsCount(git_user, git_token)) + "\n");
+        label->setText(tr("\n\nPublic repos: ") + QString::number(obj["public_repos"].toInt()) +
+                       tr("  |  Following: ") + QString::number(obj["following"].toInt()) + tr("  |  Followers: ") +
+                       QString::number(obj["followers"].toInt()) + tr("  |  Stars: ") +
+                       QString::number(getStarsCount(git_user, git_token)) + "");
 
         reply->deleteLater();
     });
@@ -511,47 +375,33 @@ void AccountWindow::setProjectsStats()
     }
 }
 
-void AccountWindow::setLangsStats(const QString langsData, CircleChart *langsChart,
-                                  ColorValueDisplay *langsValuesDisplay)
+void AccountWindow::setFontStyle()
 {
-    QStringList langsColors;
-    langsColors << "#e08581"
-                << "#d8bd85"
-                << "#a9bf85"
-                << "#85b9b3"
-                << "#5dc7c3"
-                << "#c75da9"
-                << "#c7c25d"
-                << "#875dc7";
+    userName->setFont(selectedFont);
 
-    QStringList result = langsData.split(' ');
-    int count = result.size() / 2;
-    qDebug() << count;
+    chartValuesDisplay->setFont(selectedFont);
+    chartValuesDisplay->setStyleSheet("font-size: " + font_size + "px;");
 
-    langsChart->setMaximumValue(100);
-    double other = 100;
+    tasksChartValuesDisplay->setFont(selectedFont);
+    tasksChartValuesDisplay->setStyleSheet("font-size: " + font_size + "px;");
 
-    for (int i = 0; i < count; i++)
-    {
-        int value = static_cast<int>(std::round(result[i * 2 + 1].toDouble()));
-        other = other - value;
+    tasksTitle->setFont(selectedFont);
+    tasksTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
 
-        qDebug() << result[i * 2] << " " << value;
-        langsChart->addValue(result[i * 2 + 1].toDouble(), langsColors[i]);
-        langsValuesDisplay->addValue(result[i * 2], value, langsColors[i], selectedFont);
-    }
+    projectTitle->setFont(selectedFont);
+    projectTitle->setStyleSheet("background: transparent; font-size: " + font_size + "px;");
 
-    langsChart->addValue(other, QColor("#333333"));
+    userName->setStyleSheet("font-size: 36pt;");
 
-    langsTitle->setText(tr("\n\nLanguages"));
+    profilePicture->setFont(selectedFont);
+    profilePicture->setStyleSheet("font-size: " + font_size + "px;");
 
-    if (count <= 0)
-    {
-        langsChart->hide();
-        langsValuesDisplay->addValue(tr("None"), other, "#333333", selectedFont);
-    }
-    else
-    {
-        langsValuesDisplay->addValue(tr("Other"), other, "#333333", selectedFont);
-    }
+    openRepo->setFont(selectedFont);
+    openRepo->setStyleSheet("font-size: " + font_size + "px;");
+
+    profileInfo->setFont(selectedFont);
+    profileInfo->setStyleSheet("font-size: " + font_size + "px;");
+
+    tasksStatsProgress->setFont(selectedFont);
+    tasksStatsProgress->setStyleSheet("font-size: " + font_size + "px;");
 }

@@ -3,6 +3,42 @@
 #include "mainwindow.h"
 #include "settingsFunc/GitHubReleaseDownloader.h"
 #include "settingswindow.h"
+#include <QColor>
+#include <QPixmap>
+
+QPixmap SettingsWindow::changeIconColor(QPixmap pixmap)
+{
+    QColor color;
+
+    if (isCustomTheme)
+    {
+        if (theme == 0)
+        { // custom dark
+            color = QColor("#c3e88d");
+        }
+        else if (theme == 1)
+        { // solarized
+            color = QColor("#728905");
+        }
+        else if (theme == 2)
+        { // mac dark
+            color = QColor("#ffffff");
+        }
+    }
+    else
+    {
+        color = QColor("#ffffff");
+    }
+
+    QPixmap coloredPixmap = pixmap;
+    QPainter painter(&coloredPixmap);
+
+    painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    painter.fillRect(coloredPixmap.rect(), color);
+    painter.end();
+
+    return coloredPixmap;
+}
 
 void SettingsWindow::QuitW()
 {
@@ -76,25 +112,11 @@ void SettingsWindow::checkUpdates()
 
     QPushButton *closeWindow = new QPushButton("");
     closeWindow->setFixedSize(13, 13);
-
-    closeWindow->setStyleSheet("QPushButton {"
-                               "    border-radius: 6px;"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-color: #e08581;"
-                               "    background-repeat: no-repeat;"
-                               "    background-attachment: fixed;"
-                               "}"
-
-                               "QPushButton:hover {"
-                               "    border-radius: 6px;"
-                               "    border-color: rgba(0, 0, 0, 0);"
-                               "    background-repeat: no-repeat;"
-                               "    background-color: #e06a65;"
-                               "    background-attachment: fixed;"
-                               "}");
+    closeWindow->setObjectName("closeBtn");
 
     QLabel *iconLabel = new QLabel();
-    iconLabel->setPixmap(QPixmap(":/refresh.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    iconLabel->setPixmap(
+        changeIconColor(QPixmap(":/refresh.png")).scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     QLabel *updateInfoLabel = new QLabel();
     updateInfoLabel->setStyleSheet("font-size: " + font_size + "px;");
@@ -107,7 +129,7 @@ void SettingsWindow::checkUpdates()
     verInfoLabel->setAlignment(Qt::AlignCenter);
 
     QPushButton *downloadUpdate = new QPushButton(
-        QPixmap(":/download.png")
+        changeIconColor(QPixmap(":/download.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         " Update");
     downloadUpdate->setFixedSize(100, 25);
@@ -149,7 +171,8 @@ void SettingsWindow::checkUpdates()
     }
     else
     {
-        iconLabel->setPixmap(QPixmap(":/refresh.png").scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        iconLabel->setPixmap(
+            changeIconColor(QPixmap(":/refresh.png")).scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         updateInfoLabel->setText(tr("A new version of the application is available."));
         verInfoLabel->setText(tr("Current version: ") + currentAppVersion + "\n" + tr("New version: ") + newAppVersion);
         layout->addWidget(downloadUpdate, 6, 0, 1, 2, Qt::AlignCenter);
@@ -344,6 +367,7 @@ void SettingsWindow::saveData()
     mainWindow->loadNotes();
     mainWindow->loadTasks();
     mainWindow->loadProjects();
+    mainWindow->loadStyleSheetFile();
 
     SyncWindow *syncWindow = static_cast<SyncWindow *>(parent());
 
@@ -488,20 +512,4 @@ void SettingsWindow::setStyle2(QFont *selectedFont, int *font_size_int)
 
     fontSelector->setCurrentFont(*selectedFont);
     fontSize->setValue(font_size.toInt());
-
-    quitBtn->setStyleSheet("QPushButton {"
-                           "    border-radius: 6px;"
-                           "    border-color: rgba(0, 0, 0, 0);"
-                           "    background-color: #e08581;"
-                           "    background-repeat: no-repeat;"
-                           "    background-attachment: fixed;"
-                           "}"
-
-                           "QPushButton:hover {"
-                           "    border-radius: 6px;"
-                           "    border-color: rgba(0, 0, 0, 0);"
-                           "    background-repeat: no-repeat;"
-                           "    background-color: #e06a65;"
-                           "    background-attachment: fixed;"
-                           "}");
 }

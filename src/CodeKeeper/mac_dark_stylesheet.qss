@@ -21,7 +21,7 @@ QTableWidget::item {
 }
 
 QWidget {
-  background-color: #28282a;
+  background-color: #0f0f0f;
   border-width: 0px;
   border-color: #d6d6d6;
   border-radius: 0px;
@@ -566,4 +566,197 @@ QToolTip {
   border: 10px #343537;
   border-radius: 5px;
   background-color: #343537;
+}
+
+
+
+
+
+
+
+
+
+QListWidget#IncompleteTasks {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#IncompleteTasks::item:selected {
+  background-color: rgba(211, 102, 107, 255); /* Убедитесь, что альфа-канал корректен */
+  color: #000000;
+}
+QListWidget#IncompleteTasks::item {
+  margin: 0px; 
+  color: #000000;
+  background-color: #ff757f;
+  border-radius: 5px;
+}
+
+
+QListWidget#InprocessTasks {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#InprocessTasks::item:selected {
+  background-color: rgba(231, 232, 141, 75);
+}
+QListWidget#InprocessTasks::Item {
+  margin: 0px;
+  background-color: #faef75; 
+  color: #000000; text-decoration: underline; 
+  border-radius: 5px;
+}
+
+
+QListWidget#CompleteTasks {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#CompleteTasks::item:selected {
+  background-color: rgba(195, 232, 141, 75);
+  border-width: 2px; border-color: #c3e88d;
+}
+QListWidget#CompleteTasks::Item {
+  margin: 0px;
+  background-color: #c3e88d; 
+  color: #000000;
+  border-radius: 5px;
+}
+
+
+QListWidget#NotStartedProjects {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#NotStartedProjects::item:selected {
+  border-width: 2px; border-color: #c3e88d;
+  background-color: rgba(211, 102, 107, 75);
+}
+QListWidget#NotStartedProjects::Item {
+  margin: 0px;
+  background-color: #ff757f;
+  color: #000000; 
+  border-radius: 5px;
+  border-color: #ff757f;
+}
+
+
+QListWidget#StartedProjects {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#StartedProjects::item:selected {
+  border-width: 2px; border-color: #c3e88d;
+  background-color: rgba(231, 232, 141, 75);
+}
+QListWidget#StartedProjects::Item {
+  margin: 0px;
+  background-color: #faef75; color: #000000; 
+  border-radius: 5px;
+}
+
+QListWidget#FinishlineProjects {
+  padding: 0px;
+  border-radius: 15px;
+}
+QListWidget#FinishlineProjects::item:selected {
+  border-width: 2px; border-color: #c3e88d;
+  background-color: rgba(126, 156, 216, 75)
+}
+QListWidget#FinishlineProjects::Item {
+  margin: 0px;
+  background-color: #faef75; 
+  color: #000000;
+  border-radius: 5px;
+}
+
+
+QListWidget#FinishedProjects {
+  border-radius: 15px;
+  padding: 0px;
+}
+QListWidget#FinishedProjects::item:selected {
+  border-width: 2px; border-color: #c3e88d;
+  background-color: rgba(195, 232, 141, 75);
+}
+QListWidget#FinishedProjects::Item {
+  margin: 0px;
+  background-color: #c3e88d; color: #000000; 
+  border-radius: 5px;
+}
+
+QProgressBar#tasksProgress {
+  background-color: #ff757f;
+  selection-background-color: #c3e88d;
+  color: #002731;
+}
+
+
+
+QLabel#timeLabel {
+  color: #d6d6d6;
+}
+QLabel#dateLabel {
+  color: #d6d6d6;
+}
+QLabel#helloLabel {
+  color: #d6d6d6;
+}
+QLabel#helloLabel {
+  color: #d6d6d6;
+}
+
+
+QSizeGrip#indicator {
+  background-color: #d6d6d6;
+  border-radius: 6px;
+}
+
+
+
+QPushButton#closeBtn {
+  border-radius: 6px;
+  border-color: rgba(0, 0, 0, 0);
+  background-color: #ff757f;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+QPushButton#closeBtn:hover {
+  border-radius: 6px;
+  border-color: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-color: #ff757f;
+  background-attachment: fixed;
+}
+
+QPushButton#minimizeBtn {
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-color: #faef75;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
+
+QPushButton#minimizeBtn:hover {
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-repeat: no-repeat;
+background-color: #faef75;
+background-attachment: fixed;
+}
+
+QPushButton#maximizeBtn {
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-color: #c3e88d;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
+
+QPushButton#maximizeBtn:hover {
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-color: #c3e88d;
+background-repeat: no-repeat;
+background-attachment: fixed;
 }

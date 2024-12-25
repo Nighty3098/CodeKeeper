@@ -49,31 +49,18 @@ void MainWindow::createConnects()
         }
     });
 
-    connect(toFirstTab, &QShortcut::activated, tabs, [this]() {
-        tabs->setCurrentIndex(0);
-        updateButtonStyles(mainTabButton);
-    });
+    connect(toFirstTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(0); });
 
-    connect(toSecondTab, &QShortcut::activated, tabs, [this]() {
-        tabs->setCurrentIndex(1);
-        updateButtonStyles(notesTabButton);
-    });
+    connect(toSecondTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(1); });
 
-    connect(toThirdTab, &QShortcut::activated, tabs, [this]() {
-        tabs->setCurrentIndex(2);
-        updateButtonStyles(tasksTabButton);
-    });
+    connect(toThirdTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(2); });
 
-    connect(toFourthTab, &QShortcut::activated, tabs, [this]() {
-        tabs->setCurrentIndex(3);
-        updateButtonStyles(projectsTabButton);
-    });
+    connect(toFourthTab, &QShortcut::activated, tabs, [this]() { tabs->setCurrentIndex(3); });
 
     connect(mainTabButton, &QPushButton::clicked, [this]() {
         tabs->setCurrentIndex(0);
         windowTitle->setText(" ~ CodeKeeper ~ ");
         setWindowTitle("CodeKeeper");
-        updateButtonStyles(mainTabButton); // Update style for the clicked button
     });
 
     connect(tasksTabButton, &QPushButton::clicked, [this]() {
@@ -81,21 +68,18 @@ void MainWindow::createConnects()
         windowTitle->setText(" ~ Tasks ~ ");
         setWindowTitle(tr("Tasks"));
         loadProjectsList(projectsList);
-        updateButtonStyles(tasksTabButton); // Update style for the clicked button
     });
 
     connect(notesTabButton, &QPushButton::clicked, [this]() {
         tabs->setCurrentIndex(1);
         windowTitle->setText(" ~ Notes ~ ");
         setWindowTitle(tr("Notes"));
-        updateButtonStyles(notesTabButton); // Update style for the clicked button
     });
 
     connect(projectsTabButton, &QPushButton::clicked, [this]() {
         tabs->setCurrentIndex(3);
         windowTitle->setText(" ~ Projects ~ ");
         setWindowTitle(tr("Projects"));
-        updateButtonStyles(projectsTabButton); // Update style for the clicked button
     });
 
     connect(openCommandPalette, &QShortcut::activated, this, [this]() {

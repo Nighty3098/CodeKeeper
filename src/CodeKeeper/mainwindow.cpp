@@ -59,69 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         showWelcomeMessage();
     }
 
-    if (isCustomTheme)
-    {
-        if (theme == 0)
-        {
-            QFile custom_theme(":/custom_stylesheet.qss");
-            if (custom_theme.open(QFile::ReadOnly))
-            {
-                QString customStyleSheet = custom_theme.readAll();
-                qDebug() << "Loading custom stylesheet";
-                setStyleSheet(customStyleSheet);
-                custom_theme.close();
-            }
-            else
-            {
-                qDebug() << "Failed to open custom stylesheet file";
-            }
-        }
-        else if (theme == 1)
-        {
-            QFile custom_light_theme(":/custom_stylesheet_light.qss");
-            if (custom_light_theme.open(QFile::ReadOnly))
-            {
-                QString customStyleSheetLight = custom_light_theme.readAll();
-                qDebug() << "Loading custom light stylesheet";
-                setStyleSheet(customStyleSheetLight);
-                custom_light_theme.close();
-            }
-            else
-            {
-                qDebug() << "Failed to open custom light stylesheet file";
-            }
-        }
-        else if (theme == 2)
-        {
-            QFile custom_light_theme(":/mac_dark_stylesheet.qss");
-            if (custom_light_theme.open(QFile::ReadOnly))
-            {
-                QString customStyleSheetLight = custom_light_theme.readAll();
-                qDebug() << "Loading mac dark stylesheet";
-                setStyleSheet(customStyleSheetLight);
-                custom_light_theme.close();
-            }
-            else
-            {
-                qDebug() << "Failed to open mac dark stylesheet file";
-            }
-        }
-    }
-    else
-    {
-        QFile theme_file(":/stylesheet.qss");
-        if (theme_file.open(QFile::ReadOnly))
-        {
-            QString defaultStyleSheet = theme_file.readAll();
-            qDebug() << "Loading default stylesheet";
-            setStyleSheet(defaultStyleSheet);
-            theme_file.close();
-        }
-        else
-        {
-            qDebug() << "Failed to open default stylesheet file";
-        }
-    }
+    loadStyleSheetFile();
 
     QThread *updatesThread = new QThread;
     QObject::connect(updatesThread, &QThread::started, this, [this]() {
@@ -175,8 +113,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     updatesThread->start();
 
     closeBtn = new QPushButton();
+    closeBtn->setObjectName("closeBtn");
     minimizeBtn = new QPushButton();
+    minimizeBtn->setObjectName("minimizeBtn");
     maximizeBtn = new QPushButton();
+    maximizeBtn->setObjectName("maximizeBtn");
 
     winControlL = new QHBoxLayout;
     winControlL->setSpacing(10);
@@ -186,7 +127,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     sizeGrip = new QSizeGrip(this);
     sizeGrip->setFixedSize(13, 13);
     sizeGrip->setVisible(true);
-    sizeGrip->setStyleSheet("background-color: #febe30; border-radius: 6px;");
+    sizeGrip->setObjectName("indicator");
 
     windowTitle = new QLabel(tr(" ~ CodeKeeper ~ "));
 
@@ -202,22 +143,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // ========================================================
     timeLabel = new QLabel("");
     timeLabel->setAlignment(Qt::AlignBottom);
+    timeLabel->setObjectName("timeLabel");
 
     dateLabel = new QLabel("");
     dateLabel->setAlignment(Qt::AlignTop);
+    dateLabel->setObjectName("dateLabel");
 
     helloLabel = new QLabel();
     helloLabel->setAlignment(Qt::AlignLeft);
+    helloLabel->setObjectName("helloLabel");
 
     verLabel = new QLabel();
     verLabel->setAlignment(Qt::AlignBottom);
+    verLabel->setObjectName("helloLabel");
 
     decorationLabel = new QLabel();
     decorationLabel->setAlignment(Qt::AlignHCenter);
     decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(260, 260, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     openSettingsBtn = new QPushButton(
-        QPixmap(":/settings.png")
+        changeIconColor(QPixmap(":/settings.png"))
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     openSettingsBtn->setToolTip(tr("Settings"));
@@ -225,7 +170,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     openSettingsBtn->setFlat(true);
 
     syncDataBtn = new QPushButton(
-        QPixmap(":/sync.png")
+        changeIconColor(QPixmap(":/sync.png"))
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     syncDataBtn->setToolTip(tr("Sync"));
@@ -233,7 +178,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     syncDataBtn->setFlat(true);
 
     openAccountWindow = new QPushButton(
-        QPixmap(":/user.png")
+        changeIconColor(QPixmap(":/user.png"))
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     openAccountWindow->setToolTip(tr("Account"));
@@ -296,7 +241,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     menuButton = new QToolButton;
     menuButton->setIcon(
-        QPixmap(":/main.png")
+        changeIconColor(QPixmap(":/main.png"))
             .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     menuButton->setIconSize(QSize(50, 50));
     menuButton->setFixedSize(30, 30);
@@ -309,51 +254,51 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuButton->setMenu(menu);
 
     setH1B = new QPushButton(
-        QPixmap(":/h1.png")
+        changeIconColor(QPixmap(":/h1.png"))
             .scaled(font_size.toInt() + 4, font_size.toInt() + 4, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setH2B = new QPushButton(
-        QPixmap(":/h2.png")
+        changeIconColor(QPixmap(":/h2.png"))
             .scaled(font_size.toInt() + 4, font_size.toInt() + 4, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setH3B = new QPushButton(
-        QPixmap(":/h3.png")
+        changeIconColor(QPixmap(":/h3.png"))
             .scaled(font_size.toInt() + 4, font_size.toInt() + 4, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setListB = new QPushButton(
-        QPixmap(":/list.png")
+        changeIconColor(QPixmap(":/list.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setLinkB = new QPushButton(
-        QPixmap(":/link.png")
+        changeIconColor(QPixmap(":/link.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setBoldB = new QPushButton(
-        QPixmap(":/bold.png")
+        changeIconColor(QPixmap(":/bold.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setItalicB = new QPushButton(
-        QPixmap(":/italic.png")
+        changeIconColor(QPixmap(":/italic.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setStrikeB = new QPushButton(
-        QPixmap(":/strikethrough.png")
+        changeIconColor(QPixmap(":/strikethrough.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setTaskB = new QPushButton(
-        QPixmap(":/checkbox.png")
+        changeIconColor(QPixmap(":/checkbox.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setNumListB = new QPushButton(
-        QPixmap(":/numList.png")
+        changeIconColor(QPixmap(":/numList.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setTableB = new QPushButton(
-        QPixmap(":/table.png")
+        changeIconColor(QPixmap(":/table.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     setQuoteB = new QPushButton(
-        QPixmap(":/quote.png")
+        changeIconColor(QPixmap(":/quote.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
 
@@ -403,7 +348,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tasksMenuBtn = new QToolButton;
     tasksMenuBtn->setIcon(
-        QPixmap(":/main.png")
+        changeIconColor(QPixmap(":/main.png"))
             .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     tasksMenuBtn->setIconSize(QSize(50, 50));
     tasksMenuBtn->setFixedSize(30, 30);
@@ -417,13 +362,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     projectsList = new QComboBox();
     projectsList->setFixedSize(450, 25);
-    projectsList->setPlaceholderText("Select your project ... ");
+    projectsList->setPlaceholderText(tr("Select your project ... "));
 
     tasksProgress = new QProgressBar();
     tasksProgress->setMaximum(100);
     tasksProgress->setFixedWidth(500);
     tasksProgress->setFixedHeight(25);
     tasksProgress->setAlignment(Qt::AlignCenter);
+    tasksProgress->setObjectName("tasksProgress");
 
     tasksStatsL->addItem(spacer1);
     tasksStatsL->addWidget(tasksMenuBtn);
@@ -442,7 +388,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QVBoxLayout *completeLayout = new QVBoxLayout(completeWidget);
 
     label_1 = new ClickableLabel(tr("Incomplete"));
-    label_1->setFixedHeight(15);
+    label_1->setFixedHeight(13);
     label_1->setAlignment(Qt::AlignCenter);
 
     incompleteTasks = new QListWidget();
@@ -458,7 +404,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     incompleteLayout->addWidget(incompleteTasks);
 
     label_2 = new ClickableLabel(tr("Inprocess"));
-    label_2->setFixedHeight(15);
+    label_2->setFixedHeight(13);
     label_2->setAlignment(Qt::AlignCenter);
 
     inprocessTasks = new QListWidget();
@@ -474,7 +420,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     inprocessLayout->addWidget(inprocessTasks);
 
     label_3 = new ClickableLabel(tr("Complete"));
-    label_3->setFixedHeight(15);
+    label_3->setFixedHeight(13);
     label_3->setAlignment(Qt::AlignCenter);
 
     completeTasks = new QListWidget();
@@ -528,7 +474,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // menu
     projectsMenuButton = new QToolButton();
     projectsMenuButton->setIcon(
-        QPixmap(":/main.png")
+        changeIconColor(QPixmap(":/main.png"))
             .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
     projectsMenuButton->setFixedSize(30, 25);
@@ -714,7 +660,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tabButtonsWidget->setLayout(tabButtons);
 
     mainTabButton = new QPushButton(
-        QPixmap(":/main.png")
+        changeIconColor(QPixmap(":/main.png"))
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     mainTabButton->setFixedSize(50, 50);
@@ -722,7 +668,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     mainTabButton->setToolTip(tr("Home"));
 
     tasksTabButton = new QPushButton(
-        QPixmap(":/task.png")
+        changeIconColor(QPixmap(":/task.png"))
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     tasksTabButton->setFixedSize(50, 50);
@@ -730,7 +676,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksTabButton->setToolTip(tr("Tasks"));
 
     notesTabButton = new QPushButton(
-        QPixmap(":/document.png")
+        changeIconColor(QPixmap(":/document.png"))
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     notesTabButton->setFixedSize(50, 50);
@@ -738,7 +684,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     notesTabButton->setToolTip(tr("Notes"));
 
     projectsTabButton = new QPushButton(
-        QPixmap(":/project.png")
+        changeIconColor(QPixmap(":/project.png"))
             .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     projectsTabButton->setFixedSize(50, 50);

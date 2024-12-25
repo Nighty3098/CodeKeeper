@@ -220,6 +220,7 @@ void MainWindow::openProject()
         if (item)
         {
             QDialog dialog(this);
+            dialog.setModal(true);
 
             QSizeGrip *dialogSizeGrip = new QSizeGrip(this);
 
@@ -396,7 +397,6 @@ void MainWindow::openProject()
             });
 
             dialog.exec();
-
             break;
         }
         else

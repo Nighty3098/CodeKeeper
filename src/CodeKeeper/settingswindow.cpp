@@ -71,6 +71,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
 
     quitBtn = new QPushButton();
     quitBtn->setFixedSize(13, 13);
+    quitBtn->setObjectName("closeBtn");
 
     QSpacerItem *spacer = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -99,7 +100,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     versionInfo->setAlignment(Qt::AlignCenter);
 
     checkUpdatesBtn = new QPushButton(
-        QPixmap(":/retry.png")
+        changeIconColor(QPixmap(":/retry.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         tr(" Check for updates"));
     checkUpdatesBtn->setFixedSize(200, 25);
@@ -213,7 +214,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     }
 
     themeSelector->addItem(tr("Dark"));
-    themeSelector->addItem(tr("Light"));
+    themeSelector->addItem(tr("Solarized"));
     themeSelector->addItem(tr("Mac Dark"));
     themeSelector->setCurrentIndex(theme);
 
@@ -261,7 +262,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     pathToFolder->setAlignment(Qt::AlignCenter);
 
     openFolder = new QPushButton(
-        QPixmap(":/open.png")
+        changeIconColor(QPixmap(":/open.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         " Browse");
     openFolder->setMaximumHeight(25);
@@ -369,24 +370,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow{parent}
     QWidget *projectsContentTab = new QWidget();
     projectsContentTab->setLayout(projectsContentL);
     tabs->addTab(projectsContentTab, tr("Projects"));
-
-    QIcon aboutIco;
-    QIcon syncIco;
-    QIcon storageIco;
-    QIcon paletteIco;
-    QIcon projectsIco;
-
-    aboutIco.addFile(":/about.png");
-    syncIco.addFile(":/sync.png");
-    storageIco.addFile(":/storage.png");
-    paletteIco.addFile(":/palette.png");
-    projectsIco.addFile(":/project.png");
-
-    tabs->setTabIcon(tabs->indexOf(aboutTab), aboutIco);
-    tabs->setTabIcon(tabs->indexOf(syncTab), syncIco);
-    tabs->setTabIcon(tabs->indexOf(storageTab), storageIco);
-    tabs->setTabIcon(tabs->indexOf(appereanceTab), paletteIco);
-    tabs->setTabIcon(tabs->indexOf(projectsContentTab), projectsIco);
 
     tabs->setIconSize(QSize(font_size.toInt(), font_size.toInt()));
     tabs->setTabBarAutoHide(true);

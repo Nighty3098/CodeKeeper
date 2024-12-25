@@ -10,8 +10,8 @@
 #include <QtWidgets>
 
 #include <QCache>
-#include <QSettings>
 #include <QDateTime>
+#include <QSettings>
 
 class AccountWindow : public QMainWindow
 {
@@ -45,9 +45,6 @@ class AccountWindow : public QMainWindow
     QHBoxLayout *tasksStatsLayout;
     QHBoxLayout *projectsStatsLayout;
 
-    QWidget *gitLangsWidget;
-    QWidget *LangsWidget;
-
     QWidget *centralWidget;
     QGridLayout *mainLayout;
 
@@ -58,9 +55,6 @@ class AccountWindow : public QMainWindow
 
     QLabel *tasksTitle;
     QLabel *projectTitle;
-    QLabel *langsTitle;
-
-    QToolBox *langsCard;
 
     QPushButton *closeWindow;
     QPushButton *openRepo;
@@ -70,12 +64,6 @@ class AccountWindow : public QMainWindow
 
     CircleChart *projectsChart;
     ColorValueDisplay *chartValuesDisplay;
-
-    CircleChart *langsChart;
-    ColorValueDisplay *langsValuesDisplay;
-
-    CircleChart *GitLangsChart;
-    ColorValueDisplay *GitLangsValuesDisplay;
 
     QWidget *statsWidget;
 
@@ -88,10 +76,8 @@ class AccountWindow : public QMainWindow
     int getStarsCount(const QString &username, const QString &token);
     void setTasksProgress();
     void setProjectsStats();
-    void setLangsStats(const QString langsData, CircleChart *langsChart, ColorValueDisplay *langsValuesDisplay);
     void get_image_url(const QString &username, QLabel *label);
     QStringList getAllGitReposUrls(const QString &username);
-    QString getLangByRepo(const QStringList &repositories);
     float calculatePercentage(int count, int total);
 };
 

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSettings>
 #include <QtWidgets>
+#include <QPixmap>
 
 class SettingsWindow : public QMainWindow
 {
@@ -78,6 +79,7 @@ class SettingsWindow : public QMainWindow
     }
 
   private slots:
+    QPixmap changeIconColor(QPixmap pixmap);
     void closeEvent(QCloseEvent *event);
     void QuitW();
     void saveData();

@@ -48,7 +48,7 @@ RESOURCES += \
     stylesheet.qss \
     custom_stylesheet.qss \
     mac_dark_stylesheet.qss \
-    custom_stylesheet_light.qss
+    custom_stylesheet_solarized.qss
 
 include(3rdParty/qmarkdowntextedit/qmarkdowntextedit.pri)
 

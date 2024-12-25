@@ -15,12 +15,13 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
+    MainWindow *mainWindow = static_cast<MainWindow *>(parent);
 
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
     mainLayout = new QGridLayout(centralWidget);
-    setFixedSize(800, 670);
+    setFixedSize(800, 550);
 
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
@@ -34,21 +35,16 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     projectTitle->setText(tr("Projects"));
     projectTitle->setAlignment(Qt::AlignCenter);
 
-    langsTitle = new QLabel();
-    langsTitle->setText(tr("Languages"));
-    langsTitle->setAlignment(Qt::AlignCenter);
-
     profilePicture = new QLabel();
     profilePicture->setAlignment(Qt::AlignCenter);
-    profilePicture->setPixmap(QPixmap(":/user.png").scaled(250, 250, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    profilePicture->setPixmap(mainWindow->changeIconColor(QPixmap(":/user.png"))
+                                  .scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     profilePicture->setFixedSize(300, 300);
     profilePicture->setStyleSheet("border-radius: 145px;");
 
     profileInfo = new QLabel();
     profileInfo->setText(tr("Loading..."));
     profileInfo->setAlignment(Qt::AlignHCenter);
-
-    MainWindow *mainWindow = static_cast<MainWindow *>(parent);
 
     tasksStatsLayout = new QHBoxLayout();
 
@@ -67,12 +63,14 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     userName = new QLabel();
     userName->setText(git_user);
+    userName->setFixedHeight(35);
     userName->setAlignment(Qt::AlignHCenter);
 
     openRepo = new QPushButton(tr("Open Git"));
     openRepo->setFixedSize(100, 25);
 
     closeWindow = new QPushButton("");
+    closeWindow->setObjectName("closeBtn");
     closeWindow->setFixedSize(13, 13);
 
     projectsStatsLayout = new QHBoxLayout();
@@ -89,110 +87,21 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     projectsStatsLayout->addWidget(projectsChart);
     projectsStatsLayout->addWidget(chartValuesDisplay);
 
-    langsStatsLayout = new QHBoxLayout();
-    langsStatsLayout->setSpacing(5);
-
-    langsChart = new CircleChart();
-    langsChart->setFixedSize(100, 100);
-    langsChart->setAlignment(Qt::AlignCenter);
-    langsChart->setHeight(90);
-
-    langsValuesDisplay = new ColorValueDisplay();
-    langsValuesDisplay->setFixedSize(160, 100);
-
-    langsStatsLayout->addWidget(langsChart);
-    langsStatsLayout->addWidget(langsValuesDisplay);
-    langsStatsLayout->setSpacing(5);
-
-    GitLangsStatsLayout = new QHBoxLayout();
-    GitLangsStatsLayout->setSpacing(5);
-
-    GitLangsChart = new CircleChart();
-    GitLangsChart->setFixedSize(100, 100);
-    GitLangsChart->setAlignment(Qt::AlignCenter);
-    GitLangsChart->setHeight(90);
-
-    GitLangsValuesDisplay = new ColorValueDisplay();
-    GitLangsValuesDisplay->setFixedSize(160, 140);
-
-    GitLangsStatsLayout->addWidget(GitLangsChart);
-    GitLangsStatsLayout->addWidget(GitLangsValuesDisplay);
-
-    gitLangsWidget = new QWidget;
-    gitLangsWidget->setLayout(GitLangsStatsLayout);
-
-    LangsWidget = new QWidget;
-    LangsWidget->setLayout(langsStatsLayout);
-
-    langsCard = new QToolBox();
-    langsCard->addItem(gitLangsWidget, tr("From Git profile"));
-    langsCard->addItem(LangsWidget, tr("From local data"));
-
     QVBoxLayout *statsLayout = new QVBoxLayout();
     statsLayout->setSpacing(20);
     statsLayout->addWidget(tasksTitle, Qt::AlignHCenter | Qt::AlignBottom);
     statsLayout->addLayout(tasksStatsLayout);
     statsLayout->addWidget(projectTitle, Qt::AlignHCenter | Qt::AlignBottom);
     statsLayout->addLayout(projectsStatsLayout);
-    // statsLayout->addWidget(langsTitle, Qt::AlignHCenter);
-    // statsLayout->addWidget(langsCard, Qt::AlignCenter);
 
     statsWidget = new QWidget();
-    statsWidget->setFixedSize(350, 600);
+    statsWidget->setFixedSize(350, 300);
     statsWidget->setLayout(statsLayout);
 
     QVBoxLayout *gitProfileLayout = new QVBoxLayout();
-    gitProfileLayout->addWidget(userName, Qt::AlignCenter);
-    gitProfileLayout->addWidget(profilePicture, Qt::AlignCenter);
-    gitProfileLayout->addWidget(profileInfo, Qt::AlignCenter);
-
-    /*
-    QThread *GitLangsStatsThread = new QThread;
-    QObject::connect(GitLangsStatsThread, &QThread::started, this, [this]() {
-        auto gitLangsWidget = this->gitLangsWidget;
-        auto langsWidget = this->LangsWidget;
-        auto langsCard = this->langsCard;
-        auto langsTitle = this->langsTitle;
-
-        auto git_urls = getAllGitReposUrls(git_user);
-        auto gitLangsStatsS = getLangByRepo(git_urls);
-
-        if (gitLangsStatsS.isEmpty())
-        {
-            gitLangsWidget->hide();
-        }
-        else
-        {
-            qDebug() << gitLangsStatsS;
-            setLangsStats(gitLangsStatsS, GitLangsChart, GitLangsValuesDisplay);
-            qDebug() << "gitLangsStats started";
-        }
-
-        MainWindow *mainWindow = qobject_cast<MainWindow *>(this->parent());
-        auto urls = mainWindow->getAllReposUrl();
-        auto langsStatsS = getLangByRepo(urls);
-
-        if (langsStatsS.isEmpty())
-        {
-            langsWidget->hide();
-        }
-        else
-        {
-            qDebug() << langsStatsS;
-            setLangsStats(langsStatsS, langsChart, langsValuesDisplay);
-            qDebug() << "langsStats started";
-        }
-
-        if (gitLangsStatsS.isEmpty() && langsStatsS.isEmpty())
-        {
-            langsCard->hide();
-            langsTitle->hide();
-        }
-    });
-
-    GitLangsStatsThread->start();
-
-    */
+    gitProfileLayout->addWidget(userName, Qt::AlignVCenter);
+    gitProfileLayout->addWidget(profilePicture, Qt::AlignVCenter);
+    gitProfileLayout->addWidget(profileInfo, Qt::AlignVCenter);
 
     QThread *styleThread = new QThread;
     QObject::connect(styleThread, &QThread::started, this, [this]() {
@@ -220,10 +129,12 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
     });
     setUserImageThread->start();
 
-    mainLayout->addWidget(closeWindow, 0, 0, 1, 6, Qt::AlignLeft);
-    mainLayout->addLayout(gitProfileLayout, 1, 0, 13, 3, Qt::AlignCenter);
-    mainLayout->addWidget(statsWidget, 1, 3, 13, 3, Qt::AlignCenter);
-    mainLayout->addWidget(openRepo, 14, 0, 2, 6, Qt::AlignCenter);
+    mainLayout->addWidget(closeWindow, 0, 0, 1, 8, Qt::AlignLeft);
+    mainLayout->addWidget(userName, 1, 0, 1, 8, Qt::AlignCenter);
+    mainLayout->addWidget(profilePicture, 2, 0, 7, 4, Qt::AlignCenter);
+    mainLayout->addWidget(statsWidget, 2, 4, 7, 4, Qt::AlignCenter);
+    mainLayout->addWidget(profileInfo, 12, 0, 1, 8, Qt::AlignCenter);
+    mainLayout->addWidget(openRepo, 16, 0, 1, 8, Qt::AlignCenter);
 
     connect(closeWindow, SIGNAL(clicked()), this, SLOT(closeWindowSlot()));
     connect(openRepo, SIGNAL(clicked()), this, SLOT(onOpenRepoClicked()));
