@@ -77,14 +77,14 @@ void MainWindow::setupAdaptiveUI()
     {
         tasksSplitter->setOrientation(Qt::Vertical);
         decorationLabel->setPixmap(
-            QPixmap(":/tea.svg").scaled(250, 250, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            changeIconColor(QPixmap(":/lightning.png")).scaled(250, 250, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         timeLabel->setStyleSheet("font-size: 100px;");
     }
     else if (current_width > 1500)
     {
-        timeLabel->setStyleSheet("font-size: 150px;");
+        timeLabel->setStyleSheet("font-size: 120px;");
         decorationLabel->setPixmap(
-            QPixmap(":/tea.svg").scaled(350, 350, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            changeIconColor(QPixmap(":/lightning.png")).scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
     else
     {
@@ -754,17 +754,21 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
         "QPushButton {background-color: transparent; border: none; margin: 7px; font-size: " + font_size + "px;} ");
 
     mainTabButton->setStyleSheet(
-        "QPushButton { margin: 7px; border-width: 0px; border-color: #a9bf85; background-color: transparent;} "
-        "QPushButton:hover {border-color: #a9bf85; background-color: transparent;}");
+        "QPushButton { margin: 7px; border-width: 0px; padding: 0px; border-color: #a9bf85; background-color: "
+        "transparent;} "
+        "QPushButton:hover {border-color: #a9bf85; padding: 0px; background-color: transparent;}");
     tasksTabButton->setStyleSheet(
-        "QPushButton { margin: 7px; border-width: 0px; border-color: transparent; background-color: transparent;} "
-        "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}");
+        "QPushButton { margin: 7px; border-width: 0px; padding: 0px; border-color: transparent; background-color: "
+        "transparent;} "
+        "QPushButton::hover {border-color: #a9bf85; padding: 0px; background-color: transparent;}");
     notesTabButton->setStyleSheet(
-        "QPushButton { margin: 7px; border-width: 0px; border-color: transparent; background-color: transparent;} "
-        "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}");
+        "QPushButton { margin: 7px; border-width: 0px; padding: 0px; border-color: transparent; background-color: "
+        "transparent;} "
+        "QPushButton::hover {border-color: #a9bf85; padding: 0px; background-color: transparent;}");
     projectsTabButton->setStyleSheet(
-        "QPushButton { margin: 7px; border-width: 0px; border-color: transparent; background-color: transparent;} "
-        "QPushButton::hover {border-color: #a9bf85; background-color: transparent;}");
+        "QPushButton { margin: 7px; border-width: 0px; padding: 0px; border-color: transparent; background-color: "
+        "transparent;} "
+        "QPushButton::hover {border-color: #a9bf85; padding: 0px; background-color: transparent;}");
 
     setH1B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
     setH2B->setStyleSheet("background-color: transparent; border: none; margin-left: 4px;");
