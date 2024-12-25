@@ -714,13 +714,13 @@ void MainWindow::setStyle(QFont *selectedFont, int *font_size_int)
 
     label_1->setFont(*selectedFont);
     label_1->setPixmapSize(*font_size_int);
-    label_1->setCustomStyleSheet("font-size: " + font_size + "px; color: #a9bf85;");
+    label_1->setCustomStyleSheet("font-size: " + font_size + "px; color: #fff;");
     label_2->setFont(*selectedFont);
     label_2->setPixmapSize(*font_size_int);
-    label_2->setCustomStyleSheet("font-size: " + font_size + "px; color: #a9bf85;");
+    label_2->setCustomStyleSheet("font-size: " + font_size + "px; color: #fff;");
     label_3->setFont(*selectedFont);
     label_3->setPixmapSize(*font_size_int);
-    label_3->setCustomStyleSheet("font-size: " + font_size + "px; color: #a9bf85;");
+    label_3->setCustomStyleSheet("font-size: " + font_size + "px; color: #fff;");
 
     windowTitle->setFont(*selectedFont);
     windowTitle->setStyleSheet("font-size: " + font_size + "px;");

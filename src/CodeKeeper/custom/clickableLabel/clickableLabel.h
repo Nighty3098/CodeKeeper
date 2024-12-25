@@ -11,13 +11,18 @@ class ClickableLabel : public QLabel
     {
         setFixedHeight(25);
         setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-        m_pixmap.load(":/expand.png");
+
+        QPixmap originalPixmap(":/expand.png");
+        QPixmap coloredPixmap = changeIconColor(originalPixmap);
+        m_pixmap = coloredPixmap;
+
         m_pixmapSize = QSize(20, 20);
-        m_textColor = Qt::black;
+        m_textColor = Qt::white;
     }
 
     void setCustomStyleSheet(const QString &styleSheet)
     {
+        QLabel::setObjectName("subtitle");
         QLabel::setStyleSheet(styleSheet);
         updateFontSize();
         updateTextColor();
@@ -28,6 +33,19 @@ class ClickableLabel : public QLabel
         m_pixmapSize = QSize(size, size);
         m_pixmap = m_pixmap.scaled(m_pixmapSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         update();
+    }
+
+    QPixmap changeIconColor(QPixmap pixmap)
+    {
+        QColor color = QColor("#fff");
+        QPixmap coloredPixmap = pixmap;
+        QPainter painter(&coloredPixmap);
+
+        painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+        painter.fillRect(coloredPixmap.rect(), color);
+        painter.end();
+
+        return coloredPixmap;
     }
 
   signals:
