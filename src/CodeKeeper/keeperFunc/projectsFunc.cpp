@@ -239,21 +239,7 @@ void MainWindow::openProject()
 
             QPushButton *cancelBtn = new QPushButton("");
             cancelBtn->setFixedSize(13, 13);
-            cancelBtn->setStyleSheet("QPushButton {"
-                                     "    border-radius: 6px;"
-                                     "    border-color: rgba(0, 0, 0, 0);"
-                                     "    background-color: #e08581;"
-                                     "    background-repeat: no-repeat;"
-                                     "    background-attachment: fixed;"
-                                     "}"
-
-                                     "QPushButton:hover {"
-                                     "    border-radius: 6px;"
-                                     "    border-color: rgba(0, 0, 0, 0);"
-                                     "    background-repeat: no-repeat;"
-                                     "    background-color: #e06a65;"
-                                     "    background-attachment: fixed;"
-                                     "}");
+            cancelBtn->setObjectName("closeBtn");
 
             QVBoxLayout *centralLayout = new QVBoxLayout(&dialog);
 

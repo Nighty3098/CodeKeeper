@@ -147,43 +147,6 @@ void MainWindow::createConnects()
     connect(minimizeBtn, &QPushButton::clicked, this, [this]() { showMinimized(); });
     connect(maximizeBtn, &QPushButton::clicked, this, [this]() {
         this->setWindowState(this->windowState() ^ Qt::WindowFullScreen);
-        isFullScreen = this->windowState() & Qt::WindowFullScreen;
-        if (isFullScreen)
-        {
-            maximizeBtn->setStyleSheet("QPushButton {"
-                                       "    border-radius: 6px;"
-                                       "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-color: #9bbf60;"
-                                       "    background-repeat: no-repeat;"
-                                       "    background-attachment: fixed;"
-                                       "}"
-
-                                       "QPushButton:hover {"
-                                       "    border-radius: 6px;"
-                                       "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-color: #9bbf60;"
-                                       "    background-repeat: no-repeat;"
-                                       "    background-attachment: fixed;"
-                                       "}");
-        }
-        else
-        {
-            maximizeBtn->setStyleSheet("QPushButton {"
-                                       "    border-radius: 6px;"
-                                       "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-color: #a9bf85;"
-                                       "    background-repeat: no-repeat;"
-                                       "    background-attachment: fixed;"
-                                       "}"
-
-                                       "QPushButton:hover {"
-                                       "    border-radius: 6px;"
-                                       "    border-color: rgba(0, 0, 0, 0);"
-                                       "    background-color: #9bbf60;"
-                                       "    background-repeat: no-repeat;"
-                                       "    background-attachment: fixed;"
-                                       "}");
-        }
     });
 
     connect(tabs, &QTabWidget::currentChanged, this,

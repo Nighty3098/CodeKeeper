@@ -63,7 +63,6 @@ AccountWindow::AccountWindow(QWidget *parent) : QMainWindow{parent}
 
     userName = new QLabel();
     userName->setText(git_user);
-    userName->setFixedHeight(35);
     userName->setAlignment(Qt::AlignHCenter);
 
     openRepo = new QPushButton(tr("Open Git"));
