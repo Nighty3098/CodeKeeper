@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     globalSettings = new QSettings("CodeKeeper", "CodeKeeper");
 
     getSettingsData();
+    QSize menuIconSize(font_size.toInt() + 3, font_size.toInt() + 3);
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setIcon(QIcon(":/icon.png"));
@@ -159,31 +160,34 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     decorationLabel = new QLabel();
     decorationLabel->setAlignment(Qt::AlignHCenter);
-    decorationLabel->setPixmap(QPixmap(":/tea.svg").scaled(260, 260, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    decorationLabel->setPixmap(changeIconColor(QPixmap(":/tea.svg")).scaled(260, 260, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     openSettingsBtn = new QPushButton(
         changeIconColor(QPixmap(":/settings.png"))
-            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt()+10, font_size.toInt()+10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     openSettingsBtn->setToolTip(tr("Settings"));
     openSettingsBtn->setFixedSize(50, 50);
     openSettingsBtn->setFlat(true);
+    openSettingsBtn->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
 
     syncDataBtn = new QPushButton(
         changeIconColor(QPixmap(":/sync.png"))
-            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt()+10, font_size.toInt()+10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     syncDataBtn->setToolTip(tr("Sync"));
     syncDataBtn->setFixedSize(50, 50);
     syncDataBtn->setFlat(true);
+    syncDataBtn->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
 
     openAccountWindow = new QPushButton(
         changeIconColor(QPixmap(":/user.png"))
-            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt()+10, font_size.toInt()+10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     openAccountWindow->setToolTip(tr("Account"));
     openAccountWindow->setFixedSize(50, 50);
     openAccountWindow->setFlat(true);
+    openAccountWindow->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
 
     // ========================================================
     QHBoxLayout *menuLayout = new QHBoxLayout;
@@ -243,9 +247,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     menuButton->setIcon(
         changeIconColor(QPixmap(":/main.png"))
             .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    menuButton->setIconSize(QSize(50, 50));
     menuButton->setFixedSize(30, 30);
     menuButton->setPopupMode(QToolButton::InstantPopup);
+    menuButton->setIconSize(menuIconSize);
 
     menu = new QMenu(menuButton);
 
@@ -257,50 +261,62 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         changeIconColor(QPixmap(":/h1.png"))
             .scaled(font_size.toInt() + 4, font_size.toInt() + 4, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setH1B->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setH2B = new QPushButton(
         changeIconColor(QPixmap(":/h2.png"))
             .scaled(font_size.toInt() + 4, font_size.toInt() + 4, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setH2B->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setH3B = new QPushButton(
         changeIconColor(QPixmap(":/h3.png"))
             .scaled(font_size.toInt() + 4, font_size.toInt() + 4, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setH3B->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setListB = new QPushButton(
         changeIconColor(QPixmap(":/list.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setListB->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setLinkB = new QPushButton(
         changeIconColor(QPixmap(":/link.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setLinkB->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setBoldB = new QPushButton(
         changeIconColor(QPixmap(":/bold.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setBoldB->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setItalicB = new QPushButton(
         changeIconColor(QPixmap(":/italic.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setItalicB->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setStrikeB = new QPushButton(
         changeIconColor(QPixmap(":/strikethrough.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setStrikeB->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setTaskB = new QPushButton(
         changeIconColor(QPixmap(":/checkbox.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setTaskB->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setNumListB = new QPushButton(
         changeIconColor(QPixmap(":/numList.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setNumListB->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setTableB = new QPushButton(
         changeIconColor(QPixmap(":/table.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setTableB->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     setQuoteB = new QPushButton(
         changeIconColor(QPixmap(":/quote.png"))
             .scaled(font_size.toInt() + 1, font_size.toInt() + 1, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
+    setQuoteB->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
 
     setH1B->setFixedSize(20, 20);
     setH2B->setFixedSize(20, 20);
@@ -350,9 +366,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     tasksMenuBtn->setIcon(
         changeIconColor(QPixmap(":/main.png"))
             .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    tasksMenuBtn->setIconSize(QSize(50, 50));
     tasksMenuBtn->setFixedSize(30, 30);
     tasksMenuBtn->setPopupMode(QToolButton::InstantPopup);
+    tasksMenuBtn->setIconSize(menuIconSize);
 
     tasksMenu = new QMenu(tasksMenuBtn);
 
@@ -478,7 +494,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             .scaled(font_size.toInt() + 3, font_size.toInt() + 3, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     projectsMenuButton->setPopupMode(QToolButton::InstantPopup);
     projectsMenuButton->setFixedSize(30, 25);
-    projectsMenuButton->setIconSize(QSize(40, 40));
+    projectsMenuButton->setIconSize(menuIconSize);
 
     projectsMenu = new QMenu(projectsMenuButton);
 
@@ -567,10 +583,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QWidget *mainTab = new QWidget();
     QGridLayout *firstLayout = new QGridLayout(mainTab);
 
-    firstLayout->addWidget(decorationLabel, 6, 0, 3, 8, Qt::AlignBottom | Qt::AlignRight);
-    firstLayout->addWidget(timeLabel, 0, 1, 2, 4, Qt::AlignBottom);
-    firstLayout->addWidget(dateLabel, 2, 1, 1, 4, Qt::AlignTop);
-    firstLayout->addWidget(verLabel, 9, 1, 1, 7, Qt::AlignLeft);
+    firstLayout->addWidget(decorationLabel, 0, 0, 9, 7, Qt::AlignCenter| Qt::AlignRight);
+    firstLayout->addWidget(timeLabel, 0, 1, 4, 4, Qt::AlignBottom);
+    firstLayout->addWidget(dateLabel, 4, 1, 1, 4, Qt::AlignTop);
+    firstLayout->addWidget(verLabel, 9, 1, 1, 7, Qt::AlignRight);
     firstLayout->addWidget(helloLabel, 7, 1, 2, 7, Qt::AlignLeft | Qt::AlignHCenter);
 
     tabs->addTab(mainTab, tr("Homepage"));
@@ -599,16 +615,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tabs->addTab(projectsTab, tr("Projects"));
 
-    QPixmap mainIco(":/main.png");
-    QPixmap projectsIco(":/project.png");
-    QPixmap noteIco(":/document.png");
-    QPixmap tasksIco(":/task.png");
-
-    tabs->setTabIcon(tabs->indexOf(mainTab), mainIco);
-    tabs->setTabIcon(tabs->indexOf(notesTab), noteIco);
-    tabs->setTabIcon(tabs->indexOf(tasksTab), tasksIco);
-    tabs->setTabIcon(tabs->indexOf(projectsTab), projectsIco);
-
     tabs->setIconSize(QSize(font_size.toInt(), font_size.toInt()));
     tabs->setTabBarAutoHide(true);
     tabs->setTabVisible(0, false);
@@ -618,9 +624,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     isConnected = new QPushButton("");
     isConnected->setFixedSize(14, 14);
+    isConnected->setIconSize(QSize(13, 13));
 
     isAutoSync = new QPushButton("");
     isAutoSync->setFixedSize(14, 14);
+    isAutoSync->setIconSize(QSize(13, 13));
 
     QSpacerItem *headerSp = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem *headerSp3 = new QSpacerItem(100, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -659,35 +667,41 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     tabButtonsWidget->setLayout(tabButtons);
 
+    qDebug() << font_size.toInt()+10;
+
     mainTabButton = new QPushButton(
         changeIconColor(QPixmap(":/main.png"))
-            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt()+10, font_size.toInt()+10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     mainTabButton->setFixedSize(50, 50);
     mainTabButton->setFlat(true);
     mainTabButton->setToolTip(tr("Home"));
+    mainTabButton->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
 
     tasksTabButton = new QPushButton(
         changeIconColor(QPixmap(":/task.png"))
-            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt()+10, font_size.toInt()+10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     tasksTabButton->setFixedSize(50, 50);
     tasksTabButton->setFlat(true);
     tasksTabButton->setToolTip(tr("Tasks"));
+    tasksTabButton->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
 
     notesTabButton = new QPushButton(
         changeIconColor(QPixmap(":/document.png"))
-            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt()+10, font_size.toInt()+10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     notesTabButton->setFixedSize(50, 50);
     notesTabButton->setFlat(true);
     notesTabButton->setToolTip(tr("Notes"));
+    notesTabButton->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
 
     projectsTabButton = new QPushButton(
         changeIconColor(QPixmap(":/project.png"))
-            .scaled(font_size.toInt() + 10, font_size.toInt() + 10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
+            .scaled(font_size.toInt()+10, font_size.toInt()+10, Qt::KeepAspectRatio, Qt::SmoothTransformation),
         "");
     projectsTabButton->setFixedSize(50, 50);
+    projectsTabButton->setIconSize(QSize(font_size.toInt() + 5, font_size.toInt() + 5));
     projectsTabButton->setFlat(true);
     projectsTabButton->setToolTip(tr("Projects"));
 

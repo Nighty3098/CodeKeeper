@@ -14,6 +14,7 @@ QDialog {
     show-decoration-selected: 0;
     border: 0px;
     border-radius: 5px;
+    color: #d6cfbc;
   }
 
   QTableWidget::item {
@@ -21,7 +22,7 @@ QDialog {
   }
 
   QWidget {
-    background-color: #00141a;
+    background-color: rgba(0, 20, 26, 255);
     border-width: 0px;
     border-color: #d6cfbc;
     border-radius: 0px;
@@ -202,7 +203,7 @@ QDialog {
     background-color: #002731;
     color: #d6cfbc;
     border: 0px solid #d6cfbc;
-    border-radius: 0px;
+    border-radius: 15px;
   }
 
   QMenu::separator {
@@ -264,6 +265,7 @@ QDialog {
 
   QToolButton:pressed {
     background-color: #002731;
+    border-radius: 15px;
   }
 
   QToolButton {
@@ -272,7 +274,7 @@ QDialog {
     color: #d6cfbc;
     border-width: 2px;
     border-style: solid;
-    border-radius: 10px;
+    border-radius: 15px;
     alignment: center;
     border-color: #002731;
   }
@@ -581,10 +583,12 @@ QDialog {
     border-radius: 15px;
   }
   QListWidget#IncompleteTasks::item:selected {
+    padding: 5px;
     background-color: rgba(211, 102, 107, 255); /* Убедитесь, что альфа-канал корректен */
     color: #000000;
   }
   QListWidget#IncompleteTasks::item {
+    padding: 5px;
     margin: 0px;
     color: #000000;
     background-color: #bd3612;
@@ -597,9 +601,11 @@ QDialog {
     border-radius: 15px;
   }
   QListWidget#InprocessTasks::item:selected {
+    padding: 5px;
     background-color: rgba(231, 232, 141, 75);
   }
   QListWidget#InprocessTasks::Item {
+    padding: 5px;
     margin: 0px;
     background-color: #976e09;
     color: #000000; text-decoration: underline;
@@ -612,10 +618,12 @@ QDialog {
     border-radius: 15px;
   }
   QListWidget#CompleteTasks::item:selected {
+    padding: 5px;
     background-color: rgba(195, 232, 141, 75);
     border-width: 2px; border-color: #728905;
   }
   QListWidget#CompleteTasks::Item {
+    padding: 5px;
     margin: 0px;
     background-color: #728905;
     color: #000000;
@@ -628,10 +636,12 @@ QDialog {
     border-radius: 15px;
   }
   QListWidget#NotStartedProjects::item:selected {
+    padding: 5px;
     border-width: 2px; border-color: #728905;
     background-color: rgba(211, 102, 107, 75);
   }
   QListWidget#NotStartedProjects::Item {
+    padding: 5px;
     margin: 0px;
     background-color: #bd3612;
     color: #000000;
@@ -645,10 +655,12 @@ QDialog {
     border-radius: 15px;
   }
   QListWidget#StartedProjects::item:selected {
+    padding: 5px;
     border-width: 2px; border-color: #728905;
     background-color: rgba(231, 232, 141, 75);
   }
   QListWidget#StartedProjects::Item {
+    padding: 5px;
     margin: 0px;
     background-color: #976e09; color: #000000;
     border-radius: 5px;
@@ -659,10 +671,12 @@ QDialog {
     border-radius: 15px;
   }
   QListWidget#FinishlineProjects::item:selected {
+    padding: 5px;
     border-width: 2px; border-color: #728905;
     background-color: rgba(126, 156, 216, 75)
   }
   QListWidget#FinishlineProjects::Item {
+    padding: 5px;
     margin: 0px;
     background-color: #2075c7;
     color: #000000;
@@ -680,6 +694,7 @@ QDialog {
   }
   QListWidget#FinishedProjects::Item {
     margin: 0px;
+    padding: 5px;
     background-color: #728905; color: #000000;
     border-radius: 5px;
   }

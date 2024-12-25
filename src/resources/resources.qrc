@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+    	<file>lightning.png</file>
         <file>license.txt</file>
         <file>check-mark.png</file>
         <file>logo.png</file>
