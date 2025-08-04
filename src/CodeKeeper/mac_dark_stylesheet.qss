@@ -731,7 +731,7 @@ QSizeGrip#indicator {
 QPushButton#closeBtn {
   border-radius: 6px;
   border-color: rgba(0, 0, 0, 0);
-  background-color: #ff757f;
+  background-color: #ff3b30;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -740,14 +740,14 @@ QPushButton#closeBtn:hover {
   border-radius: 6px;
   border-color: rgba(0, 0, 0, 0);
   background-repeat: no-repeat;
-  background-color: #ff757f;
+  background-color: #ff3b30;
   background-attachment: fixed;
 }
 
 QPushButton#minimizeBtn {
 border-radius: 6px;
 border-color: rgba(0, 0, 0, 0);
-background-color: #faef75;
+background-color: #ffcc00;
 background-repeat: no-repeat;
 background-attachment: fixed;
 }
@@ -756,14 +756,14 @@ QPushButton#minimizeBtn:hover {
 border-radius: 6px;
 border-color: rgba(0, 0, 0, 0);
 background-repeat: no-repeat;
-background-color: #faef75;
+background-color: #ffcc00;
 background-attachment: fixed;
 }
 
 QPushButton#maximizeBtn {
 border-radius: 6px;
 border-color: rgba(0, 0, 0, 0);
-background-color: #c3e88d;
+background-color: #27cd41;
 background-repeat: no-repeat;
 background-attachment: fixed;
 }
@@ -771,7 +771,7 @@ background-attachment: fixed;
 QPushButton#maximizeBtn:hover {
 border-radius: 6px;
 border-color: rgba(0, 0, 0, 0);
-background-color: #c3e88d;
+background-color: #27cd41;
 background-repeat: no-repeat;
 background-attachment: fixed;
 }

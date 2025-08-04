@@ -726,54 +726,52 @@ QSizeGrip#indicator {
     border-radius: 6px;
 }
 
-
-
 QPushButton#closeBtn {
-        border-radius: 6px;
-        border-color: rgba(0, 0, 0, 0);
-        background-color: #bd3612;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+  border-radius: 6px;
+  border-color: rgba(0, 0, 0, 0);
+  background-color: #ff3b30;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 QPushButton#closeBtn:hover {
-        border-radius: 6px;
-        border-color: rgba(0, 0, 0, 0);
-        background-repeat: no-repeat;
-        background-color: #bd3612;
-        background-attachment: fixed;
+  border-radius: 6px;
+  border-color: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-color: #ff3b30;
+  background-attachment: fixed;
 }
 
 QPushButton#minimizeBtn {
-    border-radius: 6px;
-    border-color: rgba(0, 0, 0, 0);
-    background-color: #976e09;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-color: #ffcc00;
+background-repeat: no-repeat;
+background-attachment: fixed;
 }
 
 QPushButton#minimizeBtn:hover {
-    border-radius: 6px;
-    border-color: rgba(0, 0, 0, 0);
-    background-repeat: no-repeat;
-    background-color: #976e09;
-    background-attachment: fixed;
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-repeat: no-repeat;
+background-color: #ffcc00;
+background-attachment: fixed;
 }
 
 QPushButton#maximizeBtn {
-    border-radius: 6px;
-    border-color: rgba(0, 0, 0, 0);
-    background-color: #728905;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-color: #27cd41;
+background-repeat: no-repeat;
+background-attachment: fixed;
 }
 
 QPushButton#maximizeBtn:hover {
-    border-radius: 6px;
-    border-color: rgba(0, 0, 0, 0);
-    background-color: #728905;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+border-radius: 6px;
+border-color: rgba(0, 0, 0, 0);
+background-color: #27cd41;
+background-repeat: no-repeat;
+background-attachment: fixed;
 }
 
 QLabel#subtitle {
